@@ -1,0 +1,3433 @@
+{
+  "avertissement": [
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "active": false
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "active": false
+      },
+      "boite": {
+        "type": "avertissement"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "fit": "contain"
+        },
+        "texte": "Bienvenue. \nCe spectacle vous donne des possibilités \nd’interaction par vos téléphones.\nSi vous voulez y participer, \nsuivez les indications sur le grand écran, avant que la pièce commence.",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "Avertissement/02.jpeg",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "texte": "Bienvenue. \nCe spectacle vous donne des possibilités \nd’interaction par vos téléphones.\nSi vous voulez y participer, \nsuivez les indications sur le grand écran, avant que la pièce commence.",
+        "mode": "biggest_text"
+      },
+      "laptop": {
+        "active": false
+      },
+      "boite": {
+        "type": "avertissement"
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "active": false
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "active": false
+      },
+      "boite": {
+        "type": "avertissement"
+      },
+      "saut": {
+        "scene": "Intro"
+      }
+    }
+  ],
+  "Intro": [
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "console": {
+        "mode": "console"
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "boite": {
+        "arg": " "
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/wii.mp3",
+          "volume": 25,
+          "loop": true
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": "Un jour un homme entra en scène.",
+        "mode": "final_fantasy"
+      }
+    },
+    "Par son apparence, on aurait dit qu’il était né entre l’année de sortie du jeux vidéo “Pong” et la chute du mur de Berlin.",
+    "La sortie au cinéma de “Retour vers le futur” avait probablement été l'événement majeur de son enfance...",
+    "Quelques mois auparavant, il avait rencontré deux metteurs en scène.",
+    "À leur demande il leur avait raconté son histoire.",
+    "Dans cette histoire, il était question d’Internet, de jeux vidéos, de musique, de programmation, de nouveaux médias et bien sûr de lui même…",
+    "…mais aussi un peu de tout le monde.",
+    "Et comme l’histoire de cet homme était trop longue pour être racontée en une heure…",
+    "les metteurs en scène décidèrent de laisser aux spectateurs la possibilité de choisir à quels bouts de l'histoire ils allaient assister.",
+    "Entre-temps, le public attendait avec impatience, avec leur téléphones connectés, la fin du récit s’affichant sur un écran.",
+    {
+      "emo": {
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "texte": "Finalement, l’intro se termina et l’histoire pu commencer."
+      }
+    },
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      }
+    },
+    {
+      "screen": {
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        },
+        "texte": " "
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Répéter l’intro [Debut2]\n\nConnaitre l'histoire de la personne qui est sur scène [Bio]\n\nRépondre à la question: Pensez-vous que le stack overflow est destiné aux débutants qui n'ont pas étudié l'informatique?"
+      }
+    }
+  ],
+  "Bio": [
+    {
+      "screen": {
+        "decor": {
+          "src": "bliss.mp4",
+          "loop": true
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "Connaitre l'histoire de la personne qui est sur scène 😀",
+        "mode": "final_fantasy"
+      }
+    },
+    " ",
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "music": {
+          "src": "Sons/chrono.wav"
+        },
+        "texte": " "
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Indiquer sur Google Maps le lieu où l'artiste du web s'est connecté à Internet pour la première fois\n\nSe battre contre une voiture [Kof93]\n\n"
+      }
+    }
+  ],
+  "Kof93": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": "Se battre contre une voiture 🚗",
+        "mode": "final_fantasy"
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "texte": " ",
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "kof93"
+      }
+    },
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        },
+        "texte": " "
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Faire du Rap [Karaoke]\n\nDiscuter avec une Intelligence Artificielle\n\nRépondre à la question : \"Quelles sont les meilleures universités où étudier l'informatique en France? Serait-il vraiment utile d'y étudier étant donné la situation actuelle des diplômés en informatique? Ou serait-il préférable de le faire soi-même via d'autres cours en ligne gratuits?\"\n"
+      }
+    }
+  ],
+  "Karaoke": [
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": "Faire du Rap  😎💰",
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": " "
+        },
+        "texte": " "
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/1.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/2.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/3.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/4.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/5.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/6.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/7.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/8.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/9.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/10.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/11.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/13.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/14.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/15.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/16.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/17.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/Refrain/1.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/Refrain/2.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/Refrain/3.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif70.gif"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/Background/BackgroundGif1.gif"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif83.gif"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/1.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/2.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/3.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/4.jpg"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/5.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/6.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/7.jpg"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/8.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/9.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/10.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/11.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/12.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/13.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/14.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/15.jpg"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/16.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/17.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/18.jpg"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/19.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/Refrain/1.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/Refrain/2.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/Refrain/3.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif50.gif"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/Background/BackgroundGif3.gif"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif79.gif"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/1.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/2.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/3.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/4.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/5.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/6.jpg"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/7.jpg"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/8.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/9.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/10.jpg"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/11.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/12.jpg"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/Refrain/1.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/Refrain/2.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/Refrain/3.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif67.gif"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif68.gif"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif55.gif"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Gif/toimoi.gif"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/danse1.gif",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif72.gif"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif80.gif"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif77.gif"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif66.gif"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        },
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        },
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Jouer aux echecs  [desertBus]\n\nExprimer un sentiment post-internet [IndiciblesSentiments]\n\nRépondre à la question : \"De quelle expérience informatique a-t-on besoin pour créer un cheval de Troie ?\""
+      }
+    }
+  ],
+  "IndiciblesSentiments": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": "Exprimer un sentiment post-internet 🐚",
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        },
+        "music": {
+          "volume": 50
+        },
+        "texte": "🌐",
+        "mode": "biggest_text"
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat1.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat2.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat3.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat4.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat5.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat6.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat9.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat8.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat10.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat11.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat12.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat13.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat7.jpg"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/Catmosaic.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/feet/piedsplage3.jpg"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/feet/piedsplage4.jpg"
+        },
+        "texte": "  "
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/feet/piedsplage2.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/avion/avion3.jpg"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/avion/avion1.jpg"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/avion/avion2.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/petitpiedgrandmain/PiedsMains3.jpeg"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/petitpiedgrandmain/PiedsMains4.jpg"
+        },
+        "texte": "  "
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/petitpiedgrandmain/PiedsMains2.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/autoportrait/autoportrait3.jpg"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/autoportrait/autoportrait1.jpg"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/autoportrait/autoportrait2.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/pisa/Pisa3.jpg"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/pisa/Pisa1.jpg"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/pisa/Pisa2.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/cake/cake3.jpg"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/cake/cake2.jpg"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/cake/cake1.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/love/love3.jpg"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/love/love2.jpg"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/love/love4.jpg"
+        },
+        "texte": "  "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/empreintespieds/footprint1.jpg"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/empreintespieds/footprint3.jpg"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/empreintespieds/footprint2.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie1.jpg"
+        },
+        "texte": " "
+      },
+      "console": {
+        "active": false
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie2.jpg"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie3.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie4.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie5.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie7.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie8.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie9.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        }
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Lire des extraits de son blog préféré \n\nOuvrir une image avec un logiciel de son\n\nJouer 10 secondes de grindcore [grindcore1]\n"
+      }
+    }
+  ],
+  "grindcore1": [
+    {
+      "emo": {
+        "texte": "💀",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/Mxv4dAr.gif"
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "Concert de Grindcore 😱 ",
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "texte": "💀",
+        "mode": "biggest_text"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Grindcore/grind-1-emo.webm",
+          "volume": 46
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Grindcore/grind-1-screen.webm",
+          "volume": 80
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Grindcore/grind-1-console.webm",
+          "volume": 46
+        },
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        },
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        }
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Mettre à l'épreuve l'intelligence collective [Mario]\n\nRaconter une légende urbaine\n\nMontrer la vidéo la plus longue postée sur Youtube"
+      }
+    }
+  ],
+  "Mario": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": "Mettre à l'épreuve l'intelligence collective 🎮",
+        "mode": "final_fantasy"
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": " "
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "music": {
+          "src": "Sons/wii remix.mp3",
+          "volume": 60,
+          "loop": true
+        },
+        "texte": " "
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "gameboy"
+      }
+    },
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        }
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Jeter un sort contre les trolls\n\nDécouvrir les derniers mots entrés dans le dictionnaire de la langue française\n\nRaconter une histoire de science-fiction [YoutubeBand]"
+      }
+    }
+  ],
+  "YoutubeBand": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": "Raconter une histoire de science-fiction.",
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": " "
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "Youtube Band/LAPTOP/1.Technique accordéon par JYSixt Leçon N° 10.webmhd.webm"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "laptop": {
+        "decor": {
+          "src": "Youtube Band/LAPTOP/2.kalimba - beauty and the beast.webmhd.webm"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Youtube Band/EMO/2°partieEMO.webm",
+          "volume": 90
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Youtube Band/SCREEN/Screen.webm"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Youtube Band/CONSOLE/Console.webm",
+          "volume": 90
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": "Youtube Band/LAPTOP/2°partie-Laptop2811.webmhd.webm"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "laptop": {
+        "active": false
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "active": false
+      },
+      "laptop": {
+        "active": false
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Youtube Band/EMO/3°partieEMO.webm"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "texte": " "
+      },
+      "boite": {
+        "arg": "\n"
+      }
+    },
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "music": {
+          "src": "Sons/chrono.wav",
+          "volume": 17,
+          "loop": true
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        },
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Répondre à la question : \" Est-ce que .NET Core va tuer Node.js ?\"\n\nFaire un discours sur la distraction\n\nExpliquer pourquoi il y a un crâne sur la table [singesSavant]\n"
+      }
+    }
+  ],
+  "singesSavant": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": "Expliquer pourquoi il y a un crâne sur la table  👻",
+        "mode": "final_fantasy"
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#0f0"
+        },
+        "texte": " "
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "#0f0"
+        },
+        "music": {
+          "src": "Sons/Harpsichord.mp3",
+          "volume": 20,
+          "loop": true
+        },
+        "texte": " ",
+        "style": ".impact",
+        "mode": "biggest_text"
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "singe_savant"
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "music": {
+          "src": " "
+        }
+      },
+      "console": {
+        "active": false
+      },
+      "boite": {
+        "type": "vide"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav"
+        },
+        "texte": " "
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Présenter sa théorie du complot préférée\n\nJouer 10 autres secondes de grindcore[grindcore2]\n\nExpliquer la différence entre la cyber-criminalité, le cyber-espionnage et la cyber-guerre\n\n"
+      }
+    }
+  ],
+  "grindcore2": [
+    {
+      "emo": {
+        "texte": "💀",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/Mxv4dAr.gif"
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "Concert de Grindcore 😱 ",
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "texte": "💀",
+        "mode": "biggest_text"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Grindcore/grind-2-emo.webm",
+          "volume": 86
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Grindcore/grind-2-screen.webm",
+          "volume": 100
+        },
+        "texte": "  "
+      },
+      "console": {
+        "decor": {
+          "src": "Grindcore/grind-2-console.webm",
+          "volume": 46
+        },
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        },
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        },
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Comprendre ce qu'est un mème [Harold]\n\nRépondre à la question la plus souvent posée sur Google\n\nChatter avec l'inconscient collectif"
+      }
+    }
+  ],
+  "Harold": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": "Comprendre ce qu'est un mème 😜",
+        "mode": "final_fantasy"
+      },
+      "laptop": {
+        "active": false
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold1.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold2.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold3.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold4.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold5.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold8.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold10.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Meme/harold11.jpg"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Meme/harold12.jpg"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Meme/harold10.jpg"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Meme/Mappemonde.jpg"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Meme/harold13.jpg"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold10.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/PostMeme/harold1.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/PostMeme/harold1-remix.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/PostMeme/harold3.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/PostMeme/harold4.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/PostMeme/harold6.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/PostMeme/harold7.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "\n"
+      }
+    },
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Écouter un monologue incroyablement long\n\nÉcouter un monologue incroyablement ennuyeux\n\nFaire des MÈMES  [Fairememe]\n\n"
+      }
+    }
+  ],
+  "Fairememe": [
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": "Faire des MÈMES 👺",
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/[Synthesia][MIDI] Bossa Nova USA.mp3",
+          "volume": 11,
+          "loop": true
+        },
+        "texte": " "
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "image"
+      }
+    },
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        },
+        "texte": " "
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Contempler un ancien MÈME pendant 20 secondes[20sMeme]\n\nRépondre à la question: \"Pourquoi, dans le cadre des concours publics, un diplôme en ingénierie informatique n'est pas comparable à celui en informatique et implique par conséquent l'exclusion d'ingénieurs?\"\n\n"
+      }
+    }
+  ],
+  "20sMeme": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": "Contempler un ancien MÈME pendant 20 secondes.",
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "pepe-the-frog.jpg",
+          "fit": "contain"
+        },
+        "music": {
+          "src": "Sons/satie.mp3"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "music": {
+          "src": "Sons/chrono.wav"
+        },
+        "texte": " "
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Présenter un système d'exploitation qui n'a jamais existé [Windows93]\n\nParler de la pollution magnétique pendant 4 heures"
+      }
+    }
+  ],
+  "Windows93": [
+    {
+      "emo": {
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "loop": true
+        },
+        "texte": "Présenter un système d'exploitation qui n'a jamais existé.",
+        "mode": "final_fantasy"
+      },
+      "boite": {
+        "type": "vide"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": " "
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "@404"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "@404"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "@404"
+        },
+        "texte": " ",
+        "mode": "biggest_text"
+      },
+      "boite": {
+        "type": "vide"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "#0000aa"
+        },
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "console": {
+        "decor": {
+          "src": "#0000aa"
+        },
+        "texte": "📱"
+      },
+      "boite": {
+        "type": "musique"
+      }
+    },
+    {
+      "boite": {
+        "type": "gifs"
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": " "
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "active": false
+      },
+      "boite": {
+        "type": "fin"
+      },
+      "osc": {
+        "message": 0
+      }
+    }
+  ],
+  "FIN": [
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "#000"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#000"
+        }
+      }
+    },
+    {
+      "screen": {
+        "texte": "Avant cette fin, d'autres fins ont été considérées par l’IA. ",
+        "mode": "normal"
+      }
+    },
+    "Dans ces différentes fins, l’artiste du web finissait la plupart du temps piégé dans des mondes parallèles, des coins cachés du théâtre, des chambres inexistantes de sa maison et d’autres choses de ce type.",
+    "Dans ces différentes fins l’artiste du web n'était jamais seul. \n",
+    "Il était toujours accompagné par des personnages divers qui portaient des noms comme NumbSurfer21, FireCrazy34, IceCold62, ExtremeMonkey60...\n",
+    "Les metteurs en scène attendait que l’IA leur propose un dernier monologue, un monologue de fin.",
+    "Un texte décisif, épique, mémorable.",
+    "Mais ce n’est pas arrivé...\n",
+    "Alors, en se rappelant d’une vieille histoire selon laquelle il existe une infime probabilité qu’un certain nombre de personnes arriveraient à écrire par hasard le texte final d’Hamlet en tapant chacun une lettre à la fois, ils ont demandé aux spectateurs d'écrire la meilleure fin pour cette pièce."
+  ],
+  "darkWeb": [
+    {
+      "screen": {
+        "texte": "Aller sur le Dark Web 💀",
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "@darkWeb"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "@darkWeb"
+        },
+        "music": {
+          "src": "Sons/x.mp3",
+          "volume": 70,
+          "loop": true
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "@darkWeb"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        }
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Contempler un vieux mème pendant 20 secondes [20sMeme]\n\nPrésenter le système d'exploitation qui n'a jamais existé [Windows93]"
+      }
+    }
+  ],
+  "desertBus": [
+    {
+      "screen": {
+        "decor": {
+          "src": "@desertbus"
+        },
+        "music": {
+          "src": "Sons/motor.mp3",
+          "volume": 30,
+          "loop": true
+        }
+      }
+    }
+  ],
+  "grindcore3": [
+    {
+      "emo": {
+        "texte": "💀",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/Mxv4dAr.gif"
+        },
+        "texte": "Concert de Grindcore 😱",
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "texte": "💀",
+        "mode": "biggest_text"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Grindcore/grind-3-emo.webm",
+          "volume": 100
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Grindcore/grind-3-screen.webm",
+          "volume": 100
+        },
+        "texte": " ",
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": "Grindcore/grind-3-console.webm"
+        },
+        "texte": " "
+      }
+    }
+  ],
+  "ex-Debut3": [
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/cloud.gif"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    "Au départ cette pièce devait commencer en pleine lumière.\n",
+    "Un acteur serait entré avec un colis dans les mains.",
+    "Il l’aurait posé sur une table et nous aurait dévoilé son contenu.",
+    "Ensuite un danseur, probablement né entre l’année de sortie du jeu vidéo Donkey Kong et la chute du mur de Berlin, aurait enchaîné des mouvements brusques et sinistres. \n",
+    "Après, l’acteur aurait dessiné sur une grande ardoise des schémas illustrant la progression de certains phénomènes culturels propres à notre société connectée ainsi que d’autres choses de ce type pendant que le danseur en patins à roulette aurait joué une sorte d'arrière-pensée de l’acteur sur de la bossa nova.",
+    "Les deux interprètes auraient eu l’âge d’avoir le film “Retour vers le futur” comme événement majeur de leur enfance. ",
+    "Mais tout ça ne va pas avoir lieu aujourd’hui.\n",
+    "Parce qu'entre-temps les metteurs en scène ont changé d’idée.",
+    "Ils ont rencontré un artiste du web \nqui leur a présenté une intelligence artificielle \nqui à son tour leur a écrit une nouvelle pièce de théâtre à choix multiples dans un mauvais français. \n",
+    "Comme leur pièce de départ allait traiter du web, qui mieux qu’un artiste du web pourrait parler du web ?\n",
+    "Et quoi de mieux qu’une intelligence artificielle pour écrire le texte de cette comédie ?\n",
+    {
+      "screen": {
+        "texte": "Voici donc la nouvelle pièce écrite par l'intelligence artificielle :\n",
+        "mode": " "
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/wii.mp3",
+          "volume": 29
+        },
+        "texte": " "
+      }
+    },
+    {
+      "screen": {
+        "texte": "Un jour un artiste du web monte sur scène. \n",
+        "mode": "final_fantasy"
+      }
+    },
+    "Il s'appelle Bob, un artiste du web qui a un travail à vie. \n",
+    "Bob a des problèmes : problèmes concernant son travail, problèmes concernant sa famille, problèmes concernant sa petite amie, problèmes liés à sa religion, problèmes liés au théâtre. \n",
+    "L’artiste du web est arrivé sur scène et les metteurs en scène lui ont alors dit : \"Hé mec, tu veux de l'argent ? J'ai quelques auteurs qui attendent.\"",
+    "Cela s'est produit encore et encore, presque tout le monde étant payé. \nEt l'artiste du web a été surpris  et heureux de travailler pour eux.\n",
+    "Puis d’autres personnages sont arrivés sur scène, et il y avait beaucoup d'interactions et d'interactions. Mais c'était trop compliqué. C'était trop plein de dialogues. ",
+    "Alors une machine appelée James Joyce a écrit une pièce de théâtre appelée Ulysses. \nC'était un peu mieux. \n",
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": "Fin de la première scène. \n"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "Noir.\n"
+      }
+    },
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        },
+        "texte": " ",
+        "style": ".sans_serif",
+        "color": "#000"
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "#Que faire?\n\nRépéter l’intro [Debut]\n\nConnaître l’artiste du web [Bio]\n\nRépondre à la question: Est-ce que le fait de changer son adresse IP a un impact sur le prix d'un billet d'avion ?"
+      }
+    }
+  ],
+  "ex-Debut1": [
+    {
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "music": {
+          "loop": true
+        },
+        "color": "#fff"
+      }
+    },
+    {
+      "screen": {
+        "texte": "Il y a quelques mois, les deux metteurs en scène de cette pièce sont tombés sur un site internet.",
+        "color": "#fff"
+      }
+    },
+    "Ce site mettait à disposition une intelligence artificielle programmée pour écrire des histoires originales.",
+    "Enthousiasmés, les metteurs en scène ont décidé de tout recommencer et d'écrire la pièce avec l’aide de cette intelligence artificielle.",
+    "Il suffisait d’écrire la première phrase pour que l’intelligence artificielle complète la suite en puisant dans des millions de textes glanés sur internet.",
+    "Ils ont donc écrit la première phrase :",
+    "\"Un jour un homme entre en scène\"",
+    "Et la machine a complété...",
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "active": false
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "active": false
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/wii.mp3",
+          "loop": true
+        },
+        "texte": " "
+      }
+    },
+    {
+      "screen": {
+        "texte": "Un jour un homme entre en scène...",
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "screen": {
+        "music": {
+          "volume": 20
+        },
+        "texte": "Il s'appelle Bob, un artiste web qui a un travail à vie. "
+      }
+    },
+    "Bob a des problèmes: problèmes concernant son travail, problèmes concernant sa famille, problèmes concernant sa petite amie, problèmes liés au travail, problèmes liés au théâtre...",
+    "Puis d’autres personnages arrivent sur scène, et il y a beaucoup d'interactions et d'interactions.",
+    "À quoi ressembleraient ces scènes? ",
+    "Elles devraient être pleines de rire. Il devrait y avoir une danse et de la musique et toutes ces choses.",
+    "Quelques minutes plus tard, il découvre que sa mère a épousé un autre homme. \n",
+    "Puis le protagoniste est urgemment transporté par l'hélicoptère dans les loges ou il vide les bouteilles de champagne les unes après les autres.",
+    "Cela se produit encore et encore, presque tout le monde étant payé. Et l'artiste Web est surpris, et heureux de travailler pour eux.",
+    "C'est la plus longue pièce de théâtre jamais jouée…",
+    "Le public révolté commence à incorporer une forme de narration interactive, basée sur cette interprétation. ",
+    "Alors l’homme sort de scène, parce que c’est ainsi que finit la première scène.",
+    {
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "Noir."
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": "Réalisant qu’ils manquaient les moyens pour louer un hélicoptère, les metteurs en scène ont demandé à l’intelligence artificielle d’écrire un nouveau début à partir de cette phrase :",
+        "color": "#fff",
+        "mode": "normal"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": " "
+      }
+    },
+    {
+      "screen": {
+        "texte": "Un jour deux metteurs en scène ont demandé une intelligence artificielle d’écrire une pièce interactive, un solo avec un budget modeste qui commence par :",
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "VN/rain.gif"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3",
+          "volume": 40,
+          "loop": true
+        },
+        "texte": " ",
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": "VN/rain.gif"
+        }
+      }
+    },
+    {
+      "screen": {
+        "texte": "... un homme qui entre en scène un soir de pluie.",
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "screen": {
+        "texte": "Il y a quelques mois, deux metteurs en scène ont demandé à une intelligence artificielle d’écrire une pièce de théâtre interactive. C’est un solo avec un budget modeste qui commence par le protagoniste qui entre en scène très lentement en portant un épée en carton. ",
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "VN/rain.gif"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "@rain"
+        },
+        "texte": "La deuxième scène commence par un homme qui arrive sur scène et un autre personnage qui entre sur scène, et il y a beaucoup d'interactions et d'interactions. ",
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": "VN/rain.gif"
+        }
+      }
+    },
+    "À quoi ressembleraient ces scènes? ",
+    "Elles devraient être pleines de rires. Il devrait y avoir une danse et de la musique et toutes ces choses. ",
+    "Mais c'était trop compliqué.",
+    " Trop plein de dialogues.",
+    "Alors une machine appelée James Joyce  écrit une pièce de théâtre appelée Ulysses. C'était un peu mieux. ",
+    "Et c'est ce qui s'est passé encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore, encore et encore...",
+    "Parce que c'est le genre de chose qu'on demande au public d'imaginer à la fin de cette séquence.",
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "Noir."
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "@homme"
+        },
+        "music": {
+          "src": "Sons/RapBeat40BPM.mp3"
+        },
+        "texte": "La troisième scène commence avec l’Intelligence Artificielle qui parle à une actrice, puis l'acteur choisit l’Intelligence Artificielle pour apparaître dans la pièce et c'est tout."
+      }
+    },
+    "L'histoire se termine par l'acteur qui appelle l’Intelligence artificielle Michel, lui demandant de venir sur scène et de raconter son histoire.",
+    "L'idée de cet exercice était que l'auteur, l'acteur et  l’intelligence artificielle jouent ensemble. ",
+    "C'était en fait un peu plus compliqué que cela. ",
+    "Le public révolté commence à incorporer une forme de narration interactive basée sur cette interprétation.",
+    "Quelques minutes plus tard, un jeune garçon découvre que sa mère a épousé un autre homme. ",
+    "C'est la plus longue pièce de théâtre jamais jouée...",
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "texte": "“Nous devrions laisser le public raconter sa propre histoire” disent les metteurs en scène."
+      },
+      "console": {
+        "texte": "allumez vos téléphones",
+        "mode": "console"
+      }
+    },
+    {
+      "screen": {
+        "texte": " "
+      },
+      "boite": {
+        "type": "choix"
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "active": false
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "active": false
+      }
+    }
+  ],
+  "retourintro": [
+    {
+      "screen": {
+        "texte": "Répéter l’intro 🙃",
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "boite": {
+        "type": "choix",
+        "arg": "répéter intro [intro]"
+      }
+    }
+  ],
+  "monologue": [
+    {
+      "emo": {
+        "decor": {
+          "src": ".gradient"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": "Réciter un monologue épique 😎",
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": ".gradient"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": "👁️",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "deeppink"
+        },
+        "texte": "👃",
+        "mode": "biggest_text"
+      },
+      "console": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": "👁️",
+        "mode": "biggest_text"
+      }
+    },
+    {
+      "emo": {
+        "texte": "✌️"
+      },
+      "screen": {
+        "texte": "👁️👃👁️"
+      },
+      "console": {
+        "texte": "🤏"
+      }
+    }
+  ],
+  "TEST boites": [
+    {
+      "screen": {
+        "decor": {
+          "src": "#b6d7a8"
+        },
+        "texte": "Test des choix",
+        "color": "#000"
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "image",
+        "arg": "reeeey"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#76a5af"
+        },
+        "texte": " "
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Lancer l'intro [intro]\n\nLancer KOF93 [voiture]\n\nJouer du Grindcore [grindcore1]"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#0f0"
+        },
+        "music": {
+          "src": "Sons/elevator.mp3",
+          "volume": 20,
+          "loop": true
+        },
+        "texte": "TEST DES SINGES SAVANTS",
+        "style": ".impact",
+        "color": "#fff",
+        "mode": "biggest_text"
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "singe_savant"
+      }
+    },
+    {
+      "screen": {
+        "music": {
+          "src": " "
+        }
+      },
+      "boite": {
+        "type": "vide"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#76a5af"
+        },
+        "texte": " ",
+        "style": ".impact",
+        "color": " ",
+        "mode": "biggest_text"
+      },
+      "boite": {
+        "type": "singe_savant"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#93c47d"
+        },
+        "texte": "Test de l'image board (pas fini)",
+        "style": " ",
+        "color": "#000",
+        "mode": " "
+      },
+      "boite": {
+        "type": "image"
+      }
+    },
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "emo": {
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "#76a5af"
+        },
+        "texte": " "
+      },
+      "boite": {
+        "type": "image"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#b6d7a8"
+        },
+        "texte": "Test des gifs (pas fini)"
+      },
+      "console": {
+        "mode": " "
+      },
+      "boite": {
+        "type": "gifs"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#76a5af"
+        },
+        "texte": " "
+      },
+      "boite": {
+        "type": "gifs"
+      }
+    },
+    {
+      "emo": {
+        "texte": "📱",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "music": {
+          "src": "Sons/wii remix.mp3",
+          "volume": 25
+        },
+        "texte": " "
+      },
+      "console": {
+        "texte": "hello",
+        "mode": "console"
+      },
+      "boite": {
+        "type": "gameboy"
+      }
+    },
+    {
+      "boite": {
+        "type": "image"
+      }
+    }
+  ],
+  "TEST step order": [
+    "Désormais, la premiere étape de chaque scène efface tout les écrans et passe tout les mobiles en boite \"attente\" 😊",
+    {
+      "emo": {
+        "decor": {
+          "src": "#76a5af"
+        },
+        "texte": "emo"
+      },
+      "screen": {
+        "decor": {
+          "src": "#93c47d"
+        },
+        "texte": "screen"
+      },
+      "console": {
+        "decor": {
+          "src": "#f9cb9c"
+        },
+        "texte": "console"
+      },
+      "laptop": {
+        "decor": {
+          "src": "#8e7cc3"
+        },
+        "texte": "laptop"
+      },
+      "boite": {
+        "type": "chat"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3",
+          "volume": 20,
+          "loop": true
+        },
+        "texte": " ",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3",
+          "volume": 20,
+          "loop": true
+        },
+        "texte": " ",
+        "mode": "biggest_text"
+      },
+      "laptop": {
+        "texte": "hello 💩",
+        "mode": "biggest_text"
+      },
+      "boite": {
+        "type": "chat"
+      }
+    },
+    {
+      "boite": {
+        "type": "choix"
+      }
+    },
+    {
+      "emo": {
+        "texte": "world"
+      },
+      "screen": {
+        "texte": "world"
+      },
+      "console": {
+        "texte": "world"
+      },
+      "laptop": {
+        "texte": "world"
+      }
+    },
+    {
+      "emo": {
+        "texte": "BIG TEXT",
+        "style": ".impact",
+        "color": "#8e7cc3",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "texte": "BIG TEXT",
+        "style": ".impact",
+        "color": "#6fa8dc",
+        "mode": "biggest_text"
+      },
+      "console": {
+        "texte": "BIG TEXT",
+        "style": ".impact",
+        "color": "#a2c4c9",
+        "mode": "biggest_text"
+      },
+      "laptop": {
+        "texte": "BIG TEXT",
+        "style": ".impact",
+        "color": "#c27ba0",
+        "mode": "biggest_text"
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "decor": {
+          "src": "@darkWeb"
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "cat.webm",
+          "loop": true
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "yo",
+        "style": ".sans_serif",
+        "color": "#ead1dc",
+        "mode": "biggest_text"
+      },
+      "laptop": {
+        "active": false
+      },
+      "boite": {
+        "type": "kof93"
+      }
+    }
+  ],
+  "Quete": [
+    {
+      "emo": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3",
+          "loop": true
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "loop": true
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3",
+          "loop": true
+        },
+        "texte": " "
+      }
+    },
+    {
+      "screen": {
+        "texte": "Allo !",
+        "mode": "final_fantasy"
+      }
+    },
+    "Allo ?",
+    "Il y a quelqu'un ? ",
+    "Vous m'entendez ? ",
+    "Vous me recevez ?",
+    "Je parle dans un coquillage. ",
+    "Une  conque,  pour  être  précis.",
+    "Allo ? ",
+    "II  y  a quelqu'un  à  l'autre  bout  de  ma  conque  ?",
+    "Me recevez-vous  ?",
+    " Vous.",
+    "oui VOUS !",
+    "Assis  là,  en  train  de regarder un spectacle au théâtre.",
+    "Je suis en train de jeter un SORTILÈGE.",
+    "C'est un sortilège très puissant.",
+    "C'est  un  sortilège  en forme de filet.",
+    "Il capture votre esprit pendant que lisez ces lignes. ",
+    "Etes-vous nerveux ?",
+    "On le serait pour bien moins !",
+    "C'est un sortilege très puissant...",
+    "Un sortilège auquel je n'ai pas souvent recours...",
+    "Cela prend trop de temps !",
+    "Pour certains sortilèges  il  suffit  de  marmonner  un  mot ou d'agiter  une  baguette magique...",
+    "Mais  celui-ci  impose  d'écrire  toute  une pièce de théâtre. ",
+    "La pièce  que  vous  êtes en train de voir.",
+    "Il va falloir que vous m'aidiez, figurez-vous.",
+    "Vous ne pouvez pas simplement vous contenter de regarder cette pièce.",
+    "Non, vous  devez  y  mettre  du  vôtre...  ",
+    "Car j'ai un problème.",
+    "Je  ne  dispose  pas  d'un  corps  dans  votre  monde.",
+    "J'ai donc besoin de votre aide.",
+    {
+      "emo": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": "📱 ",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "texte": "Quand vous voyez l'icone de téléphone sur l'écran de droite cela signifie que j'ai besoin de vous."
+      }
+    },
+    "Capisce ? ",
+    {
+      "screen": {
+        "music": {
+          "src": "Sons/chrono.wav"
+        },
+        "texte": " "
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "# Êtes-vous prêts ?\n\nOui ! [quete2Oui]\n\nBof. [quete2Bof]"
+      }
+    }
+  ],
+  "quete2Oui": [
+    {
+      "emo": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "texte": "Parfait. 😎",
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3"
+        }
+      }
+    },
+    "Je ferais peut-être bien de vous  mettre  au  courant  du  sortilège  en  question  maintenant  que  la pièce a commencé.",
+    "Je vais vous expliquer quel est son effet.",
+    "Le sortilège vous emporte loin du monde où vous vous trouvez et vous enlève à votre époque.",
+    "Enfin, il prélève une part essentielle de vous, votre part intérieure.",
+    "Il laisse votre  corps  intact  si  bien  que  vos  amis,  par  exemple,  ne  savent  pas  que  vous  êtes \nparti. ",
+    "Mais  pourtant,  vous  êtes  absent.",
+    "C'est  la  vérité.",
+    "Votre  esprit  a  quitté  votre monde  pour  se  retrouver  dans  le mien.",
+    "Et  là,  je  le  glisse  aussitôt  dans  un  autre corps...",
+    "Un  corps  trié  sur  le  volet...",
+    "Le  corps  d'un  être jeune, tout  à  fait  comme  vous...",
+    "Mais  plus  séduisant.",
+    "Je  ne  peux  pas  vous  rendre  plus  intelligent  mais, sur ce point, il faudra vous faire une raison 😂"
+  ],
+  "quete2Bof": [
+    {
+      "emo": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "texte": "Oh... 😮",
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3"
+        }
+      }
+    },
+    "Comme je vous comprends...",
+    "Vous savez, moi non plus je n'aime pas trop  ces trucs technologiques.",
+    "Je ne comprends pas trop l'interet d'ajouter tout ce capharnaüm électronique dans une pièce de théâtre...",
+    "...",
+    "De toute façon, il va falloir faire avec maintenant qu'on y est.",
+    "Espérons que ce ne soit pas trop pénible... 😔",
+    "N'hésitez pas à quitter la salle pendant le spectacle et à taper un scandale 😂",
+    "Qu'il se passe  quelque-chose de vivant au moins !"
+  ],
+  "Tarbesvideo": [
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Youtube Band/Tarbes/2°partie NV1emo.webmhd.webm"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Youtube Band/Tarbes/2°partie NV1screen.webmhd.webm"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Youtube Band/Tarbes/2°partie NV1console.webmhd.webm"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "Youtube Band/Tarbes/2°partie NV1laptop.webmhd.webm"
+        }
+      }
+    }
+  ],
+  "dispositif": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": "Epliquer le dispositif technique de la pièce.",
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-01.png",
+          "fit": "contain"
+        },
+        "texte": " ",
+        "mode": "normal"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-02.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-03.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-04.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-05.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-06.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-07.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-08.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-09.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-10.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-11-a.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-11b.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-12.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-13.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-14.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-15.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-16.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-17.png",
+          "fit": "contain"
+        }
+      }
+    }
+  ]
+}

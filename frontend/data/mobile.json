@@ -1,0 +1,28 @@
+{
+    "FR" : {
+        "avertissement" : ["Vous êtes arrivés au bon endroit !", "La pièce va bientôt commencer..."],
+        "fin" : ["FIN"],
+        "attente" : ["Vous allez pouvoir interagir avec votre téléphone très prochainement"],
+        "no_phone" : ["Vous pouvez ranger votre téléphone pour le moment", "Sortez-le et revenez ici", "lorsque cette icone apparaîtra", "sur l'écran"],
+        "image_photo_icon" : ["Envoyer une photo"],
+        "singe_savant" : ["C'est (peut-être) bientôt", "votre tour d'écrire"],
+        "gifs" : ["téléportation", "tonus", "glissade"],
+        "avertissement-boite" : {"title" : "Bienvenue !", "text" : "Votre pseudo est", "console" : "est connecté"},
+        "choix-boite" : {"text" : "Les votes sont clos !"},
+        "image-boite" : {"text" : "Probleme de lecture d'image"},
+        "musique-boite" : {"title" : "Musique", "text" : "Montez le volume de votre téléphone."}
+    },
+    "EN" : {
+        "avertissement" : ["Vous êtes arrivés au bon endroit !", "La pièce va bientôt commencer..."],
+        "fin" : ["FIN"],
+        "attente" : ["Vous allez pouvoir interagir avec votre téléphone très prochainement"],
+        "no_phone" : ["Vous pouvez ranger votre téléphone pour le moment", "Sortez-le et revenez ici", "lorsque cette icone apparaîtra", "sur l'écran"],
+        "image_photo_icon" : ["Envoyer une photo"],
+        "singe_savant" : ["C'est (peut-être) bientôt", "votre tour d'écrire"],
+        "gifs" : ["téléportation", "tonus", "glissade"],
+        "avertissement-boite" : {"title" : "Bienvenue !", "text" : "Votre pseudo est", "console" : "est connecté"},
+        "choix-boite" : {"text" : "Les votes sont clos !"},
+        "image-boite" : {"text" : "Probleme de lecture d'image"},
+        "musique-boite" : {"title" : "Musique", "text" : "Montez le volume de votre téléphone."}
+    }
+}

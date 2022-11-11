@@ -1,0 +1,63 @@
+
+
+#collective_song {
+    display: flex;
+    flex-direction: row;
+}
+
+.collective-song-group {
+    width: 20%;
+    height: 50%;
+    background-color: white;
+    border: 1px solid black;
+    word-break: break-word;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.show-random {
+    width: 100%;
+    box-shadow: inset 0px 3px 5px rgb(0 0 0 / 50%);
+    background: #b295b9;
+}
+
+.answer {
+    margin: 5px;
+    overflow-y: scroll;
+}
+
+.question {
+    font-weight: bold;
+    margin: 3px;
+    text-align: center;
+}
+
+.answer p {
+    margin: 3px;
+}
+
+.submit-div {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
+.submit-div input, .submit-div button {
+    width: 100%;
+}
+
+.meme{
+    position: relative;
+    width: 250px;
+    height: auto;
+}
+
+.meme img {
+    width: 100%;
+}
+
+#image-msg {
+    width: 75px;
+    width: auto;
+}

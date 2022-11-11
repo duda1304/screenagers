@@ -1,0 +1,78 @@
+@import 'lib/normalize.css';
+@import 'lib/box.css';
+
+html,
+body {
+  margin: 0;
+  overflow: hidden;
+  /* background: #000; */
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif, emoji;
+}
+
+img[src$='.gif'],
+.step__decor[style*='.gif'] {
+  image-rendering: pixelated;
+}
+
+#boite img,
+#boite {
+  image-rendering: unset;
+}
+
+* {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.selectable,
+input,
+textarea {
+  -webkit-touch-callout: default;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+template,
+.hide {
+  display: none;
+}
+
+.off {
+  display: none;
+}
+
+main {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: auto;
+  height: auto;
+  padding: 1rem;
+  overflow: auto;
+}
+
+img.emoji {
+  height: 1em;
+  width: 1em;
+  margin: 0 0.05em 0 0.1em;
+  vertical-align: -0.1em;
+}
+
+.button_radio input,
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}

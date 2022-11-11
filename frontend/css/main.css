@@ -1,0 +1,131 @@
+.horizontal {
+    display:flex; 
+    flex-wrap: wrap;
+    flex-direction: row; 
+    align-items: stretch; 
+    height: 100vh; 
+    width:100vw;
+}
+
+.vertical {
+    display:flex; 
+    flex-wrap: wrap;
+    flex-direction: column; 
+    align-items: center; 
+    align-items: stretch; 
+    height: 100vh; 
+    width:100vw;
+}
+
+#emo_section {
+    order: 1;
+}
+
+#screen_section {
+    order:2
+}
+
+#console_section {
+    order: 3;
+}
+
+/* Wtih both horizontal and vertical */
+.same-size #screen_section,  .same-size #emo_section, .same-size #console_section{
+    flex: 1 0px;
+}
+
+.screen-larger #screen_section{
+    flex: 2 0px;
+}
+
+.screen-larger #emo_section, .screen-larger #console_section{
+    flex: 1 0px;
+}
+
+/* With vertical */
+
+.vertical.screen-right #screen_section, .vertical.screen-right #emo_section, .vertical.screen-right #console_section {
+    flex: 1 0px;
+}
+.vertical.screen-right #emo_section {
+    order: 1;
+    width: 30%;
+    height: auto;
+}
+
+.vertical.screen-right #console_section {
+    order: 2;
+    width: 30%;
+    height: auto;
+}
+
+.vertical.screen-right #break-column {
+    order: 3;
+    flex-basis: 100%;
+    width: 0;
+}
+
+.vertical.screen-right #screen_section {
+    order: 4;
+    width: 70%;
+    height: auto;
+}
+
+.vertical.screen-left #screen_section, .vertical.screen-left #emo_section, .vertical.screen-left #console_section {
+    flex: 1 0px;
+}
+
+.vertical.screen-left #emo_section {
+    order: 3;
+    width: 30%;
+    height: auto;
+}
+
+.vertical.screen-left #console_section {
+    order: 4;
+    width: 30%;
+    height: auto;
+}
+
+.vertical.screen-left #break-column {
+    order: 2;
+    flex-basis: 100%;
+    width: 0;
+}
+
+.vertical.screen-left #screen_section {
+    order: 1;
+    width: 70%;
+    height: auto;
+}
+
+/* Screen on top and bottom goes with horizontal class */
+.screen-top #screen_section {
+    flex-basis: 100%;
+    order: 1;
+}
+
+.screen-top #emo_section {
+    order: 2;
+    flex-grow: 1
+} 
+
+.screen-top #console_section {
+    order: 3;
+    flex-grow: 1
+}
+
+.screen-bottom #screen_section {
+    flex-basis: 100%;
+    order: 3;
+}
+
+.screen-bottom #emo_section {
+    order: 1;
+    flex-grow: 1
+} 
+
+.screen-bottom #console_section {
+    order: 2;
+    flex-grow: 1
+}

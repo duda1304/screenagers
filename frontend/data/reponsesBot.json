@@ -1,0 +1,178 @@
+{
+  "👍": {
+    "title": "reponse positive",
+    "type": "message",
+    "data": {
+      "FR" : [ "Très juste",
+        "Yeaahhh",
+        "Parfait",
+        "Genial",
+        "Carrément",
+        "Trop fort",
+        "Cool",
+        "Super",
+        "Stylé",
+        "Je suis d’accord",
+        "Heureux pour toi",
+        "Ok",
+        "Elle est belle",
+        "Hugs",
+        "Wesh",
+        "Mark Zuckerberg aime ça",
+        "Surréaliste",
+        "C’est dar",
+        "C’est golri",
+        "Je suis déter",
+        "C’est de la peufra",
+        "C’est chanmé",
+        "C’est déclassé",
+        "👌",
+        "👍",
+        ":)",
+        ";)"
+        ],
+        "EN" : [ "Très juste",
+        "Yeaahhh",
+        "Parfait",
+        "Genial",
+        "Carrément",
+        "Trop fort",
+        "Cool",
+        "Super",
+        "Stylé",
+        "Je suis d’accord",
+        "Heureux pour toi",
+        "Ok",
+        "Elle est belle",
+        "Hugs",
+        "Wesh",
+        "Mark Zuckerberg aime ça",
+        "Surréaliste",
+        "C’est dar",
+        "C’est golri",
+        "Je suis déter",
+        "C’est de la peufra",
+        "C’est chanmé",
+        "C’est déclassé",
+        "👌",
+        "👍",
+        ":)",
+        ";)"
+        ]
+      }
+  },
+  "👎": {
+    "title": "reponse negative",
+    "type": "message",
+    "data": {
+      "FR" : [
+      "Pas maintenant",
+      "Hélas non",
+      "Quelle idée!?",
+      "Je rêve!",
+      "Je ne préfère pas",
+      "Pas franchement",
+      "Absolument pas",
+      "Nop",
+      "Nope",
+      "Ça va pas non!",
+      "Trop pas",
+      "C’est Dead",
+      "Nawak",
+      "Sérieux?",
+      "Ca craint du boudin",
+      "Trop auch !",
+      "👎",
+      ":("
+      ],
+      "EN" : [
+      "Pas maintenant",
+      "Hélas non",
+      "Quelle idée!?",
+      "Je rêve!",
+      "Je ne préfère pas",
+      "Pas franchement",
+      "Absolument pas",
+      "Nop",
+      "Nope",
+      "Ça va pas non!",
+      "Trop pas",
+      "C’est Dead",
+      "Nawak",
+      "Sérieux?",
+      "Ca craint du boudin",
+      "Trop auch !",
+      "👎",
+      ":("
+      ]
+    }
+  },
+  "🚨": {
+    "title": "alerte simple",
+    "type": "alert",
+    "data": {
+      "FR" : [
+      "Mon sparring-partner, c'est une dalle !",
+      "Dans 30 secondes se passera qqch d’incroyable",
+      "T’inquiète, tu seras bientôt chez toi",
+      "Les pandas dorment 12h par jour, juste pour que tu le saches.",
+      "Règles d’Internet n°29: Sur internet, les hommes sont des hommes, les femmes sont des hommes, et les petites filles sont des agents du F.B.I.",
+      "Règles d’Internet n°38: Quand on voit un lion, il faut monter dans la voiture",
+      "Règles d’Internet n°46: Le gâteau est un mensonge",
+      "Règles d’Internet n°42: Rien n’est sacré ! Sans exception",
+      "Ton téléphone est trop vieux",
+      "Ca fait trop longtemps que tu es sur le téléphone",
+      "Hello, je n’ai pas pu m'empêcher de fouiller dans ton telephone,  il va falloir mettre un peu d’ordre ",
+      "Je ne comprends pas pourquoi tu ignores systématiquement les mises à jour",
+      "Change ton fond d’écran, please",
+      "J'ai vu, je vais le dire à tes parents",
+      "Tu es le mème d'aujourd'hui ! Happy mème !"
+      ],
+      "EN" : [
+      "Mon sparring-partner, c'est une dalle !",
+      "Dans 30 secondes se passera qqch d’incroyable",
+      "T’inquiète, tu seras bientôt chez toi",
+      "Les pandas dorment 12h par jour, juste pour que tu le saches.",
+      "Règles d’Internet n°29: Sur internet, les hommes sont des hommes, les femmes sont des hommes, et les petites filles sont des agents du F.B.I.",
+      "Règles d’Internet n°38: Quand on voit un lion, il faut monter dans la voiture",
+      "Règles d’Internet n°46: Le gâteau est un mensonge",
+      "Règles d’Internet n°42: Rien n’est sacré ! Sans exception",
+      "Ton téléphone est trop vieux",
+      "Ca fait trop longtemps que tu es sur le téléphone",
+      "Hello, je n’ai pas pu m'empêcher de fouiller dans ton telephone,  il va falloir mettre un peu d’ordre ",
+      "Je ne comprends pas pourquoi tu ignores systématiquement les mises à jour",
+      "Change ton fond d’écran, please",
+      "J'ai vu, je vais le dire à tes parents",
+      "Tu es le mème d'aujourd'hui ! Happy mème !"
+      ]
+    }
+  },
+  "🌪": {
+    "title": "réchauffement climatique",
+    "type": "message",
+    "data": {
+      "FR" : [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "Le temps avance de plus en plus rapidement",
+      "Il fait chaud ici"
+      ],
+      "EN" : [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "Le temps avance de plus en plus rapidement",
+      "Il fait chaud ici"
+      ]
+    }
+  },
+  "🤖": {
+    "title": "I.A.",
+    "type": "message",
+    "data": {
+      "FR" : [
+      "Il n’est pas tout à fait clair à qui appartiennent les mots que tu es en train de lire"
+      ],
+      "EN" : [
+      "Il n’est pas tout à fait clair à qui appartiennent les mots que tu es en train de lire"
+      ]
+    }
+  }
+}

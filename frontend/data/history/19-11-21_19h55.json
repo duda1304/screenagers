@@ -1,0 +1,2052 @@
+{
+  "tuto": [
+    {
+      "screen": {
+        "active": false,
+        "texte": " "
+      },
+      "console": {
+        "active": false,
+        "texte": " "
+      },
+      "emo": {
+        "active": false,
+        "texte": " "
+      },
+      "laptop": {
+        "active": false,
+        "texte": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "intro/01.jpeg",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "intro/02.jpeg",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "active": false,
+        "texte": " "
+      },
+      "laptop": {
+        "active": false,
+        "texte": " "
+      }
+    }
+  ],
+  "test video": [
+    {
+      "emo": {
+        "decor": {
+          "src": "youtube band/03.webm"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "youtube band/01.webm"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "youtube band/02.webm"
+        }
+      },
+      "laptop": {
+        "active": false,
+        "texte": " "
+      }
+    }
+  ],
+  "intro": [
+    {
+      "emo": {
+        "decor": {
+          "src": "#014e4b"
+        },
+        "texte": "😁"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "wii.mp3",
+          "loop": true
+        },
+        "texte": " "
+      },
+      "console": {
+        "texte": "Bonjour tout le monde !"
+      },
+      "laptop": {
+        "decor": {
+          "src": "#ff00ff"
+        },
+        "texte": "🥳"
+      }
+    },
+    "Un jour un homme entra en scène...",
+    "Par son apparence, on aurait dit qu’il était né entre l’année de sortie du jeux vidéo “Pong” et la chute du mur de Berlin.",
+    "La sortie au cinéma de “Retour vers le futur” avait probablement été l'événement majeur de son enfance...",
+    "Et au moment où il tombait amoureux pour la première fois, quelqu’un dans sa famille possédait déjà un Amstrad CPC.",
+    "Quelques mois auparavant, il avait rencontré deux metteurs en scène.",
+    "À leur demande il leur avait raconté son histoire.",
+    "Dans cette histoire, il était question d’Internet, de jeux vidéos, de musique, de programmation, de nouveaux médias et bien sûr de lui même…",
+    {
+      "screen": {
+        "texte": "…mais aussi un peu de tout le monde.",
+        "music": {
+          "src": "wii remix.mp3"
+        }
+      },
+      "emo": {
+        "decor": {
+          "src": "hotpink"
+        },
+        "texte": "😅"
+      },
+      "console": {
+        "active": false
+      }
+    },
+    "Et comme l’histoire de cet homme était trop longue pour être racontée en une heure…",
+    "les metteurs en scène décidèrent de laisser au public la possibilité de choisir à quels bouts de l'histoire ils allaient assister.",
+    "Entre-temps, le public attendait avec impatience avec leur téléphones connectés la fin du récit s’affichant sur un écran.",
+    "Finalement, l’intro se termina et l’histoire pu commencer",
+    {
+      "choix": [
+        [
+          "Répéter l’intro",
+          "retourintro"
+        ],
+        [
+          "Réciter un monologue épique",
+          "monologue"
+        ],
+        [
+          "Se battre contre une voiture",
+          "voiture"
+        ]
+      ]
+    }
+  ],
+  "retourintro": [
+    "Répéter l’intro",
+    {
+      "choix": "intro"
+    }
+  ],
+  "monologue": [
+    "Réciter un monologue épique",
+    "..."
+  ],
+  "voiture": [
+    {
+      "screen": {
+        "decor": "pages/kof.html"
+      },
+      "console": {
+        "active": false
+      },
+      "emo": {
+        "active": false
+      }
+    }
+  ],
+  "tosti": [
+    {
+      "emo": {
+        "texte": "👍"
+      },
+      "screen": {
+        "decor": {
+          "src": "rgb(255, 0, 255)"
+        },
+        "texte": "yo yo yo",
+        "style": ".sans_serif",
+        "color": "rgb(0, 0, 255)",
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": "japan.gif"
+        },
+        "texte": "bla"
+      }
+    }
+  ],
+  "YoutubeBand": [
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "active": false
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "decor": {
+          "src": "youtube band/piano.webm"
+        }
+      }
+    },
+    {
+      "laptop": {
+        "decor": {
+          "src": "youtube band/14kalimba - beauty and the beast.webmhd.webm"
+        }
+      }
+    },
+    {
+      "emo": {
+        "texte": " "
+      },
+      "screen": {
+        "texte": " "
+      },
+      "console": {
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": "youtube band/LAPTOP.webm"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "youtube band/RIGHT.webm"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "youtube band/BigScreen.webm"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "youtube band/LEFT.webm"
+        }
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "active": false
+      }
+    }
+  ],
+  "blabla": [
+    {
+      "console": {
+        "texte": "coucou"
+      }
+    }
+  ],
+  "karaoke": [
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": " ",
+        "style": " "
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": " ",
+        "style": " "
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": " ",
+        "style": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": " ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/1.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/2.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/1.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/2.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/1.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/3.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/2.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/4.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/3.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/5.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/4.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/3.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/5.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/4.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/6.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/5.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/7.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/6.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/8.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/7.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/6.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/8.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/7.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/9.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/8.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/10.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/9.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/8.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/10.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/12.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/14.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/10.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/12.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/14.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/10.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/15.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/14.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/16.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/15.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/17.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/16.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/15.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/17.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/16.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/18.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/17.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/Refrain/1.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/18.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/Refrain/2.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/Refrain/1.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/18.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/Refrain/2.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/Refrain/1.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/Refrain/3.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "gif/gameboy.gif",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "console": {
+        "decor": {
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " ",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/1.png",
+          "fit": "contain"
+        },
+        "texte": "  "
+      },
+      "console": {
+        "decor": {
+          "src": " ",
+          "fit": "contain"
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/2.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "fit": "contain"
+        },
+        "texte": "   "
+      },
+      "console": {
+        "decor": {
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/2.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "fit": "contain"
+        },
+        "texte": "   "
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/3.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/2.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/4.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/3.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/5.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/4.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/3.png",
+          "fit": "contain"
+        },
+        "texte": " "
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/5.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/4.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/6.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/5.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/7.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/6.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/8.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/7.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/6.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/8.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/7.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/9.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/8.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/10.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/9.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/11.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/10.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/9.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/11.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/10.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/12.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/11.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/13.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/12.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/14.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/13.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/12.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/14.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/13.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/15.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/14.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/16.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/15.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/17.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/16.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/15.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/17.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/16.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/18.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/17.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/19.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/18.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/17.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/19.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/Refrain/1.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/17.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/Refrain/2.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/Refrain/1.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/Refrain/3.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/Refrain/2.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/Refrain/1.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "  "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": "  ",
+        "style": " "
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/1.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/2.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/1.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/3.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/2.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/1.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/3.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/2.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/4.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/3.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/5.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/4.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/6.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/5.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/4.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/6.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/5.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/7.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/6.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/8.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/7.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/9.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/8.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/7.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/9.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/8.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/10.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/9.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/11.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/10.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/12.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/11.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/10.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/12.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/11.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/Refrain/1.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/12.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/Refrain/2.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/Refrain/1.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/Refrain/3.png",
+          "fit": "contain"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Karaoke/Refrain/2.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Karaoke/Refrain/1.png",
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      }
+    }
+  ],
+  "harold": [
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "decor": {
+          "src": "AvantMeme/harold11.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "active": false
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "decor": {
+          "src": "AvantMeme/harold2.jpg",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "active": false
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "decor": {
+          "src": "AvantMeme/harold3.jpg",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "active": false
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "AvantMeme/harold5.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "AvantMeme/harold6.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "AvantMeme/harold7.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "AvantMeme/harold8.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "AvantMeme/harold9.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "AvantMeme/harold10.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "AvantMeme/harold15.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "AvantMeme/harold17.jpg",
+          "fit": "contain"
+        }
+      }
+    }
+  ]
+}

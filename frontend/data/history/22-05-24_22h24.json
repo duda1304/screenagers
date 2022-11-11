@@ -1,0 +1,4084 @@
+{
+  "avertissement": [
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "active": false
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "active": false
+      },
+      "boite": {
+        "type": "avertissement"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "fit": "contain"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "Avertissement/02.jpeg",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "laptop": {
+        "active": false
+      },
+      "boite": {
+        "type": "avertissement"
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "active": false
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "active": false
+      },
+      "boite": {
+        "type": "avertissement"
+      },
+      "saut": {
+        "scene": "Intro"
+      }
+    }
+  ],
+  "Intro": [
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "console": {
+        "mode": "console"
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "boite": {
+        "arg": " ",
+        "texte": {}
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/wii.mp3",
+          "volume": 25,
+          "loop": true
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "emo": {
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      }
+    },
+    {
+      "screen": {
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Répéter l’intro [Debut2]\n\nConnaitre l'histoire de la personne qui est sur scène [Bio]\n\nRépondre à la question: Pensez-vous que le stack overflow est destiné aux débutants qui n'ont pas étudié l'informatique?",
+        "texte": {}
+      }
+    }
+  ],
+  "Bio": [
+    {
+      "screen": {
+        "decor": {
+          "src": "bliss.mp4",
+          "loop": true
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "music": {
+          "src": "Sons/chrono.wav"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Indiquer sur Google Maps le lieu où l'artiste du web s'est connecté à Internet pour la première fois\n\nSe battre contre une voiture [Kof93]\n\n",
+        "texte": {}
+      }
+    }
+  ],
+  "Kof93": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "kof93"
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Faire du Rap [Karaoke]\n\nDiscuter avec une Intelligence Artificielle\n\nRépondre à la question : \"Quelles sont les meilleures universités où étudier l'informatique en France? Serait-il vraiment utile d'y étudier étant donné la situation actuelle des diplômés en informatique? Ou serait-il préférable de le faire soi-même via d'autres cours en ligne gratuits?\"\n",
+        "texte": {}
+      }
+    }
+  ],
+  "Karaoke": [
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": " "
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/1.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/2.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/3.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/4.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/5.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/6.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/7.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/8.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/9.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/10.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/11.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/13.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/14.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/15.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/16.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/1erCouplet/17.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/Refrain/1.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/Refrain/2.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/Refrain/3.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif70.gif"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/Background/BackgroundGif1.gif"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif83.gif"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/1.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/2.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/3.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/4.jpg"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/5.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/6.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/7.jpg"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/8.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/9.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/10.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/11.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/12.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/13.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/14.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/15.jpg"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/16.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/17.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/18.jpg"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/2emeCouplet/19.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/Refrain/1.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/Refrain/2.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/Refrain/3.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif50.gif"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/Background/BackgroundGif3.gif"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif79.gif"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/1.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/2.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/3.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/4.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/5.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/6.jpg"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/7.jpg"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/8.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/9.png"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/10.jpg"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/11.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/3emeCouplet/12.jpg"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Karaoke/Refrain/1.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Karaoke/Refrain/2.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "Karaoke/Refrain/3.png"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif67.gif"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif68.gif"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif55.gif"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Gif/toimoi.gif"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/danse1.gif",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif72.gif"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif80.gif"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif77.gif"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Gif/Danse/DanseGif66.gif"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " @"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        },
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Jouer aux echecs  [desertBus]\n\nExprimer un sentiment étrange [IndiciblesSentiments]\n\nRépondre à la question : \"De quelle expérience informatique a-t-on besoin pour créer un cheval de Troie ?\"",
+        "texte": {}
+      }
+    }
+  ],
+  "IndiciblesSentiments": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        },
+        "music": {
+          "volume": 50
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat1.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat2.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat3.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat4.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat5.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat6.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat9.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat8.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat10.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat11.png"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat12.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat13.jpg"
+        }
+      }
+    },
+    {
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/chat7.jpg"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Debut/Catmosaic.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/feet/piedsplage3.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/feet/piedsplage4.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/feet/piedsplage2.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/avion/avion3.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/avion/avion1.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/avion/avion2.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/petitpiedgrandmain/PiedsMains3.jpeg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/petitpiedgrandmain/PiedsMains4.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/petitpiedgrandmain/PiedsMains2.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/autoportrait/autoportrait3.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/autoportrait/autoportrait1.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/autoportrait/autoportrait2.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/pisa/Pisa3.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/pisa/Pisa1.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/pisa/Pisa2.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/cake/cake3.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/cake/cake2.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/cake/cake1.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/love/love3.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/love/love2.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/love/love4.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "SentimentsPostInternet/empreintespieds/footprint1.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/empreintespieds/footprint3.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "SentimentsPostInternet/empreintespieds/footprint2.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie1.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "active": false
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie2.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie3.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie4.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie5.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie7.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie8.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "SentimentsPostInternet/Selfie/Selfie9.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        }
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Lire des extraits de son blog préféré \n\nOuvrir une image avec un logiciel de son\n\nJouer 10 secondes de grindcore [grindcore1]\n",
+        "texte": {}
+      }
+    }
+  ],
+  "grindcore1": [
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/Mxv4dAr.gif"
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Grindcore/grind-1-emo.webm",
+          "volume": 46
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Grindcore/grind-1-screen.webm",
+          "volume": 80
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Grindcore/grind-1-console.webm",
+          "volume": 46
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        }
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Mettre à l'épreuve l'intelligence collective [Mario]\n\nRaconter une légende urbaine\n\nMontrer la vidéo la plus longue postée sur Youtube",
+        "texte": {}
+      }
+    }
+  ],
+  "Mario": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "music": {
+          "src": "Sons/wii remix.mp3",
+          "volume": 60,
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "gameboy"
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        }
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "\nDécouvrir les derniers mots entrés dans le dictionnaire de la langue française\n\nVisiter une réalité parallèle [YoutubeBand]",
+        "texte": {}
+      }
+    }
+  ],
+  "YoutubeBand": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": " "
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "fit": "contain"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "Youtube Band/LAPTOP/1.Technique accordéon par JYSixt Leçon N° 10.webmhd.webm"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "laptop": {
+        "decor": {
+          "src": "Youtube Band/LAPTOP/2.kalimba - beauty and the beast.webmhd.webm"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Youtube Band/Grenoble/2°EmoGrenoble.webmhd.webm",
+          "volume": 90
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Youtube Band/Grenoble/2°ScreenGrenoble.webmhd.webm"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Youtube Band/Grenoble/2°ConsoleGrenoble.webmhd.webm",
+          "volume": 90
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "Youtube Band/Grenoble/2°LaptopGrenoble.webmhd.webm"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "volume": 17,
+          "loop": true
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        },
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Répondre à la question : \" Est-ce que .NET Core va tuer Node.js ?\"\n\nFaire un discours sur la distraction\n\nExpliquer pourquoi il y a un crâne sur la table [singesSavant]\n",
+        "texte": {}
+      }
+    }
+  ],
+  "singesSavant": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#0f0"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "#0f0"
+        },
+        "music": {
+          "src": "Sons/Harpsichord.mp3",
+          "volume": 20,
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "style": ".impact",
+        "mode": "biggest_text"
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "singe_savant"
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "music": {
+          "src": " "
+        }
+      },
+      "console": {
+        "active": false
+      },
+      "boite": {
+        "type": "vide"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Présenter sa théorie du complot préférée\n\nJouer 10 autres secondes de grindcore[grindcore2]\n\nExpliquer la différence entre la cyber-criminalité, le cyber-espionnage et la cyber-guerre\n\n",
+        "texte": {}
+      }
+    }
+  ],
+  "grindcore2": [
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/Mxv4dAr.gif"
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Grindcore/grind-2-emo.webm",
+          "volume": 86
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Grindcore/grind-2-screen.webm",
+          "volume": 100
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Grindcore/grind-2-console.webm",
+          "volume": 46
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        },
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Comprendre ce qu'est un mème [Harold]\n\nRépondre à la question la plus souvent posée sur Google\n\nChatter avec l'inconscient collectif",
+        "texte": {}
+      }
+    }
+  ],
+  "Harold": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "laptop": {
+        "active": false
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold1.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold2.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold3.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold4.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold5.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold8.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold10.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Meme/harold11.jpg"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Meme/harold12.jpg"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Meme/harold10.jpg"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Meme/Mappemonde.jpg"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Meme/harold13.jpg"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/Avantmême/Harold10.jpg",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/PostMeme/harold1.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/PostMeme/harold1-remix.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/PostMeme/harold3.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/PostMeme/harold4.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/PostMeme/harold6.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "Harold/PostMeme/harold7.png",
+          "fit": "contain"
+        }
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "\n",
+        "texte": {}
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Écouter un monologue incroyablement long\n\nÉcouter un monologue incroyablement ennuyeux\n\nFaire des MÈMES  [Fairememe]\n\n",
+        "texte": {}
+      }
+    }
+  ],
+  "Fairememe": [
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/[Synthesia][MIDI] Bossa Nova USA.mp3",
+          "volume": 11,
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "image"
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Contempler un ancien MÈME pendant 20 secondes[20sMeme]\n\nRépondre à la question: \"Pourquoi, dans le cadre des concours publics, un diplôme en ingénierie informatique n'est pas comparable à celui en informatique et implique par conséquent l'exclusion d'ingénieurs?\"\n\n",
+        "texte": {}
+      }
+    }
+  ],
+  "20sMeme": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "pepe-the-frog.jpg",
+          "fit": "contain"
+        },
+        "music": {
+          "src": "Sons/satie.mp3"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "music": {
+          "src": "Sons/chrono.wav"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Présenter un système d'exploitation qui n'a jamais existé [Windows93]\n\nParler de la pollution magnétique pendant 4 heures",
+        "texte": {}
+      }
+    }
+  ],
+  "Windows93": [
+    {
+      "emo": {
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "boite": {
+        "type": "vide"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "#000"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "boite": {
+        "type": "vide"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "@404"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "#00f"
+        },
+        "mode": "biggest_text"
+      },
+      "console": {
+        "decor": {
+          "src": "#000"
+        }
+      },
+      "boite": {
+        "type": "musique"
+      }
+    },
+    {
+      "emo": {
+        "mode": "biggest_text"
+      },
+      "console": {
+        "decor": {
+          "src": "#666"
+        }
+      },
+      "boite": {
+        "type": "gifs"
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "active": false
+      },
+      "boite": {
+        "type": "fin"
+      },
+      "osc": {
+        "message": 0
+      }
+    }
+  ],
+  "FIN": [
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "#000"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#000"
+        }
+      }
+    },
+    {
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "normal"
+      }
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    }
+  ],
+  "darkWeb": [
+    {
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "@darkWeb"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "music": {
+          "src": "Sons/x.mp3",
+          "volume": 70,
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "@darkWeb"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        }
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Contempler un vieux mème pendant 20 secondes [20sMeme]\n\nPrésenter le système d'exploitation qui n'a jamais existé [Windows93]",
+        "texte": {}
+      }
+    }
+  ],
+  "desertBus": [
+    {
+      "screen": {
+        "decor": {
+          "src": "@desertbus"
+        },
+        "music": {
+          "src": "Sons/motor.mp3",
+          "volume": 30,
+          "loop": true
+        }
+      }
+    }
+  ],
+  "grindcore3": [
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/Mxv4dAr.gif"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Grindcore/grind-3-emo.webm",
+          "volume": 100
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Grindcore/grind-3-screen.webm",
+          "volume": 100
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": "Grindcore/grind-3-console.webm"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    }
+  ],
+  "ex-Debut3": [
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Gif/cloud.gif"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": " "
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/wii.mp3",
+          "volume": 29
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/chrono.wav",
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "style": ".sans_serif",
+        "color": "#000"
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "#Que faire?\n\nRépéter l’intro [Debut]\n\nConnaître l’artiste du web [Bio]\n\nRépondre à la question: Est-ce que le fait de changer son adresse IP a un impact sur le prix d'un billet d'avion ?",
+        "texte": {}
+      }
+    }
+  ],
+  "ex-Debut1": [
+    {
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "music": {
+          "loop": true
+        },
+        "color": "#fff"
+      }
+    },
+    {
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "color": "#fff"
+      }
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "active": false
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "active": false
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "music": {
+          "src": "Sons/wii.mp3",
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "screen": {
+        "music": {
+          "volume": 20
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "color": "#fff",
+        "mode": "normal"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "VN/rain.gif"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3",
+          "volume": 40,
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": "VN/rain.gif"
+        }
+      }
+    },
+    {
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "VN/rain.gif"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "@rain"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": "VN/rain.gif"
+        }
+      }
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "@homme"
+        },
+        "music": {
+          "src": "Sons/RapBeat40BPM.mp3"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "console"
+      }
+    },
+    {
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "boite": {
+        "type": "choix"
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "active": false
+      },
+      "console": {
+        "active": false
+      },
+      "laptop": {
+        "active": false
+      }
+    }
+  ],
+  "retourintro": [
+    {
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "boite": {
+        "type": "choix",
+        "arg": "répéter intro [intro]",
+        "texte": {}
+      }
+    }
+  ],
+  "monologue": [
+    {
+      "emo": {
+        "decor": {
+          "src": ".gradient"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": ".gradient"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "deeppink"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "console": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    }
+  ],
+  "TEST boites": [
+    {
+      "screen": {
+        "decor": {
+          "src": "#b6d7a8"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "color": "#000"
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "image",
+        "arg": "reeeey",
+        "texte": {}
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#76a5af"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "Lancer l'intro [intro]\n\nLancer KOF93 [voiture]\n\nJouer du Grindcore [grindcore1]",
+        "texte": {}
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#0f0"
+        },
+        "music": {
+          "src": "Sons/elevator.mp3",
+          "volume": 20,
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "style": ".impact",
+        "color": "#fff",
+        "mode": "biggest_text"
+      },
+      "console": {
+        "mode": "console"
+      },
+      "boite": {
+        "type": "singe_savant"
+      }
+    },
+    {
+      "screen": {
+        "music": {
+          "src": " "
+        }
+      },
+      "boite": {
+        "type": "vide"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#76a5af"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "style": ".impact",
+        "color": " ",
+        "mode": "biggest_text"
+      },
+      "boite": {
+        "type": "singe_savant"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#93c47d"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "style": " ",
+        "color": "#000",
+        "mode": " "
+      },
+      "boite": {
+        "type": "image"
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "boite": {
+        "type": "attente"
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "#76a5af"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "boite": {
+        "type": "image"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#b6d7a8"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "mode": " "
+      },
+      "boite": {
+        "type": "gifs"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "#76a5af"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "boite": {
+        "type": "gifs"
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "#000"
+        },
+        "music": {
+          "src": "Sons/wii remix.mp3",
+          "volume": 25
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "console"
+      },
+      "boite": {
+        "type": "gameboy"
+      }
+    },
+    {
+      "boite": {
+        "type": "image"
+      }
+    }
+  ],
+  "TEST step order": [
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "#76a5af"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "#93c47d"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "#f9cb9c"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "#8e7cc3"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "boite": {
+        "type": "chat"
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3",
+          "volume": 20,
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3",
+          "volume": 20,
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "laptop": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "boite": {
+        "type": "chat"
+      }
+    },
+    {
+      "boite": {
+        "type": "choix"
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "laptop": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "style": ".impact",
+        "color": "#8e7cc3",
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "style": ".impact",
+        "color": "#6fa8dc",
+        "mode": "biggest_text"
+      },
+      "console": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "style": ".impact",
+        "color": "#a2c4c9",
+        "mode": "biggest_text"
+      },
+      "laptop": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "style": ".impact",
+        "color": "#c27ba0",
+        "mode": "biggest_text"
+      }
+    },
+    {
+      "emo": {
+        "active": false
+      },
+      "screen": {
+        "decor": {
+          "src": "@darkWeb"
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "cat.webm",
+          "loop": true
+        },
+        "music": {
+          "src": " "
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "style": ".sans_serif",
+        "color": "#ead1dc",
+        "mode": "biggest_text"
+      },
+      "laptop": {
+        "active": false
+      },
+      "boite": {
+        "type": "kof93"
+      }
+    }
+  ],
+  "Quete": [
+    {
+      "emo": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3",
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3",
+          "loop": true
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "#000"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "biggest_text"
+      },
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "screen": {
+        "music": {
+          "src": "Sons/chrono.wav"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "boite": {
+        "type": "choix",
+        "arg": "# Êtes-vous prêts ?\n\nOui ! [quete2Oui]\n\nBof. [quete2Bof]",
+        "texte": {}
+      }
+    }
+  ],
+  "quete2Oui": [
+    {
+      "emo": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3"
+        }
+      }
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    }
+  ],
+  "quete2Bof": [
+    {
+      "emo": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      },
+      "console": {
+        "decor": {
+          "src": "VN/rain.gif"
+        },
+        "music": {
+          "src": "Sons/ambiances/ambiance urban street rain.mp3"
+        }
+      }
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    },
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    }
+  ],
+  "Tarbesvideo": [
+    {
+      "emo": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "console": {
+        "decor": {
+          "src": " "
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": " "
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "Youtube Band/Tarbes/2°partie NV1emo.webmhd.webm"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "Youtube Band/Tarbes/2°partie NV1screen.webmhd.webm"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "Youtube Band/Tarbes/2°partie NV1console.webmhd.webm"
+        }
+      },
+      "laptop": {
+        "decor": {
+          "src": "Youtube Band/Tarbes/2°partie NV1laptop.webmhd.webm"
+        }
+      }
+    }
+  ],
+  "dispositif": [
+    {
+      "screen": {
+        "decor": {
+          "src": ".gradient"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "final_fantasy"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-01.png",
+          "fit": "contain"
+        },
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        },
+        "mode": "normal"
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-02.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-03.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-04.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-05.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-06.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-07.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-08.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-09.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-10.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-11-a.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-11b.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-12.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-13.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-14.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-15.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-16.png",
+          "fit": "contain"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "dispositif/schema-17.png",
+          "fit": "contain"
+        }
+      }
+    }
+  ],
+  "tets": [
+    {
+      "emo": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "screen": {
+        "decor": {
+          "src": "#f00"
+        }
+      },
+      "console": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      }
+    },
+    {
+      "emo": {
+        "decor": {
+          "src": "#e06666"
+        }
+      },
+      "screen": {
+        "texte": {
+          "FR": "NO TRANSLATION! Available only in FR"
+        }
+      },
+      "console": {
+        "decor": {
+          "src": "#0f0"
+        }
+      }
+    },
+    {
+      "screen": {
+        "decor": {
+          "src": "@test2"
+        }
+      }
+    }
+  ],
+  "testsavevisas": [
+    {
+      "FR": "NO TRANSLATION! Available only in FR"
+    }
+  ]
+}

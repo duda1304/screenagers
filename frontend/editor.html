@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+/>
+<meta name="theme-color" content="#333333" />
+<meta name="msapplication-navbutton-color" content="#333333" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link rel="manifest" href="/static/manifest.json" />
+<link rel="icon" sizes="32x32" href="/static/icon.png" />
+<link rel="apple-touch-startup-image" href="/static/icon.png" />
+
+<link rel="stylesheet" href="/css/common.css?v=1.0" />
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/lib/jquery.min.js"></script>
+<script src="/js/lib/howler.min.js"></script>
+<script src="/js/lib/twemoji.min.js"></script>
+
+<title>EDITOR</title>
+
+<link rel="stylesheet" href="/data/decors.css?v=1.0" />
+<link rel="stylesheet" href="/data/all_screens.css?v=1.0" />
+
+
+<link rel="stylesheet" href="/js/lib/spectrum.css" />
+<script src="/js/lib/spectrum.min.js"></script>
+
+<link rel="stylesheet" href="/js/lib/jquery-ui.min.css" />
+<script src="/js/lib/jquery-ui.min.js"></script>
+
+<script src="/js/lib/mousetrap.min.js"></script>
+<script src="/js/lib/jquery.scrollTo.min.js"></script>
+
+<script src="/js/processor.js"></script>
+
+<link rel="stylesheet" href="/css/editor.css" />
+
+
+<!-- EDITOR -->
+<!-- <link rel="stylesheet" href="/frontend/css/lib/cropper.css" />
+<script src="/frontend/js/lib/cropper.js"></script>
+<script src="/frontend/js/lib/main.js"></script> -->
+
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/2.0.0-alpha.2/cropper.min.js" integrity="sha512-IlZV3863HqEgMeFLVllRjbNOoh8uVj0kgx0aYxgt4rdBABTZCl/h5MfshHD9BrnVs6Rs9yNN7kUQpzhcLkNmHw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/2.0.0-alpha.2/cropper.css" integrity="sha512-5ZQRy5L3cl4XTtZvjaJRucHRPKaKebtkvCWR/gbYdKH67km1e18C1huhdAc0wSnyMwZLiO7nEa534naJrH6R/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/2.0.0-alpha.2/cropper.js" integrity="sha512-witv14AEvG3RlvqCAtVxAqply8BjTpbWaWheEZqOohL5pxLq3AtIwrihgz7SsxihwAZkhUixj171yQCZsUG8kw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/2.0.0-alpha.2/cropper.min.css" integrity="sha512-6QxSiaKfNSQmmqwqpTNyhHErr+Bbm8u8HHSiinMEz0uimy9nu7lc/2NaXJiUJj2y4BApd5vgDjSHyLzC8nP6Ng==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link href="fonts/fontawesome-free-6.1.1-web/css/all.css" rel="stylesheet"> -->
+
+<!-- <link  rel="stylesheet" href="../node_modules/cropperjs/src/css/cropper.css"  />
+<script src="../node_modules/cropperjs/src/js/cropper.js"></script> -->
+
+
+<body>
+<main>
+  <div id="preview" style="position: absolute; top: 0px; left: 0px; height: 100%; width: 100%; border: 0 none; overflow: hidden;">
+    <div id="media-menu" class="edit-element">
+    <!-- <h1 id="title"></h1> -->
+    <label for="decor.src">Background color</label>
+    <input
+      autocomplete="off"
+      _list="list_decors"
+      class="color-picker _box-min d-none"
+      id = "preview_background"
+      type="text"
+      placeholder="decor"
+      name="decor.src"
+    /><br>
+    <p style='text-decoration: underline; font-size: 0.8em;' onclick='removeBackgroundColor(null)'>Remove Background color</p>
+    <div class='editor-buttons'>
+      <button onclick="newEtape()" class="grey"><span>➕</span> New etape</button>
+      <button onclick="clearPreview()" class="grey"><span>🚫</span> Clear all</button>
+      <button onclick="setElements('', 'text-box')" class="green" id="add-text-button" >Add text box</button>
+      <button onclick="displayMediaList()" class="green">Add media</button>
+      <button onclick="getMediaStream()" class="green" id="add-stream-button">Add video stream</button>
+      <button onclick="addAvatarsArea()" class="green" id="add-avatars-button">Add avatars area</button>
+    </div>
+    <section id="media" class="d-none">
+      <div class="media_cat">
+      <i title="styles css">🗛</i>
+      <div class="media_styles"></div>
+      </div>
+      <div class="media_cat">
+      <i title="decors css">🌈</i>
+      <div class="media_decors"></div>
+      </div>
+      <!-- <div class="media_cat">
+      <i title="pages iframe">🌐</i>
+      <div class="media_pages"></div>
+      </div> -->
+      <div class="media_cat">
+        <i title="pages iframe">🌐</i>
+        <div class="media_layouts"></div>
+        </div>
+      <div class="media_cat">
+      <i title="videos">📽️</i>
+      <div class="media_video"></div>
+      </div>
+      <!-- <div class="media_cat">
+      <i title="audio">🎧</i>
+      <div class="media_audio"></div>
+      </div> -->
+      <div class="media_cat">
+      <i title="gifs">🖼️</i>
+      <div class="media_gifs"></div>
+      </div>
+      <div class="media_cat">
+      <i title="images">📷</i>
+      <div class="media_images"></div>
+      </div>
+    </section>
+    <section id="media-editor"></section>
+    <div id="send-to-master" class="edit-element">
+      <button class="large-black" onclick="sendToScreenInput('boite')">Save avatars position</button>
+      <button class="large-black" onclick="sendToScreenInput('screen')">Send to screen etape</button>
+    </div>
+  </div>
+  
+  <!-- <div id="save-menu" class="edit-element"> -->
+    <!-- <button onclick="clearPreview()">Clear all</button> -->
+    <!-- <button onclick="saveScreenChanges()" class="d-none" id="save-changes">Save Changes</button> -->
+    <!-- <button onclick="displayModal()">Save As New</button> -->
+  <!-- </div> -->
+ 
+   <!-- Save as new MODAL -->
+   <!-- <div id="save-new-modal" class="d-none edit-element">
+    <div id="save-new-modal-content">
+      <span id="save-new-modal-close" onclick="closeModal()">&times;</span>
+      <form onsubmit="saveNewScreen(event)">
+        <input id="file-name" required oninput="this.value = this.value.replace(/[^a-zA-Z0-9.]/g, '').replace(/\./g, '')" placeholder="Name" autocomplete="off"></input>
+        <button type="submit">Save</button>
+        <button onclick="closeModal()">Cancel</button>
+      </form>
+    </div>
+  </div> -->
+ 
+  <!-- <div id="preview" style="position: absolute; top: 0px; left: 0px; height: 100%; width: 100%; border: 0 none; overflow: hidden;"> -->
+ 
+</main>
+
+<script src="/js/iso.js?v=1.0"></script>
+<script src="/js/editor.js"></script>
+</body>

@@ -348,119 +348,119 @@ $('#layout').append(
 
 /* Shortcuts
 ============ */
-var disabledCombos = ['ctrl+left', 'ctrl+right', 'y', 'n'];
+// var disabledCombos = ['ctrl+left', 'ctrl+right', 'y', 'n'];
 
-Mousetrap.prototype.stopCallback = function(e, element, combo) {
-  return (
-    disabledCombos.includes(combo) &&
-    (element.tagName == 'INPUT' ||
-      element.tagName == 'SELECT' ||
-      element.tagName == 'TEXTAREA' ||
-      (element.contentEditable && element.contentEditable == 'true'))
-  );
-};
+// Mousetrap.prototype.stopCallback = function(e, element, combo) {
+//   return (
+//     disabledCombos.includes(combo) &&
+//     (element.tagName == 'INPUT' ||
+//       element.tagName == 'SELECT' ||
+//       element.tagName == 'TEXTAREA' ||
+//       (element.contentEditable && element.contentEditable == 'true'))
+//   );
+// };
 
-var shortcuts = {
-  'ctrl+s': [
-    'Sauvegarder le visual novel',
-    function() {
-      $('#visual__save').click();
-      return false;
-    },
-    '#visual__save'
-  ],
-  'ctrl+del': [
-    "Supprimer la scène ou l'étape active",
-    function() {
-      $('#visual__delete').click();
-      return false;
-    },
-    '#visual__delete'
-  ],
-  'alt+e': [
-    'Ajouter une étape',
-    function() {
-      $('#visual__add_step').click();
-      return false;
-    },
-    '#visual__add_step'
-  ],
-  'alt+s': [
-    'Ajouter une scène',
-    function() {
-      $('#visual__add_scene').click();
-      return false;
-    },
-    '#visual__add_scene'
-  ],
-  'ctrl+left': [
-    "Lancer l'étape suivante du visual novel",
-    function() {
-      $('#visual__prev').click();
-      return false;
-    },
-    '#visual__prev'
-  ],
-  'ctrl+right': [
-    "Lancer l'étape precedente du visual novel",
-    function() {
-      $('#visual__next').click();
-      return false;
-    },
-    '#visual__next'
-  ],
-  'ctrl+enter': [
-    "Lancer l'écran en cours d'édition",
-    function() {
-      if (document.activeElement.form) {
-        var $form = $(document.activeElement.form);
-        if (
-          $form.hasClass('box-screen') ||
-          $form[0].id === 'boite' ||
-          $form[0].id === 'one_shot'
-        ) {
-          $form.submit();
-        }
-      }
-      return false;
-    }
-  ],
-  'ctrl+shift+enter': [
-    'Lancer tout les écrans',
-    function() {
-      sendScreens();
-      return false;
-    },
-    '#send_all_screens'
-  ],
-  y: [
-    'Valide le 1er message de la liste de moderation',
-    function() {
-      $('.message_moderation')
-        .first()
-        .find('.btn_yes')
-        .click();
-    }
-  ],
-  n: [
-    'Invalide le 1er message de la liste de moderation',
-    function() {
-      $('.message_moderation')
-        .first()
-        .find('.btn_no')
-        .click();
-    }
-  ]
-};
+// var shortcuts = {
+//   'ctrl+s': [
+//     'Sauvegarder le visual novel',
+//     function() {
+//       $('#visual__save').click();
+//       return false;
+//     },
+//     '#visual__save'
+//   ],
+//   'ctrl+del': [
+//     "Supprimer la scène ou l'étape active",
+//     function() {
+//       $('#visual__delete').click();
+//       return false;
+//     },
+//     '#visual__delete'
+//   ],
+//   'alt+e': [
+//     'Ajouter une étape',
+//     function() {
+//       $('#visual__add_step').click();
+//       return false;
+//     },
+//     '#visual__add_step'
+//   ],
+//   'alt+s': [
+//     'Ajouter une scène',
+//     function() {
+//       $('#visual__add_scene').click();
+//       return false;
+//     },
+//     '#visual__add_scene'
+//   ],
+//   'ctrl+left': [
+//     "Lancer l'étape suivante du visual novel",
+//     function() {
+//       $('#visual__prev').click();
+//       return false;
+//     },
+//     '#visual__prev'
+//   ],
+//   'ctrl+right': [
+//     "Lancer l'étape precedente du visual novel",
+//     function() {
+//       $('#visual__next').click();
+//       return false;
+//     },
+//     '#visual__next'
+//   ],
+//   'ctrl+enter': [
+//     "Lancer l'écran en cours d'édition",
+//     function() {
+//       if (document.activeElement.form) {
+//         var $form = $(document.activeElement.form);
+//         if (
+//           $form.hasClass('box-screen') ||
+//           $form[0].id === 'boite' ||
+//           $form[0].id === 'one_shot'
+//         ) {
+//           $form.submit();
+//         }
+//       }
+//       return false;
+//     }
+//   ],
+//   'ctrl+shift+enter': [
+//     'Lancer tout les écrans',
+//     function() {
+//       sendScreens();
+//       return false;
+//     },
+//     '#send_all_screens'
+//   ],
+//   y: [
+//     'Valide le 1er message de la liste de moderation',
+//     function() {
+//       $('.message_moderation')
+//         .first()
+//         .find('.btn_yes')
+//         .click();
+//     }
+//   ],
+//   n: [
+//     'Invalide le 1er message de la liste de moderation',
+//     function() {
+//       $('.message_moderation')
+//         .first()
+//         .find('.btn_no')
+//         .click();
+//     }
+//   ]
+// };
 
-var $shortcuts = $('#shortcuts');
-$.each(shortcuts, function(key, val) {
-  Mousetrap.bind(key, val[1]);
-  if (val[2]) {
-    $(val[2]).attr('title', `${val[0]} (${key})`);
-  }
-  $shortcuts.append(`<div><strong>${key}</strong> : ${val[0]}</div>`);
-});
+// var $shortcuts = $('#shortcuts');
+// $.each(shortcuts, function(key, val) {
+//   Mousetrap.bind(key, val[1]);
+//   if (val[2]) {
+//     $(val[2]).attr('title', `${val[0]} (${key})`);
+//   }
+//   $shortcuts.append(`<div><strong>${key}</strong> : ${val[0]}</div>`);
+// });
 
 /* Emojis
 ========= */

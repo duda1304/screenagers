@@ -37,6 +37,8 @@
 
 <link rel="stylesheet" href="/css/editor.css" />
 
+<link rel="stylesheet" href=".listcomponent/style.css">
+
 
 <!-- EDITOR -->
 <!-- <link rel="stylesheet" href="/frontend/css/lib/cropper.css" />
@@ -118,7 +120,30 @@
       <button class="large-black" onclick="sendToScreenInput('boite')">Save avatars position</button>
       <button class="large-black" onclick="sendToScreenInput('screen')">Send to screen etape</button>
     </div>
-  </div>
+    </div>
+    <section class="container" id="layers" style="position: absolute; top: 20px; right: 20px;">
+      <div class="list-item" id="step1">
+        <div class="item-content">
+          <span class="order">1</span> Alpha
+        </div>
+      </div>
+      <!-- <div class="list-item" id="step2">
+        <div class="item-content">
+          <span class="order">2</span> Bravo
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="item-content">
+          <span class="order">3</span> Charlie
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="item-content">
+          <span class="order">4</span> Delta
+        </div>
+      </div> -->
+    </section>
+
   
   <!-- <div id="save-menu" class="edit-element"> -->
     <!-- <button onclick="clearPreview()">Clear all</button> -->
@@ -144,4 +169,6 @@
 
 <script src="/js/iso.js?v=1.0"></script>
 <script src="/js/editor.js"></script>
+<script src='./listcomponent/Draggable.min.js'></script>
+<script src='./listcomponent/TweenMax.min.js'></script><script  src="./listcomponent/script.js"></script>
 </body>

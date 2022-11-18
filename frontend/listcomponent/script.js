@@ -1,14 +1,3 @@
-const steps = [{"id" : 1, "order_number" : 1}, {"id" : 3, "order_number" : 2}, {"id" : 2, "order_number" : 3}]
-    
-steps.forEach(step => {
-    const listItem = `<div class="list-item" id=${step.id}>
-                        <div class="item-content">
-                          Step <span class="order">${step.order_number}</span>
-                        </div>
-                      </div>`
-    $( "#layers" ).append(listItem);
-})
-
 var rowSize = 100; // => container height / number of items
 var container = document.querySelector(".container");
 var listItems = Array.from(document.querySelectorAll(".list-item")); // Array of elements

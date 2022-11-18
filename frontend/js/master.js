@@ -1308,6 +1308,7 @@ function displayVisual() {
   displaySaut();
 }
 
+
 $('#visual__save').on('click', function() {
   var data = {};
   $('.scene__content').each(function() {

@@ -208,6 +208,14 @@ const set = {
 
     socket.emit('init states', states);
 
+    const json = walkSync('./frontend/data/json');
+    // states.media = states.media.reduce((acc, item) => {
+    //   acc.push(item.replace('frontend/data/media/', ''));
+    //   return acc;
+    // }, []);
+
+    socket.emit('json visual', json);
+
     socket.emit('language', {'currentLanguage' : currentLanguage});
 
     socket.on('refresh media list', () => {

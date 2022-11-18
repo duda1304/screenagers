@@ -1,3 +1,74 @@
+
+const socket = io();
+
+let mainData = {};
+
+// separate JSONs for each show made, data gives array of all JSONs
+socket.on('json visual', function(data) {
+    data.forEach(src => {
+        $.getJSON(src.replace('frontend', '.'), function(jsonData) {
+            let array = src.split('/');
+
+            mainData[array[array.length -1].replace('.json', '')] = jsonData;
+            displayStructure(array[array.length -1].replace('.json', ''), jsonData);
+        })
+       
+    })
+   
+});
+
+let movedStep;
+let arrayEl;
+
+function displayStructure(fileName, object) {
+    let showElement =  `<ul id=${fileName}>
+                            <li>${object.name}</li>
+                            <li><select class="languages"></select></li>
+                        </ul>`
+    $('#structure').append(showElement);
+    for(let scene in object['data']) {
+        const id = scene.replace(/\s/g,'');
+
+        let sceneElement = `<li class="scene">
+            <b id=${id + "toggle"}>${scene}</b>`;
+            
+        let stepList = `<ul id=${id} style="display: none">`
+        
+        for (let step in object['data'][scene]) {
+            stepList = stepList + `<li class="step" data-key=${step}>Step ${parseInt(step)+1}</li>`        
+        }
+        stepList = stepList + `</ul>`
+        sceneElement = sceneElement + stepList + `</li>`
+        $('#' + fileName).append(sceneElement);
+        $("#" + id).sortable();
+        $("#" + id).sortable({
+            start : function (event, ui) {
+               startPosition = ui.item.index();
+               arrayEl = mainData[fileName]['data'][scene]
+                movedStep = arrayEl.splice(ui.item.index(), 1)[0];
+            },
+            stop: function(event, ui) {
+                arrayEl.splice(ui.item.index(), 0, movedStep);
+                mainData[fileName]['data'][scene] = arrayEl;
+                console.log(mainData[fileName]['data'][scene]);
+            }
+        });
+        $("#" + id + "toggle").click(function() {
+            $( "#" + id ).toggle();
+          });
+    }
+}
+
+
+function saveChanges() {
+    socket.emit("update json", fileName);
+}
+
+
+
+
+
+
 window.onload = function() {
     initDragElement();
     initResizeElement();
@@ -20,6 +91,8 @@ window.onload = function() {
 //         $( "#layers" ).append(listItem);
 //     })
 // }
+
+
 
 function initDragElement() {
     var pos1 = 0,
@@ -191,7 +264,6 @@ var states = {
 
 var currentLanguage;
 
-const socket = io();
 
 socket.on('init states', function(data) {
     states = deepMerge(states, data);

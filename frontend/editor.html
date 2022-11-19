@@ -18,6 +18,7 @@
 <script src="/js/lib/howler.min.js"></script>
 <script src="/js/lib/twemoji.min.js"></script>
 
+<script src="/js/constants.js"></script>
 
 <title>EDITOR</title>
 
@@ -28,8 +29,8 @@
 <link rel="stylesheet" href="/js/lib/spectrum.css" />
 <script src="/js/lib/spectrum.min.js"></script>
 
-<link rel="stylesheet" href="/js/lib/jquery-ui.min.css" />
-<script src="/js/lib/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/js/lib/jquery-ui-1.13.2/jquery-ui.min.css" />
+<script src="./js/lib/jquery-ui-1.13.2/jquery-ui.min.js"></script>
 
 <script src="/js/lib/mousetrap.min.js"></script>
 <script src="/js/lib/jquery.scrollTo.min.js"></script>
@@ -59,69 +60,83 @@
 
 
 <body>
-<main>
-  <div id="preview" style="position: absolute; top: 0px; left: 0px; height: 100%; width: 100%; border: 0 none; overflow: hidden;">
-    <div id="media-menu" class="edit-element">
-    <!-- <h1 id="title"></h1> -->
-    <label for="decor.src">Background color</label>
-    <input
-      autocomplete="off"
-      _list="list_decors"
-      class="color-picker _box-min d-none"
-      id = "preview_background"
-      type="text"
-      placeholder="decor"
-      name="decor.src"
-    /><br>
-    <p style='text-decoration: underline; font-size: 0.8em;' onclick='removeBackgroundColor(null)'>Remove Background color</p>
-    <div class='editor-buttons'>
-      <button onclick="newEtape()" class="grey"><span>➕</span> New etape</button>
-      <button onclick="clearPreview()" class="grey"><span>🚫</span> Clear all</button>
-      <button onclick="setElements('', 'text-box')" class="green" id="add-text-button" >Add text box</button>
-      <button onclick="displayMediaList()" class="green">Add media</button>
-      <button onclick="getMediaStream()" class="green" id="add-stream-button">Add video stream</button>
-      <button onclick="addAvatarsArea()" class="green" id="add-avatars-button">Add avatars area</button>
-    </div>
-    <section id="media" class="d-none">
-      <div class="media_cat">
-      <i title="styles css">🗛</i>
-      <div class="media_styles"></div>
+<main id="editor-main">
+  <div id="left-menu">
+    <div id="media-menu">
+      <div id="step-preview"></div>
+      <!-- <h1 id="title"></h1> -->
+      <!-- <label for="decor.src">Background color</label>
+      <input
+        autocomplete="off"
+        _list="list_decors"
+        class="color-picker _box-min d-none"
+        id = "preview_background"
+        type="text"
+        placeholder="decor"
+        name="decor.src"
+      /><br> -->
+      <!-- <p style='text-decoration: underline; font-size: 0.8em;' onclick='removeBackgroundColor(null)'>Remove Background color</p> -->
+      <div id='editor-buttons'>
+        <!-- <button onclick="newEtape()" class="grey">+</button> -->
+        <button onclick="displayMediaList()"><img src="./icons/plus.svg"></img></button>
+        <button><img src="./icons/trash.svg"></img></button>
+        <button><img src="./icons/settings.svg"></img></button>
+        <button><img src="./icons/arrowhead-down.svg"></img></button>
+        <button><img src="./icons/arrowhead-up.svg"></img></button>
+
+        <!-- <button onclick="clearPreview()" class="grey"><span>🚫</span> Clear all</button> -->
+        <!-- <button onclick="setElements('', 'text-box')" class="green" id="add-text-button" >Add text box</button>
+        <button onclick="displayMediaList()" class="green">Add media</button>
+        <button onclick="getMediaStream()" class="green" id="add-stream-button">Add video stream</button>
+        <button onclick="addAvatarsArea()" class="green" id="add-avatars-button">Add avatars area</button> -->
       </div>
-      <div class="media_cat">
-      <i title="decors css">🌈</i>
-      <div class="media_decors"></div>
-      </div>
-      <!-- <div class="media_cat">
-      <i title="pages iframe">🌐</i>
-      <div class="media_pages"></div>
-      </div> -->
-      <div class="media_cat">
-        <i title="pages iframe">🌐</i>
-        <div class="media_layouts"></div>
+      <section id="media" class="d-none">
+        <div class="media_cat">
+        <i title="styles css">🗛</i>
+        <div class="media_styles"></div>
         </div>
-      <div class="media_cat">
-      <i title="videos">📽️</i>
-      <div class="media_video"></div>
-      </div>
-      <!-- <div class="media_cat">
-      <i title="audio">🎧</i>
-      <div class="media_audio"></div>
+        <div class="media_cat">
+          <i title="decors css">🌈</i>
+          <div class="media_decors"></div>
+        </div>
+        <!-- <div class="media_cat">
+        <i title="pages iframe">🌐</i>
+        <div class="media_pages"></div>
+        </div> -->
+        <div class="media_cat">
+          <i title="pages iframe">🌐</i>
+          <div class="media_layouts"></div>
+          </div>
+        <div class="media_cat">
+          <i title="videos">📽️ VIDEO</i>
+          <div class="media_video"></div>
+        </div>
+        <!-- <div class="media_cat">
+        <i title="audio">🎧</i>
+        <div class="media_audio"></div>
+        </div> -->
+        <div class="media_cat">
+          <i title="gifs">🖼️ GIF</i>
+          <div class="media_gifs"></div>
+        </div>
+        <div class="media_cat">
+          <i title="images">📷 IMAGE</i>
+          <div class="media_images"></div>
+        </div>
+      </section>
+      <section id="media-editor"></section>
+      <!-- <div id="send-to-master" class="edit-element">
+        <button class="large-black" onclick="sendToScreenInput('boite')">Save avatars position</button>
+        <button class="large-black" onclick="sendToScreenInput('screen')">Send to screen etape</button>
       </div> -->
-      <div class="media_cat">
-      <i title="gifs">🖼️</i>
-      <div class="media_gifs"></div>
-      </div>
-      <div class="media_cat">
-      <i title="images">📷</i>
-      <div class="media_images"></div>
-      </div>
+    </div>
+    <section id="structure">
     </section>
-    <section id="media-editor"></section>
-    <div id="send-to-master" class="edit-element">
-      <button class="large-black" onclick="sendToScreenInput('boite')">Save avatars position</button>
-      <button class="large-black" onclick="sendToScreenInput('screen')">Send to screen etape</button>
-    </div>
-    </div>
+  </div>
+  
+  <div id="preview" style="height: 50%; width: 50%; border: 0 none; overflow: hidden; margin-left: auto;
+  margin-right: auto; margin-top: 10%; background-color: pink; position: relative;">
+    
     <!-- <section class="container" id="layers" style="position: absolute; top: 20px; right: 20px;">
       <div class="list-item" id="step1">
         <div class="item-content">
@@ -130,10 +145,7 @@
       </div>
      
     </section> -->
-    <section id="structure" style="position: absolute; top: 20px; right: 20px; max-height: 95vh;
-    overflow-y: scroll;">
-
-    </section>
+   
 
   
   <!-- <div id="save-menu" class="edit-element"> -->
@@ -155,7 +167,7 @@
   </div> -->
  
   <!-- <div id="preview" style="position: absolute; top: 0px; left: 0px; height: 100%; width: 100%; border: 0 none; overflow: hidden;"> -->
- 
+ </div>
 </main>
 
 <script src="/js/iso.js?v=1.0"></script>

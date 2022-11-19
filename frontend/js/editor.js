@@ -21,10 +21,11 @@ let movedStep;
 let arrayEl;
 
 function displayStructure(fileName, object) {
-    let showElement =  `<ul id=${fileName}>
+    let showElement =  `<ul id=${fileName} class="show">
                             <li>${object.name}</li>
                             <li><select class="languages"></select></li>
                         </ul>`
+    
     $('#structure').append(showElement);
     for(let scene in object['data']) {
         const id = scene.replace(/\s/g,'');
@@ -59,19 +60,17 @@ function displayStructure(fileName, object) {
     }
 }
 
-
+// at some point json needs to be saved
 function saveChanges() {
     socket.emit("update json", fileName);
 }
 
-
-
-
+const stepPreviewElement =  `<div></div>`
 
 
 window.onload = function() {
-    initDragElement();
-    initResizeElement();
+    // initDragElement();
+    // initResizeElement();
     activateColorPicker();
     // displayVisual(steps);
 };
@@ -92,9 +91,13 @@ window.onload = function() {
 //     })
 // }
 
-
-
 function initDragElement() {
+    $( function() {
+        $( ".draggable" ).draggable();
+      } );
+}
+
+function initDragElement_old() {
     var pos1 = 0,
         pos2 = 0,
         pos3 = 0,
@@ -176,81 +179,81 @@ var croppable = false;
 var initialImageWidth;
 var initialImageHeight;
 
-function initResizeElement(id) {
-    var element = null;
-    var image = null;
-    var startX, startY, startWidth, startHeight
+// function initResizeElement(id) {
+//     var element = null;
+//     var image = null;
+//     var startX, startY, startWidth, startHeight
 
-    var popups = getRelevantPopups(id);
+//     var popups = getRelevantPopups(id);
     
-    popups.forEach(popup => appendReziseElements(popup));
+//     popups.forEach(popup => appendReziseElements(popup));
 
-    function appendReziseElements(popup) {
-        var both = document.createElement("div");
-        both.className = "resizer-both";
-        var styles = {  "width": "15px",
-                        "height": "15px",
-                        "z-index": "10",
-                        "position": "absolute",
-                        "right": "-15px",
-                        "bottom": "-7.5px",
-                        "cursor": "nw-resize",
-                        "background-image": 'url("../icons/angles-down-solid.svg")',
-                        "background-size": "contain",
-                        "background-repeat": "no-repeat",
-                        "transform": "rotate(-45deg)",
-                        "background-color": "grey",
-                        "background-position": "center"
-                    }
+//     function appendReziseElements(popup) {
+//         var both = document.createElement("div");
+//         both.className = "resizer-both";
+//         var styles = {  "width": "15px",
+//                         "height": "15px",
+//                         "z-index": "10",
+//                         "position": "absolute",
+//                         "right": "-15px",
+//                         "bottom": "-7.5px",
+//                         "cursor": "nw-resize",
+//                         "background-image": 'url("../icons/angles-down-solid.svg")',
+//                         "background-size": "contain",
+//                         "background-repeat": "no-repeat",
+//                         "transform": "rotate(-45deg)",
+//                         "background-color": "grey",
+//                         "background-position": "center"
+//                     }
 
-        for (var property in styles) {
-            both.style[property] = styles[property]
-        }
-        popup.appendChild(both);
-        both.addEventListener("mousedown", initDrag, false);
-        both.parentPopup = popup;
-    }
+//         for (var property in styles) {
+//             both.style[property] = styles[property]
+//         }
+//         popup.appendChild(both);
+//         both.addEventListener("mousedown", initDrag, false);
+//         both.parentPopup = popup;
+//     }
    
 
-    function initDrag(e) {
-        element = this.parentPopup;
+//     function initDrag(e) {
+//         element = this.parentPopup;
 
-        startX = e.clientX;
-        startY = e.clientY;
+//         startX = e.clientX;
+//         startY = e.clientY;
 
-        // Start values
-        startWidth = parseInt(
-        document.defaultView.getComputedStyle(element).width,
-        10
-        );
-        startHeight = parseInt(
-        document.defaultView.getComputedStyle(element).height,
-        10
-        );
+//         // Start values
+//         startWidth = parseInt(
+//         document.defaultView.getComputedStyle(element).width,
+//         10
+//         );
+//         startHeight = parseInt(
+//         document.defaultView.getComputedStyle(element).height,
+//         10
+//         );
 
-        document.documentElement.addEventListener("mousemove", doDrag, false);
-        document.documentElement.addEventListener("mouseup", stopDrag, false);
-    }
+//         document.documentElement.addEventListener("mousemove", doDrag, false);
+//         document.documentElement.addEventListener("mouseup", stopDrag, false);
+//     }
 
-    function doDrag(e) {
-        if (!croppable) {
-            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-            const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+//     function doDrag(e) {
+//         if (!croppable) {
+//             const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+//             const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
 
-            element.style.width = (startWidth +  e.clientX - startX)*100/vw + "%";
+//             element.style.width = (startWidth +  e.clientX - startX)*100/vw + "%";
 
-            if (popups.length === 1 && $(popups).hasClass('avatars')) {
-                element.style.height = (startHeight + e.clientY - startY)*100/vh + "%";
-            }
-        } 
-    }
+//             if (popups.length === 1 && $(popups).hasClass('avatars')) {
+//                 element.style.height = (startHeight + e.clientY - startY)*100/vh + "%";
+//             }
+//         } 
+//     }
 
-    function stopDrag() {
-        document.documentElement.removeEventListener("mousemove", doDrag, false);
-        document.documentElement.removeEventListener("mouseup", stopDrag, false);
-    }
+//     function stopDrag() {
+//         document.documentElement.removeEventListener("mousemove", doDrag, false);
+//         document.documentElement.removeEventListener("mouseup", stopDrag, false);
+//     }
     
-}
+// }
   
   /* Media
 ======== */
@@ -478,6 +481,10 @@ var $media = $('#media');
 
 $media.on('mousedown', '.file', function() {
     setElements($(this).attr('title'), this.parentElement.className);
+    setTimeout(() => {
+        $(".ui-dialog-titlebar-close"). click();
+    }, 500);
+    
 });
 
 var medias = {
@@ -646,14 +653,14 @@ function setElements(val, type) {
                         </div>
                     </div>`
 
-    var imageElement = `<div 
+    var imageElement_old = `<div 
                             id=${id}
-                            class = "popup image"
+                            class = "popup image draggable"
                             style = "z-index: ${zIndex};
                                      text-align: center;
                                      position: absolute;
-                                     left: 0%; 
-                                     top: 85%; 
+                                     left: 50%; 
+                                     top: 50%; 
                                      box-sizing: border-box;
                                      width: 20%;
                                      height: auto;
@@ -689,7 +696,9 @@ function setElements(val, type) {
                                 <img style="width: 100%" src=${src} id=${id + 'img'}></img>
                             </div>
                         </div>`
-    
+
+    var imageElement = `<div class="draggable resizable" style="width: 10%; height:auto; position: absolute; top: 50%; left:50%;"><img style="width: 100%;" src=${src} id=${id + 'img'}></img></div>`
+
     var videoElement = `<div 
                             id=${id}
                             class = "popup video"
@@ -844,24 +853,24 @@ function setElements(val, type) {
 
     if (type === 'media_video') {
         $('#preview').append(videoElement);
-        initResizeElement(id);
+        // initResizeElement(id);
         addMenu(id);
         closeMediaList();
     } else if (type === 'videoStream'){
         $('#preview').append(streamElement);
         hideIfDisplayed($('#add-stream-button')[0]);
-        initResizeElement(id);
+        // initResizeElement(id);
         addMenu(id);
     }
     else if (type === 'media_images' || type === 'media_gifs') {
         $('#preview').append(imageElement);
-        initResizeElement(id);
-        addMenu(id);
+        // initResizeElement(id);
+        // addMenu(id);
         closeMediaList();
     } else if (type === 'avatars') {
         $('#preview').append(avatars);
         hideIfDisplayed($('#add-avatars-button')[0]);
-        initResizeElement(id);
+        // initResizeElement(id);
         addMenu(id);
     } 
     else if (type === 'media_layouts') {
@@ -904,7 +913,7 @@ function setElements(val, type) {
                   
             const popupElementsNew = Array.from(node.getElementsById("preview"));
            
-            initResizeElement();
+            // initResizeElement();
             if (typeof(id) === 'string') {
                 addMenu(id);
             } else {
@@ -952,7 +961,7 @@ function setElements(val, type) {
     else if (type === 'text-box') {
         $('#preview').append(textElement);
         document.getElementById(id + 'text').focus();
-        initResizeElement(id);
+        // initResizeElement(id);
         addMenu(id);
         closeMediaList();
         initDragElement();
@@ -960,7 +969,16 @@ function setElements(val, type) {
         return id
     }
     initDragElement();
+
+    $('.draggable').mousedown(function(){
+        $('.draggable').css("border-color", '#FF0000');
+        $(this).css("border-color", '#00FF00');
+    });
+
+    $(".resizable").resizable();
 }
+
+const rgb2hex = (rgb) => `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice(1).map(n => parseInt(n, 10).toString(16).padStart(2, '0')).join('')}`
 
 function addMenu(id) {
     var menuTemplate =  `<div  
@@ -1146,6 +1164,8 @@ function addVideoMenuOptions(id) {
     }
     addBackground(id);
 }
+
+oncontextmenu = (event) => {console.log(event) };
 
 function addMenuOptionsTextBox(id) {
     
@@ -1420,8 +1440,6 @@ function setVideoAttribute(id, attribute, e) {
     popupBody.appendChild(newVideoElement)
     video.setAttribute(attribute, booleanValue);
     video.load()
-    
-    
 }
 
 function addBackground(id) {
@@ -1515,8 +1533,14 @@ function displayIfHidden(element) {
 }
 
 function displayMediaList() {
-    $('#media')[0].classList.toggle("d-none");
-    $('#media-editor')[0].innerHTML = '';
+    $( "#media" ).dialog({
+        resizable: false,
+        modal: true,
+        maxHeight: 600,
+        minWidth: 500
+    });
+    // $('#media')[0].classList.toggle("d-none");
+    // $('#media-editor')[0].innerHTML = '';
 }
 
 function sendToScreenInput(screen) {

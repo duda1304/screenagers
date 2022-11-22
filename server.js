@@ -215,8 +215,23 @@ const set = {
     // }, []);
 
     socket.emit('json visual', json);
+  
 
     socket.emit('language', {'currentLanguage' : currentLanguage});
+
+    // NOVO za reorder steps
+    socket.on('reorder steps', (data) => {
+      const filePath = `./frontend/data/json/${data.fileName}.json`;
+      const file = require(filePath);
+          
+      file['scenes'][data.sceneOrderNumber]['step-order'] = data.stepsOrder;
+          
+      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
+        if (err) return console.log(err);
+        console.log(JSON.stringify(file));
+        console.log('writing to ' + filePath);
+      });
+    })
 
     socket.on('refresh media list', () => {
       states.media = walkSync('./frontend/data/media');

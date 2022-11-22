@@ -158,10 +158,15 @@ body {
   width: fit-content;
 }
 
+#step-media ul {
+  list-style-type: none;
+}
+
 #editor-buttons {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
 #editor-buttons button {

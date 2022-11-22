@@ -8,56 +8,153 @@ socket.on('json visual', function(data) {
     data.forEach(src => {
         $.getJSON(src.replace('frontend', '.'), function(jsonData) {
             let array = src.split('/');
-
-            mainData[array[array.length -1].replace('.json', '')] = jsonData;
-            displayStructure(array[array.length -1].replace('.json', ''), jsonData);
-        })
-       
+            let fileName = array[array.length -1].replace('.json', '');
+            mainData[fileName] = jsonData;
+            displayStructure(fileName, jsonData);
+            
+        })    
     })
-   
 });
 
 let movedStep;
 let arrayEl;
 
-function displayStructure(fileName, object) {
+
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+function displayStructure(fileName, data) {
     let showElement =  `<ul id=${fileName} class="show">
-                            <li>${object.name}</li>
+                            <li>${data.name}</li>
                             <li><select class="languages"></select></li>
                         </ul>`
     
     $('#structure').append(showElement);
-    for(let scene in object['data']) {
-        const id = scene.replace(/\s/g,'');
 
-        let sceneElement = `<li class="scene">
-            <b id=${id + "toggle"}>${scene}</b>`;
-            
-        let stepList = `<ul id=${id} style="display: none">`
-        
-        for (let step in object['data'][scene]) {
-            stepList = stepList + `<li class="step" data-key=${step}>Step ${parseInt(step)+1}</li>`        
-        }
-        stepList = stepList + `</ul>`
-        sceneElement = sceneElement + stepList + `</li>`
-        $('#' + fileName).append(sceneElement);
-        $("#" + id).sortable();
+    // append available languages
+    $.each(data.languages, function(key, value) {   
+        $('#' + fileName).find('select')
+            .append($("<option></option>")
+                       .attr("value", key)
+                       .text(value)); 
+   });
+
+    // append scenes and steps
+    const sceneOrder = data['scene-order'];
+
+    sceneOrder.forEach(sceneOrderNumber => {
+        let scene = data['scenes'][sceneOrderNumber];
+        const stepOrder = scene['step-order'];
+
+        const id = makeid(5);
+        $(`<li><b id=${id + 'toggler'}>${scene.name}<b></li>`).appendTo(`#${fileName}`).append(`<ul id=${id} style="display: none"></ul>`);
+
+        stepOrder.forEach(stepOrderNumber => {
+            $("#" + id).append(`<li class="step" onclick="setStep('${fileName}', '${sceneOrderNumber}', ${stepOrderNumber})">Step </li>`)
+        })
+        // scene.steps.forEach(step => {
+        //     $("#" + id).append(`<li class="step" id=${step.id} onclick="setStep('${fileName}', '${scene.id}', ${step.id})">Step </li>`)
+        // })
+
         $("#" + id).sortable({
             start : function (event, ui) {
                startPosition = ui.item.index();
-               arrayEl = mainData[fileName]['data'][scene]
+               arrayEl = mainData[fileName]['scenes'][sceneOrderNumber]['step-order']
                 movedStep = arrayEl.splice(ui.item.index(), 1)[0];
             },
             stop: function(event, ui) {
                 arrayEl.splice(ui.item.index(), 0, movedStep);
-                mainData[fileName]['data'][scene] = arrayEl;
-                console.log(mainData[fileName]['data'][scene]);
+                mainData[fileName]['scenes'][sceneOrderNumber]['step-order'] = arrayEl;
+                console.log(mainData[fileName]);
+                saveStepOrder(fileName, sceneOrderNumber, arrayEl);
             }
         });
-        $("#" + id + "toggle").click(function() {
+      
+        $("#" + id + "toggler").click(function() {
             $( "#" + id ).toggle();
-          });
-    }
+        });
+    })
+    // for(let scene in data['scenes']) {
+    //     const id = makeid(5);
+    //     $(`<li><b id=${id + 'toggler'}>${scene}<b></li>`).appendTo(`#${fileName}`).append(`<ul id=${id} style="display: none"></ul>`);
+
+    //     data['scenes'][scene].forEach(step => {
+    //         $("#" + id).append(`<li class="step" id=${step.id} onclick="setStep('${fileName}', '${scene}', ${step.id})">Step </li>`)
+    //     })
+
+    //     $("#" + id).sortable({
+    //         start : function (event, ui) {
+    //            startPosition = ui.item.index();
+    //            arrayEl = mainData[fileName]['scenes'][scene]
+    //             movedStep = arrayEl.splice(ui.item.index(), 1)[0];
+    //         },
+    //         stop: function(event, ui) {
+    //             arrayEl.splice(ui.item.index(), 0, movedStep);
+    //             mainData[fileName]['scenes'][scene] = arrayEl;
+    //             console.log(mainData[fileName]['scenes'][scene]);
+    //         }
+    //     });
+      
+    //     $("#" + id + "toggler").click(function() {
+    //         $( "#" + id ).toggle();
+    //     });
+    // }
+}
+
+function saveStepOrder(file, sceneOrderNumber, stepsOrder) {
+    socket.emit('reorder steps', {"fileName" : file, "sceneOrderNumber" : sceneOrderNumber, "stepsOrder" : stepsOrder})
+}
+
+let active = {
+    fileName : "",
+    scene : "",
+    step : ""
+}
+
+function setActiveItem(fileName, scene, step) {
+    active.fileName = fileName;
+    active.scene = scene;
+    active.step = step;
+}
+
+function setStep(fileName, scene, step) {
+    setActiveItem(fileName, scene, step)
+    console.log(active)
+    let media = [];
+    let sortedMedia;
+
+    $.getJSON('./data/json/' + fileName + '.json', function(jsonData) {
+        console.log(jsonData)
+        
+        const stepData = jsonData['scenes'][scene]['steps'][step];
+
+        stepData.image.forEach(image => media.push(image));
+        stepData.stream.forEach(stream => media.push(stream));
+        stepData.text.forEach(text => media.push(text));
+        stepData.video.forEach(video => media.push(video));
+        sortedMedia = media.sort((r1, r2) => (r1['z-index'] > r2['z-index']) ? 1 : (r1['z-index'] < r2['z-index']) ? -1 : 0);
+        sortedMedia.forEach(element => {
+            const li = `<li><img src="./icons/visible.svg"></img>${element.src}</li>`;
+            $('#step-media ul').append(li);
+        })
+    })  
+
+  
+}
+
+function sortzInedex() {
+    products.sort((p1, p2) => (p1.manufactured > p2.manufactured) ? 1 : (p1.manufactured < p2.manufactured) ? -1 : 0);
+}
+
+function sortElementsForMenu(step) {
+
 }
 
 // at some point json needs to be saved
@@ -340,7 +437,6 @@ socket.on('step from master', (data) => {
 })
 
 function setTextStyle(id, style) { 
-
     var textStyle = style.trim();
     $('#' + id + 'text').attr("style", textStyle);
 
@@ -483,8 +579,7 @@ $media.on('mousedown', '.file', function() {
     setElements($(this).attr('title'), this.parentElement.className);
     setTimeout(() => {
         $(".ui-dialog-titlebar-close"). click();
-    }, 500);
-    
+    }, 500);   
 });
 
 var medias = {

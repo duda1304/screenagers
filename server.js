@@ -233,6 +233,21 @@ const set = {
       });
     })
 
+    // NOVO za reorder scenes
+    socket.on('reorder scenes', (data) => {
+      const filePath = `./frontend/data/json/${data.fileName}.json`;
+      const file = require(filePath);
+          
+      file['scene-order'] = data.scenesOrder;
+          
+      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
+        if (err) return console.log(err);
+        console.log(JSON.stringify(file));
+        console.log('writing to ' + filePath);
+      });
+    })
+
+
     socket.on('refresh media list', () => {
       states.media = walkSync('./frontend/data/media');
       states.media = states.media.reduce((acc, item) => {

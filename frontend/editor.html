@@ -63,7 +63,10 @@
 <main id="editor-main">
   <div id="left-menu">
     <div id="media-menu">
-      <div id="step-media"><ul></ul></div>
+      <div class="section-header">Media</div>
+      <div id="step-media">
+        <ul></ul>
+      </div>
       <!-- <h1 id="title"></h1> -->
       <!-- <label for="decor.src">Background color</label>
       <input
@@ -79,8 +82,8 @@
       <div id='editor-buttons'>
         <!-- <button onclick="newEtape()" class="grey">+</button> -->
         <button onclick="displayMediaList()"><img src="./icons/plus.svg"></img></button>
-        <button><img src="./icons/trash.svg"></img></button>
-        <button><img src="./icons/settings.svg"></img></button>
+        <button id="delete-button"><img src="./icons/trash.svg"></img></button>
+        <button id="edit-button"><img src="./icons/settings.svg"></img></button>
         <button><img src="./icons/arrowhead-down.svg"></img></button>
         <button><img src="./icons/arrowhead-up.svg"></img></button>
 
@@ -131,6 +134,8 @@
       </div> -->
     </div>
     <section id="structure">
+      <div class="section-header">Structure</div>
+      <div id="structure-content"></div>
     </section>
   </div>
   

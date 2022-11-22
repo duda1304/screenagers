@@ -19,6 +19,9 @@ socket.on('json visual', function(data) {
 let movedStep;
 let arrayEl;
 
+function getFileName(src) {
+    return src.split('/')[src.split('/').length -1]
+}
 
 function makeid(length) {
     var result           = '';
@@ -32,11 +35,14 @@ function makeid(length) {
 
 function displayStructure(fileName, data) {
     let showElement =  `<ul id=${fileName} class="show">
-                            <li>${data.name}</li>
-                            <li><select class="languages"></select></li>
+                            <li>Show name: ${data.name}</li>
+                            <li>Available languages: <select class="languages"></select></li>
+                            <li>Scenes:
+                                <ul id=${fileName + 'sceneList'} class="scenes"></ul>
+                            </li>
                         </ul>`
     
-    $('#structure').append(showElement);
+    $('#structure-content').append(showElement);
 
     // append available languages
     $.each(data.languages, function(key, value) {   
@@ -48,21 +54,30 @@ function displayStructure(fileName, data) {
 
     // append scenes and steps
     const sceneOrder = data['scene-order'];
-
     sceneOrder.forEach(sceneOrderNumber => {
         let scene = data['scenes'][sceneOrderNumber];
         const stepOrder = scene['step-order'];
 
         const id = makeid(5);
-        $(`<li><b id=${id + 'toggler'}>${scene.name}<b></li>`).appendTo(`#${fileName}`).append(`<ul id=${id} style="display: none"></ul>`);
+        $(`<li><b id=${id + 'toggler'}>${scene.name}<b></li>`).appendTo(`#${fileName + 'sceneList'}`).append(`<ul id=${id} style="display: none" class="steps"></ul>`);
 
         stepOrder.forEach(stepOrderNumber => {
             $("#" + id).append(`<li class="step" onclick="setStep('${fileName}', '${sceneOrderNumber}', ${stepOrderNumber})">Step </li>`)
         })
-        // scene.steps.forEach(step => {
-        //     $("#" + id).append(`<li class="step" id=${step.id} onclick="setStep('${fileName}', '${scene.id}', ${step.id})">Step </li>`)
-        // })
 
+        $('#' + fileName + 'sceneList').sortable({
+            start : function (event, ui) {
+                startPosition = ui.item.index();
+                arrayEl = mainData[fileName]['scene-order']
+                movedStep = arrayEl.splice(ui.item.index(), 1)[0];
+             },
+             stop: function(event, ui) {
+                 arrayEl.splice(ui.item.index(), 0, movedStep);
+                 mainData[fileName]['scene-order'] = arrayEl;
+                 console.log(mainData[fileName]['scene-order']);
+                 saveSceneOrder(fileName, arrayEl);
+             }
+        })
         $("#" + id).sortable({
             start : function (event, ui) {
                startPosition = ui.item.index();
@@ -75,41 +90,19 @@ function displayStructure(fileName, data) {
                 console.log(mainData[fileName]);
                 saveStepOrder(fileName, sceneOrderNumber, arrayEl);
             }
-        });
-      
+        });    
         $("#" + id + "toggler").click(function() {
             $( "#" + id ).toggle();
         });
     })
-    // for(let scene in data['scenes']) {
-    //     const id = makeid(5);
-    //     $(`<li><b id=${id + 'toggler'}>${scene}<b></li>`).appendTo(`#${fileName}`).append(`<ul id=${id} style="display: none"></ul>`);
-
-    //     data['scenes'][scene].forEach(step => {
-    //         $("#" + id).append(`<li class="step" id=${step.id} onclick="setStep('${fileName}', '${scene}', ${step.id})">Step </li>`)
-    //     })
-
-    //     $("#" + id).sortable({
-    //         start : function (event, ui) {
-    //            startPosition = ui.item.index();
-    //            arrayEl = mainData[fileName]['scenes'][scene]
-    //             movedStep = arrayEl.splice(ui.item.index(), 1)[0];
-    //         },
-    //         stop: function(event, ui) {
-    //             arrayEl.splice(ui.item.index(), 0, movedStep);
-    //             mainData[fileName]['scenes'][scene] = arrayEl;
-    //             console.log(mainData[fileName]['scenes'][scene]);
-    //         }
-    //     });
-      
-    //     $("#" + id + "toggler").click(function() {
-    //         $( "#" + id ).toggle();
-    //     });
-    // }
 }
 
-function saveStepOrder(file, sceneOrderNumber, stepsOrder) {
-    socket.emit('reorder steps', {"fileName" : file, "sceneOrderNumber" : sceneOrderNumber, "stepsOrder" : stepsOrder})
+function saveStepOrder(fileName, sceneOrderNumber, stepsOrder) {
+    socket.emit('reorder steps', {"fileName" : fileName, "sceneOrderNumber" : sceneOrderNumber, "stepsOrder" : stepsOrder})
+}
+
+function saveSceneOrder(fileName, scenesOrder) {
+    socket.emit('reorder scenes', {"fileName" : fileName, "scenesOrder" : scenesOrder})
 }
 
 let active = {
@@ -126,43 +119,53 @@ function setActiveItem(fileName, scene, step) {
 
 function setStep(fileName, scene, step) {
     setActiveItem(fileName, scene, step)
-    console.log(active)
+    
     let media = [];
     let sortedMedia;
 
     $.getJSON('./data/json/' + fileName + '.json', function(jsonData) {
-        console.log(jsonData)
-        
         const stepData = jsonData['scenes'][scene]['steps'][step];
-
         stepData.image.forEach(image => media.push(image));
         stepData.stream.forEach(stream => media.push(stream));
         stepData.text.forEach(text => media.push(text));
         stepData.video.forEach(video => media.push(video));
         sortedMedia = media.sort((r1, r2) => (r1['z-index'] > r2['z-index']) ? 1 : (r1['z-index'] < r2['z-index']) ? -1 : 0);
         sortedMedia.forEach(element => {
-            const li = `<li><img src="./icons/visible.svg"></img>${element.src}</li>`;
+            const li = `<li data-src=${element.src} onclick="setActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-src=${element.src}></div>${getFileName(element.src)}</li>`;
+            $('#step-media ul').empty();
             $('#step-media ul').append(li);
+            $('#preview').empty();
+            setElements(element.src, 'media_images');
         })
     })  
-
-  
 }
 
-function sortzInedex() {
-    products.sort((p1, p2) => (p1.manufactured > p2.manufactured) ? 1 : (p1.manufactured < p2.manufactured) ? -1 : 0);
+function toggleVisibility(e) {
+    $(e.target).toggleClass('visible');
+    $(`[src*='${e.target.dataset.src}']`).parent().toggle();
 }
 
-function sortElementsForMenu(step) {
-
+function setActiveStepMediaElement(e) {
+    $("#step-media ul li").not(e.target).removeClass('active');
+    $(e.target).toggleClass('active');
+    $("#delete-button").unbind("click");
+    if ($(e.target).hasClass('active')) {
+        $("#delete-button").click(function(){
+            $(`[src*='${e.target.dataset.src}']`).parent().remove();
+            $(e.target).remove();
+        })
+        $("#edit-button").click(function(){
+            $(`[src*='${e.target.dataset.src}']`).parent().remove();
+            $(e.target).remove();
+        })
+    }
+   
 }
 
-// at some point json needs to be saved
-function saveChanges() {
-    socket.emit("update json", fileName);
-}
 
-const stepPreviewElement =  `<div></div>`
+
+
+
 
 
 window.onload = function() {
@@ -172,185 +175,17 @@ window.onload = function() {
     // displayVisual(steps);
 };
 
-// const steps = [{"id" : 1, "order_number" : 1}, {"id" : 3, "order_number" : 2}, {"id" : 2, "order_number" : 3}]
-
-// function displayVisual(steps) {
-    
-//     steps.forEach(step => {
-//         const listItem = `<div class="list-item" id=${step.id}>
-//     <div class="item-content">
-//       Step <span class="order">${step.order_number}</span>
-//     </div>
-//   </div>`
-//         // let id = step.id;
-//         // let order_number = step.order_number;
-//         $( "#layers" ).append(listItem);
-//     })
-// }
-
 function initDragElement() {
     $( function() {
         $( ".draggable" ).draggable();
       } );
 }
 
-function initDragElement_old() {
-    var pos1 = 0,
-        pos2 = 0,
-        pos3 = 0,
-        pos4 = 0;
-        
-    var popups = document.getElementsByClassName("popup");
-    var elmnt = null;
-
-   
-    var currentZIndex = 100; //TODO reset z index when a threshold is passed
-
-    for (var i = 0; i < popups.length; i++) {
-        var popup = popups[i];
-        var header = getHeader(popup);
-
-        popup.onmousedown = function() {
-            if (popup.classList.contains('cover')) {
-                    this.style.zIndex = "" + ++currentZIndex;
-            }
-        };
-
-        if (header) {
-        header.parentPopup = popup;
-        header.onmousedown = dragMouseDown;
-        }
-    }
-
-    function dragMouseDown(e) {
-        elmnt = this.parentPopup;
-        if (!elmnt.classList.contains('cover')) {
-            elmnt.style.zIndex = "" + ++currentZIndex;
-        }
-
-        e = e || window.event;
-        // get the mouse cursor position at startup:
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        // call a function whenever the cursor moves:
-        document.onmousemove = elementDrag;
-    }
-
-    function elementDrag(e) {
-        if (!elmnt) {
-        return;
-        }
-
-        e = e || window.event;
-        // calculate the new cursor position:
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        // set the element's new position:
-        const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-        const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-      
-        elmnt.style.top = (elmnt.offsetTop - pos2)*100/vh + "%";
-        elmnt.style.left = (elmnt.offsetLeft - pos1)*100/vw + "%";
-    }
-
-    function closeDragElement() {
-        /* stop moving when mouse button is released:*/
-        document.onmouseup = null;
-        document.onmousemove = null;
-    }
-
-    function getHeader(element) {
-        var headerItems = element.getElementsByClassName("popup-header");
-
-        if (headerItems.length === 1) {
-        return headerItems[0];
-        }
-        return null;
-    }
-}
 
 var croppable = false;
 var initialImageWidth;
 var initialImageHeight;
 
-// function initResizeElement(id) {
-//     var element = null;
-//     var image = null;
-//     var startX, startY, startWidth, startHeight
-
-//     var popups = getRelevantPopups(id);
-    
-//     popups.forEach(popup => appendReziseElements(popup));
-
-//     function appendReziseElements(popup) {
-//         var both = document.createElement("div");
-//         both.className = "resizer-both";
-//         var styles = {  "width": "15px",
-//                         "height": "15px",
-//                         "z-index": "10",
-//                         "position": "absolute",
-//                         "right": "-15px",
-//                         "bottom": "-7.5px",
-//                         "cursor": "nw-resize",
-//                         "background-image": 'url("../icons/angles-down-solid.svg")',
-//                         "background-size": "contain",
-//                         "background-repeat": "no-repeat",
-//                         "transform": "rotate(-45deg)",
-//                         "background-color": "grey",
-//                         "background-position": "center"
-//                     }
-
-//         for (var property in styles) {
-//             both.style[property] = styles[property]
-//         }
-//         popup.appendChild(both);
-//         both.addEventListener("mousedown", initDrag, false);
-//         both.parentPopup = popup;
-//     }
-   
-
-//     function initDrag(e) {
-//         element = this.parentPopup;
-
-//         startX = e.clientX;
-//         startY = e.clientY;
-
-//         // Start values
-//         startWidth = parseInt(
-//         document.defaultView.getComputedStyle(element).width,
-//         10
-//         );
-//         startHeight = parseInt(
-//         document.defaultView.getComputedStyle(element).height,
-//         10
-//         );
-
-//         document.documentElement.addEventListener("mousemove", doDrag, false);
-//         document.documentElement.addEventListener("mouseup", stopDrag, false);
-//     }
-
-//     function doDrag(e) {
-//         if (!croppable) {
-//             const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-//             const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-
-//             element.style.width = (startWidth +  e.clientX - startX)*100/vw + "%";
-
-//             if (popups.length === 1 && $(popups).hasClass('avatars')) {
-//                 element.style.height = (startHeight + e.clientY - startY)*100/vh + "%";
-//             }
-//         } 
-//     }
-
-//     function stopDrag() {
-//         document.documentElement.removeEventListener("mousemove", doDrag, false);
-//         document.documentElement.removeEventListener("mouseup", stopDrag, false);
-//     }
-    
-// }
   
   /* Media
 ======== */
@@ -577,9 +412,14 @@ var $media = $('#media');
 
 $media.on('mousedown', '.file', function() {
     setElements($(this).attr('title'), this.parentElement.className);
+
+    const li = `<li data-src=${$(this).attr('title')} onclick="setActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-src=${$(this).attr('title')}></div>${getFileName($(this).attr('title'))}</li>`;
+           
+    $('#step-media ul').append(li);
+           
     setTimeout(() => {
         $(".ui-dialog-titlebar-close"). click();
-    }, 500);   
+    }, 200);   
 });
 
 var medias = {
@@ -748,51 +588,8 @@ function setElements(val, type) {
                         </div>
                     </div>`
 
-    var imageElement_old = `<div 
-                            id=${id}
-                            class = "popup image draggable"
-                            style = "z-index: ${zIndex};
-                                     text-align: center;
-                                     position: absolute;
-                                     left: 50%; 
-                                     top: 50%; 
-                                     box-sizing: border-box;
-                                     width: 20%;
-                                     height: auto;
-                                     -webkit-touch-callout: none; 
-                                     -webkit-user-select: none; 
-                                     -khtml-user-select: none; 
-                                     -moz-user-select: none; 
-                                     -ms-user-select: none; 
-                                     user-select: none; 
-                                    "
-                        >
-                            <div 
-                                class = "popup-body"
-                                         style = "width: 100%;
-                                         height: 100%;
-                                         overflow: hidden;
-                                         box-sizing: border-box;"
-                            >
-                                <div 
-                                    class="popup-header" 
-                                    id=${id + 'header'}
-                                    style = "   position: absolute;
-                                                left: 7%;
-                                                top: 7%;
-                                                width: 85%;
-                                                height: 85%;
-                                                padding: 0;
-                                                cursor: move;
-                                                z-index: 10;
-                                            "
-                                ></div>
-                               
-                                <img style="width: 100%" src=${src} id=${id + 'img'}></img>
-                            </div>
-                        </div>`
 
-    var imageElement = `<div class="draggable resizable" style="width: 10%; height:auto; position: absolute; top: 50%; left:50%;"><img style="width: 100%;" src=${src} id=${id + 'img'}></img></div>`
+    var imageElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-src=${val}><img style="width: 100%;" src=${src} id=${id + 'img'}></img></div>`
 
     var videoElement = `<div 
                             id=${id}

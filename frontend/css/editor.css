@@ -24,6 +24,8 @@ body {
 }
 
 #media-menu {
+  display: flex;
+  flex-direction: column;
   height: 50%;
   overflow-y: auto;
   /* position: absolute;
@@ -31,24 +33,75 @@ body {
   padding-top: 20px; */
   /* z-index: 6000; */
   /* background-color: rgba(0, 0, 0); */
-  background-color: blue;
+  background-color: #424141;
+  padding-bottom: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.visibility-icon {
+  margin-right: 5px;
+  width: 16px;
+  height: 16px;
+  background-color: #424141;
+  background-image: url('../icons/not-visible.svg');
+}
+
+.visibility-icon.visible {
+  background-image: url('../icons/visible.svg');
 }
 
 #structure {
   height: 50%;
   overflow-y: auto;
-  background-color: pink;
-  padding-left: 10px;
+  background-color: #424141;
   padding-bottom: 10px;
+  border-radius: 10px;
   /* position: absolute;
   left: 20px;
   padding-top: 20px; */
   /* z-index: 6000; */
   /* background-color: rgba(0, 0, 0); */
 }
+
+/* #structure ul {
+  padding-left: 10px;
+} */
+
+.section-header {
+  width: 100%;
+  padding: 5px 5px 5px 10px;
+  background-color: #605d5d;
+}
+
 .show {
   list-style-type: none;
-  padding-left: 0px;
+  padding-left: 10px;
+}
+
+.show li {
+  margin-bottom: 5px;
+}
+
+@counter-style arrows {
+  system: cyclic;
+  symbols: "\21E2";
+  suffix: " ";
+}
+
+.scenes {
+  list-style-type: none;
+}
+
+.steps {
+  list-style-type: arrows;
+}
+
+.languages {
+  padding: 3px;
+  border: none;
+  background-color: transparent;
+  color: #605d5d;
 }
 
 @font-face {
@@ -158,8 +211,27 @@ body {
   width: fit-content;
 }
 
+#step-media {
+  overflow-y: auto;
+}
+
 #step-media ul {
   list-style-type: none;
+  padding-left: 10px;
+}
+
+#step-media ul li {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 0.8em;
+  padding: 5px;
+  border-radius: 5px;
+  margin-right: 5px
+}
+
+#step-media ul li.active {
+  background-color: #008496;
 }
 
 #editor-buttons {
@@ -167,11 +239,12 @@ body {
   flex-direction: row;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  margin-top: auto;
 }
 
 #editor-buttons button {
   margin-top: 10px;
-  background-color: #424141;
+  background-color: #605d5d;
 }
 
 .ui-dialog {

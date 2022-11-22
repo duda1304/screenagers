@@ -81,7 +81,7 @@
       <!-- <p style='text-decoration: underline; font-size: 0.8em;' onclick='removeBackgroundColor(null)'>Remove Background color</p> -->
       <div id='editor-buttons'>
         <!-- <button onclick="newEtape()" class="grey">+</button> -->
-        <button onclick="displayMediaList()"><img src="./icons/plus.svg"></img></button>
+        <button onclick="addMedia()"><img src="./icons/plus.svg"></img></button>
         <button id="delete-button"><img src="./icons/trash.svg"></img></button>
         <button id="edit-button"><img src="./icons/settings.svg"></img></button>
         <button><img src="./icons/arrowhead-down.svg"></img></button>
@@ -94,38 +94,39 @@
         <button onclick="addAvatarsArea()" class="green" id="add-avatars-button">Add avatars area</button> -->
       </div>
       <section id="media" class="d-none">
-        <div class="media_cat">
+        <!-- <div class="media_cat">
         <i title="styles css">🗛</i>
         <div class="media_styles"></div>
         </div>
         <div class="media_cat">
           <i title="decors css">🌈</i>
           <div class="media_decors"></div>
-        </div>
+        </div> -->
         <!-- <div class="media_cat">
         <i title="pages iframe">🌐</i>
         <div class="media_pages"></div>
         </div> -->
-        <div class="media_cat">
+        <!-- <div class="media_cat">
           <i title="pages iframe">🌐</i>
           <div class="media_layouts"></div>
-          </div>
+          </div> -->
         <div class="media_cat">
-          <i title="videos">📽️ VIDEO</i>
-          <div class="media_video"></div>
+          <p title="videos">VIDEO<span>&#8964;</span></p>
+          <div class="media_video" style="display: none"></div>
         </div>
         <!-- <div class="media_cat">
         <i title="audio">🎧</i>
         <div class="media_audio"></div>
         </div> -->
         <div class="media_cat">
-          <i title="gifs">🖼️ GIF</i>
-          <div class="media_gifs"></div>
+          <p title="gifs">GIF<span>&#8964;</span></p>
+          <div class="media_gifs" style="display: none"></div>
         </div>
         <div class="media_cat">
-          <i title="images">📷 IMAGE</i>
-          <div class="media_images"></div>
+          <p title="images">IMAGE<span>&#8964;</span></p>
+          <div class="media_images" style="display: none"></div>
         </div>
+        <button onclick="getMediaStream()" class="green" id="add-stream-button">Add video stream</button>
       </section>
       <section id="media-editor"></section>
       <!-- <div id="send-to-master" class="edit-element">

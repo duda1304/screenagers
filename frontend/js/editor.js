@@ -35,7 +35,7 @@ function makeid(length) {
 
 function displayStructure(fileName, data) {
     let showElement =  `<ul id=${fileName} class="show">
-                            <li>Show name: ${data.name}</li>
+                            <li>Show name:<br> <b>${data.name}</b></li>
                             <li>Available languages: <select class="languages"></select></li>
                             <li>Scenes:
                                 <ul id=${fileName + 'sceneList'} class="scenes"></ul>
@@ -59,10 +59,10 @@ function displayStructure(fileName, data) {
         const stepOrder = scene['step-order'];
 
         const id = makeid(5);
-        $(`<li><b id=${id + 'toggler'}>${scene.name}<b></li>`).appendTo(`#${fileName + 'sceneList'}`).append(`<ul id=${id} style="display: none" class="steps"></ul>`);
+        $(`<li style="margin-top: 10px;"><b id=${id + 'toggler'} class="toggler">${scene.name}<b></li>`).appendTo(`#${fileName + 'sceneList'}`).append(`<ul id=${id} style="display: none" class="steps"></ul>`);
 
         stepOrder.forEach(stepOrderNumber => {
-            $("#" + id).append(`<li class="step" onclick="setStep('${fileName}', '${sceneOrderNumber}', ${stepOrderNumber})">Step </li>`)
+            $("#" + id).append(`<li class="step" onclick="setStep(event, '${fileName}', '${sceneOrderNumber}', ${stepOrderNumber})">Step </li>`)
         })
 
         $('#' + fileName + 'sceneList').sortable({
@@ -92,7 +92,20 @@ function displayStructure(fileName, data) {
             }
         });    
         $("#" + id + "toggler").click(function() {
+            $(".toggler").not(this).next().hide();
             $( "#" + id ).toggle();
+            
+            $(".toggler").not(this).removeClass('active');
+            $(this).toggleClass('active');
+            if ($(this).hasClass('active')) {
+                setActiveStep(fileName, sceneOrderNumber, "");
+                $(".step").removeClass('active');
+            } else {
+                setActiveStep("", "", "");
+                $(".step").removeClass('active');
+            }
+            $('#step-media ul').empty();
+            $('#preview').empty();
         });
     })
 }
@@ -111,33 +124,46 @@ let active = {
     step : ""
 }
 
-function setActiveItem(fileName, scene, step) {
+function setActiveStep(fileName, scene, step) {
     active.fileName = fileName;
     active.scene = scene;
     active.step = step;
+    console.log(active)
 }
 
-function setStep(fileName, scene, step) {
-    setActiveItem(fileName, scene, step)
-    
-    let media = [];
-    let sortedMedia;
+function setStep(e, fileName, scene, step) {
+    $(".step").not(e.target).removeClass('active');
+    $(e.target).toggleClass('active');
 
-    $.getJSON('./data/json/' + fileName + '.json', function(jsonData) {
-        const stepData = jsonData['scenes'][scene]['steps'][step];
-        stepData.image.forEach(image => media.push(image));
-        stepData.stream.forEach(stream => media.push(stream));
-        stepData.text.forEach(text => media.push(text));
-        stepData.video.forEach(video => media.push(video));
-        sortedMedia = media.sort((r1, r2) => (r1['z-index'] > r2['z-index']) ? 1 : (r1['z-index'] < r2['z-index']) ? -1 : 0);
-        sortedMedia.forEach(element => {
-            const li = `<li data-src=${element.src} onclick="setActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-src=${element.src}></div>${getFileName(element.src)}</li>`;
-            $('#step-media ul').empty();
-            $('#step-media ul').append(li);
-            $('#preview').empty();
-            setElements(element.src, 'media_images');
-        })
-    })  
+    // CLEAR PREVIOUS  STEP DATA LIST AND PREVIEW
+    $('#step-media ul').empty();
+    $('#preview').empty();
+
+    if($(e.target).hasClass('active')) {
+        setActiveStep(fileName, scene, step);
+   
+        // DISPLAY SET DATA IN MEDIA LIST AND IN PREVIEW
+        let media = [];
+        let sortedMedia;
+
+        $.getJSON('./data/json/' + fileName + '.json', function(jsonData) {
+            const stepData = jsonData['scenes'][scene]['steps'][step];
+            stepData.image.forEach(image => media.push(image));
+            stepData.stream.forEach(stream => media.push(stream));
+            stepData.text.forEach(text => media.push(text));
+            stepData.video.forEach(video => media.push(video));
+            sortedMedia = media.sort((r1, r2) => (r1['z-index'] > r2['z-index']) ? 1 : (r1['z-index'] < r2['z-index']) ? -1 : 0);
+            sortedMedia.forEach(element => {
+                const li = `<li data-src=${element.src} onclick="setActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-src=${element.src}></div>${getFileName(element.src)}</li>`;
+                // $('#step-media ul').empty();
+                $('#step-media ul').append(li);
+                // $('#preview').empty();
+                setElements(element.src, 'media_images');
+            })
+        }) 
+    } else {
+        setActiveStep(fileName, scene, ""); 
+    }
 }
 
 function toggleVisibility(e) {
@@ -154,14 +180,20 @@ function setActiveStepMediaElement(e) {
             $(`[src*='${e.target.dataset.src}']`).parent().remove();
             $(e.target).remove();
         })
-        $("#edit-button").click(function(){
-            $(`[src*='${e.target.dataset.src}']`).parent().remove();
-            $(e.target).remove();
-        })
+        // $("#edit-button").click(function(){
+        //     $(`[src*='${e.target.dataset.src}']`).parent().remove();
+        //     $(e.target).remove();
+        // })
     }
    
 }
 
+function addMedia() {
+    if (active.step !== "") {
+        displayMediaList();
+    }
+   
+}
 
 
 
@@ -423,10 +455,10 @@ $media.on('mousedown', '.file', function() {
 });
 
 var medias = {
-styles: $('.media_styles'),
-decors: $('.media_decors'),
+// styles: $('.media_styles'),
+// decors: $('.media_decors'),
 // pages: $('.media_pages'),
-layouts: $('.media_layouts'),
+// layouts: $('.media_layouts'),
 video: $('.media_video'),
 // audio: $('.media_audio'),
 gifs: $('.media_gifs'),
@@ -434,10 +466,10 @@ images: $('.media_images')
 };
 
 function displayMedia() {
-medias.styles.empty();
-medias.decors.empty();
+// medias.styles.empty();
+// medias.decors.empty();
 // medias.pages.empty();
-medias.layouts.empty();
+// medias.layouts.empty();
 medias.video.empty();
 // medias.audio.empty();
 medias.gifs.empty();
@@ -462,21 +494,21 @@ $.each(datalists, function(key, val) {
 
 /* Css
 ====== */
-var decorsStyleSheet = document.styleSheets[1].cssRules;
-[...decorsStyleSheet].forEach(val => {
-    var styles = [...val.style];
-    val = val.selectorText;
-    if (val) {
-    var file = `<div title="${val}" class="file">${val}</div>`;
-    if (styles.includes('background-color') || styles.includes('background-image')) {
-        medias.decors.append(file);
-        datalists.decors.data.push(val);
-    } else {
-        medias.styles.append(file);
-        datalists.styles.data.push(val);
-    }
-    }
-});
+// var decorsStyleSheet = document.styleSheets[1].cssRules;
+// [...decorsStyleSheet].forEach(val => {
+//     var styles = [...val.style];
+//     val = val.selectorText;
+//     if (val) {
+//     var file = `<div title="${val}" class="file">${val}</div>`;
+//     if (styles.includes('background-color') || styles.includes('background-image')) {
+//         medias.decors.append(file);
+//         datalists.decors.data.push(val);
+//     } else {
+//         medias.styles.append(file);
+//         datalists.styles.data.push(val);
+//     }
+//     }
+// });
 
 /* Media
 ======== */
@@ -524,6 +556,10 @@ $.each(states.media, function(key, val) {
     }
 });
 datalistsWrite();
+$(".media_cat p").click(function(){
+    $(".media_cat p").not(this).next().hide();
+    $(this).next().toggle();
+})
 }
 
 // ADD ELEMENTS
@@ -589,9 +625,10 @@ function setElements(val, type) {
                     </div>`
 
 
-    var imageElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-src=${val}><img style="width: 100%;" src=${src} id=${id + 'img'}></img></div>`
+    const imageElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-src=${val}><img style="width: 100%;" src=${src} id=${id + 'img'}></img></div>`
 
-    var videoElement = `<div 
+    const videoElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-src=${val}><video autoplay style="width: 100%;" src=${src} id=${id + 'video'}></video></div>`
+    var videoElement_old = `<div 
                             id=${id}
                             class = "popup video"
                             style = "z-index: ${zIndex};
@@ -746,7 +783,7 @@ function setElements(val, type) {
     if (type === 'media_video') {
         $('#preview').append(videoElement);
         // initResizeElement(id);
-        addMenu(id);
+        // addMenu(id);
         closeMediaList();
     } else if (type === 'videoStream'){
         $('#preview').append(streamElement);
@@ -869,8 +906,6 @@ function setElements(val, type) {
 
     $(".resizable").resizable();
 }
-
-const rgb2hex = (rgb) => `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice(1).map(n => parseInt(n, 10).toString(16).padStart(2, '0')).join('')}`
 
 function addMenu(id) {
     var menuTemplate =  `<div  

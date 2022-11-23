@@ -16,6 +16,7 @@ socket.on('json visual', function(data) {
     })
 });
 
+let startPosition;
 let movedStep;
 let arrayEl;
 
@@ -23,6 +24,7 @@ function getFileName(src) {
     return src.split('/')[src.split('/').length -1]
 }
 
+// FUNCTION TO MAKE TEMPORARY RANDOM STRING IDs TO CONNECT ALL ELEMENTS
 function makeid(length) {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -68,27 +70,46 @@ function displayStructure(fileName, data) {
         $('#' + fileName + 'sceneList').sortable({
             start : function (event, ui) {
                 startPosition = ui.item.index();
-                arrayEl = mainData[fileName]['scene-order']
-                movedStep = arrayEl.splice(ui.item.index(), 1)[0];
+                // arrayEl = mainData[fileName]['scene-order']
+                // movedStep = arrayEl.splice(ui.item.index(), 1)[0];
              },
              stop: function(event, ui) {
-                 arrayEl.splice(ui.item.index(), 0, movedStep);
-                 mainData[fileName]['scene-order'] = arrayEl;
-                 console.log(mainData[fileName]['scene-order']);
-                 saveSceneOrder(fileName, arrayEl);
+                let endPosition = ui.item.index();
+                if (endPosition !== startPosition) {
+                    // let arrayEl = mainData[fileName]['scene-order'];
+                    let movedElement = mainData[fileName]['scene-order'].splice(startPosition, 1)[0];
+                    mainData[fileName]['scene-order'].splice(endPosition, 0, movedElement);
+                    // mainData[fileName]['scene-order'] = arrayEl;
+                    saveSceneOrder(fileName, mainData[fileName]['scene-order']);
+                    console.log(mainData[fileName]['scene-order']);
+                }
+                //  arrayEl.splice(ui.item.index(), 0, movedStep);
+                //  mainData[fileName]['scene-order'] = arrayEl;
+                //  console.log(mainData[fileName]['scene-order']);
+                //  saveSceneOrder(fileName, arrayEl);
              }
         })
         $("#" + id).sortable({
             start : function (event, ui) {
                startPosition = ui.item.index();
-               arrayEl = mainData[fileName]['scenes'][sceneOrderNumber]['step-order']
-                movedStep = arrayEl.splice(ui.item.index(), 1)[0];
+            //    arrayEl = mainData[fileName]['scenes'][sceneOrderNumber]['step-order']
+            //     movedStep = arrayEl.splice(ui.item.index(), 1)[0];
             },
             stop: function(event, ui) {
-                arrayEl.splice(ui.item.index(), 0, movedStep);
-                mainData[fileName]['scenes'][sceneOrderNumber]['step-order'] = arrayEl;
-                console.log(mainData[fileName]);
-                saveStepOrder(fileName, sceneOrderNumber, arrayEl);
+                let endPosition = ui.item.index();
+                if (endPosition !== startPosition) {
+                    // let arrayEl = mainData[fileName]['scene-order'];
+                    let movedElement = mainData[fileName]['scenes'][sceneOrderNumber]['step-order'].splice(startPosition, 1)[0];
+                    mainData[fileName]['scenes'][sceneOrderNumber]['step-order'].splice(endPosition, 0, movedElement);
+                    // mainData[fileName]['scene-order'] = arrayEl;
+                    saveStepOrder(fileName, sceneOrderNumber, mainData[fileName]['scenes'][sceneOrderNumber]['step-order']);
+                    console.log(mainData[fileName]['scenes'][sceneOrderNumber]['step-order']);
+                }
+
+                // arrayEl.splice(ui.item.index(), 0, movedStep);
+                // mainData[fileName]['scenes'][sceneOrderNumber]['step-order'] = arrayEl;
+                // console.log(mainData[fileName]);
+                // saveStepOrder(fileName, sceneOrderNumber, arrayEl);
             }
         });    
         $("#" + id + "toggler").click(function() {
@@ -154,11 +175,10 @@ function setStep(e, fileName, scene, step) {
             stepData.video.forEach(video => media.push(video));
             sortedMedia = media.sort((r1, r2) => (r1['z-index'] > r2['z-index']) ? 1 : (r1['z-index'] < r2['z-index']) ? -1 : 0);
             sortedMedia.forEach(element => {
-                const li = `<li data-src=${element.src} onclick="setActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-src=${element.src}></div>${getFileName(element.src)}</li>`;
-                // $('#step-media ul').empty();
+                let data_key = makeid(5);
+                const li = `<li data-key=${data_key} onclick="setActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${getFileName(element.src)}</li>`;
                 $('#step-media ul').append(li);
-                // $('#preview').empty();
-                setElements(element.src, 'media_images');
+                setElements(element.src, 'media_images', data_key);
             })
         }) 
     } else {
@@ -168,20 +188,27 @@ function setStep(e, fileName, scene, step) {
 
 function toggleVisibility(e) {
     $(e.target).toggleClass('visible');
-    $(`[src*='${e.target.dataset.src}']`).parent().toggle();
+    $(`[src*='${e.target.dataset.key}']`).parent().toggle();
 }
 
 function setActiveStepMediaElement(e) {
+    // MARK IN MEDIA LIST
     $("#step-media ul li").not(e.target).removeClass('active');
     $(e.target).toggleClass('active');
+
+    // MARK IN PREVIEW
+    $('.draggable').not(`.draggable[data-key*='${e.target.dataset.key}']`).removeClass('active');
+    $(`.draggable[data-key*='${e.target.dataset.key}']`).toggleClass('active');
+
+    // ADD EVENT LISTENERS
     $("#delete-button").unbind("click");
     if ($(e.target).hasClass('active')) {
         $("#delete-button").click(function(){
-            $(`[src*='${e.target.dataset.src}']`).parent().remove();
+            $(`.draggable[data-key*='${e.target.dataset.key}']`).remove();
             $(e.target).remove();
         })
         // $("#edit-button").click(function(){
-        //     $(`[src*='${e.target.dataset.src}']`).parent().remove();
+        //     $(`[src*='${e.target.dataset.key}']`).parent().remove();
         //     $(e.target).remove();
         // })
     }
@@ -443,9 +470,11 @@ val.el.addClass('edit-element');
 var $media = $('#media');
 
 $media.on('mousedown', '.file', function() {
-    setElements($(this).attr('title'), this.parentElement.className);
+    let data_key = makeid(5) + $(this).attr('title');
 
-    const li = `<li data-src=${$(this).attr('title')} onclick="setActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-src=${$(this).attr('title')}></div>${getFileName($(this).attr('title'))}</li>`;
+    setElements($(this).attr('title'), this.parentElement.className, data_key);
+   
+    const li = `<li data-key=${data_key} onclick="setActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${getFileName($(this).attr('title'))}</li>`;
            
     $('#step-media ul').append(li);
            
@@ -563,7 +592,7 @@ $(".media_cat p").click(function(){
 }
 
 // ADD ELEMENTS
-function setElements(val, type) {
+function setElements(val, type, data_key) {
     $('#media-editor')[0].innerHTML = '';
 
     src = '/data/media/' + val;
@@ -625,9 +654,10 @@ function setElements(val, type) {
                     </div>`
 
 
-    const imageElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-src=${val}><img style="width: 100%;" src=${src} id=${id + 'img'}></img></div>`
+    const imageElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key}><img style="width: 100%;" src=${src} id=${id + 'img'}></img></div>`
 
-    const videoElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-src=${val}><video autoplay style="width: 100%;" src=${src} id=${id + 'video'}></video></div>`
+    const videoElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key}><video autoplay style="width: 100%;" src=${src} id=${id + 'video'}></video></div>`
+
     var videoElement_old = `<div 
                             id=${id}
                             class = "popup video"
@@ -900,8 +930,25 @@ function setElements(val, type) {
     initDragElement();
 
     $('.draggable').mousedown(function(){
-        $('.draggable').css("border-color", '#FF0000');
-        $(this).css("border-color", '#00FF00');
+        $('.draggable').not(this).removeClass('active');
+        $(this).addClass('active');
+        // MARK ACTIVE IN MEDIA LIST
+        $("#step-media ul li").not(`li[data-key="${this.dataset.key}"]`).removeClass('active');
+        $("#step-media").find(`li[data-key="${this.dataset.key}"]`).addClass('active');
+        // SET EVENT LISTENERS ON BUTTONS
+        $("#delete-button").unbind("click");
+        let previewElement = $(this);
+        let data_key = this.dataset.key;
+        if ($(this).hasClass('active')) {
+            $("#delete-button").click(function(){
+                $(previewElement).remove();
+                $("#step-media").find(`li[data-key="${data_key}"]`).remove();
+            })
+            // $("#edit-button").click(function(){
+            //     $(`[src*='${e.target.dataset.key}']`).parent().remove();
+            //     $(e.target).remove();
+            // })
+        }
     });
 
     $(".resizable").resizable();

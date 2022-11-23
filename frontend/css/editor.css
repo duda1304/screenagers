@@ -599,6 +599,10 @@ video {
   overflow: hidden;
 }
 
+.draggable.active {
+  border: 1px solid #00FF00;
+}
+
 .media_cat p {
   background-color: #605d5d;
   padding: 10px;

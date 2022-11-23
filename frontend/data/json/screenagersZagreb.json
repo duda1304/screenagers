@@ -1,8 +1,7 @@
 {
-    "name": "screenagers Zagreb",
+    "name": "Screenagers Zagreb",
     "languages": [
-        "EN",
-        "FR"
+        "EN"
     ],
     "scene-order": [
         "1",
@@ -13,9 +12,9 @@
             "name": "Cable story",
             "step-order": [
                 "2",
-                "3",
                 "4",
                 "5",
+                "3",
                 "6",
                 "7",
                 "8",
@@ -234,7 +233,7 @@
             }
         },
         "2": {
-            "name": "second story",
+            "name": "Second story",
             "step-order": [
                 "1",
                 "2",

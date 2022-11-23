@@ -1,10 +1,6 @@
 var express = require('express');
 var path = require('path');
 var fs = require('fs');
-const mysql = require("mysql2");
-const bodyParser = require("body-parser");
-const databaseRoutes = require("./backend/databaseRoutes");
-
 const QrScanner = require('qr-scanner'); 
 
 
@@ -92,8 +88,6 @@ function getBackupFilename() {
 /* Web server
 ============= */
 var app = express();
-app.use(bodyParser.json());
-app.use(databaseRoutes);
 
 var server = app.listen(port, function() {
   var url = 'http://localhost:' + port;

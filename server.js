@@ -248,6 +248,35 @@ const set = {
     })
 
 
+    // NOVO ZA DODAVANJE STEPA
+    socket.on('add step', (data) => {
+      const filePath = `./frontend/data/json/${data.fileName}.json`;
+      const file = require(filePath);
+          
+      file['scenes'][data.scene]['step-order'].push(data.key);
+      file['scenes'][data.scene]['steps'][data.key] = data.step;
+          
+      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
+        if (err) return console.log(err);
+       
+      });
+    })
+
+    // NOVO ZA DODAVANJE SCENE
+    socket.on('add scene', (data) => {
+      const filePath = `./frontend/data/json/${data.fileName}.json`;
+      const file = require(filePath);
+          
+      file['scene-order'].push(data.key);
+      file['scenes'][data.key] = data.scene;
+          
+      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
+        if (err) return console.log(err);
+       
+      });
+    })
+
+
     socket.on('refresh media list', () => {
       states.media = walkSync('./frontend/data/media');
       states.media = states.media.reduce((acc, item) => {

@@ -79,11 +79,11 @@
         name="decor.src"
       /><br> -->
       <!-- <p style='text-decoration: underline; font-size: 0.8em;' onclick='removeBackgroundColor(null)'>Remove Background color</p> -->
-      <div id='editor-buttons'>
+      <div class='editor-buttons'>
         <!-- <button onclick="newEtape()" class="grey">+</button> -->
         <button onclick="addMedia()"><img src="./icons/plus.svg"></img></button>
-        <button id="delete-button"><img src="./icons/trash.svg"></img></button>
-        <button id="edit-button"><img src="./icons/settings.svg"></img></button>
+        <button id="delete-media-button"><img src="./icons/trash.svg"></img></button>
+        <button id="edit-media-button"><img src="./icons/settings.svg"></img></button>
         <button><img src="./icons/arrowhead-down.svg"></img></button>
         <button><img src="./icons/arrowhead-up.svg"></img></button>
 
@@ -137,21 +137,19 @@
     <section id="structure">
       <div class="section-header">Structure</div>
       <div id="structure-content"></div>
+      <div class='editor-buttons'>
+        <button id="add-scene-step-button" onclick="addInStructure()"><img src="./icons/plus.svg"></img></button>
+        <button id="delete-scene-step-button" onclick="deleteFromStructure()"><img src="./icons/trash.svg"></img></button>
+     </div>
     </section>
   </div>
+
+  <div id="alert" class="d-none"></div>
   
-  <div id="preview" style="height: 50%; width: 50%; border: 0 none; overflow: hidden; margin-left: auto;
+  <div id="preview" style="height: 65%; width: 65%; border: 0 none; overflow: hidden; margin-left: auto;
   margin-right: auto; margin-top: 10%; background-color: black; position: relative;">
-    
-    <!-- <section class="container" id="layers" style="position: absolute; top: 20px; right: 20px;">
-      <div class="list-item" id="step1">
-        <div class="item-content">
-          <span class="order">1</span> Alpha
-        </div>
-      </div>
-     
-    </section> -->
-   
+  
+  
 
   
   <!-- <div id="save-menu" class="edit-element"> -->

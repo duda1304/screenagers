@@ -1,4 +1,4 @@
-
+// KADA NOVI SHOE NESMIJE IMATI RAZMAKA U FILENAMEu
 const socket = io();
 
 let mainData = {};
@@ -46,7 +46,8 @@ function displayStructure(fileName, data) {
     
     $('#structure-content').append(showElement);
 
-    // append available languages
+
+    // APPEND AVAILABLE LANGUAGES
     $.each(data.languages, function(key, value) {   
         $('#' + fileName).find('select')
             .append($("<option></option>")
@@ -54,70 +55,87 @@ function displayStructure(fileName, data) {
                        .text(value)); 
    });
 
-    // append scenes and steps
+    // APPEND SCENES AND STEPS
     const sceneOrder = data['scene-order'];
+
     sceneOrder.forEach(sceneOrderNumber => {
+
         let scene = data['scenes'][sceneOrderNumber];
         const stepOrder = scene['step-order'];
 
         const id = makeid(5);
-        $(`<li style="margin-top: 10px;"><b id=${id + 'toggler'} class="toggler">${scene.name}<b></li>`).appendTo(`#${fileName + 'sceneList'}`).append(`<ul id=${id} style="display: none" class="steps"></ul>`);
+        $(`<li style="margin-top: 10px;"><b id=${id + 'toggler'} class="toggler">${scene.name}<b></li>`).appendTo(`#${fileName + 'sceneList'}`)
+        .append(`<ul id=${id} style="display: none" class="steps"></ul>`);
 
+        let number = 1;
         stepOrder.forEach(stepOrderNumber => {
-            $("#" + id).append(`<li class="step" onclick="setStep(event, '${fileName}', '${sceneOrderNumber}', ${stepOrderNumber})">Step </li>`)
+            $("#" + id).append(`<li class="step" onclick="setStep(event, '${fileName}', '${sceneOrderNumber}', ${stepOrderNumber})">Step ${number}</li>`)
+            number = number + 1;
         })
 
+        // DEFINE SORTABLE FUNCTIONS FOR SCENES
         $('#' + fileName + 'sceneList').sortable({
             start : function (event, ui) {
                 startPosition = ui.item.index();
-                // arrayEl = mainData[fileName]['scene-order']
-                // movedStep = arrayEl.splice(ui.item.index(), 1)[0];
              },
              stop: function(event, ui) {
                 let endPosition = ui.item.index();
                 if (endPosition !== startPosition) {
-                    // let arrayEl = mainData[fileName]['scene-order'];
                     let movedElement = mainData[fileName]['scene-order'].splice(startPosition, 1)[0];
                     mainData[fileName]['scene-order'].splice(endPosition, 0, movedElement);
-                    // mainData[fileName]['scene-order'] = arrayEl;
                     saveSceneOrder(fileName, mainData[fileName]['scene-order']);
                     console.log(mainData[fileName]['scene-order']);
                 }
-                //  arrayEl.splice(ui.item.index(), 0, movedStep);
-                //  mainData[fileName]['scene-order'] = arrayEl;
-                //  console.log(mainData[fileName]['scene-order']);
-                //  saveSceneOrder(fileName, arrayEl);
              }
         })
+
+        // DEFINE SORTABLE FUNCTIONS FOR STEPS
         $("#" + id).sortable({
             start : function (event, ui) {
                startPosition = ui.item.index();
-            //    arrayEl = mainData[fileName]['scenes'][sceneOrderNumber]['step-order']
-            //     movedStep = arrayEl.splice(ui.item.index(), 1)[0];
             },
             stop: function(event, ui) {
                 let endPosition = ui.item.index();
                 if (endPosition !== startPosition) {
-                    // let arrayEl = mainData[fileName]['scene-order'];
                     let movedElement = mainData[fileName]['scenes'][sceneOrderNumber]['step-order'].splice(startPosition, 1)[0];
                     mainData[fileName]['scenes'][sceneOrderNumber]['step-order'].splice(endPosition, 0, movedElement);
-                    // mainData[fileName]['scene-order'] = arrayEl;
                     saveStepOrder(fileName, sceneOrderNumber, mainData[fileName]['scenes'][sceneOrderNumber]['step-order']);
                     console.log(mainData[fileName]['scenes'][sceneOrderNumber]['step-order']);
-                }
 
-                // arrayEl.splice(ui.item.index(), 0, movedStep);
-                // mainData[fileName]['scenes'][sceneOrderNumber]['step-order'] = arrayEl;
-                // console.log(mainData[fileName]);
-                // saveStepOrder(fileName, sceneOrderNumber, arrayEl);
+                    // ADJUST TEXT STEP number IN HTML
+                    $(ui.item).text('Step ' + (endPosition + 1));
+
+                    $(function () {
+                        let currentLi = ui.item;
+                        let number = endPosition;
+
+                        while (number > 0) {
+                            $(currentLi).prev().text('Step ' + number);
+                            currentLi = $(currentLi).prev();
+                            number = number - 1;
+                        }       
+                        
+                        currentLi = ui.item;
+                        number = endPosition + 2;
+
+                        while (number <= ui.item.parent().children().length) {
+                            $(currentLi).next().text('Step ' + number);
+                            currentLi = $(currentLi).next();
+                            number = number + 1;
+                        }
+                    });
+                }
             }
         });    
+
+        // DEFINE TOGGLE FUNCTIONS FOR STEP LIST
         $("#" + id + "toggler").click(function() {
             $(".toggler").not(this).next().hide();
             $( "#" + id ).toggle();
             
             $(".toggler").not(this).removeClass('active');
             $(this).toggleClass('active');
+
             if ($(this).hasClass('active')) {
                 setActiveStep(fileName, sceneOrderNumber, "");
                 $(".step").removeClass('active');
@@ -176,7 +194,7 @@ function setStep(e, fileName, scene, step) {
             sortedMedia = media.sort((r1, r2) => (r1['z-index'] > r2['z-index']) ? 1 : (r1['z-index'] < r2['z-index']) ? -1 : 0);
             sortedMedia.forEach(element => {
                 let data_key = makeid(5);
-                const li = `<li data-key=${data_key} onclick="setActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${getFileName(element.src)}</li>`;
+                const li = `<li data-key=${data_key} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${getFileName(element.src)}</li>`;
                 $('#step-media ul').append(li);
                 setElements(element.src, 'media_images', data_key);
             })
@@ -191,7 +209,7 @@ function toggleVisibility(e) {
     $(`[src*='${e.target.dataset.key}']`).parent().toggle();
 }
 
-function setActiveStepMediaElement(e) {
+function markActiveStepMediaElement(e) {
     // MARK IN MEDIA LIST
     $("#step-media ul li").not(e.target).removeClass('active');
     $(e.target).toggleClass('active');
@@ -201,13 +219,13 @@ function setActiveStepMediaElement(e) {
     $(`.draggable[data-key*='${e.target.dataset.key}']`).toggleClass('active');
 
     // ADD EVENT LISTENERS
-    $("#delete-button").unbind("click");
+    $("#delete-media-button").unbind("click");
     if ($(e.target).hasClass('active')) {
-        $("#delete-button").click(function(){
+        $("#delete-media-button").click(function(){
             $(`.draggable[data-key*='${e.target.dataset.key}']`).remove();
             $(e.target).remove();
         })
-        // $("#edit-button").click(function(){
+        // $("#edit-media-button").click(function(){
         //     $(`[src*='${e.target.dataset.key}']`).parent().remove();
         //     $(e.target).remove();
         // })
@@ -219,13 +237,167 @@ function addMedia() {
     if (active.step !== "") {
         displayMediaList();
     }
-   
 }
 
+function addInStructure() {
+    if (active.step !== "") {
+        $('#alert')
+        .empty()
+        .append(`<p>Add new step?</p>
+                <div class='editor-buttons' style='justify-content: center;'>
+                    <button>Ok</button>
+                </div>`)
+        .dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+        });
+        // OK BUTTON FUNCTION
+        $('#alert button').click(function() {
+            let stepNumbers = mainData[active.fileName]['scenes'][active.scene]['step-order'].map(Number);
+             
+            let newStepNumber = Math.max(...stepNumbers) + 1;
+            // ADD TO MAINDATA
+            mainData[active.fileName]['scenes'][active.scene]['steps'][newStepNumber] = stepObject;
+            mainData[active.fileName]['scenes'][active.scene]['step-order'].push((newStepNumber));
+            // SAVE TO JSON FILE
+            addNewStep(newStepNumber, stepObject);
+            // ADD TO STRUCTURE LIST
+            $('#structure li.active').parent().append(`<li class="step" onclick="setStep(event, '${active.fileName}', '${active.scene}', ${newStepNumber})">Step ${newStepNumber}</li>`)
 
+            setTimeout(() => {
+                $(".ui-dialog-titlebar-close"). click();
+            }, 200); 
+        })
+    } else if (active.scene !== "") {
+        $('#alert')
+        .empty()
+        .append(`<form>
+                    <input type="text" name="name" placeholder="New scene name" required></input>
+                    <div class='editor-buttons' style='justify-content: center;'>
+                        <button type="submit">Ok</button>
+                    </div>
+                 </form>`)
+        .dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+        });
+        // OK BUTTON FUNCTION
+        $('#alert form').submit(function(e) {
+            e.preventDefault();
+            const sceneName = e.target.elements.name.value;
+            
+            let sceneNumbers = mainData[active.fileName]['scene-order'];
+             
+            let newSceneNumber = Math.max(...sceneNumbers) + 1;
 
+            // ADD TO MAINDATA
+            let newSceneObject = sceneObject;
+            newSceneObject['name'] = sceneName;
+            newSceneObject['step-order'] = ['1'];
+            newSceneObject['steps'] = {
+                                        "1": {
+                                            "background-color": "",
+                                            "image": [],
+                                            "video": [],
+                                            "stream": [],
+                                            "text": [],
+                                            "avatar": "",
+                                            "console": ""
+                                        }
+                                    };
 
+            mainData[active.fileName]['scenes'][newSceneNumber] = newSceneObject;
+            mainData[active.fileName]['scene-order'].push((newSceneNumber));
 
+            // SAVE TO JSON FILE
+            addNewScene(newSceneNumber, newSceneObject);
+
+            // ADD TO STRUCTURE LIST
+            const id = makeid(5);
+
+            $(`<li style="margin-top: 10px;"><b id=${id + 'toggler'} class="toggler">${sceneName}<b></li>`).appendTo(`#${active.fileName + 'sceneList'}`)
+            .append(`<ul id=${id} style="display: none" class="steps"></ul>`);
+    
+            $("#" + id).append(`<li class="step" onclick="setStep(event, '${active.fileName}', '${newSceneNumber}', ${1})">Step 1</li>`);
+
+           // DEFINE SORTABLE FUNCTIONS FOR STEPS IN NEW SCENE
+            $("#" + id).sortable({
+                start : function (event, ui) {
+                startPosition = ui.item.index();
+                },
+                stop: function(event, ui) {
+                    let endPosition = ui.item.index();
+                    if (endPosition !== startPosition) {
+                        let movedElement = mainData[fileName]['scenes'][sceneOrderNumber]['step-order'].splice(startPosition, 1)[0];
+                        mainData[fileName]['scenes'][sceneOrderNumber]['step-order'].splice(endPosition, 0, movedElement);
+                        saveStepOrder(fileName, sceneOrderNumber, mainData[fileName]['scenes'][sceneOrderNumber]['step-order']);
+                        console.log(mainData[fileName]['scenes'][sceneOrderNumber]['step-order']);
+
+                        // ADJUST TEXT STEP number IN HTML
+                        $(ui.item).text('Step ' + (endPosition + 1));
+
+                        $(function () {
+                            let currentLi = ui.item;
+                            let number = endPosition;
+
+                            while (number > 0) {
+                                $(currentLi).prev().text('Step ' + number);
+                                currentLi = $(currentLi).prev();
+                                number = number - 1;
+                            }       
+                            
+                            currentLi = ui.item;
+                            number = endPosition + 2;
+
+                            while (number <= ui.item.parent().children().length) {
+                                $(currentLi).next().text('Step ' + number);
+                                currentLi = $(currentLi).next();
+                                number = number + 1;
+                            }
+                        });
+                    }
+                }
+            });    
+
+            // DEFINE TOGGLE FUNCTIONS FOR STEP LIST
+            $("#" + id + "toggler").click(function() {
+                $(".toggler").not(this).next().hide();
+                $( "#" + id ).toggle();
+                
+                $(".toggler").not(this).removeClass('active');
+                $(this).toggleClass('active');
+
+                if ($(this).hasClass('active')) {
+                    setActiveStep(fileName, sceneOrderNumber, "");
+                    $(".step").removeClass('active');
+                } else {
+                    setActiveStep("", "", "");
+                    $(".step").removeClass('active');
+                }
+                $('#step-media ul').empty();
+                $('#preview').empty();
+            });
+            
+            setTimeout(() => {
+                $(".ui-dialog-titlebar-close"). click();
+            }, 200); 
+        })
+    }
+}
+
+function deleteFromStructure() {
+
+}
+
+function addNewStep(newStepNumber, step) {
+    socket.emit("add step", {"fileName" : active.fileName, "scene" : active.scene, "key" : newStepNumber, "step" : step});
+}
+
+function addNewScene(newSceneNumber, scene) {
+    socket.emit("add scene", {"fileName" : active.fileName, "key" : newSceneNumber, "scene" : scene});
+}
 
 window.onload = function() {
     // initDragElement();
@@ -474,7 +646,7 @@ $media.on('mousedown', '.file', function() {
 
     setElements($(this).attr('title'), this.parentElement.className, data_key);
    
-    const li = `<li data-key=${data_key} onclick="setActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${getFileName($(this).attr('title'))}</li>`;
+    const li = `<li data-key=${data_key} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${getFileName($(this).attr('title'))}</li>`;
            
     $('#step-media ul').append(li);
            
@@ -936,15 +1108,15 @@ function setElements(val, type, data_key) {
         $("#step-media ul li").not(`li[data-key="${this.dataset.key}"]`).removeClass('active');
         $("#step-media").find(`li[data-key="${this.dataset.key}"]`).addClass('active');
         // SET EVENT LISTENERS ON BUTTONS
-        $("#delete-button").unbind("click");
+        $("#delete-media-button").unbind("click");
         let previewElement = $(this);
         let data_key = this.dataset.key;
         if ($(this).hasClass('active')) {
-            $("#delete-button").click(function(){
+            $("#delete-media-button").click(function(){
                 $(previewElement).remove();
                 $("#step-media").find(`li[data-key="${data_key}"]`).remove();
             })
-            // $("#edit-button").click(function(){
+            // $("#edit-media-button").click(function(){
             //     $(`[src*='${e.target.dataset.key}']`).parent().remove();
             //     $(e.target).remove();
             // })

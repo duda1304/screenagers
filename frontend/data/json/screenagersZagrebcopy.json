@@ -4,21 +4,21 @@
         "EN"
     ],
     "scene-order": [
-        2,
-        1
+       1,
+       2,
+       3
     ],
     "scenes": {
         "1": {
             "name": "Cable story",
             "step-order": [
-                2,
                 1,
+                2,
                 3,
                 4,
                 5,
                 6,
                 7,
-                11,
                 8,
                 9,
                 10
@@ -232,15 +232,6 @@
                     "console": ""
                 },
                 "11": {
-                    "background-color": "",
-                    "image": [],
-                    "video": [],
-                    "stream": [],
-                    "text": [],
-                    "avatar": "",
-                    "console": ""
-                },
-                "12": {
                     "background-color": "",
                     "image": [],
                     "video": [],
@@ -472,17 +463,16 @@
                     "text": [],
                     "avatar": "",
                     "console": ""
-                },
-                "11": {
-                    "background-color": "",
-                    "image": [],
-                    "video": [],
-                    "stream": [],
-                    "text": [],
-                    "avatar": "",
-                    "console": ""
-                },
-                "12": {
+                }
+            }
+        },
+        "3": {
+            "name": "test",
+            "step-order": [
+                1
+            ],
+            "steps": {
+                "1": {
                     "background-color": "",
                     "image": [],
                     "video": [],

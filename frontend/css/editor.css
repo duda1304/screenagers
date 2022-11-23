@@ -260,26 +260,28 @@ body {
   background-color: #008496;
 }
 
-#editor-buttons {
+.editor-buttons {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
   flex-wrap: wrap;
   margin-top: auto;
 }
 
-#editor-buttons button {
+.editor-buttons button {
   margin-top: 10px;
+  margin-left: 10px;
   background-color: #605d5d;
 }
+
+#alert {
+  color: white;
+  text-align: center;
+}
+
 
 .ui-dialog {
   word-break: break-all;
   background-color: #424141;
-}
-
-.ui-dialog-title::before {
-  content: "CHOOSE FILE";
 }
 
 .ui-widget-overlay {

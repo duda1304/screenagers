@@ -4,7 +4,6 @@ const showObject = { "name" : "",
 }
 
 const stepObject = {        
-                        "id" : "",
                         "background-color" : "", 
                         "image" : [],
                         "video" : [],
@@ -12,6 +11,12 @@ const stepObject = {
                         "text" : [],
                         "avatar" : "", 
                         "console" : ""
+                    };
+
+const sceneObject = {
+                        "name" : "",
+                        "step-order" : [],
+                        "steps" : {}
                     };
 
 const global = {"top" : "",

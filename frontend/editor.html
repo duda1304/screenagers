@@ -62,7 +62,7 @@
 <body>
 <main id="editor-main">
   <div id="left-menu">
-    <div id="media-menu">
+    <div id="media-menu"  class="resizable">
       <div class="section-header">Media</div>
       <div id="step-media">
         <ul></ul>
@@ -84,8 +84,8 @@
         <button onclick="addMedia()"><img src="./icons/plus.svg"></img></button>
         <button id="delete-media-button"><img src="./icons/trash.svg"></img></button>
         <button id="edit-media-button"><img src="./icons/settings.svg"></img></button>
-        <button><img src="./icons/arrowhead-down.svg"></img></button>
-        <button><img src="./icons/arrowhead-up.svg"></img></button>
+        <button id="layer-down"><img src="./icons/arrowhead-down.svg"></img></button>
+        <button id="layer-up"><img src="./icons/arrowhead-up.svg"></img></button>
 
         <!-- <button onclick="clearPreview()" class="grey"><span>🚫</span> Clear all</button> -->
         <!-- <button onclick="setElements('', 'text-box')" class="green" id="add-text-button" >Add text box</button>
@@ -134,7 +134,7 @@
         <button class="large-black" onclick="sendToScreenInput('screen')">Send to screen etape</button>
       </div> -->
     </div>
-    <section id="structure">
+    <section id="structure" class="resizable">
       <div class="section-header">Structure</div>
       <div id="structure-content"></div>
       <div class='editor-buttons'>

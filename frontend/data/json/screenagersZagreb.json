@@ -4,12 +4,289 @@
         "EN"
     ],
     "scene-order": [
-        2,
-        1
+        3,
+        1,
+        2
     ],
     "scenes": {
         "1": {
             "name": "Cable story",
+            "step-order": [
+                5,
+                6,
+                1,
+                2,
+                4,
+                3,
+                7,
+                11,
+                8,
+                9,
+                10,
+                12,
+                13,
+                14
+            ],
+            "steps": {
+                "1": {
+                    "background-color": "",
+                    "image": [],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                },
+                "2": {
+                    "background-color": "",
+                    "image": [
+                        {
+                            "top": "",
+                            "left": "",
+                            "z-index": 1,
+                            "width": "100%",
+                            "height": "100%",
+                            "object-fit": "cover",
+                            "background-color": "",
+                            "background-image": "",
+                            "transform": "",
+                            "src": "CableStory/Histoire-des-cables001.jpeg"
+                        },
+                        {
+                            "top": "",
+                            "left": "",
+                            "z-index": 2,
+                            "width": "100%",
+                            "height": "100%",
+                            "object-fit": "cover",
+                            "background-color": "",
+                            "background-image": "",
+                            "transform": "",
+                            "src": "Gif/Avatars/Avatars2.gif"
+                        }
+                    ],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                },
+                "3": {
+                    "background-color": "",
+                    "image": [
+                        {
+                            "top": "",
+                            "left": "",
+                            "z-index": 1,
+                            "width": "100%",
+                            "height": "100%",
+                            "object-fit": "cover",
+                            "background-color": "",
+                            "background-image": "",
+                            "transform": "",
+                            "src": "CableStory/Histoire-des-cables002.jpeg"
+                        }
+                    ],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                },
+                "4": {
+                    "background-color": "",
+                    "image": [
+                        {
+                            "top": "",
+                            "left": "",
+                            "z-index": 1,
+                            "width": "100%",
+                            "height": "100%",
+                            "object-fit": "cover",
+                            "background-color": "",
+                            "background-image": "",
+                            "transform": "",
+                            "src": "CableStory/Histoire-des-cables003.jpeg"
+                        }
+                    ],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                },
+                "5": {
+                    "background-color": "",
+                    "image": [
+                        {
+                            "top": "",
+                            "left": "",
+                            "z-index": 1,
+                            "width": "100%",
+                            "height": "100%",
+                            "object-fit": "cover",
+                            "background-color": "",
+                            "background-image": "",
+                            "transform": "",
+                            "src": "CableStory/Histoire-des-cables004.jpeg"
+                        }
+                    ],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                },
+                "6": {
+                    "background-color": "",
+                    "image": [
+                        {
+                            "top": "",
+                            "left": "",
+                            "z-index": 1,
+                            "width": "100%",
+                            "height": "100%",
+                            "object-fit": "cover",
+                            "background-color": "",
+                            "background-image": "",
+                            "transform": "",
+                            "src": "CableStory/Histoire-des-cables005.jpeg"
+                        }
+                    ],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                },
+                "7": {
+                    "background-color": "",
+                    "image": [
+                        {
+                            "top": "",
+                            "left": "",
+                            "z-index": 1,
+                            "width": "100%",
+                            "height": "100%",
+                            "object-fit": "cover",
+                            "background-color": "",
+                            "background-image": "",
+                            "transform": "",
+                            "src": "CableStory/Histoire-des-cables006.jpeg"
+                        }
+                    ],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                },
+                "8": {
+                    "background-color": "",
+                    "image": [
+                        {
+                            "top": "",
+                            "left": "",
+                            "z-index": 1,
+                            "width": "100%",
+                            "height": "100%",
+                            "object-fit": "cover",
+                            "background-color": "",
+                            "background-image": "",
+                            "transform": "",
+                            "src": "CableStory/Histoire-des-cables007.jpeg"
+                        }
+                    ],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                },
+                "9": {
+                    "background-color": "",
+                    "image": [
+                        {
+                            "top": "",
+                            "left": "",
+                            "z-index": 1,
+                            "width": "100%",
+                            "height": "100%",
+                            "object-fit": "cover",
+                            "background-color": "",
+                            "background-image": "",
+                            "transform": "",
+                            "src": "CableStory/Histoire-des-cables008.jpeg"
+                        }
+                    ],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                },
+                "10": {
+                    "background-color": "",
+                    "image": [
+                        {
+                            "top": "",
+                            "left": "",
+                            "z-index": 1,
+                            "width": "100%",
+                            "height": "100%",
+                            "object-fit": "cover",
+                            "background-color": "",
+                            "background-image": "",
+                            "transform": "",
+                            "src": "CableStory/Histoire-des-cables015.jpeg"
+                        }
+                    ],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                },
+                "11": {
+                    "background-color": "",
+                    "image": [],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                },
+                "12": {
+                    "background-color": "",
+                    "image": [],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                },
+                "13": {
+                    "background-color": "",
+                    "image": [],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                },
+                "14": {
+                    "background-color": "",
+                    "image": [],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                }
+            }
+        },
+        "2": {
+            "name": "Second story",
             "step-order": [
                 2,
                 1,
@@ -18,7 +295,6 @@
                 5,
                 6,
                 7,
-                11,
                 8,
                 9,
                 10
@@ -251,19 +527,11 @@
                 }
             }
         },
-        "2": {
-            "name": "Second story",
+        "3": {
+            "name": "test",
             "step-order": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
+                "1",
+                2
             ],
             "steps": {
                 "1": {
@@ -276,213 +544,6 @@
                     "console": ""
                 },
                 "2": {
-                    "background-color": "",
-                    "image": [
-                        {
-                            "top": "",
-                            "left": "",
-                            "z-index": 1,
-                            "width": "100%",
-                            "height": "100%",
-                            "object-fit": "cover",
-                            "background-color": "",
-                            "background-image": "",
-                            "transform": "",
-                            "src": "CableStory/Histoire-des-cables001.jpeg"
-                        }
-                    ],
-                    "video": [],
-                    "stream": [],
-                    "text": [],
-                    "avatar": "",
-                    "console": ""
-                },
-                "3": {
-                    "background-color": "",
-                    "image": [
-                        {
-                            "top": "",
-                            "left": "",
-                            "z-index": 1,
-                            "width": "100%",
-                            "height": "100%",
-                            "object-fit": "cover",
-                            "background-color": "",
-                            "background-image": "",
-                            "transform": "",
-                            "src": "CableStory/Histoire-des-cables002.jpeg"
-                        }
-                    ],
-                    "video": [],
-                    "stream": [],
-                    "text": [],
-                    "avatar": "",
-                    "console": ""
-                },
-                "4": {
-                    "background-color": "",
-                    "image": [
-                        {
-                            "top": "",
-                            "left": "",
-                            "z-index": 1,
-                            "width": "100%",
-                            "height": "100%",
-                            "object-fit": "cover",
-                            "background-color": "",
-                            "background-image": "",
-                            "transform": "",
-                            "src": "CableStory/Histoire-des-cables003.jpeg"
-                        }
-                    ],
-                    "video": [],
-                    "stream": [],
-                    "text": [],
-                    "avatar": "",
-                    "console": ""
-                },
-                "5": {
-                    "background-color": "",
-                    "image": [
-                        {
-                            "top": "",
-                            "left": "",
-                            "z-index": 1,
-                            "width": "100%",
-                            "height": "100%",
-                            "object-fit": "cover",
-                            "background-color": "",
-                            "background-image": "",
-                            "transform": "",
-                            "src": "CableStory/Histoire-des-cables004.jpeg"
-                        }
-                    ],
-                    "video": [],
-                    "stream": [],
-                    "text": [],
-                    "avatar": "",
-                    "console": ""
-                },
-                "6": {
-                    "background-color": "",
-                    "image": [
-                        {
-                            "top": "",
-                            "left": "",
-                            "z-index": 1,
-                            "width": "100%",
-                            "height": "100%",
-                            "object-fit": "cover",
-                            "background-color": "",
-                            "background-image": "",
-                            "transform": "",
-                            "src": "CableStory/Histoire-des-cables005.jpeg"
-                        }
-                    ],
-                    "video": [],
-                    "stream": [],
-                    "text": [],
-                    "avatar": "",
-                    "console": ""
-                },
-                "7": {
-                    "background-color": "",
-                    "image": [
-                        {
-                            "top": "",
-                            "left": "",
-                            "z-index": 1,
-                            "width": "100%",
-                            "height": "100%",
-                            "object-fit": "cover",
-                            "background-color": "",
-                            "background-image": "",
-                            "transform": "",
-                            "src": "CableStory/Histoire-des-cables006.jpeg"
-                        }
-                    ],
-                    "video": [],
-                    "stream": [],
-                    "text": [],
-                    "avatar": "",
-                    "console": ""
-                },
-                "8": {
-                    "background-color": "",
-                    "image": [
-                        {
-                            "top": "",
-                            "left": "",
-                            "z-index": 1,
-                            "width": "100%",
-                            "height": "100%",
-                            "object-fit": "cover",
-                            "background-color": "",
-                            "background-image": "",
-                            "transform": "",
-                            "src": "CableStory/Histoire-des-cables007.jpeg"
-                        }
-                    ],
-                    "video": [],
-                    "stream": [],
-                    "text": [],
-                    "avatar": "",
-                    "console": ""
-                },
-                "9": {
-                    "background-color": "",
-                    "image": [
-                        {
-                            "top": "",
-                            "left": "",
-                            "z-index": 1,
-                            "width": "100%",
-                            "height": "100%",
-                            "object-fit": "cover",
-                            "background-color": "",
-                            "background-image": "",
-                            "transform": "",
-                            "src": "CableStory/Histoire-des-cables008.jpeg"
-                        }
-                    ],
-                    "video": [],
-                    "stream": [],
-                    "text": [],
-                    "avatar": "",
-                    "console": ""
-                },
-                "10": {
-                    "background-color": "",
-                    "image": [
-                        {
-                            "top": "",
-                            "left": "",
-                            "z-index": 1,
-                            "width": "100%",
-                            "height": "100%",
-                            "object-fit": "cover",
-                            "background-color": "",
-                            "background-image": "",
-                            "transform": "",
-                            "src": "CableStory/Histoire-des-cables009.jpeg"
-                        }
-                    ],
-                    "video": [],
-                    "stream": [],
-                    "text": [],
-                    "avatar": "",
-                    "console": ""
-                },
-                "11": {
-                    "background-color": "",
-                    "image": [],
-                    "video": [],
-                    "stream": [],
-                    "text": [],
-                    "avatar": "",
-                    "console": ""
-                },
-                "12": {
                     "background-color": "",
                     "image": [],
                     "video": [],

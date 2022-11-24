@@ -3,6 +3,10 @@ const socket = io();
 
 let mainData = {};
 
+$(".resizable").resizable({
+    handles: "se"
+});
+
 // separate JSONs for each show made, data gives array of all JSONs
 socket.on('json visual', function(data) {
     data.forEach(src => {
@@ -181,22 +185,28 @@ function setStep(e, fileName, scene, step) {
     if($(e.target).hasClass('active')) {
         setActiveStep(fileName, scene, step);
    
-        // DISPLAY SET DATA IN MEDIA LIST AND IN PREVIEW
+        // DISPLAY STEP DATA IN MEDIA LIST 
         let media = [];
+        let zIndex = [];
         let sortedMedia;
 
         $.getJSON('./data/json/' + fileName + '.json', function(jsonData) {
             const stepData = jsonData['scenes'][scene]['steps'][step];
+
+            // GET ALL STEP ELEMENTS AND ALL Z INDEXES
             stepData.image.forEach(image => media.push(image));
             stepData.stream.forEach(stream => media.push(stream));
             stepData.text.forEach(text => media.push(text));
             stepData.video.forEach(video => media.push(video));
-            sortedMedia = media.sort((r1, r2) => (r1['z-index'] > r2['z-index']) ? 1 : (r1['z-index'] < r2['z-index']) ? -1 : 0);
+
+            // SORT MEDIA ACCRODING TO Z INDEX TO DISPLAY LAYOUT ORDER 
+            sortedMedia = media.sort((r1, r2) => (r1['z-index'] < r2['z-index']) ? 1 : (r1['z-index'] > r2['z-index']) ? -1 : 0);
             sortedMedia.forEach(element => {
                 let data_key = makeid(5);
                 const li = `<li data-key=${data_key} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${getFileName(element.src)}</li>`;
                 $('#step-media ul').append(li);
-                setElements(element.src, 'media_images', data_key);
+                // DISPLAY STEP IN MEDIA LIST
+                setElements(element.src, 'media_images', data_key, element);
             })
         }) 
     } else {
@@ -206,8 +216,16 @@ function setStep(e, fileName, scene, step) {
 
 function toggleVisibility(e) {
     $(e.target).toggleClass('visible');
-    $(`[src*='${e.target.dataset.key}']`).parent().toggle();
+    $('#preview').find(`[data-key='${e.target.dataset.key}']`).toggle();
 }
+
+$('.up-button').click(function(){
+    $(this).parents('.leg').insertBefore($(this).parents('.leg').prev());
+    });
+    
+    $('.down-button').click(function(){
+    $(this).parents('.leg').insertAfter($(this).parents('.leg').next());
+    });
 
 function markActiveStepMediaElement(e) {
     // MARK IN MEDIA LIST
@@ -215,18 +233,25 @@ function markActiveStepMediaElement(e) {
     $(e.target).toggleClass('active');
 
     // MARK IN PREVIEW
-    $('.draggable').not(`.draggable[data-key*='${e.target.dataset.key}']`).removeClass('active');
-    $(`.draggable[data-key*='${e.target.dataset.key}']`).toggleClass('active');
+    $('.draggable').not(`.draggable[data-key='${e.target.dataset.key}']`).removeClass('active');
+    $(`.draggable[data-key='${e.target.dataset.key}']`).toggleClass('active');
 
     // ADD EVENT LISTENERS
     $("#delete-media-button").unbind("click");
     if ($(e.target).hasClass('active')) {
         $("#delete-media-button").click(function(){
-            $(`.draggable[data-key*='${e.target.dataset.key}']`).remove();
+            $(`.draggable[data-key='${e.target.dataset.key}']`).remove();
             $(e.target).remove();
         })
+        $('#layer-up').click(function(){
+            $(e.target).parents('li').insertBefore($(e.target).parents('li').prev());
+        })
+        $('#layer-down').click(function(){
+            $(e.target).parents('li').insertAfter($(e.target).parents('uli').next());
+        })
+            
         // $("#edit-media-button").click(function(){
-        //     $(`[src*='${e.target.dataset.key}']`).parent().remove();
+        //     $(`[data-key='${e.target.dataset.key}']`).parent().remove();
         //     $(e.target).remove();
         // })
     }
@@ -390,6 +415,22 @@ function addInStructure() {
 function deleteFromStructure() {
 
 }
+
+// FIND LARGEST INDEX OF ELEMENTS IN PREVIEW
+function findBiggestIndex() {
+    let index_highest = 0;   
+
+    $("#preview .draggable").each(function() {
+        // always use a radix when using parseInt
+        var index_current = parseInt($(this).css("zIndex"), 10);
+        if(index_current > index_highest) {
+            index_highest = index_current;
+        }
+    });
+    
+    return index_highest;
+}
+
 
 function addNewStep(newStepNumber, step) {
     socket.emit("add step", {"fileName" : active.fileName, "scene" : active.scene, "key" : newStepNumber, "step" : step});
@@ -642,6 +683,7 @@ val.el.addClass('edit-element');
 var $media = $('#media');
 
 $media.on('mousedown', '.file', function() {
+    //CREATE UNIQUE DATA KEY TO BE ABLE TO ADD MEDIA WITH SAME SOURCE AND RECOGNIZE THEM
     let data_key = makeid(5) + $(this).attr('title');
 
     setElements($(this).attr('title'), this.parentElement.className, data_key);
@@ -764,223 +806,179 @@ $(".media_cat p").click(function(){
 }
 
 // ADD ELEMENTS
-function setElements(val, type, data_key) {
+function setElements(val, type, data_key, mediaObject) {
     $('#media-editor')[0].innerHTML = '';
 
     src = '/data/media/' + val;
-    var id = Math.floor(100000 + Math.random() * 900000);
+    // var id = Math.floor(100000 + Math.random() * 900000);
 
-    var zIndex ;
-    var zIndexes = [];
-    if ($('.popup')[0]) {
-        $('.popup').each(function() {
-            zIndexes.push(parseInt($(this).css('z-index')));
-        })
-        zIndex = Math.max.apply(Math,zIndexes) + 1;
-    } else {
-        zIndex = 9;
-    }
+    // var zIndex ;
+    // var zIndexes = [];
+    // if ($('.popup')[0]) {
+    //     $('.popup').each(function() {
+    //         zIndexes.push(parseInt($(this).css('z-index')));
+    //     })
+    //     zIndex = Math.max.apply(Math,zIndexes) + 1;
+    // } else {
+    //     zIndex = 9;
+    // }
 
-    var avatars = `<div 
-                        id=${id}
-                        class = "popup image avatars"
-                        style = "z-index: ${zIndex};
-                                text-align: center;
-                                position: absolute;
-                                left: 0%; 
-                                top: 85%; 
-                                box-sizing: border-box;
-                                width: 25%;
-                                height: 15%;
-                                -webkit-touch-callout: none; 
-                                -webkit-user-select: none; 
-                                -khtml-user-select: none; 
-                                -moz-user-select: none; 
-                                -ms-user-select: none; 
-                                user-select: none;"
-                    >
-                        <div 
-                            class = "popup-body"
-                                    style = "width: 100%;
-                                    height: 100%;
-                                    overflow: hidden;
-                                    box-sizing: border-box;
-                                    border-radius: 45%;
-                                    border: 2px solid green;"
-                        >
-                            <div 
-                                class="popup-header" 
-                                id=${id + 'header'}
-                                style = "   position: absolute;
-                                            left: 7%;
-                                            top: 7%;
-                                            width: 85%;
-                                            height: 85%;
-                                            padding: 0;
-                                            cursor: move;
-                                            z-index: 10;
-                                        "
-                            ></div>
-                            <img style = "width: 100%; height: 100%;" id=${id + 'img'}></img>
-                        </div>
-                    </div>`
+    // var avatars = `<div 
+    //                     id=${id}
+    //                     class = "popup image avatars"
+    //                     style = "z-index: ${zIndex};
+    //                             text-align: center;
+    //                             position: absolute;
+    //                             left: 0%; 
+    //                             top: 85%; 
+    //                             box-sizing: border-box;
+    //                             width: 25%;
+    //                             height: 15%;
+    //                             -webkit-touch-callout: none; 
+    //                             -webkit-user-select: none; 
+    //                             -khtml-user-select: none; 
+    //                             -moz-user-select: none; 
+    //                             -ms-user-select: none; 
+    //                             user-select: none;"
+    //                 >
+    //                     <div 
+    //                         class = "popup-body"
+    //                                 style = "width: 100%;
+    //                                 height: 100%;
+    //                                 overflow: hidden;
+    //                                 box-sizing: border-box;
+    //                                 border-radius: 45%;
+    //                                 border: 2px solid green;"
+    //                     >
+    //                         <div 
+    //                             class="popup-header" 
+    //                             id=${id + 'header'}
+    //                             style = "   position: absolute;
+    //                                         left: 7%;
+    //                                         top: 7%;
+    //                                         width: 85%;
+    //                                         height: 85%;
+    //                                         padding: 0;
+    //                                         cursor: move;
+    //                                         z-index: 10;
+    //                                     "
+    //                         ></div>
+    //                         <img style = "width: 100%; height: 100%;" id=${id + 'img'}></img>
+    //                     </div>
+    //                 </div>`
 
 
     const imageElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key}><img style="width: 100%;" src=${src} id=${id + 'img'}></img></div>`
 
     const videoElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key}><video autoplay style="width: 100%;" src=${src} id=${id + 'video'}></video></div>`
-
-    var videoElement_old = `<div 
-                            id=${id}
-                            class = "popup video"
-                            style = "z-index: ${zIndex};
-                                        text-align: center;
-                                        position: absolute;
-                                        left: 0%; 
-                                        top: 85%; 
-                                        box-sizing: border-box;
-                                        width: 20%;
-                                        height: auto;
-                                        -webkit-touch-callout: none; 
-                                        -webkit-user-select: none; 
-                                        -khtml-user-select: none; 
-                                        -moz-user-select: none; 
-                                        -ms-user-select: none; 
-                                        user-select: none; 
-                                    "
-                        >
-                            <div 
-                                class = "popup-body"
-                                            style = "width: 100%;
-                                            height: 100%;
-                                            overflow: hidden;
-                                            box-sizing: border-box;"
-                            >
-                                <div 
-                                    class="popup-header" 
-                                    id=${id + 'header'}
-                                    style = "   position: absolute;
-                                                left: 7%;
-                                                top: 7%;
-                                                width: 85%;
-                                                height: 40%;
-                                                padding: 0;
-                                                cursor: move;
-                                                z-index: 10;
-                                            "
-                                ></div>
-                              
-                                <video style="width: 100%" autoplay src=${src} id=${id + 'video'}></video>
-                            </div>
-                        </div>`
                         
-    var streamElement = ` 
-                        <div 
-                        id=${id}
-                        class = "popup video stream"
-                        style = "z-index: ${zIndex};
-                                    text-align: center;
-                                    position: absolute;
-                                    left: 0%; 
-                                    top: 85%;
-                                    box-sizing: border-box;
-                                    width: 40%;
-                                    height: auto;
-                                    -webkit-touch-callout: none; 
-                                    -webkit-user-select: none; 
-                                    -khtml-user-select: none; 
-                                    -moz-user-select: none; 
-                                    -ms-user-select: none; 
-                                    user-select: none; 
-                                "
-                        >
-                            <div 
-                                class = "popup-body"
-                                            style = "width: 100%;
-                                            height: 100%;
-                                            overflow: hidden;
-                                            box-sizing: border-box;"
-                            >
-                            <div 
-                                class="popup-header" 
-                                id=${id + 'header'}
-                                style = "   position: absolute;
-                                            left: 7%;
-                                            top: 20%;
-                                            width: 85%;
-                                            height: 80%;
-                                            padding: 0;
-                                            cursor: move;
-                                            z-index: 10;
-                                        "
-                            ></div>
+    // var streamElement = ` 
+    //                     <div 
+    //                     id=${id}
+    //                     class = "popup video stream"
+    //                     style = "z-index: ${zIndex};
+    //                                 text-align: center;
+    //                                 position: absolute;
+    //                                 left: 0%; 
+    //                                 top: 85%;
+    //                                 box-sizing: border-box;
+    //                                 width: 40%;
+    //                                 height: auto;
+    //                                 -webkit-touch-callout: none; 
+    //                                 -webkit-user-select: none; 
+    //                                 -khtml-user-select: none; 
+    //                                 -moz-user-select: none; 
+    //                                 -ms-user-select: none; 
+    //                                 user-select: none; 
+    //                             "
+    //                     >
+    //                         <div 
+    //                             class = "popup-body"
+    //                                         style = "width: 100%;
+    //                                         height: 100%;
+    //                                         overflow: hidden;
+    //                                         box-sizing: border-box;"
+    //                         >
+    //                         <div 
+    //                             class="popup-header" 
+    //                             id=${id + 'header'}
+    //                             style = "   position: absolute;
+    //                                         left: 7%;
+    //                                         top: 20%;
+    //                                         width: 85%;
+    //                                         height: 80%;
+    //                                         padding: 0;
+    //                                         cursor: move;
+    //                                         z-index: 10;
+    //                                     "
+    //                         ></div>
                         
-                            <video id="stream" autoplay style="width: 100%"></video>
-                            <div class="video-options">
-                                <select name="" id="" class="custom-select"><option value="">Select camera</option></select>
-                            </div>
-                            <div class="controls d-none">
-                                <button class="play streamControl" title="Play">&gt;</button>
-                                <button class="pause d-none streamControl" title="Pause">||</button>
-                            </div>
-                        </div>
-                    </div>
+    //                         <video id="stream" autoplay style="width: 100%"></video>
+    //                         <div class="video-options">
+    //                             <select name="" id="" class="custom-select"><option value="">Select camera</option></select>
+    //                         </div>
+    //                         <div class="controls d-none">
+    //                             <button class="play streamControl" title="Play">&gt;</button>
+    //                             <button class="pause d-none streamControl" title="Pause">||</button>
+    //                         </div>
+    //                     </div>
+    //                 </div>
     
     
-    `
+    // `
     
-    var textElement = `<div 
-                            id=${id}
-                            class = "popup text"
-                            style = "z-index: ${zIndex};
-                                    text-align: center;
-                                    position: absolute;
-                                    left: 85%; 
-                                    top: 85%;
-                                    box-sizing: border-box;
-                                    width: 20%;
-                                    height: auto;
-                                    -webkit-touch-callout: none; 
-                                    -webkit-user-select: none; 
-                                    -khtml-user-select: none; 
-                                    -moz-user-select: none; 
-                                    -ms-user-select: none; 
-                                    user-select: none; 
-                                    "
-                        >
-                            <div 
-                                class = "popup-body"
-                                        style = "width: 100%;
-                                        height: 100%;
-                                        overflow: hidden;
-                                        box-sizing: border-box;"
-                            >
-                                <div 
-                                    class="popup-header text-box-header" 
-                                    id=${id + 'header'}
-                                    style = "   position: absolute;
-                                                left: -15px;
-                                                top: 0px;
-                                                width: 15px;
-                                                height: 24px;
-                                                padding: 0;
-                                                cursor: move;
-                                                z-index: 10;
+    // var textElement = `<div 
+    //                         id=${id}
+    //                         class = "popup text"
+    //                         style = "z-index: ${zIndex};
+    //                                 text-align: center;
+    //                                 position: absolute;
+    //                                 left: 85%; 
+    //                                 top: 85%;
+    //                                 box-sizing: border-box;
+    //                                 width: 20%;
+    //                                 height: auto;
+    //                                 -webkit-touch-callout: none; 
+    //                                 -webkit-user-select: none; 
+    //                                 -khtml-user-select: none; 
+    //                                 -moz-user-select: none; 
+    //                                 -ms-user-select: none; 
+    //                                 user-select: none; 
+    //                                 "
+    //                     >
+    //                         <div 
+    //                             class = "popup-body"
+    //                                     style = "width: 100%;
+    //                                     height: 100%;
+    //                                     overflow: hidden;
+    //                                     box-sizing: border-box;"
+    //                         >
+    //                             <div 
+    //                                 class="popup-header text-box-header" 
+    //                                 id=${id + 'header'}
+    //                                 style = "   position: absolute;
+    //                                             left: -15px;
+    //                                             top: 0px;
+    //                                             width: 15px;
+    //                                             height: 24px;
+    //                                             padding: 0;
+    //                                             cursor: move;
+    //                                             z-index: 10;
                                                 
-                                            "
-                                ></div>
-                                <pre contenteditable="true" id=${id + 'text'} 
-                                    style=" 
-                                    white-space: pre-wrap; 
-                                    word-wrap: break-word;
-                                    color: white;
-                                    font-size: 16px;
-                                    margin: 0px;
-                                    font-family: Arial;
-                                    "
-                                >${val}</pre>
-                            </div>
-                        </div>`
+    //                                         "
+    //                             ></div>
+    //                             <pre contenteditable="true" id=${id + 'text'} 
+    //                                 style=" 
+    //                                 white-space: pre-wrap; 
+    //                                 word-wrap: break-word;
+    //                                 color: white;
+    //                                 font-size: 16px;
+    //                                 margin: 0px;
+    //                                 font-family: Arial;
+    //                                 "
+    //                             >${val}</pre>
+    //                         </div>
+    //                     </div>`
 
     if (type === 'media_video') {
         $('#preview').append(videoElement);
@@ -1099,8 +1097,11 @@ function setElements(val, type, data_key) {
         hideIfDisplayed($('#add-text-button')[0]);
         return id
     }
+
+    // MAKE MEDIA DRAGABLE
     initDragElement();
 
+    // DEFINE FUNCTIONS FOR ELEMENT TO BE DRAGGABLE AND RESIZABLE
     $('.draggable').mousedown(function(){
         $('.draggable').not(this).removeClass('active');
         $(this).addClass('active');
@@ -1117,13 +1118,40 @@ function setElements(val, type, data_key) {
                 $("#step-media").find(`li[data-key="${data_key}"]`).remove();
             })
             // $("#edit-media-button").click(function(){
-            //     $(`[src*='${e.target.dataset.key}']`).parent().remove();
+            //     $(`[data-key='${e.target.dataset.key}']`).parent().remove();
             //     $(e.target).remove();
             // })
         }
     });
 
-    $(".resizable").resizable();
+    $(".resizable").resizable({
+        handles: "se"
+    });
+
+    // APPLY STYLE IF MEDIA OBJECT IS FROM STEP
+    if (mediaObject) {
+        if (type === 'media_images') {
+            let div_css = editor_media_div_css;
+            for (let property in div_css) {
+                div_css[property] = mediaObject[property];
+            }
+
+            let image_css = editor_image_css;
+            for (let property in image_css) {
+                image_css[property] = mediaObject[property];
+            }
+
+            if (image_css['object-fit'] !== '') {
+                image_css['height'] = '100%';
+            }
+            $("#preview").find(`*[data-key="${data_key}"]`).css(div_css);
+            $("#preview").find(`*[data-key="${data_key}"] img`).css(image_css);
+            
+        }
+    } else {
+        const zIndex = findBiggestIndex() + 1;
+        $("#preview").find(`*[data-key="${data_key}"]`).css('z-index', zIndex);
+    }
 }
 
 function addMenu(id) {

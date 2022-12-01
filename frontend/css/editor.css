@@ -66,6 +66,27 @@ body {
   background-image: url('../icons/visible.svg');
 }
 
+.spinner {
+  border: 10px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 10px solid #3498db;
+  width: 45px;
+  height: 45px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 #structure {
   height: 50%;
   overflow-y: auto;
@@ -104,6 +125,32 @@ body {
   margin-bottom: 5px;
 }
 
+.show-name u {
+  font-size: 1.13em;
+}
+
+.show-name.active u {
+  color: #008496;
+}
+
+.show-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.show-form input {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.show-form select {
+  margin-bottom: 10px;
+}
+
+.show-form small {
+  word-break: normal;
+}
+
 @counter-style arrows {
   system: cyclic;
   symbols: "\21E2";
@@ -133,7 +180,7 @@ body {
   padding: 3px;
   border: none;
   background-color: transparent;
-  color: #605d5d;
+  color: white;
 }
 
 @font-face {

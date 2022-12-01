@@ -208,12 +208,12 @@ const set = {
     //   return acc;
     // }, []);
 
-    socket.emit('json visual', json);
+    socket.emit('initial json', json);
   
 
     socket.emit('language', {'currentLanguage' : currentLanguage});
 
-    // NOVO za reorder steps
+    // NEW reorder steps
     socket.on('reorder steps', (data) => {
       const filePath = `./frontend/data/json/${data.fileName}.json`;
       const file = require(filePath);
@@ -222,12 +222,10 @@ const set = {
           
       fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
         if (err) return console.log(err);
-        console.log(JSON.stringify(file));
-        console.log('writing to ' + filePath);
       });
     })
 
-    // NOVO za reorder scenes
+    // NEW reorder scenes
     socket.on('reorder scenes', (data) => {
       const filePath = `./frontend/data/json/${data.fileName}.json`;
       const file = require(filePath);
@@ -236,13 +234,12 @@ const set = {
           
       fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
         if (err) return console.log(err);
-        console.log(JSON.stringify(file));
-        console.log('writing to ' + filePath);
+        
       });
     })
 
 
-    // NOVO ZA DODAVANJE STEPA
+    // NEW add step
     socket.on('add step', (data) => {
       const filePath = `./frontend/data/json/${data.fileName}.json`;
       const file = require(filePath);
@@ -251,12 +248,33 @@ const set = {
       file['scenes'][data.scene]['steps'][data.key] = data.step;
           
       fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
-        if (err) return console.log(err);
-       
+        if (err) {
+          groups['editors'].emit('error');
+        }
+          const json = walkSync('./frontend/data/json');
+          groups['editors'].emit('success', {'added' : 'step', 'data' : json});     
       });
     })
 
-    // NOVO ZA DODAVANJE SCENE
+     // NEW delete step
+     socket.on('delete step', (data) => {
+      const filePath = `./frontend/data/json/${data.fileName}.json`;
+      const file = require(filePath);
+
+      const index = file['scenes'][data.scene]['step-order'].indexOf(data.step);
+      file['scenes'][data.scene]['step-order'].splice(index, 1);
+      delete file['scenes'][data.scene]['steps'][data.step];
+          
+      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
+        if (err) {
+          groups['editors'].emit('error');
+        }
+        const json = walkSync('./frontend/data/json');
+        groups['editors'].emit('success', {'deleted' : 'step', 'data' : json}); 
+      });
+    })
+
+    // NEW add scene
     socket.on('add scene', (data) => {
       const filePath = `./frontend/data/json/${data.fileName}.json`;
       const file = require(filePath);
@@ -265,7 +283,43 @@ const set = {
       file['scenes'][data.key] = data.scene;
           
       fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
-        if (err) return console.log(err);
+        if (err) {
+          groups['editors'].emit('error');
+        }
+        const json = walkSync('./frontend/data/json');
+        groups['editors'].emit('success', {'added' : 'scene', 'data' : json}); 
+       
+      });
+    })
+
+    // NEW delete scene
+    socket.on('delete scene', (data) => {
+      const filePath = `./frontend/data/json/${data.fileName}.json`;
+      const file = require(filePath);
+
+      const index = file['scene-order'].indexOf(data.scene);
+      file['scene-order'].splice(index, 1);
+      delete file['scenes'][data.scene];
+          
+      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
+        if (err) {
+          groups['editors'].emit('error');
+        }
+        const json = walkSync('./frontend/data/json');
+        groups['editors'].emit('success', {'deleted' : 'scene', 'data' : json});     
+      });
+    })
+
+    // NEW add show
+    socket.on('add show', (data) => {
+      const filePath = `./frontend/data/json/${data.fileName}.json`;
+      
+      fs.writeFile(filePath, JSON.stringify(data.content, null, 4), function writeJSON(err) {
+        if (err) {
+          groups['editors'].emit('error');
+        }
+        const json = walkSync('./frontend/data/json');
+        groups['editors'].emit('success', {'added' : 'scene', 'data' : json}); 
        
       });
     })

@@ -4,9 +4,8 @@
         "EN"
     ],
     "scene-order": [
-        3,
-        1,
-        2
+        2,
+        1
     ],
     "scenes": {
         "1": {
@@ -25,7 +24,8 @@
                 10,
                 12,
                 13,
-                14
+                14,
+                15
             ],
             "steps": {
                 "1": {
@@ -282,22 +282,32 @@
                     "text": [],
                     "avatar": "",
                     "console": ""
+                },
+                "15": {
+                    "background-color": "",
+                    "image": [],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
                 }
             }
         },
         "2": {
             "name": "Second story",
             "step-order": [
-                2,
                 1,
+                2,
                 3,
                 4,
                 5,
                 6,
                 7,
+                10,
                 8,
                 9,
-                10
+                11
             ],
             "steps": {
                 "1": {
@@ -517,33 +527,6 @@
                     "console": ""
                 },
                 "12": {
-                    "background-color": "",
-                    "image": [],
-                    "video": [],
-                    "stream": [],
-                    "text": [],
-                    "avatar": "",
-                    "console": ""
-                }
-            }
-        },
-        "3": {
-            "name": "test",
-            "step-order": [
-                "1",
-                2
-            ],
-            "steps": {
-                "1": {
-                    "background-color": "",
-                    "image": [],
-                    "video": [],
-                    "stream": [],
-                    "text": [],
-                    "avatar": "",
-                    "console": ""
-                },
-                "2": {
                     "background-color": "",
                     "image": [],
                     "video": [],

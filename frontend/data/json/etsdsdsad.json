@@ -1,0 +1,56 @@
+{
+    "name": "etsdsdsad",
+    "languages": [
+        "EN"
+    ],
+    "scene-order": [
+        2,
+        1
+    ],
+    "scenes": {
+        "1": {
+            "name": "asdasd",
+            "step-order": [
+                1
+            ],
+            "steps": {
+                "1": {
+                    "background-color": "",
+                    "image": [],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                }
+            }
+        },
+        "2": {
+            "name": "sdfdfsgdfg",
+            "step-order": [
+                1,
+                2
+            ],
+            "steps": {
+                "1": {
+                    "background-color": "",
+                    "image": [],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                },
+                "2": {
+                    "background-color": "",
+                    "image": [],
+                    "video": [],
+                    "stream": [],
+                    "text": [],
+                    "avatar": "",
+                    "console": ""
+                }
+            }
+        }
+    }
+}

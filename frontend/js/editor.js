@@ -3,22 +3,51 @@ const socket = io();
 
 let mainData = {};
 
+
+let active = {
+    fileName : "",
+    scene : "",
+    step : ""
+}
+
 $(".resizable").resizable({
     handles: "se"
 });
 
 // separate JSONs for each show made, data gives array of all JSONs
-socket.on('json visual', function(data) {
-    data.forEach(src => {
-        $.getJSON(src.replace('frontend', '.'), function(jsonData) {
+socket.on('initial json', function(data) {
+    setJSONsdata(data);
+});
+
+function setJSONsdata(data) { 
+    mainData = {};
+    let count = 0;
+
+    data.sort().forEach(async(src) => {
+        await $.getJSON(src.replace('frontend', '.'), function(jsonData) {
             let array = src.split('/');
             let fileName = array[array.length -1].replace('.json', '');
             mainData[fileName] = jsonData;
             displayStructure(fileName, jsonData);
-            
+            count = count + 1;
+            console.log(active)
+            if (count === data.length) {
+                 // CLICK ON ACTIVE ITEM 
+                 const currentActive = {"fileName" : active.fileName, "step" : active.step, "scene" : active.scene};
+                 
+                if (currentActive.fileName !== "") {
+                    $(`#${currentActive.fileName} .show-name`).click();
+                    if (currentActive.scene !== "") {
+                        $(`#${currentActive.fileName} li[data-scene=${currentActive.scene}] .toggler`).click();
+                        if (currentActive.step !== "") {
+                            $(`#${currentActive.fileName} li[data-scene=${currentActive.scene}] li[data-step=${currentActive.step}]`).click();
+                        }
+                    } 
+                }
+            }
         })    
-    })
-});
+    });
+}
 
 let startPosition;
 let movedStep;
@@ -41,9 +70,9 @@ function makeid(length) {
 
 function displayStructure(fileName, data) {
     let showElement =  `<ul id=${fileName} class="show">
-                            <li>Show name:<br> <b>${data.name}</b></li>
-                            <li>Available languages: <select class="languages"></select></li>
-                            <li>Scenes:
+                            <li class="show-name"><b><u>${data.name}</u></b></li>
+                            <li style="display: none;"><select class="languages"></select></li>
+                            <li style="display: none;">
                                 <ul id=${fileName + 'sceneList'} class="scenes"></ul>
                             </li>
                         </ul>`
@@ -59,21 +88,22 @@ function displayStructure(fileName, data) {
                        .text(value)); 
    });
 
-    // APPEND SCENES AND STEPS
-    const sceneOrder = data['scene-order'];
 
+    // APPEND SCENES AND STEPS IF PRESENT
+    if (!jQuery.isEmptyObject( data.scenes )  ) {
+    const sceneOrder = data['scene-order'];
     sceneOrder.forEach(sceneOrderNumber => {
 
         let scene = data['scenes'][sceneOrderNumber];
         const stepOrder = scene['step-order'];
 
         const id = makeid(5);
-        $(`<li style="margin-top: 10px;"><b id=${id + 'toggler'} class="toggler">${scene.name}<b></li>`).appendTo(`#${fileName + 'sceneList'}`)
+        $(`<li style="margin-top: 10px;" data-scene=${sceneOrderNumber}><b id=${id + 'toggler'} class="toggler">${scene.name}<b></li>`).appendTo(`#${fileName + 'sceneList'}`)
         .append(`<ul id=${id} style="display: none" class="steps"></ul>`);
 
         let number = 1;
         stepOrder.forEach(stepOrderNumber => {
-            $("#" + id).append(`<li class="step" onclick="setStep(event, '${fileName}', '${sceneOrderNumber}', ${stepOrderNumber})">Step ${number}</li>`)
+            $("#" + id).append(`<li class="step" data-step=${stepOrderNumber} onclick="setStep(event, '${fileName}', ${sceneOrderNumber}, ${stepOrderNumber})">Step ${number}</li>`)
             number = number + 1;
         })
 
@@ -88,7 +118,6 @@ function displayStructure(fileName, data) {
                     let movedElement = mainData[fileName]['scene-order'].splice(startPosition, 1)[0];
                     mainData[fileName]['scene-order'].splice(endPosition, 0, movedElement);
                     saveSceneOrder(fileName, mainData[fileName]['scene-order']);
-                    console.log(mainData[fileName]['scene-order']);
                 }
              }
         })
@@ -140,17 +169,48 @@ function displayStructure(fileName, data) {
             $(".toggler").not(this).removeClass('active');
             $(this).toggleClass('active');
 
+            // MARK ACTIVE SCENE in constant active and by color in menu
             if ($(this).hasClass('active')) {
                 setActiveStep(fileName, sceneOrderNumber, "");
+                $(".show-name").removeClass('active');
+                $(`#${fileName} .show-name`).addClass('active');
                 $(".step").removeClass('active');
             } else {
-                setActiveStep("", "", "");
+                setActiveStep(fileName, "", "");
                 $(".step").removeClass('active');
             }
             $('#step-media ul').empty();
             $('#preview').empty();
         });
     })
+}
+     // TOGGLE SHOW
+     $(`#${fileName} .show-name`).click(function(){
+        // toggle visibility
+        $(".show").not(`#${fileName}`).children().not('.show-name').hide()
+        $(`#${fileName}`).children().not(this).toggle();
+        
+        // toggle class
+        $(".show-name").not(this).removeClass('active');
+        $(this).toggleClass('active');
+
+        // close all scenes
+        $(".toggler").next().hide();
+
+        // unmark all scenes and steps
+        $(".toggler").removeClass('active');
+        $(".step").removeClass('active');
+
+        // MARK ACTIVE SHOW in constant active and by color in menu
+        if ($(this).hasClass('active')) {
+            setActiveStep(fileName, "", "");
+        } else {
+            setActiveStep("", "", "");
+        }
+        $('#step-media ul').empty();
+        $('#preview').empty();
+    })
+    
 }
 
 function saveStepOrder(fileName, sceneOrderNumber, stepsOrder) {
@@ -161,11 +221,6 @@ function saveSceneOrder(fileName, scenesOrder) {
     socket.emit('reorder scenes', {"fileName" : fileName, "scenesOrder" : scenesOrder})
 }
 
-let active = {
-    fileName : "",
-    scene : "",
-    step : ""
-}
 
 function setActiveStep(fileName, scene, step) {
     active.fileName = fileName;
@@ -219,13 +274,13 @@ function toggleVisibility(e) {
     $('#preview').find(`[data-key='${e.target.dataset.key}']`).toggle();
 }
 
-$('.up-button').click(function(){
-    $(this).parents('.leg').insertBefore($(this).parents('.leg').prev());
-    });
+// $('.up-button').click(function(){
+//     $(this).parents('.leg').insertBefore($(this).parents('.leg').prev());
+//     });
     
-    $('.down-button').click(function(){
-    $(this).parents('.leg').insertAfter($(this).parents('.leg').next());
-    });
+// $('.down-button').click(function(){
+// $(this).parents('.leg').insertAfter($(this).parents('.leg').next());
+// });
 
 function markActiveStepMediaElement(e) {
     // MARK IN MEDIA LIST
@@ -265,10 +320,126 @@ function addMedia() {
 }
 
 function addInStructure() {
-    if (active.step !== "") {
+    if (active.fileName === "") {
+        const languageList = Object.keys(languages);
+
+        let options = `<option value="" selected disabled>Select language</option>`
+
+        $.each(languages, function(index,value){
+            options = options + `<option data-code=${index} value=${index}>${value}</option>`
+        });
+
         $('#alert')
         .empty()
-        .append(`<p>Add new step?</p>
+        .append(`<form class="show-form">
+                    <input type="text" name="name" placeholder="New show name" required></input>
+                    <select name="language" required>${options}</select>
+                    <small>* you need to select language due to multilingual support.<br>Languages can be edited later.</small>
+                    <div class='editor-buttons' style='justify-content: center;'>
+                        <button type="submit">Ok</button>
+                    </div>
+                 </form>`)
+        .dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+        });
+         // OK BUTTON FUNCTION
+         $('#alert form').submit(function(e) {
+            e.preventDefault();
+            const showName = e.target.elements.name.value;
+            const fileName = showName.replace(/ /g, '').trim();
+
+            let newShowObject = showObject;
+            newShowObject.name = showName;
+            newShowObject.languages.push(e.target.elements.language.value.toUpperCase())
+            
+            // SAVE TO JSON FILE
+            addNewShow(fileName, newShowObject);
+            showSpinner();
+            // // ADD TO MAINDATA
+            // let newShowObject = showObject;
+            // newShowObject['name'] = showName;
+            // newShowObject['languages'].push(e.target.elements.language.value.toUpperCase());
+
+            // // ADD TO STRUCTURE LIST
+            // const id = makeid(5);
+
+            // $(`<li style="margin-top: 10px;" data-scene=${newSceneNumber}><b id=${id + 'toggler'} class="toggler">${sceneName}<b></li>`).appendTo(`#${active.fileName + 'sceneList'}`)
+            // .append(`<ul id=${id} style="display: none" class="steps"></ul>`);
+    
+            // $("#" + id).append(`<li class="step" data-step=${1} onclick="setStep(event, '${active.fileName}', ${newSceneNumber}, ${1})">Step 1</li>`);
+
+           // DEFINE SORTABLE FUNCTIONS FOR STEPS IN NEW SCENE
+            // $("#" + id).sortable({
+            //     start : function (event, ui) {
+            //     startPosition = ui.item.index();
+            //     },
+            //     stop: function(event, ui) {
+            //         let endPosition = ui.item.index();
+            //         if (endPosition !== startPosition) {
+            //             let movedElement = mainData[active.fileName]['scenes'][newSceneNumber]['step-order'].splice(startPosition, 1)[0];
+            //             mainData[active.fileName]['scenes'][newSceneNumber]['step-order'].splice(endPosition, 0, movedElement);
+            //             saveStepOrder(active.fileName, newSceneNumber, mainData[active.fileName]['scenes'][newSceneNumber]['step-order']);
+            //             console.log(mainData[active.fileName]['scenes'][newSceneNumber]['step-order']);
+
+            //             // ADJUST TEXT STEP number IN HTML
+            //             $(ui.item).text('Step ' + (endPosition + 1));
+
+            //             $(function () {
+            //                 let currentLi = ui.item;
+            //                 let number = endPosition;
+
+            //                 while (number > 0) {
+            //                     $(currentLi).prev().text('Step ' + number);
+            //                     currentLi = $(currentLi).prev();
+            //                     number = number - 1;
+            //                 }       
+                            
+            //                 currentLi = ui.item;
+            //                 number = endPosition + 2;
+
+            //                 while (number <= ui.item.parent().children().length) {
+            //                     $(currentLi).next().text('Step ' + number);
+            //                     currentLi = $(currentLi).next();
+            //                     number = number + 1;
+            //                 }
+            //             });
+            //         }
+            //     }
+            // });    
+
+            // DEFINE TOGGLE FUNCTIONS FOR STEP LIST
+            // $("#" + id + "toggler").click(function() {
+            //     $(".toggler").not(this).next().hide();
+            //     $( "#" + id ).toggle();
+                
+            //     $(".toggler").not(this).removeClass('active');
+            //     $(this).toggleClass('active');
+
+            //     // MARK ACTIVE SCENE in constant active and by color in menu
+            //     if ($(this).hasClass('active')) {
+            //         setActiveStep(active.fileName, newSceneNumber, "");
+            //         $(".show-name").removeClass('active');
+            //         $(`#${active.fileName} .show-name`).addClass('active');
+            //         $(".step").removeClass('active');
+            //     } else {
+            //         setActiveStep(active.fileName, "", "");
+            //         $(".step").removeClass('active');
+            //     }
+            //     $('#step-media ul').empty();
+            //     $('#preview').empty();
+            // });
+            
+            // setTimeout(() => {
+            //     $(".ui-dialog-titlebar-close"). click();
+            // }, 200); 
+        })
+    }
+    else if (active.scene !== "") {
+        $('#alert')
+        .empty()
+        .append(`<p>Add new empty step?</p>
                 <div class='editor-buttons' style='justify-content: center;'>
                     <button>Ok</button>
                 </div>`)
@@ -280,21 +451,28 @@ function addInStructure() {
         // OK BUTTON FUNCTION
         $('#alert button').click(function() {
             let stepNumbers = mainData[active.fileName]['scenes'][active.scene]['step-order'].map(Number);
-             
-            let newStepNumber = Math.max(...stepNumbers) + 1;
+            let newStepNumber;
+            if (stepNumbers.length > 0) {
+                newStepNumber = Math.max(...stepNumbers) + 1;
+            } else {
+                newStepNumber = 1;
+            }
+           
             // ADD TO MAINDATA
-            mainData[active.fileName]['scenes'][active.scene]['steps'][newStepNumber] = stepObject;
-            mainData[active.fileName]['scenes'][active.scene]['step-order'].push((newStepNumber));
+            // mainData[active.fileName]['scenes'][active.scene]['steps'][newStepNumber] = stepObject;
+            // mainData[active.fileName]['scenes'][active.scene]['step-order'].push((newStepNumber));
+
             // SAVE TO JSON FILE
             addNewStep(newStepNumber, stepObject);
+            showSpinner();
             // ADD TO STRUCTURE LIST
-            $('#structure li.active').parent().append(`<li class="step" onclick="setStep(event, '${active.fileName}', '${active.scene}', ${newStepNumber})">Step ${newStepNumber}</li>`)
+            // $('#structure .toggler.active').next().append(`<li class="step" data-step=${newStepNumber} onclick="setStep(event, '${active.fileName}', ${active.scene}, ${newStepNumber})">Step ${newStepNumber}</li>`)
 
-            setTimeout(() => {
-                $(".ui-dialog-titlebar-close"). click();
-            }, 200); 
+            // setTimeout(() => {
+            //     $(".ui-dialog-titlebar-close"). click();
+            // }, 200); 
         })
-    } else if (active.scene !== "") {
+    } else {
         $('#alert')
         .empty()
         .append(`<form>
@@ -314,13 +492,18 @@ function addInStructure() {
             const sceneName = e.target.elements.name.value;
             
             let sceneNumbers = mainData[active.fileName]['scene-order'];
-             
-            let newSceneNumber = Math.max(...sceneNumbers) + 1;
+            
+            let newSceneNumber;
+            if (sceneNumbers.length > 0) {
+                newSceneNumber = Math.max(...sceneNumbers) + 1;
+            } else {
+                newSceneNumber = 1;
+            }
 
-            // ADD TO MAINDATA
+            // DEFINE NEW SCENE OBJECT
             let newSceneObject = sceneObject;
             newSceneObject['name'] = sceneName;
-            newSceneObject['step-order'] = ['1'];
+            newSceneObject['step-order'] = [1];
             newSceneObject['steps'] = {
                                         "1": {
                                             "background-color": "",
@@ -333,88 +516,196 @@ function addInStructure() {
                                         }
                                     };
 
-            mainData[active.fileName]['scenes'][newSceneNumber] = newSceneObject;
-            mainData[active.fileName]['scene-order'].push((newSceneNumber));
+            // mainData[active.fileName]['scenes'][newSceneNumber] = newSceneObject;
+            // mainData[active.fileName]['scene-order'].push((newSceneNumber));
 
             // SAVE TO JSON FILE
             addNewScene(newSceneNumber, newSceneObject);
-
+            showSpinner();
             // ADD TO STRUCTURE LIST
-            const id = makeid(5);
+            // const id = makeid(5);
 
-            $(`<li style="margin-top: 10px;"><b id=${id + 'toggler'} class="toggler">${sceneName}<b></li>`).appendTo(`#${active.fileName + 'sceneList'}`)
-            .append(`<ul id=${id} style="display: none" class="steps"></ul>`);
+            // $(`<li style="margin-top: 10px;" data-scene=${newSceneNumber}><b id=${id + 'toggler'} class="toggler">${sceneName}<b></li>`).appendTo(`#${active.fileName + 'sceneList'}`)
+            // .append(`<ul id=${id} style="display: none" class="steps"></ul>`);
     
-            $("#" + id).append(`<li class="step" onclick="setStep(event, '${active.fileName}', '${newSceneNumber}', ${1})">Step 1</li>`);
+            // $("#" + id).append(`<li class="step" data-step=${1} onclick="setStep(event, '${active.fileName}', ${newSceneNumber}, ${1})">Step 1</li>`);
 
            // DEFINE SORTABLE FUNCTIONS FOR STEPS IN NEW SCENE
-            $("#" + id).sortable({
-                start : function (event, ui) {
-                startPosition = ui.item.index();
-                },
-                stop: function(event, ui) {
-                    let endPosition = ui.item.index();
-                    if (endPosition !== startPosition) {
-                        let movedElement = mainData[fileName]['scenes'][sceneOrderNumber]['step-order'].splice(startPosition, 1)[0];
-                        mainData[fileName]['scenes'][sceneOrderNumber]['step-order'].splice(endPosition, 0, movedElement);
-                        saveStepOrder(fileName, sceneOrderNumber, mainData[fileName]['scenes'][sceneOrderNumber]['step-order']);
-                        console.log(mainData[fileName]['scenes'][sceneOrderNumber]['step-order']);
+            // $("#" + id).sortable({
+            //     start : function (event, ui) {
+            //     startPosition = ui.item.index();
+            //     },
+            //     stop: function(event, ui) {
+            //         let endPosition = ui.item.index();
+            //         if (endPosition !== startPosition) {
+            //             let movedElement = mainData[active.fileName]['scenes'][newSceneNumber]['step-order'].splice(startPosition, 1)[0];
+            //             mainData[active.fileName]['scenes'][newSceneNumber]['step-order'].splice(endPosition, 0, movedElement);
+            //             saveStepOrder(active.fileName, newSceneNumber, mainData[active.fileName]['scenes'][newSceneNumber]['step-order']);
+            //             console.log(mainData[active.fileName]['scenes'][newSceneNumber]['step-order']);
 
-                        // ADJUST TEXT STEP number IN HTML
-                        $(ui.item).text('Step ' + (endPosition + 1));
+            //             // ADJUST TEXT STEP number IN HTML
+            //             $(ui.item).text('Step ' + (endPosition + 1));
 
-                        $(function () {
-                            let currentLi = ui.item;
-                            let number = endPosition;
+            //             $(function () {
+            //                 let currentLi = ui.item;
+            //                 let number = endPosition;
 
-                            while (number > 0) {
-                                $(currentLi).prev().text('Step ' + number);
-                                currentLi = $(currentLi).prev();
-                                number = number - 1;
-                            }       
+            //                 while (number > 0) {
+            //                     $(currentLi).prev().text('Step ' + number);
+            //                     currentLi = $(currentLi).prev();
+            //                     number = number - 1;
+            //                 }       
                             
-                            currentLi = ui.item;
-                            number = endPosition + 2;
+            //                 currentLi = ui.item;
+            //                 number = endPosition + 2;
 
-                            while (number <= ui.item.parent().children().length) {
-                                $(currentLi).next().text('Step ' + number);
-                                currentLi = $(currentLi).next();
-                                number = number + 1;
-                            }
-                        });
-                    }
-                }
-            });    
+            //                 while (number <= ui.item.parent().children().length) {
+            //                     $(currentLi).next().text('Step ' + number);
+            //                     currentLi = $(currentLi).next();
+            //                     number = number + 1;
+            //                 }
+            //             });
+            //         }
+            //     }
+            // });    
 
             // DEFINE TOGGLE FUNCTIONS FOR STEP LIST
-            $("#" + id + "toggler").click(function() {
-                $(".toggler").not(this).next().hide();
-                $( "#" + id ).toggle();
+            // $("#" + id + "toggler").click(function() {
+            //     $(".toggler").not(this).next().hide();
+            //     $( "#" + id ).toggle();
                 
-                $(".toggler").not(this).removeClass('active');
-                $(this).toggleClass('active');
+            //     $(".toggler").not(this).removeClass('active');
+            //     $(this).toggleClass('active');
 
-                if ($(this).hasClass('active')) {
-                    setActiveStep(fileName, sceneOrderNumber, "");
-                    $(".step").removeClass('active');
-                } else {
-                    setActiveStep("", "", "");
-                    $(".step").removeClass('active');
-                }
-                $('#step-media ul').empty();
-                $('#preview').empty();
-            });
+            //     // MARK ACTIVE SCENE in constant active and by color in menu
+            //     if ($(this).hasClass('active')) {
+            //         setActiveStep(active.fileName, newSceneNumber, "");
+            //         $(".show-name").removeClass('active');
+            //         $(`#${active.fileName} .show-name`).addClass('active');
+            //         $(".step").removeClass('active');
+            //     } else {
+            //         setActiveStep(active.fileName, "", "");
+            //         $(".step").removeClass('active');
+            //     }
+            //     $('#step-media ul').empty();
+            //     $('#preview').empty();
+            // });
             
-            setTimeout(() => {
-                $(".ui-dialog-titlebar-close"). click();
-            }, 200); 
+            // setTimeout(() => {
+            //     $(".ui-dialog-titlebar-close"). click();
+            // }, 200); 
         })
     }
 }
 
 function deleteFromStructure() {
+    if (active.step !== "") {
+        $('#alert')
+        .empty()
+        .append(`<p>Delete step?</p>
+                <div class='editor-buttons' style='justify-content: center;'>
+                    <button>Ok</button>
+                </div>`)
+        .dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+        });
 
+        // OK BUTTON FUNCTION
+        $('#alert button').click(function() {
+            // SAVE CHANGES TO JSON FILE
+            deleteStep();
+            showSpinner();
+            // DELETE FROM MAINDATA
+            // delete mainData[active.fileName]['scenes'][active.scene]['steps'][active.step];
+            // const index = mainData[active.fileName]['scenes'][active.scene]['step-order'].indexOf(active.step);
+            // mainData[active.fileName]['scenes'][active.scene]['step-order'].splice(index, 1);
+            // REMOVE FROM STRUCTURE LIST
+            // $(`#${active.fileName} li[data-scene=${active.scene}] li[data-step=${active.step}]`).remove();
+            // REMOVE FROM ACTIVE
+            // setActiveStep(active.fileName, active.scene, "");
+
+            // setTimeout(() => {
+            //     $(".ui-dialog-titlebar-close"). click();
+            // }, 200); 
+        })
+    } else if (active.scene !== "") {
+        $('#alert')
+        .empty()
+        .append(`<p>Delete scene?</p>
+                <div class='editor-buttons' style='justify-content: center;'>
+                    <button>Ok</button>
+                </div>`)
+        .dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+        });
+
+        // OK BUTTON FUNCTION
+        $('#alert button').click(function() {
+            // SAVE CHANGES TO JSON FILE
+            deleteScene();
+            showSpinner();
+
+            // DELETE FROM MAINDATA
+            // delete mainData[active.fileName]['scenes'][active.scene];
+            // const index = mainData[active.fileName]['scene-order'].indexOf(active.scene);
+            // mainData[active.fileName]['scene-order'].splice(index, 1);
+            // REMOVE FROM STRUCTURE LIST
+            // $(`#${active.fileName} li[data-scene=${active.scene}]`).remove();
+            // REMOVE FROM ACTIVE
+            // setActiveStep(active.fileName, "", "");
+
+            // setTimeout(() => {
+            //     $(".ui-dialog-titlebar-close"). click();
+            // }, 200); 
+        })
+    }
 }
+
+function showSpinner() {
+    $('#alert')
+    .empty()
+    .append(`<div class="spinner"><div>`);
+}
+
+socket.on('success', function(data){
+
+    // EMPTY PREVIOUS STRUCTURE AND STEP PREVIEW
+    $('#step-media ul').empty();
+    $('#structure-content').empty();
+
+    // UNBIND EVENT LISTENERS
+    $("#delete-media-button").unbind("click");
+    $("#edit-media-button").unbind("click");
+    $("#layer-up").unbind("click");
+    $("#layer-down").unbind("click");
+
+    // ADJUST constant ACTIVE
+    if (data && data.deleted === 'step') {
+        setActiveStep(active.fileName, active.scene, "");
+    } else if (data && data.deleted === 'scene') {
+        setActiveStep(active.fileName, "", "");
+    } else if (data && data.deleted === 'show') {
+        setActiveStep("", "", "");
+    }
+
+    setJSONsdata(data.data);
+
+    // CLOSE MODAL
+    setTimeout(() => {
+        $('#alert').empty();
+        $(".ui-dialog-titlebar-close"). click();
+    }, 500);
+})
+
+socket.on('error', function(){
+    $('#alert')
+    .empty()
+    .append(`<p>Connection to server failed. Please try again.</p>`);
+})
 
 // FIND LARGEST INDEX OF ELEMENTS IN PREVIEW
 function findBiggestIndex() {
@@ -431,14 +722,27 @@ function findBiggestIndex() {
     return index_highest;
 }
 
-
 function addNewStep(newStepNumber, step) {
     socket.emit("add step", {"fileName" : active.fileName, "scene" : active.scene, "key" : newStepNumber, "step" : step});
+}
+
+function deleteStep() {
+    socket.emit("delete step", {"fileName" : active.fileName, "scene" : active.scene, "step" : active.step});
 }
 
 function addNewScene(newSceneNumber, scene) {
     socket.emit("add scene", {"fileName" : active.fileName, "key" : newSceneNumber, "scene" : scene});
 }
+
+function deleteScene() {
+    socket.emit("delete scene", {"fileName" : active.fileName, "scene" : active.scene});
+}
+
+function addNewShow(fileName, showObject) {
+    socket.emit("add show", {"fileName" : fileName, "content" : showObject});
+}
+
+
 
 window.onload = function() {
     // initDragElement();

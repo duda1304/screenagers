@@ -1,7 +1,9 @@
 var boites_mobiles = boites;
 boites = {};
 
-var $monitoring = $('#monitoring');
+var $monitoring_incoming = $('#monitoring_incoming');
+var $monitoring_outgoing = $('#monitoring_outgoing');
+
 
 /* Chatbot
 ========== */
@@ -19,7 +21,7 @@ var $monitoring = $('#monitoring');
     });
   });
 
-  $monitoring.append($btn);
+  $monitoring_incoming.append($btn);
   $btn.hide();
 
   boites.chatbot = {
@@ -59,7 +61,7 @@ var $monitoring = $('#monitoring');
     });
   });
 
-  $monitoring.append($btn);
+  $monitoring_outgoing.append($btn);
   $btn.hide();
 
   boites.gameboy = {
@@ -162,7 +164,7 @@ var $monitoring = $('#monitoring');
   });
 
   $btn.append($keyboard);
-  $monitoring.append($btn);
+  $monitoring_outgoing.append($btn);
   $btn.hide();
 
   window.addEventListener('keydown', function(e) {
@@ -233,7 +235,7 @@ var $monitoring = $('#monitoring');
 
   
 
-  $monitoring.append($btn);
+  $monitoring_outgoing.append($btn);
   $btn.hide();
 
   var letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R'];
@@ -384,7 +386,7 @@ ${percent}<br>
     inputHistory.push(this);
   });
 
-  $monitoring.append($ctrl);
+  $monitoring_outgoing.append($ctrl);
   $ctrl.hide();
 
   var parsed;

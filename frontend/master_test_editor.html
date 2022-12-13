@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+/>
+<meta name="theme-color" content="#333333" />
+<meta name="msapplication-navbutton-color" content="#333333" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link rel="manifest" href="./static/manifest.json" />
+<link rel="icon" sizes="32x32" href="./static/icon.png" />
+<link rel="apple-touch-startup-image" href="./static/icon.png" />
+<link rel="stylesheet" href="./css/common.css?v=1.0" />
+<script src="./socket.io/socket.io.js"></script>
+<script src="./js/lib/jquery.min.js"></script>
+<script src="./js/lib/howler.min.js"></script>
+<script src="./js/lib/twemoji.min.js"></script>
+<link rel="stylesheet" href="./js/lib/jquery-ui-1.13.2/jquery-ui.min.css" />
+<script src="./js/lib/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+
+<title>🎛️ MASTER</title>
+
+<link rel="stylesheet" href="./data/decors.css?v=1.0" />
+
+<link rel="stylesheet" href="./js/lib/spectrum.css" />
+<script src="./js/lib/spectrum.min.js"></script>
+
+<link rel="stylesheet" href="./js/lib/jquery-ui.min.css" />
+<script src="./js/lib/jquery-ui.min.js"></script>
+
+<script src="./js/lib/mousetrap.min.js"></script>
+<script src="./js/lib/jquery.scrollTo.min.js"></script>
+
+<script src="./js/constants.js"></script>
+
+<link rel="stylesheet" href="./css/master.css?v=1.0" />
+<link rel="stylesheet" href="./css/editor.css" />
+
+<main id="master">
+  <div id="left-menu">
+    <header class="box-h box-debug closed">
+      <b>debug</b>
+      <div id="debug"></div>
+    </header>
+    <header class="box-h box-tools _closed">
+      <b>tools</b>
+      <div id="tools"></div>
+    </header>
+    <footer class="box-h box-shortcuts closed">
+      <b>osc settings</b>
+      <form action="" id="form_osc_ip">
+        <div class="box-v">
+          <button class="box-min icon" type="submit">💾</button>
+          <input id="osc_ip" name="ip" type="text" placeholder="ip" />
+        </div>
+      </form>
+    </footer>
+    <footer class="box-h box-shortcuts">
+      <b>step media</b>
+      <div id="media-menu">
+        <div id="step-media">
+          <ul></ul>
+        </div>
+        <!-- <h1 id="title"></h1> -->
+        <!-- <label for="decor.src">Background color</label>
+        <input
+          autocomplete="off"
+          _list="list_decors"
+          class="color-picker _box-min d-none"
+          id = "preview_background"
+          type="text"
+          placeholder="decor"
+          name="decor.src"
+        /><br> -->
+        <!-- <p style='text-decoration: underline; font-size: 0.8em;' onclick='removeBackgroundColor(null)'>Remove Background color</p> -->
+        <div class='editor-buttons'>
+          <!-- <button onclick="newEtape()" class="grey">+</button> -->
+          <button onclick="addMedia()"><img src="./icons/plus.svg"></img></button>
+          <button id="delete-media-button"><img src="./icons/trash.svg"></img></button>
+          <button id="edit-media-button"><img src="./icons/settings.svg"></img></button>
+          <!-- <button id="layer-down"><img src="./icons/arrowhead-down.svg"></img></button>
+          <button id="layer-up"><img src="./icons/arrowhead-up.svg"></img></button> -->
+          <button onclick="saveStep()">Save</button>
+          <fieldset>
+          <label for="avatars">Avatars</label>
+          <input type="checkbox" name="avatars" id="avatars-checkbox">
+          <label for="console">Console</label>
+          <input type="checkbox" name="console" id="console-checkbox">
+         </fieldset>
+  
+          <!-- <button onclick="clearPreview()" class="grey"><span>🚫</span> Clear all</button> -->
+          <!-- <button onclick="setElements('', 'text-box')" class="green" id="add-text-button" >Add text box</button>
+          <button onclick="displayMediaList()" class="green">Add media</button>
+          <button onclick="getMediaStream()" class="green" id="add-stream-button">Add video stream</button>
+          <button onclick="addAvatarsArea()" class="green" id="add-avatars-button">Add avatars area</button> -->
+        </div>
+      
+        <section id="media-editor"></section>
+      </div>
+    </footer>
+    <footer class="box-h box-shortcuts">
+      <b>structure</b>
+      <section id="structure">
+        <div id="structure-content"></div>
+        <div class='editor-buttons'>
+          <button id="add-scene-step-button" onclick="addInStructure()"><img src="./icons/plus.svg"></img></button>
+          <button id="delete-scene-step-button" onclick="deleteFromStructure()"><img src="./icons/trash.svg"></img></button>
+       </div>
+      </section>
+    </footer>
+  </div>
+  <div id="video-control">
+    <button class="repet__rewind icon box-min">⏪</button>
+    <button class="repet__pause toggle icon box-min">⏸️</button>
+    <button class="repet__forward icon box-min">⏩</button>
+    <input
+      style="width:78px"
+      min="0"
+      max="59"
+      id="repet__min"
+      type="number"
+      class="box-min"
+      placeholder="minutes"
+    />
+    <button class="icon" id="send_all_screens">📢</button>
+  </div>
+  <!-- <div id="step-control">
+    <button onclick="sendStep()">Send to screeen</button>
+  </div> -->
+  
+  <!-- LIST OF AVAILABABLE MEDIA -->
+  <div id="preview" style="height: 65%; width: 65%; border: 0 none; overflow: hidden; margin-left: auto;
+  margin-right: auto; margin-top: 10%; background-color: black; position: relative;"></div>
+      <aside class="box-h box-fit" style="width: 25vw">
+        <div class="box-h box-users">
+          <b>users</b>
+          <header class="_hide box-v box-random-users">
+            <!-- <button
+              id="refresh_mobiles"
+              class="icon box-min"
+              title="Reload tout les mobiles"
+            >
+              ♻
+            </button> -->
+            <input
+              title="Nombre d'utilisateurs tirés au sort"
+              id="number_random_users"
+              type="number"
+              min="0"
+              value="1"
+            />
+            <button id="select_random_users" class="icon box-min">🎲</button>
+          </header>
+          <div class="users_container">
+            <table class="table-users">
+              <thead>
+                <th><input checked id="users_check_all" type="checkbox" /></th>
+                <th></th>
+                <th>pseudo</th>
+                <th>karma</th>
+              </thead>
+              <tbody id="users"></tbody>
+            </table>
+          </div>
+          <header id="users_stats">
+            <span id="nb_users_inscrits">0</span> inscrit(s) /
+            <span id="nb_users_connectes">0</span> connecté(s)
+          </header>
+          <footer id="reponses" class="box-v box-wrap"></footer>
+          <footer>
+            <form id="interactions">
+              <div class="box-h">
+                <textarea
+                  cols="44"
+                  rows="3"
+                  id="one_shot__message"
+                  placeholder="message"
+                  name="message"
+                ></textarea>
+                <img id="image-msg"></img>
+                <button
+                  type="submit"
+                  title="Envoyer le message (Ctrl+Enter)"
+                  class="icon"
+                >
+                  📩
+                </button>
+              </div>
+            </form>
+          </footer>
+        </div>
+
+        <div class="box-h box-monitoring">
+          <b>monitoring</b>
+          <section id="monitoring"></section>
+        </div>
+
+        <footer class="box-h box-boites">
+          <b>états</b>
+          <form id="boite">
+            <header class="box-h box-boites-type">
+              <div id="boites_types" class="box-v box-wrap"></div>
+            </header>
+            <textarea
+              class="screen__input screen__texte"
+              cols="44"
+              rows="6"
+              placeholder="data"
+              name="arg"
+            ></textarea>
+            <footer class="box-v">
+              <button type="submit" title="Envoyer la boite (Ctrl+Enter)" class="icon">
+                📢
+              </button>
+            </footer>
+          </form>
+        </footer>
+        <!-- <footer class="box-h box-jump">
+          <b>saut ver sune scène</b>
+          <form id="saut">
+            <div class="box-h">
+              <select name="scene" id="saut_select">
+                <option value="">...</option>
+              </select>
+              <div class="box-v">
+                <button
+                  type="submit"
+                  title="Envoyer le message OSC (Ctrl+Enter)"
+                  class="icon"
+                >
+                  📢
+                </button>
+              </div>
+            </div>
+          </form>
+        </footer> -->
+
+        <footer class="box-h box-osc hide">
+          <b>osc</b>
+          <form id="osc">
+            <div class="box-h">
+              <input
+                type="number"
+                name="message"
+                placeholder="preset number (0 = Noir)"
+              />
+              <div class="box-v">
+                <button
+                  type="submit"
+                  title="Envoyer le message OSC (Ctrl+Enter)"
+                  class="icon"
+                >
+                  📢
+                </button>
+              </div>
+            </div>
+          </form>
+        </footer>
+      </aside>
+</main>
+<section id="media" class="d-none">
+  <!-- <div class="media_cat">
+  <i title="styles css">🗛</i>
+  <div class="media_styles"></div>
+  </div>
+  <div class="media_cat">
+    <i title="decors css">🌈</i>
+    <div class="media_decors"></div>
+  </div> -->
+  <!-- <div class="media_cat">
+  <i title="pages iframe">🌐</i>
+  <div class="media_pages"></div>
+  </div> -->
+  <!-- <div class="media_cat">
+    <i title="pages iframe">🌐</i>
+    <div class="media_layouts"></div>
+    </div> -->
+  <div class="media_cat">
+    <p title="videos">VIDEO<span>&#8964;</span></p>
+    <div class="media_video" style="display: none"></div>
+  </div>
+  <!-- <div class="media_cat">
+  <i title="audio">🎧</i>
+  <div class="media_audio"></div>
+  </div> -->
+  <div class="media_cat">
+    <p title="gifs">GIF<span>&#8964;</span></p>
+    <div class="media_gifs" style="display: none"></div>
+  </div>
+  <div class="media_cat">
+    <p title="images">IMAGE<span>&#8964;</span></p>
+    <div class="media_images" style="display: none"></div>
+  </div>
+  <button onclick="getMediaStream()" class="green" id="add-stream-button">Add video stream</button>
+</section>
+<div id="alert" class="d-none"></div>
+
+<template id="tmpl_screen__ctrl">
+  <div class="screen__ctrl">
+    <div class="box-v">
+      <input
+        autocomplete="off"
+        _list="list_decors"
+        class="color-picker _box-min"
+        type="text"
+        placeholder="decor"
+        name="decor.src"
+      />
+      <input
+        autocomplete="off"
+        _list="list_decors"
+        type="text"
+        placeholder="decor"
+        name="decor.style"
+      />
+      <input
+        style="flex: 0 0 58px"
+        type="number"
+        min="0"
+        max="100"
+        placeholder="vol."
+        title="Volume"
+        name="decor.volume"
+      />
+      <div class="button_radio box-min">
+        <label title="Lecture en boucle">
+          <input type="checkbox" name="decor.loop" />
+          <span class="icon">🔁</span>
+        </label>
+      </div>
+    </div>
+    <div class="box-v button_radio">
+      <label title="L'image ou la video recouvre tout l'écran (avec crop)">
+        <input class="radio_fit" checked type="radio" value="cover" name="decor.fit" />
+        <span>cover</span>
+      </label>
+      <label title="L'image ou la video s'affiche en entier (sans crop)">
+        <input class="radio_fit" type="radio" value="contain" name="decor.fit" />
+        <span>contain</span>
+      </label>
+    </div>
+      <label title="Avatars displayed on screen" class="avatars-on">
+        <input class="radio_fit" type="radio" value="on" name="avatars" />
+        <span>avatars on</span>
+      </label>
+      <label title="Avatars not displayed on screen" class="avatars-off">
+        <input class="radio_fit" type="radio" value="off" name="avatars" />
+        <span>avatars off</span>
+      </label>
+      <input
+      class="avatars"
+      type="text"
+      style="height:10px"
+     
+      name="avatars_area"
+      id="avatars_area"
+    ></input>
+    <div class="box-v">
+      <input
+        autocomplete="off"
+        list="list_musics"
+        type="text"
+        placeholder="music"
+        name="music.src"
+      />
+      <input
+        style="flex: 0 0 58px"
+        type="number"
+        min="0"
+        max="100"
+        placeholder="vol."
+        title="Volume"
+        name="music.volume"
+      />
+      <div class="button_radio box-min">
+        <label title="Lecture en boucle">
+          <input type="checkbox" name="music.loop" />
+          <span class="icon">🔁</span>
+        </label>
+      </div>
+    </div>
+    <!-- <div class="box-v">
+      <select class="select_text_language">
+      </select>
+    </div> -->
+    <div class="box-v">
+      <textarea
+        autocomplete="off"
+        cols="44"
+        rows="6"
+        placeholder="texte"
+        name="texte"
+      ></textarea>
+    </div>
+    <div class="box-v">
+      <input
+        autocomplete="off"
+        list="list_styles"
+        type="text"
+        placeholder="style"
+        name="style"
+      />
+      <input
+        autocomplete="off"
+        class="color-picker _box-min"
+        type="text"
+        placeholder="color"
+        name="color"
+      />
+    </div>
+    <div class="box-v">
+      <input
+        autocomplete="off"
+        list="list_modes"
+        type="text"
+        placeholder="mode d'affichage"
+        name="mode_aff"
+      />
+    </div>
+    <!-- <div class="box-v">
+      <textarea
+        autocomplete="off"
+        cols="44"
+        rows="2"
+        placeholder="code"
+        name="code"
+      ></textarea>
+    </div> -->
+  </div>
+</template>
+
+<div id="QR_modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeQRmodal()">&times;</span>
+    <div class="display-cover">
+      <video id="stream" autoplay></video>
+      <div class="video-options">
+          <select name="" id="" class="custom-select"><option value="">Select camera</option></select>
+      </div>
+      <div class="controls d-none">
+          <button class="play streamControl" title="Play">&gt;</button>
+          <button class="pause d-none streamControl" title="Pause">||</button>
+      </div>
+    </div>
+      <button onclick="readCode()">Save scene layout</button>
+  </div>
+</div>
+
+<script src="/js/common.js?v=1.0"></script>
+<script>
+  cat = 'master';
+</script>
+<script src="./js/iso.js?v=1.0"></script>
+<script src="./js/boites_mobile.js?v=1.0"></script>
+<script src="./js/boites_master.js?v=1.0"></script>
+<script src="./js/modes.js?v=1.0"></script>
+<script src="./js/master.js?v=1.0"></script>
+<script src="./js/editor.js"></script>
+
+

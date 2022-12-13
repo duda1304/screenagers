@@ -1,0 +1,77 @@
+{
+    "name": "asdasd-copy",
+    "languages": [
+        "BS"
+    ],
+    "scene-order": [
+        1,
+        2
+    ],
+    "scenes": {
+        "1": {
+            "name": "cdfd",
+            "step-order": [
+                1,
+                2
+            ],
+            "steps": {
+                "1": {
+                    "screen": {
+                        "media-order": [],
+                        "background-color": "",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    }
+                },
+                "2": {
+                    "screen": {
+                        "media-order": [],
+                        "background-color": "",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    }
+                }
+            }
+        },
+        "2": {
+            "name": "fff",
+            "step-order": [
+                1
+            ],
+            "steps": {
+                "1": {
+                    "screen": {
+                        "media-order": [],
+                        "background-color": "",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

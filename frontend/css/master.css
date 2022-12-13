@@ -14,6 +14,17 @@ body {
   background-color: rgba(0, 0, 0, 1);
 }
 
+#master {
+  background-color: #242424;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  font-size: 85%;
+}
+
+.box {
+  width: 25vw;
+}
 main {
   font-size: 73%;
 }
@@ -26,12 +37,19 @@ fieldset {
   border: 0 none;
   padding: 0;
   margin: 0;
-
+margin: 10px;
   max-width: 100%;
 }
 
+
+
 [disabled] {
   opacity: 0.4;
+}
+
+.menu-left {
+  background-color: #424141;
+  color: white;
 }
 
 #tools {
@@ -73,6 +91,10 @@ fieldset {
   padding: 3px 6px;
   background-color: rgb(183, 149, 170);
   border-top: 1px solid rgb(159, 130, 149);
+}
+
+#interactions button {
+  width: auto ;
 }
 
 #no_click {
@@ -207,7 +229,7 @@ fieldset {
   color: #fff;
   display: block;
   padding: 1px 5px;
-  font-size: 80%;
+  font-size: 90%;
   font-weight: 100;
 }
 
@@ -467,6 +489,7 @@ i,
 ========= */
 
 input[type='range'] {
+  appearance: none;
   -webkit-appearance: none;
   width: 100%;
 }
@@ -483,6 +506,7 @@ input[type='range']::-webkit-slider-runnable-track {
   background: #000;
 }
 input[type='range']::-webkit-slider-thumb {
+  appearance: none;
   -webkit-appearance: none;
   border: 1px solid #000000;
   background: #ffffff;

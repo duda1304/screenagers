@@ -4,33 +4,79 @@ const showObject = { "name" : "",
                     "scenes" : {}                 
 }
 
-const stepObject = {        
-                        "background-color" : "", 
-                        "image" : [],
-                        "video" : [],
-                        "stream" : [],
-                        "text" : [],
-                        "avatar" : "", 
-                        "console" : ""
-                    };
-
 const sceneObject = {
-                        "name" : "",
-                        "step-order" : [],
-                        "steps" : {}
+    "name" : "",
+    "step-order" : [],
+    "steps" : {}
+}
+const stepObject = { 
+    "screen" :  {
+                    "media-order": [],
+                    "background-color": "",
+                    "media": {},
+                    "console": {
+                        "active": false,
+                        "css": {}
+                    },
+                    "music" : {
+                        "src": "",
+                        "volume": "",
+                        "loop": ""
+                    }
+                }
+            }
+
+const consoleObject =   {
+                        "mode": "console"
+                        }
+
+const boiteObject =     {
+                        "type": "",
+                        "arg": ""
+                        }
+
+
+// const stepObject = {     
+//                     "screen" : {
+//                         "decor" : {
+//                             "media-order" : [],   
+//                             "background-color" : "", 
+//                             "image" : [],
+//                             "video" : [],
+//                             "stream" : [],
+//                             "text" : [],
+//                             "avatar" : {}, 
+//                             "console" : {}
+//                         },
+//                         "music": {
+//                             "src": "",
+//                             "volume": "",
+//                             "loop": ""
+//                         }
+//                     }
+                        
+//                     };
+const htmlPathToMedia = '/data/media/';
+
+const mediaObject = {   
+                        "type" : "",
+                        "css" : {},
+                        "attributes" : {},
+                        "content" : "",
+                        "classes" : [] 
                     };
 
-const global = {"top" : "",
-                "left" : "", 
-                "z-index" : ""
+const global = {
+                "top" : "",
+                "left" : ""
                 };
 
 const editor_media_div_css = {
+                        "position" : "absolute",
                         "top": "",
                         "left": "",
-                        "z-index": 1,
-                        "width": "100%",
-                        "height": "100%",
+                        "width": "",
+                        "height": "",
                     };
 
 const editor_image_css = {
@@ -46,10 +92,9 @@ const imageObject = {   "width" : "",
                         "background-color" : "",
                         "background-image" : "",
                         "transform" : "",
-                        "src" : ""
                     };
 
-
+// only if object-fit => inner elelemtn height:100% + object-fit property
 
 const videoObject = {   "width" : "",
                         "height" : "",
@@ -86,9 +131,7 @@ const avatarObject = {  "width" : "",
                         "background-image" : ""
                     };
 
-const consoleObject = {"width" : "", 
-                        "height" : ""
-                    };
+
 
 const languages = {
                     'sq' : 'Albanian',

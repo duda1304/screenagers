@@ -38,25 +38,25 @@ function inIframe() {
 
 var cat = window.location.pathname === '/' ? 'mobile' : window.location.pathname.slice(1);
 
-var $no_click = $('<div id="no_click" class="box-fit box-center"></div>');
-$no_click.append($('<div>CLICK ME BABY !</div>'));
-if (cat !== 'mobile') {
-  $('body').append($no_click);
-}
+// var $no_click = $('<div id="no_click" class="box-fit box-center"></div>');
+// $no_click.append($('<div>CLICK ME BABY !</div>'));
+// if (cat !== 'mobile') {
+//   $('body').append($no_click);
+// }
 
-var firstClick = false;
-$(window).one('click', function() {
-  firstClick = true;
+// var firstClick = true;
+// $(window).one('click', function() {
+//   firstClick = true;
 
-  $no_click.remove();
-  if (
-    window.location.hostname !== 'localhost' &&
-    window.location.hostname !== 'leto.nute.net' &&
-    inIframe() === false
-  ) {
-    toggleFullScreen();
-  }
-});
+//   $no_click.remove();
+//   if (
+//     window.location.hostname !== 'localhost' &&
+//     window.location.hostname !== 'leto.nute.net' &&
+//     inIframe() === false
+//   ) {
+//     toggleFullScreen();
+//   }
+// });
 
 /* Utils
 ======== */

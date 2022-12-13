@@ -15,18 +15,18 @@ modes.normal = function() {
 
 (function() {
   var cnt = 0;
-  function resizeFit() {
-    cnt++;
-    if (cnt > 500) return;
-    var fontsize = parseFloat($texte.css('font-size'));
-    if (fontsize > 30) {
-      $texte.css('fontSize', fontsize - 5 + 'px');
-      var h = $step.height();
-      if ($texte.height() >= h - h * 0.4 || $step[0].scrollWidth > $step.width()) {
-        resizeFit();
-      }
-    }
-  }
+  // function resizeFit() {
+  //   cnt++;
+  //   if (cnt > 500) return;
+  //   var fontsize = parseFloat($texte.css('font-size'));
+  //   if (fontsize > 30) {
+  //     $texte.css('fontSize', fontsize - 5 + 'px');
+  //     var h = $step.height();
+  //     if ($texte.height() >= h - h * 0.4 || $step[0].scrollWidth > $step.width()) {
+  //       resizeFit();
+  //     }
+  //   }
+  // }
 
   modes.biggest_text = function() {
     $main.addClass('mode--biggest_text');
@@ -39,7 +39,7 @@ modes.normal = function() {
         cnt = 0;
         data = data.replace(/\n/, '<br>');
         $texte.css('font-size', '55vmin').html(data);
-        resizeFit();
+        // resizeFit();
       },
 
       destroy() {
@@ -80,7 +80,7 @@ modes.normal = function() {
       timeouts = [...str].map((letter, i) => ecrireMot(letter, i));
     }
 
-    $main.addClass('mode--final_fantasy');
+    // $main.addClass('mode--final_fantasy');
     $texte.hide();
 
     return {
@@ -103,7 +103,7 @@ modes.normal = function() {
 
       destroy() {
         $texte.show();
-        $main.removeClass('mode--final_fantasy');
+        // $main.removeClass('mode--final_fantasy');
       }
     };
   };
@@ -113,6 +113,15 @@ modes.normal = function() {
 ========== */
 (function() {
   var lastData;
+
+ 
+  if ($('.step__texte').length === 0) {
+    var $texte = $('<div class="step__texte"></div>');
+    $('step').append($texte);
+  } 
+
+  var $texte = $('.step__texte')
+  
 
   var log;
   function scrollDown() {

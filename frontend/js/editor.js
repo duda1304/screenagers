@@ -1,18 +1,16 @@
-// KADA NOVI SHOE NESMIJE IMATI RAZMAKA U FILENAMEu
-const socket = io();
-
 let mainData = {};
+// const socket = io();
 
-
+// MAIN STATUS TRACKER
 let active = {
     fileName : "",
     scene : "",
     step : ""
 }
 
-$(".resizable").resizable({
-    handles: "se"
-});
+$( function() {
+    $( ".draggable" ).draggable();
+  } );
 
 // separate JSONs for each show made, data gives array of all JSONs
 socket.on('initial json', function(data) {
@@ -22,19 +20,20 @@ socket.on('initial json', function(data) {
 function setJSONsdata(data) { 
     mainData = {};
     let count = 0;
+    $('#structure-content').empty();
 
-    data.sort().forEach(async(src) => {
+    const sorted = data.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+    
+    sorted.forEach(async(src) => {
         await $.getJSON(src.replace('frontend', '.'), function(jsonData) {
             let array = src.split('/');
             let fileName = array[array.length -1].replace('.json', '');
             mainData[fileName] = jsonData;
             displayStructure(fileName, jsonData);
             count = count + 1;
-            console.log(active)
             if (count === data.length) {
                  // CLICK ON ACTIVE ITEM 
                  const currentActive = {"fileName" : active.fileName, "step" : active.step, "scene" : active.scene};
-                 
                 if (currentActive.fileName !== "") {
                     $(`#${currentActive.fileName} .show-name`).click();
                     if (currentActive.scene !== "") {
@@ -58,7 +57,7 @@ function getFileName(src) {
 }
 
 // FUNCTION TO MAKE TEMPORARY RANDOM STRING IDs TO CONNECT ALL ELEMENTS
-function makeid(length) {
+function createRandomString(length) {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
@@ -71,12 +70,17 @@ function makeid(length) {
 function displayStructure(fileName, data) {
     let showElement =  `<ul id=${fileName} class="show">
                             <li class="show-name"><b><u>${data.name}</u></b></li>
+                            <li style="display: none;" class="structure-buttons">
+                                <span onclick="addInStructure('scene')"><img src="./icons/plus.svg"></img></span>
+                                <span onclick="duplicate('show')"><img class="duplicate-icon" src="./icons/duplicate.png"></img></span>
+                                <span onclick="deleteFromStructure('show')"><img src="./icons/trash.svg"></img></span>
+                                <span onclick="editName('show')"><img class="edit-icon" src="./icons/edit.png"></img></span>
+                            </li>
                             <li style="display: none;"><select class="languages"></select></li>
                             <li style="display: none;">
                                 <ul id=${fileName + 'sceneList'} class="scenes"></ul>
                             </li>
                         </ul>`
-    
     $('#structure-content').append(showElement);
 
 
@@ -88,7 +92,6 @@ function displayStructure(fileName, data) {
                        .text(value)); 
    });
 
-
     // APPEND SCENES AND STEPS IF PRESENT
     if (!jQuery.isEmptyObject( data.scenes )  ) {
     const sceneOrder = data['scene-order'];
@@ -97,8 +100,16 @@ function displayStructure(fileName, data) {
         let scene = data['scenes'][sceneOrderNumber];
         const stepOrder = scene['step-order'];
 
-        const id = makeid(5);
-        $(`<li style="margin-top: 10px;" data-scene=${sceneOrderNumber}><b id=${id + 'toggler'} class="toggler">${scene.name}<b></li>`).appendTo(`#${fileName + 'sceneList'}`)
+        const id = createRandomString(5);
+        $(`<li style="margin-top: 10px;" data-scene=${sceneOrderNumber}>
+            <b id=${id + 'toggler'} class="toggler">${scene.name}</b>
+            <div style="display: none;" class="structure-buttons">
+                <span onclick="addInStructure('step')"><img src="./icons/plus.svg"></img></span>
+                <span onclick="duplicate('scene')"><img class="duplicate-icon" src="./icons/duplicate.png"></img></span>
+                <span onclick="deleteFromStructure('scene')"><img src="./icons/trash.svg"></img></span>
+                <span onclick="editName('scene')"><img class="edit-icon" src="./icons/edit.png"></img></span>
+            </div>
+            </li>`).appendTo(`#${fileName + 'sceneList'}`)
         .append(`<ul id=${id} style="display: none" class="steps"></ul>`);
 
         let number = 1;
@@ -115,8 +126,10 @@ function displayStructure(fileName, data) {
              stop: function(event, ui) {
                 let endPosition = ui.item.index();
                 if (endPosition !== startPosition) {
+                    // ADJUST MAIN DATA
                     let movedElement = mainData[fileName]['scene-order'].splice(startPosition, 1)[0];
                     mainData[fileName]['scene-order'].splice(endPosition, 0, movedElement);
+                    // SAVE TO JSON
                     saveSceneOrder(fileName, mainData[fileName]['scene-order']);
                 }
              }
@@ -130,14 +143,14 @@ function displayStructure(fileName, data) {
             stop: function(event, ui) {
                 let endPosition = ui.item.index();
                 if (endPosition !== startPosition) {
+                    // ADJUST MAIN DATA
                     let movedElement = mainData[fileName]['scenes'][sceneOrderNumber]['step-order'].splice(startPosition, 1)[0];
                     mainData[fileName]['scenes'][sceneOrderNumber]['step-order'].splice(endPosition, 0, movedElement);
+                    // SAVE TO JSON
                     saveStepOrder(fileName, sceneOrderNumber, mainData[fileName]['scenes'][sceneOrderNumber]['step-order']);
-                    console.log(mainData[fileName]['scenes'][sceneOrderNumber]['step-order']);
 
                     // ADJUST TEXT STEP number IN HTML
                     $(ui.item).text('Step ' + (endPosition + 1));
-
                     $(function () {
                         let currentLi = ui.item;
                         let number = endPosition;
@@ -163,8 +176,9 @@ function displayStructure(fileName, data) {
 
         // DEFINE TOGGLE FUNCTIONS FOR STEP LIST
         $("#" + id + "toggler").click(function() {
-            $(".toggler").not(this).next().hide();
-            $( "#" + id ).toggle();
+            $(".toggler").not(this).nextAll().hide();
+            // $( "#" + id ).toggle();
+            $(this).nextAll().toggle();
             
             $(".toggler").not(this).removeClass('active');
             $(this).toggleClass('active');
@@ -187,8 +201,8 @@ function displayStructure(fileName, data) {
      // TOGGLE SHOW
      $(`#${fileName} .show-name`).click(function(){
         // toggle visibility
-        $(".show").not(`#${fileName}`).children().not('.show-name').hide()
-        $(`#${fileName}`).children().not(this).toggle();
+        $(".show").not(`#${fileName}`).children().not('.show-name').hide();
+        $(`#${fileName}`).children().not('.show-name').toggle();
         
         // toggle class
         $(".show-name").not(this).removeClass('active');
@@ -207,6 +221,7 @@ function displayStructure(fileName, data) {
         } else {
             setActiveStep("", "", "");
         }
+        console.log(active)
         $('#step-media ul').empty();
         $('#preview').empty();
     })
@@ -229,58 +244,497 @@ function setActiveStep(fileName, scene, step) {
     console.log(active)
 }
 
+function applyZIndexes() {
+    let mediaOrder = [];
+    $('#step-media li').each(function(){mediaOrder.push($(this).data('key'))})
+    mediaOrder.forEach((value, index) => {
+        $(`#preview [data-key=${value}]`).css({"z-index" : index + 1});
+    })
+}
+
+function clearUnwantedMedia(stepMedia){
+    // const div = document.getElementById(container);
+    // const stepMedia = mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media'];
+
+    let keysArray = [].map.call($('.step').children().not('#boite'), function (e) {
+    return e.getAttribute('data-key')
+    })
+
+    keysArray.forEach(key => {
+        if (!stepMedia[key]) {
+            $(`#preview [data-key=${key}]`).remove();
+        }
+    })
+}
+
+$("#step-media ul").sortable({
+    start : function (event, ui) {
+       startPosition = ui.item.index();
+    },
+    stop: function(event, ui) {
+        let endPosition = ui.item.index();
+        if (endPosition !== startPosition) {
+            // ADJUST MAIN DATA
+            // let movedElement = mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].splice(startPosition, 1)[0];
+            // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].splice(endPosition, 0, movedElement);
+
+            applyZIndexes();
+           
+        }
+    }
+});    
+
+// STEP IS DISPLAYED FROM SAVED JSON DATA
 function setStep(e, fileName, scene, step) {
     $(".step").not(e.target).removeClass('active');
+    $(e.target).parent().find('.structure-buttons').remove();
     $(e.target).toggleClass('active');
 
     // CLEAR PREVIOUS  STEP DATA LIST AND PREVIEW
     $('#step-media ul').empty();
-    $('#preview').empty();
 
     if($(e.target).hasClass('active')) {
         setActiveStep(fileName, scene, step);
-   
-        // DISPLAY STEP DATA IN MEDIA LIST 
-        let media = [];
-        let zIndex = [];
-        let sortedMedia;
+
+        // APPEND clone and delete buttons
+        $(e.target).append(`<div class="structure-buttons">
+                                <span onclick="duplicate('step')"><img class="duplicate-icon" src="./icons/duplicate.png"></img></span>
+                                <span onclick="deleteFromStructure('step')"><img src="./icons/trash.svg"></img></span>
+                            </div>`)
 
         $.getJSON('./data/json/' + fileName + '.json', function(jsonData) {
-            const stepData = jsonData['scenes'][scene]['steps'][step];
-
-            // GET ALL STEP ELEMENTS AND ALL Z INDEXES
-            stepData.image.forEach(image => media.push(image));
-            stepData.stream.forEach(stream => media.push(stream));
-            stepData.text.forEach(text => media.push(text));
-            stepData.video.forEach(video => media.push(video));
-
-            // SORT MEDIA ACCRODING TO Z INDEX TO DISPLAY LAYOUT ORDER 
-            sortedMedia = media.sort((r1, r2) => (r1['z-index'] < r2['z-index']) ? 1 : (r1['z-index'] > r2['z-index']) ? -1 : 0);
-            sortedMedia.forEach(element => {
-                let data_key = makeid(5);
-                const li = `<li data-key=${data_key} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${getFileName(element.src)}</li>`;
+            const mediaOrder = jsonData['scenes'][scene]['steps'][step]['screen']['media-order'];
+            const stepMedia = jsonData['scenes'][scene]['steps'][step]['screen']['media'];
+            
+            clearUnwantedMedia(stepMedia);
+            for (let data_key of mediaOrder) {
+                // DISPLAY MEDIA IN MEDIA LIST
+                let liName;
+                if (stepMedia[data_key]['type'] === 'media_images' || stepMedia[data_key]['type'] === 'media_video' || stepMedia[data_key]['type'] === 'media_gifs') {
+                    liName = getFileName(stepMedia[data_key]['attributes']['src']);
+                } else {
+                    liName = stepMedia[data_key]['type']
+                }
+                const li = `<li data-key=${data_key} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${liName}</li>`;
                 $('#step-media ul').append(li);
-                // DISPLAY STEP IN MEDIA LIST
-                setElements(element.src, 'media_images', data_key, element);
-            })
+                // DISPLAY STEP IN MEDIA PREVIEW
+                setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);
+            }
+            applyZIndexes();
+            // setElements("", "avatars", "", jsonData['scenes'][scene]['steps'][step]['screen']['avatars']);
+            setElements("", "console", "", jsonData['scenes'][scene]['steps'][step]['screen']['console']);
+            setElements("", "music", "", jsonData['scenes'][scene]['steps'][step]['screen']['music']);
         }) 
     } else {
         setActiveStep(fileName, scene, ""); 
+        $('#preview').empty();
     }
 }
+
+// ADD ELEMENTS
+function setElements(val, type, data_key, stepMediaObject) {
+    // $('#media-editor')[0].innerHTML = '';
+    src = htmlPathToMedia + val;
+   
+    const avatarsElement = `<div class="avatars draggable resizable" style="width: 25%; height: 15%; position: absolute; top: 25%; left:25%; border-radius: 45%; z-index:99;" data-key=${data_key} data-type=${type}><img style = "width: 100%; height: 100%;" class="media"></img></div>`;
+
+    const console = `<div id="console" class="draggable resizable" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:100;"><iframe src="/console" style="width:100%; height: 100%; border: none;"></iframe></div>`;
+
+    const imageElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}><img style="width: 100%;" src=${src} class="media"></img></div>`
+
+    const videoElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}><video autoplay style="width: 100%;" src=${src} class="media"></video></div>`
+                   
+    const audioElement = `<audio id="music" src="" data-type=${type}></audio>`
+
+    const streamElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}><video autoplay id="stream" style="width: 100%;" src=${src} class="media"> </video><div class="video-options">
+    <select name="" id="" class="custom-select"><option value="">Select camera</option></select>
+</div>
+<div class="controls d-none">
+    <button class="play streamControl" title="Play">&gt;</button>
+    <button class="pause d-none streamControl" title="Pause">||</button>
+</div></div>`
+    // var streamElement = ` 
+    //                     <div 
+    //                     id=${id}
+    //                     class = "popup video stream"
+    //                     style = "z-index: ${zIndex};
+    //                                 text-align: center;
+    //                                 position: absolute;
+    //                                 left: 0%; 
+    //                                 top: 85%;
+    //                                 box-sizing: border-box;
+    //                                 width: 40%;
+    //                                 height: auto;
+    //                                 -webkit-touch-callout: none; 
+    //                                 -webkit-user-select: none; 
+    //                                 -khtml-user-select: none; 
+    //                                 -moz-user-select: none; 
+    //                                 -ms-user-select: none; 
+    //                                 user-select: none; 
+    //                             "
+    //                     >
+    //                         <div 
+    //                             class = "popup-body"
+    //                                         style = "width: 100%;
+    //                                         height: 100%;
+    //                                         overflow: hidden;
+    //                                         box-sizing: border-box;"
+    //                         >
+    //                         <div 
+    //                             class="popup-header" 
+    //                             id=${id + 'header'}
+    //                             style = "   position: absolute;
+    //                                         left: 7%;
+    //                                         top: 20%;
+    //                                         width: 85%;
+    //                                         height: 80%;
+    //                                         padding: 0;
+    //                                         cursor: move;
+    //                                         z-index: 10;
+    //                                     "
+    //                         ></div>
+                        
+    //                         <video id="stream" autoplay style="width: 100%"></video>
+    //                         <div class="video-options">
+    //                             <select name="" id="" class="custom-select"><option value="">Select camera</option></select>
+    //                         </div>
+    //                         <div class="controls d-none">
+    //                             <button class="play streamControl" title="Play">&gt;</button>
+    //                             <button class="pause d-none streamControl" title="Pause">||</button>
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    
+    
+    // `
+    
+    // var textElement = `<div 
+    //                         id=${id}
+    //                         class = "popup text"
+    //                         style = "z-index: ${zIndex};
+    //                                 text-align: center;
+    //                                 position: absolute;
+    //                                 left: 85%; 
+    //                                 top: 85%;
+    //                                 box-sizing: border-box;
+    //                                 width: 20%;
+    //                                 height: auto;
+    //                                 -webkit-touch-callout: none; 
+    //                                 -webkit-user-select: none; 
+    //                                 -khtml-user-select: none; 
+    //                                 -moz-user-select: none; 
+    //                                 -ms-user-select: none; 
+    //                                 user-select: none; 
+    //                                 "
+    //                     >
+    //                         <div 
+    //                             class = "popup-body"
+    //                                     style = "width: 100%;
+    //                                     height: 100%;
+    //                                     overflow: hidden;
+    //                                     box-sizing: border-box;"
+    //                         >
+    //                             <div 
+    //                                 class="popup-header text-box-header" 
+    //                                 id=${id + 'header'}
+    //                                 style = "   position: absolute;
+    //                                             left: -15px;
+    //                                             top: 0px;
+    //                                             width: 15px;
+    //                                             height: 24px;
+    //                                             padding: 0;
+    //                                             cursor: move;
+    //                                             z-index: 10;
+                                                
+    //                                         "
+    //                             ></div>
+    //                             <pre contenteditable="true" id=${id + 'text'} 
+    //                                 style=" 
+    //                                 white-space: pre-wrap; 
+    //                                 word-wrap: break-word;
+    //                                 color: white;
+    //                                 font-size: 16px;
+    //                                 margin: 0px;
+    //                                 font-family: Arial;
+    //                                 "
+    //                             >${val}</pre>
+    //                         </div>
+    //                     </div>`
+
+    if (type === 'media_video') {
+        if($(`#preview [data-key=${data_key}]`).length === 0) {
+            $('#preview').append(videoElement);
+        }
+    } else if (type === 'videoStream'){
+        if($(`#preview [data-key=${data_key}]`).length === 0) {
+            $('#preview').append(streamElement);
+        }
+    }
+    else if (type === 'media_images' || type === 'media_gifs') {
+        //  IF ELEMENT DOES NOT ALREADY EXIST CREATE IT
+        if($(`#preview [data-key=${data_key}]`).length === 0) {
+            $('#preview').append(imageElement);
+        }
+    } else if (type === 'avatars') {
+        if($(`#preview [data-key=${data_key}]`).length === 0) {
+            $('#preview').append(avatarsElement);
+        }
+       
+    } else if(type === 'console') {
+        if($('#console').length === 0) {
+            $('#preview').append(console);
+        }
+    } else if (type === 'music') {
+        if($('#music').length === 0) {
+            $('#preview').append(audioElement);
+        }
+    }
+    else if (type === 'media_layouts') {
+        // const iframe  = document.createElement("iframe");
+        // iframe.src = '/data/media/' + val;
+        // iframe.style.display = "none";
+        // document.body.appendChild(iframe);
+
+        // iframe.onload = function(e) {
+            const node = document.createElement('div');
+            node.innerHTML = val;
+
+            const popupElements = Array.from(node.getElementsByClassName("popup"));
+            var id = [];
+            popupElements.forEach(element => id.push(element.id));
+
+            // Adjust src of media elements to be seen by editor
+            var mediaElements = node.querySelectorAll('[src]');
+            for (var element of mediaElements) {
+                var adjustedSRC = element.getAttribute("src").replace("..", "/data/media");
+                element.setAttribute("src", adjustedSRC);
+            }
+
+            // adjust src of media for background images on elements if exists
+            var popupBodyElements = node.querySelectorAll('.popup-body');
+            for (var element of popupBodyElements) {
+                        if (element.style.backgroundImage !== '') {
+                            var adjustedSRC = element.style.backgroundImage.replace('url("..','url("data/media');
+                            element.style.backgroundImage = adjustedSRC;
+                        }
+                    }
+            // adjust main color picker value
+            $('#preview_background')[0].value = node.style.backgroundColor;
+            $('#preview_background').trigger('input');
+
+            document.getElementById("preview").remove();
+            document.getElementsByTagName("main")[0].append(node);
+         
+            e.target.remove();
+                  
+            const popupElementsNew = Array.from(node.getElementsById("preview"));
+           
+            // initResizeElement();
+            if (typeof(id) === 'string') {
+                addMenu(id);
+            } else {
+                id.forEach(element => addMenu(element));
+            // }
+            
+            // initDragElement();
+            closeMediaList();
+        }
+    } 
+    else if (type === 'media_decors') {
+        var decors = Array.from(document.querySelector(".media_decors").children);
+        var previewElement = document.querySelector("#preview");
+        // Remove previouse styles
+        decors.forEach(decor => {
+            var className = decor.innerHTML.substring(1);
+            if (previewElement.classList.contains(className)) {
+                previewElement.classList.remove(className);
+            }
+            if (previewElement.style.backgroundColor !== '') {
+                $('#preview_background')[0].value = '';
+                $('#preview_background').trigger('input');
+            }
+        });
+        previewElement.classList.add(val.substring(1));
+        closeMediaList();
+    } 
+    else if (type === 'background') {
+        var decors = Array.from(document.querySelector(".media_decors").children);
+        var previewElement = document.querySelector("#preview");
+        // Remove previouse styles
+        decors.forEach(decor => {
+            var className = decor.innerHTML.substring(1);
+            if (previewElement.classList.contains(className)) {
+                previewElement.classList.remove(className);
+            }
+            // if (previewElement.style.backgroundColor !== '') {
+                $('#preview_background')[0].value = val;
+                $('#preview_background').trigger('input');
+            // }
+        });
+        // previewElement.classList.add(val.substring(1));
+        closeMediaList();
+    }    
+    else if (type === 'text-box') {
+        $('#preview').append(textElement);
+        document.getElementById(id + 'text').focus();
+        // initResizeElement(id);
+        addMenu(id);
+        closeMediaList();
+        // initDragElement();
+        hideIfDisplayed($('#add-text-button')[0]);
+        return id
+    }
+
+
+    // DEFINE FUNCTIONS FOR ELEMENT TO BE DRAGGABLE AND RESIZABLE
+    $("#preview .draggable").draggable({
+        stop: function () {
+            const l = Math.round(( 100 * parseFloat($(this).position().left / parseFloat($('#preview').width())) )) + "%" ;
+            const t = Math.round(( 100 * parseFloat($(this).position().top / parseFloat($('#preview').height())) )) + "%" ;
+            $(this).css("left", l);
+            $(this).css("top", t);
+        }
+    });
+    $('#preview .draggable').mousedown(function(){
+        $('#preview .draggable').not(this).removeClass('active');
+        $(this).addClass('active');
+        // MARK ACTIVE IN MEDIA LIST
+        $("#step-media ul li").not(`li[data-key="${this.dataset.key}"]`).removeClass('active');
+        $("#step-media").find(`li[data-key="${this.dataset.key}"]`).addClass('active');
+        // SET EVENT LISTENERS ON BUTTONS
+        $("#delete-media-button").unbind("click");
+        $("#edit-media-button").unbind("click");
+        let previewElement = $(this);
+        let data_key = this.dataset.key;
+        let type = this.dataset.type;
+        if ($(this).hasClass('active')) {
+            $("#delete-media-button").click(function(){
+                // DELETE FROM JSON
+                // deleteMedia(data_key);
+                // DELETE FROM MAIN DATA
+                // const index = mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].indexOf(data_key);
+                // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].splice(index, 1);
+                // delete mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media'][data_key];
+                $(previewElement).remove();
+                $("#step-media").find(`li[data-key="${data_key}"]`).remove();
+                applyZIndexes();
+            })
+            $("#edit-media-button").click(function(){
+                editElement(data_key, type)
+            })
+        }
+    });
+
+    $(".resizable").resizable({
+        handles: "se",
+        resize: function () {
+            $(this).css("object-fit", "");
+            $(this).children().each(function(){$(this).css("object-fit", "");$(this).css("height", "");})
+            const w = Math.round(( 100 * $(this).width() / $('#preview').width() )) + "%" ;
+            const h = Math.round(( 100 * $(this).height() / $('#preview').height() )) + "%" ;
+            $(this).css("width", w);
+            $(this).css("height", h);
+        }
+    });
+
+    // APPLY STYLE IF MEDIA OBJECT IS FROM STEP
+    if (stepMediaObject) {
+        if (type === 'console') {
+            if (!stepMediaObject['active']) {
+                $(`#${type}`).hide();
+                $(`#${type}-checkbox`).prop("checked", false);
+            } else {
+                $(`#${type}`).show();
+                $(`#${type}-checkbox`).prop("checked", true);
+            }
+            $(`#${type}`).css(stepMediaObject['css']);
+        } else if (type === 'music') {
+            if (!$('#music').attr('src').includes(stepMediaObject['src'])) {
+                $('#music').attr('src', htmlPathToMedia +  stepMediaObject['src']); 
+            }
+            $('#music').attr('volume', stepMediaObject['volume'])
+            $('#music').attr('loop', stepMediaObject['loop'])
+        }   
+        
+        else {
+        // if (type === 'media_images') {
+            // APPLY CSS
+            let mediaElement = $("#preview").find(`*[data-key="${data_key}"]`);
+            mediaElement.removeAttr('style');
+            mediaElement.css(stepMediaObject['css']);
+
+            // APPLY LOOP AND MUTED TO VIDEOS
+            if(stepMediaObject['type'] === 'media_video') {
+                mediaElement.find('.media').prop('muted', stepMediaObject['attributes']['muted'])
+                mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop'])
+            }
+
+            // CHECK IF NEW SRC SHOULD BE APPLIED
+            if (stepMediaObject['type'] === 'media_video' || stepMediaObject['type'] === 'media_images') {
+                if (!mediaElement.find('.media').attr('src').includes(stepMediaObject['attributes']['src'])) {
+                    mediaElement.find('.media').attr('src', htmlPathToMedia +  stepMediaObject['attributes']['src']); 
+                }
+            }
+
+            // if (stepMediaObject['type'] === 'videoStream') {
+            //     if (mediaElement.find('.media')[0].srcObject('id') !== stepMediaObject['attributes']['device']) {
+            //         async() => {
+            //             await navigator.mediaDevices.getUserMedia({
+            //               video: {
+            //                   deviceId: stepMediaObject['attributes']['device']
+            //               }}).then(stream => mediaElement.find('.media')[0].srcObject = stream)
+            //             } 
+            //     }
+            // }
+
+
+            // APPLY CLASSES
+            let classes = "";
+            stepMediaObject['classes'].forEach(element => {
+                classes = classes + element;
+            });
+            mediaElement.addClass(classes);
+
+            // ADD TEXT
+            mediaElement.find('.text').text(stepMediaObject['content']);
+
+            if(stepMediaObject['css']['object-fit'] !== "") {
+                mediaElement.find('.media').css({"height" : "100%", "object-fit" : stepMediaObject['css']['object-fit']});
+            }
+        // }
+        }
+    } 
+}
+
+function checkMediaType(val) {
+    if (
+    val.toLowerCase().endsWith('.jpeg') ||
+    val.toLowerCase().endsWith('.gif') ||
+    val.toLowerCase().endsWith('.jpg') ||
+    val.toLowerCase().endsWith('.png') ||
+    val.toLowerCase().endsWith('.svg') ||
+    val.toLowerCase().endsWith('.webp') ||
+    val.toLowerCase().endsWith('.jfif') ) {
+        return 'media_images'
+    }
+    if (
+    val.toLowerCase().endsWith('.webm') ||
+    val.toLowerCase().endsWith('.mp4') ||
+    val.toLowerCase().endsWith('.mov') ||
+    val.toLowerCase().endsWith('.wmv') ||
+    val.toLowerCase().endsWith('.avi') ||
+    val.toLowerCase().endsWith('.ogv') ) {
+        return 'media_video'
+    }
+
+    return 'media_stream'
+}
+
 
 function toggleVisibility(e) {
     $(e.target).toggleClass('visible');
     $('#preview').find(`[data-key='${e.target.dataset.key}']`).toggle();
 }
-
-// $('.up-button').click(function(){
-//     $(this).parents('.leg').insertBefore($(this).parents('.leg').prev());
-//     });
-    
-// $('.down-button').click(function(){
-// $(this).parents('.leg').insertAfter($(this).parents('.leg').next());
-// });
 
 function markActiveStepMediaElement(e) {
     // MARK IN MEDIA LIST
@@ -288,29 +742,22 @@ function markActiveStepMediaElement(e) {
     $(e.target).toggleClass('active');
 
     // MARK IN PREVIEW
-    $('.draggable').not(`.draggable[data-key='${e.target.dataset.key}']`).removeClass('active');
-    $(`.draggable[data-key='${e.target.dataset.key}']`).toggleClass('active');
+    $('#preview .draggable').not(`#preview .draggable[data-key='${e.target.dataset.key}']`).removeClass('active');
+    $(`#preview .draggable[data-key='${e.target.dataset.key}']`).toggleClass('active');
 
     // ADD EVENT LISTENERS
     $("#delete-media-button").unbind("click");
+    $("#edit-media-button").unbind("click");
     if ($(e.target).hasClass('active')) {
         $("#delete-media-button").click(function(){
-            $(`.draggable[data-key='${e.target.dataset.key}']`).remove();
+            $(`#preview .draggable[data-key='${e.target.dataset.key}']`).remove();
             $(e.target).remove();
+            applyZIndexes();
         })
-        $('#layer-up').click(function(){
-            $(e.target).parents('li').insertBefore($(e.target).parents('li').prev());
+        $("#edit-media-button").click(function(){
+            editElement(e.target.dataset.key, e.target.dataset.type)
         })
-        $('#layer-down').click(function(){
-            $(e.target).parents('li').insertAfter($(e.target).parents('uli').next());
-        })
-            
-        // $("#edit-media-button").click(function(){
-        //     $(`[data-key='${e.target.dataset.key}']`).parent().remove();
-        //     $(e.target).remove();
-        // })
     }
-   
 }
 
 function addMedia() {
@@ -319,8 +766,106 @@ function addMedia() {
     }
 }
 
-function addInStructure() {
-    if (active.fileName === "") {
+function styleToObject(style) {
+    const regex = /([\w-]*)\s*:\s*([^;]*)/g;
+    let match, properties={};
+    while(match=regex.exec(style)) properties[match[1]] = match[2].trim(); 
+    return properties;
+}
+
+function analyseStep() {
+    let updatedStepObject = {...stepObject};
+
+    updatedStepObject['screen']['background-color'] = $('#preview').css('background-color');
+
+    let mediaOrder = [];
+    $('#step-media li').each(function(){mediaOrder.push($(this).data('key'))});
+    updatedStepObject['screen']['media-order'] = mediaOrder;
+
+
+    let updatedMediaObject = {};
+
+    // get all media elements
+    $("#preview").children().not('#console, #music, #boite').each(function(){
+        let object =   {   "type" : "",     
+                            "css" : {},
+                            "attributes" : {},
+                            "content" : "",
+                            "classes" : [] 
+                        }
+                        
+        object['type'] = $(this).data('type');
+
+        object['css'] = styleToObject($(this).attr('style'));
+
+        // display none can be present if visibility was toggled
+        delete object['css']['display'];
+
+        if ($(this).data('type') === 'media_video' || $(this).data('type') === 'media_images') {
+            object['attributes']['src'] = $(this).children().attr('src').replace(htmlPathToMedia, '');
+        } 
+        // else {
+        //     object['attributes']['src'] = '';
+        // }
+
+        if($(this).data('type') === 'media_video') {
+            object['attributes']['loop'] = $(this).find('video')[0].loop;
+            object['attributes']['muted'] = $(this).find('video')[0].muted;
+        }
+
+        if ($(this).data('type') === 'videoStream') {
+            object['attributes']['device'] = $(this).find('video')[0].srcObject.id;
+        }
+       
+
+        let classArray = $(this).attr('class').split(" ");
+
+        classArray.forEach(element => {
+            if (!element.includes('draggable') && !element.includes('resizable') && !element.includes('active')) {
+                object['classes'].push(element);
+            }
+        })
+        object['content'] = $(this).children().text();
+
+        updatedMediaObject[$(this).data('key')] = object;
+    })
+
+    updatedStepObject['screen']['media'] = updatedMediaObject;
+
+    // updatedStepObject['screen']['avatars']['active'] = $('#avatars-checkbox').is(':checked');
+    // updatedStepObject['screen']['avatars']['css'] = styleToObject($('#avatars').attr('style'));
+
+    updatedStepObject['screen']['console']['active'] = $('#console-checkbox').is(':checked');
+    updatedStepObject['screen']['console']['css'] = styleToObject($('#console').attr('style'));
+
+    if ($('#console-checkbox').is(':checked')) {
+        updatedStepObject['console'] = {...consoleObject};
+    }
+
+    updatedStepObject['screen']['music']['scr'] = $('#audio').attr('src');
+
+    // ADD IF BOITE
+    return updatedStepObject;
+}
+
+function saveStep() {
+    if (active.step !== "") {
+        const step = analyseStep();
+        // SAVE TO JSON
+        socket.emit("save step", {"fileName" : active.fileName, "scene": active.scene, "step" : active.step, 'stepObject' : step})
+    }
+}
+
+function createNewObjectKey(array) {
+    if (array.length > 0) {
+        return Math.max(...array) + 1;
+    } else {
+        return 1;
+    }
+}
+
+function addInStructure(parameter) {
+    if (parameter === 'show') {
         const languageList = Object.keys(languages);
 
         let options = `<option value="" selected disabled>Select language</option>`
@@ -332,7 +877,7 @@ function addInStructure() {
         $('#alert')
         .empty()
         .append(`<form class="show-form">
-                    <input type="text" name="name" placeholder="New show name" required></input>
+                    <input type="text" name="name" placeholder="New show name" required oninput="this.value = this.value.replace(/[^a-zA-Z0-9 -]/g, '')"></input>
                     <select name="language" required>${options}</select>
                     <small>* you need to select language due to multilingual support.<br>Languages can be edited later.</small>
                     <div class='editor-buttons' style='justify-content: center;'>
@@ -350,129 +895,38 @@ function addInStructure() {
             const showName = e.target.elements.name.value;
             const fileName = showName.replace(/ /g, '').trim();
 
-            let newShowObject = showObject;
+            let newShowObject = {...showObject};
             newShowObject.name = showName;
             newShowObject.languages.push(e.target.elements.language.value.toUpperCase())
             
             // SAVE TO JSON FILE
             addNewShow(fileName, newShowObject);
             showSpinner();
-            // // ADD TO MAINDATA
-            // let newShowObject = showObject;
-            // newShowObject['name'] = showName;
-            // newShowObject['languages'].push(e.target.elements.language.value.toUpperCase());
-
-            // // ADD TO STRUCTURE LIST
-            // const id = makeid(5);
-
-            // $(`<li style="margin-top: 10px;" data-scene=${newSceneNumber}><b id=${id + 'toggler'} class="toggler">${sceneName}<b></li>`).appendTo(`#${active.fileName + 'sceneList'}`)
-            // .append(`<ul id=${id} style="display: none" class="steps"></ul>`);
-    
-            // $("#" + id).append(`<li class="step" data-step=${1} onclick="setStep(event, '${active.fileName}', ${newSceneNumber}, ${1})">Step 1</li>`);
-
-           // DEFINE SORTABLE FUNCTIONS FOR STEPS IN NEW SCENE
-            // $("#" + id).sortable({
-            //     start : function (event, ui) {
-            //     startPosition = ui.item.index();
-            //     },
-            //     stop: function(event, ui) {
-            //         let endPosition = ui.item.index();
-            //         if (endPosition !== startPosition) {
-            //             let movedElement = mainData[active.fileName]['scenes'][newSceneNumber]['step-order'].splice(startPosition, 1)[0];
-            //             mainData[active.fileName]['scenes'][newSceneNumber]['step-order'].splice(endPosition, 0, movedElement);
-            //             saveStepOrder(active.fileName, newSceneNumber, mainData[active.fileName]['scenes'][newSceneNumber]['step-order']);
-            //             console.log(mainData[active.fileName]['scenes'][newSceneNumber]['step-order']);
-
-            //             // ADJUST TEXT STEP number IN HTML
-            //             $(ui.item).text('Step ' + (endPosition + 1));
-
-            //             $(function () {
-            //                 let currentLi = ui.item;
-            //                 let number = endPosition;
-
-            //                 while (number > 0) {
-            //                     $(currentLi).prev().text('Step ' + number);
-            //                     currentLi = $(currentLi).prev();
-            //                     number = number - 1;
-            //                 }       
-                            
-            //                 currentLi = ui.item;
-            //                 number = endPosition + 2;
-
-            //                 while (number <= ui.item.parent().children().length) {
-            //                     $(currentLi).next().text('Step ' + number);
-            //                     currentLi = $(currentLi).next();
-            //                     number = number + 1;
-            //                 }
-            //             });
-            //         }
-            //     }
-            // });    
-
-            // DEFINE TOGGLE FUNCTIONS FOR STEP LIST
-            // $("#" + id + "toggler").click(function() {
-            //     $(".toggler").not(this).next().hide();
-            //     $( "#" + id ).toggle();
-                
-            //     $(".toggler").not(this).removeClass('active');
-            //     $(this).toggleClass('active');
-
-            //     // MARK ACTIVE SCENE in constant active and by color in menu
-            //     if ($(this).hasClass('active')) {
-            //         setActiveStep(active.fileName, newSceneNumber, "");
-            //         $(".show-name").removeClass('active');
-            //         $(`#${active.fileName} .show-name`).addClass('active');
-            //         $(".step").removeClass('active');
-            //     } else {
-            //         setActiveStep(active.fileName, "", "");
-            //         $(".step").removeClass('active');
-            //     }
-            //     $('#step-media ul').empty();
-            //     $('#preview').empty();
-            // });
-            
-            // setTimeout(() => {
-            //     $(".ui-dialog-titlebar-close"). click();
-            // }, 200); 
         })
     }
-    else if (active.scene !== "") {
+    if (parameter === 'step') {
         $('#alert')
         .empty()
-        .append(`<p>Add new empty step?</p>
-                <div class='editor-buttons' style='justify-content: center;'>
+        .append(`<p>Add new step?</p>
+                 <div class='editor-buttons' style='justify-content: center;'>
                     <button>Ok</button>
-                </div>`)
+                 </div>`)
         .dialog({
             resizable: false,
             modal: true,
             maxHeight: 600,
         });
+
         // OK BUTTON FUNCTION
         $('#alert button').click(function() {
-            let stepNumbers = mainData[active.fileName]['scenes'][active.scene]['step-order'].map(Number);
-            let newStepNumber;
-            if (stepNumbers.length > 0) {
-                newStepNumber = Math.max(...stepNumbers) + 1;
-            } else {
-                newStepNumber = 1;
-            }
-           
-            // ADD TO MAINDATA
-            // mainData[active.fileName]['scenes'][active.scene]['steps'][newStepNumber] = stepObject;
-            // mainData[active.fileName]['scenes'][active.scene]['step-order'].push((newStepNumber));
-
+            let newStepNumber = createNewObjectKey(mainData[active.fileName]['scenes'][active.scene]['step-order']);
+            let newStepObject = {...stepObject};
             // SAVE TO JSON FILE
-            addNewStep(newStepNumber, stepObject);
+            addNewStep(newStepNumber, newStepObject);
             showSpinner();
-            // ADD TO STRUCTURE LIST
-            // $('#structure .toggler.active').next().append(`<li class="step" data-step=${newStepNumber} onclick="setStep(event, '${active.fileName}', ${active.scene}, ${newStepNumber})">Step ${newStepNumber}</li>`)
-
-            // setTimeout(() => {
-            //     $(".ui-dialog-titlebar-close"). click();
-            // }, 200); 
         })
-    } else {
+    } 
+    if (parameter === 'scene') {
         $('#alert')
         .empty()
         .append(`<form>
@@ -490,116 +944,152 @@ function addInStructure() {
         $('#alert form').submit(function(e) {
             e.preventDefault();
             const sceneName = e.target.elements.name.value;
-            
-            let sceneNumbers = mainData[active.fileName]['scene-order'];
-            
-            let newSceneNumber;
-            if (sceneNumbers.length > 0) {
-                newSceneNumber = Math.max(...sceneNumbers) + 1;
-            } else {
-                newSceneNumber = 1;
-            }
+           
+            let newSceneNumber = createNewObjectKey(mainData[active.fileName]['scene-order'])
 
             // DEFINE NEW SCENE OBJECT
-            let newSceneObject = sceneObject;
+            let newSceneObject = {...sceneObject};
             newSceneObject['name'] = sceneName;
             newSceneObject['step-order'] = [1];
             newSceneObject['steps'] = {
-                                        "1": {
-                                            "background-color": "",
-                                            "image": [],
-                                            "video": [],
-                                            "stream": [],
-                                            "text": [],
-                                            "avatar": "",
-                                            "console": ""
-                                        }
+                                        "1": {...stepObject}
                                     };
-
-            // mainData[active.fileName]['scenes'][newSceneNumber] = newSceneObject;
-            // mainData[active.fileName]['scene-order'].push((newSceneNumber));
 
             // SAVE TO JSON FILE
             addNewScene(newSceneNumber, newSceneObject);
             showSpinner();
-            // ADD TO STRUCTURE LIST
-            // const id = makeid(5);
-
-            // $(`<li style="margin-top: 10px;" data-scene=${newSceneNumber}><b id=${id + 'toggler'} class="toggler">${sceneName}<b></li>`).appendTo(`#${active.fileName + 'sceneList'}`)
-            // .append(`<ul id=${id} style="display: none" class="steps"></ul>`);
-    
-            // $("#" + id).append(`<li class="step" data-step=${1} onclick="setStep(event, '${active.fileName}', ${newSceneNumber}, ${1})">Step 1</li>`);
-
-           // DEFINE SORTABLE FUNCTIONS FOR STEPS IN NEW SCENE
-            // $("#" + id).sortable({
-            //     start : function (event, ui) {
-            //     startPosition = ui.item.index();
-            //     },
-            //     stop: function(event, ui) {
-            //         let endPosition = ui.item.index();
-            //         if (endPosition !== startPosition) {
-            //             let movedElement = mainData[active.fileName]['scenes'][newSceneNumber]['step-order'].splice(startPosition, 1)[0];
-            //             mainData[active.fileName]['scenes'][newSceneNumber]['step-order'].splice(endPosition, 0, movedElement);
-            //             saveStepOrder(active.fileName, newSceneNumber, mainData[active.fileName]['scenes'][newSceneNumber]['step-order']);
-            //             console.log(mainData[active.fileName]['scenes'][newSceneNumber]['step-order']);
-
-            //             // ADJUST TEXT STEP number IN HTML
-            //             $(ui.item).text('Step ' + (endPosition + 1));
-
-            //             $(function () {
-            //                 let currentLi = ui.item;
-            //                 let number = endPosition;
-
-            //                 while (number > 0) {
-            //                     $(currentLi).prev().text('Step ' + number);
-            //                     currentLi = $(currentLi).prev();
-            //                     number = number - 1;
-            //                 }       
-                            
-            //                 currentLi = ui.item;
-            //                 number = endPosition + 2;
-
-            //                 while (number <= ui.item.parent().children().length) {
-            //                     $(currentLi).next().text('Step ' + number);
-            //                     currentLi = $(currentLi).next();
-            //                     number = number + 1;
-            //                 }
-            //             });
-            //         }
-            //     }
-            // });    
-
-            // DEFINE TOGGLE FUNCTIONS FOR STEP LIST
-            // $("#" + id + "toggler").click(function() {
-            //     $(".toggler").not(this).next().hide();
-            //     $( "#" + id ).toggle();
-                
-            //     $(".toggler").not(this).removeClass('active');
-            //     $(this).toggleClass('active');
-
-            //     // MARK ACTIVE SCENE in constant active and by color in menu
-            //     if ($(this).hasClass('active')) {
-            //         setActiveStep(active.fileName, newSceneNumber, "");
-            //         $(".show-name").removeClass('active');
-            //         $(`#${active.fileName} .show-name`).addClass('active');
-            //         $(".step").removeClass('active');
-            //     } else {
-            //         setActiveStep(active.fileName, "", "");
-            //         $(".step").removeClass('active');
-            //     }
-            //     $('#step-media ul').empty();
-            //     $('#preview').empty();
-            // });
-            
-            // setTimeout(() => {
-            //     $(".ui-dialog-titlebar-close"). click();
-            // }, 200); 
         })
     }
 }
 
-function deleteFromStructure() {
-    if (active.step !== "") {
+function duplicate(parameter) {
+    if (parameter === 'show') {
+        $('#alert')
+        .empty()
+        .append(`<p>Duplicate ${mainData[active.fileName]['name']} ?</p>
+                 <div class='editor-buttons' style='justify-content: center;'>
+                    <button>Ok</button>
+                 </div>`)
+        .dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+        });
+          // OK BUTTON FUNCTION
+        $('#alert button').click(function() {
+            // SAVE TO JSON FILE
+            duplicateShow();
+            showSpinner();
+        })
+    } 
+    
+    if (parameter === 'scene'){
+        $('#alert')
+        .empty()
+        .append(`<p>Duplicate ${mainData[active.fileName]['scenes'][active.scene]['name']} ?</p>
+                 <div class='editor-buttons' style='justify-content: center;'>
+                    <button>Ok</button>
+                 </div>`)
+        .dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+        });
+          // OK BUTTON FUNCTION
+        $('#alert button').click(function() {
+            const sceneName = mainData[active.fileName]['scenes'][active.scene]['name'] + '-copy';
+            
+            let newSceneNumber = createNewObjectKey(mainData[active.fileName]['scene-order'])
+
+            // DEFINE NEW SCENE OBJECT
+            let newSceneObject = {...mainData[active.fileName]['scenes'][active.scene]};
+            newSceneObject['name'] = sceneName;
+           
+            // SAVE TO JSON FILE
+            addNewScene(newSceneNumber, newSceneObject);
+            showSpinner();
+        })
+    }
+
+    if (parameter === 'step'){
+        $('#alert')
+        .empty()
+        .append(`<p>Duplicate step?</p>
+                 <div class='editor-buttons' style='justify-content: center;'>
+                    <button>Ok</button>
+                 </div>`)
+        .dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+        });
+          // OK BUTTON FUNCTION
+        $('#alert button').click(function() {
+            let newStepNumber = createNewObjectKey(mainData[active.fileName]['scenes'][active.scene]['step-order']);
+            let newStepObject = {...mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]};
+            // SAVE TO JSON FILE
+            addNewStep(newStepNumber, newStepObject);
+            showSpinner();
+        })
+    }
+
+
+}
+
+function editName(parameter) {
+    if (parameter === 'show') {
+        $('#alert')
+        .empty()
+        .append(`<form class="show-form">
+                    <input type="text" name="name" placeholder="${mainData[active.fileName]['name']}" required oninput="this.value = this.value.replace(/[^a-zA-Z0-9 -]/g, '')"></input>
+                    <div class='editor-buttons' style='justify-content: center;'>
+                        <button type="submit">Ok</button>
+                    </div>
+                 </form>`)
+        .dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+        });
+         // OK BUTTON FUNCTION
+         $('#alert form').submit(function(e) {
+            e.preventDefault();
+            const showName = e.target.elements.name.value.trim();
+            const newFileName = showName.replace(/ /g, '').trim();
+            
+            // SAVE TO JSON FILE
+            renameShow(newFileName, showName);
+            showSpinner();
+        })
+    } 
+    if (parameter === 'scene') {
+        $('#alert')
+        .empty()
+        .append(`<form class="show-form">
+                    <input type="text" name="name" placeholder="${mainData[active.fileName]['scenes'][active.scene]['name']}" required></input>
+                    <div class='editor-buttons' style='justify-content: center;'>
+                        <button type="submit">Ok</button>
+                    </div>
+                 </form>`)
+        .dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+        });
+         // OK BUTTON FUNCTION
+         $('#alert form').submit(function(e) {
+            e.preventDefault();
+            const sceneName = e.target.elements.name.value.trim();
+            
+            // SAVE TO JSON FILE
+            renameScene(sceneName);
+            showSpinner();
+        })
+    }
+}
+
+function deleteFromStructure(parameter) {
+    if (parameter === 'step') {
         $('#alert')
         .empty()
         .append(`<p>Delete step?</p>
@@ -617,20 +1107,9 @@ function deleteFromStructure() {
             // SAVE CHANGES TO JSON FILE
             deleteStep();
             showSpinner();
-            // DELETE FROM MAINDATA
-            // delete mainData[active.fileName]['scenes'][active.scene]['steps'][active.step];
-            // const index = mainData[active.fileName]['scenes'][active.scene]['step-order'].indexOf(active.step);
-            // mainData[active.fileName]['scenes'][active.scene]['step-order'].splice(index, 1);
-            // REMOVE FROM STRUCTURE LIST
-            // $(`#${active.fileName} li[data-scene=${active.scene}] li[data-step=${active.step}]`).remove();
-            // REMOVE FROM ACTIVE
-            // setActiveStep(active.fileName, active.scene, "");
-
-            // setTimeout(() => {
-            //     $(".ui-dialog-titlebar-close"). click();
-            // }, 200); 
         })
-    } else if (active.scene !== "") {
+    } 
+    if (parameter === 'scene') {
         $('#alert')
         .empty()
         .append(`<p>Delete scene?</p>
@@ -648,19 +1127,27 @@ function deleteFromStructure() {
             // SAVE CHANGES TO JSON FILE
             deleteScene();
             showSpinner();
+        })
+    }
 
-            // DELETE FROM MAINDATA
-            // delete mainData[active.fileName]['scenes'][active.scene];
-            // const index = mainData[active.fileName]['scene-order'].indexOf(active.scene);
-            // mainData[active.fileName]['scene-order'].splice(index, 1);
-            // REMOVE FROM STRUCTURE LIST
-            // $(`#${active.fileName} li[data-scene=${active.scene}]`).remove();
-            // REMOVE FROM ACTIVE
-            // setActiveStep(active.fileName, "", "");
+    if (parameter === 'show') {
+        $('#alert')
+        .empty()
+        .append(`<p>Delete ${mainData[active.fileName]['name']}?</p>
+                <div class='editor-buttons' style='justify-content: center;'>
+                    <button>Ok</button>
+                </div>`)
+        .dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+        });
 
-            // setTimeout(() => {
-            //     $(".ui-dialog-titlebar-close"). click();
-            // }, 200); 
+        // OK BUTTON FUNCTION
+        $('#alert button').click(function() {
+            // SAVE CHANGES TO JSON FILE
+            deleteShow();
+            showSpinner();
         })
     }
 }
@@ -680,9 +1167,8 @@ socket.on('success', function(data){
     // UNBIND EVENT LISTENERS
     $("#delete-media-button").unbind("click");
     $("#edit-media-button").unbind("click");
-    $("#layer-up").unbind("click");
-    $("#layer-down").unbind("click");
-
+    
+    
     // ADJUST constant ACTIVE
     if (data && data.deleted === 'step') {
         setActiveStep(active.fileName, active.scene, "");
@@ -701,26 +1187,35 @@ socket.on('success', function(data){
     }, 500);
 })
 
-socket.on('error', function(){
+socket.on('error', function(data){
     $('#alert')
     .empty()
     .append(`<p>Connection to server failed. Please try again.</p>`);
+
+    if (data.deleted) {
+        $('#alert').dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+            minWidth: 500
+        });
+    }
 })
 
-// FIND LARGEST INDEX OF ELEMENTS IN PREVIEW
-function findBiggestIndex() {
-    let index_highest = 0;   
-
-    $("#preview .draggable").each(function() {
-        // always use a radix when using parseInt
-        var index_current = parseInt($(this).css("zIndex"), 10);
-        if(index_current > index_highest) {
-            index_highest = index_current;
+$('.editor-buttons fieldset input').change(function() {
+    if (active.step !== "") {
+        if ($(this).is(':checked')) {
+            $(`#${$(this).attr('name')}` ).show();
+            // $("this").prop("checked", false);
+        } else {
+            $(`#${$(this).attr('name')}` ).hide();
+            // $(this).prop("checked", false);
         }
-    });
-    
-    return index_highest;
-}
+    } else {
+        $(this).prop("checked", false);
+    }
+});
+
 
 function addNewStep(newStepNumber, step) {
     socket.emit("add step", {"fileName" : active.fileName, "scene" : active.scene, "key" : newStepNumber, "step" : step});
@@ -734,34 +1229,39 @@ function addNewScene(newSceneNumber, scene) {
     socket.emit("add scene", {"fileName" : active.fileName, "key" : newSceneNumber, "scene" : scene});
 }
 
+function renameScene(sceneName) {
+    socket.emit("rename scene", {"fileName" : active.fileName, "scene" : active.scene, "name" : sceneName});
+}
+
 function deleteScene() {
     socket.emit("delete scene", {"fileName" : active.fileName, "scene" : active.scene});
 }
 
-function addNewShow(fileName, showObject) {
-    socket.emit("add show", {"fileName" : fileName, "content" : showObject});
+function addNewShow(fileName, show) {
+    socket.emit("add show", {"fileName" : fileName, "content" : show});
 }
 
+function duplicateShow() {
+    socket.emit("duplicate show", {"fileName" : active.fileName});
+}
+
+function renameShow(newFileName, showName) {
+    socket.emit("rename show", {"fileName" : active.fileName, "newFileName" : newFileName, "name" : showName});
+}
+
+function deleteShow() {
+    socket.emit("delete show", {"fileName" : active.fileName});
+}
+
+// function sendStep() {
+//     const step = analyseStep();
+//     socket.emit('step', step)
+// }
 
 
 window.onload = function() {
-    // initDragElement();
-    // initResizeElement();
     activateColorPicker();
-    // displayVisual(steps);
 };
-
-function initDragElement() {
-    $( function() {
-        $( ".draggable" ).draggable();
-      } );
-}
-
-
-var croppable = false;
-var initialImageWidth;
-var initialImageHeight;
-
   
   /* Media
 ======== */
@@ -782,164 +1282,20 @@ socket.on('init states', function(data) {
     displayMedia();
 });
 
-function isJsonString(str) {
-    try {
-        JSON.parse(str);
-    } catch (e) {
-        return false;
-    }
-    return true;
-}
-
-socket.on('step from master', (data) => {
-    console.log(data);
-   
-    var screen = data.screen;
-    
-    if (screen.decor.src !== ' ') {
-    if(isJsonString(screen.decor.src)) {
-        var style = JSON.parse(screen.decor.style);
-        JSON.parse(screen.decor.src).forEach((value,index) => {
-            if (style[index] !== " " && style[index] !== undefined && style[index] !== "[]") {
-                displayElement(value, style[index]);
-            } else {
-                displayElement(value, screen.decor.fit);
-            }
-        })
-    } else {
-        var style = screen.decor.style;
-        if (style !== " " && style !== undefined && style !== "[]") {
-            displayElement(screen.decor.src, style);
-        } else {
-            if (screen.decor.fit) {
-                displayElement(screen.decor.src, screen.decor.fit);
-            } else {
-                displayElement(screen.decor.src, 'cover');
-            }
-        }
-    }
-    }
-    if (isJsonString(screen.texte)) {
-        var style = JSON.parse(screen.style);
-        JSON.parse(screen.texte).forEach((value,index) => {
-            if(screen.texte !== '' && screen.texte !== ' ') {
-                var id = setElements(screen.texte, 'text-box');
-                setTextStyle(id, screen.style[index])
-            }
-        })
-    } 
-    if(screen.texte !== '' && screen.texte !== ' ') {
-    var id = setElements(screen.texte, 'text-box');
-    setTextStyle(id, screen.style)
-    }
-    
-    if (screen.avatars_area !== ' ') {
-        setElements('', 'avatars');
-        var style = JSON.parse(screen.avatars_area);
-        var popupParameters = ['width', 'height', 'top', 'left'];
-        for (const property in style) {
-            if (popupParameters.includes(property)) {
-                $('.avatars')[0].style[property] = style[property];
-            } else {
-                $('.avatars').find('img')[0].style[property] = style[property];
-            }
-        }
-    }
-})
-
-function setTextStyle(id, style) { 
-    var textStyle = style.trim();
-    $('#' + id + 'text').attr("style", textStyle);
-
-    var popupParameters = ['width', 'height', 'top', 'left', 'transform'];
-
-    for (const parameter of popupParameters) {
-        $('#' + id)[0].style[parameter] = $('#' + id + 'text')[0].style[parameter];
-        $('#' + id + 'text')[0].style[parameter] = ''
-    }
-
-    $('#' + id + 'text')[0].style.position = '';
-}
-
-function displayElement(src, style) {
-    if (src.charAt(0) === '#' || src.includes('rgb')) {
-        setElements(src, 'background');
-    } 
-  
-    else if (src.includes('deviceId')) {
-        getMediaStream();
-        setTimeout(() => {
-            setStyle(src, style);
-            $('.video-options>select').val(src.split('_')[1]);
-            $('.video-options>select').change();
-        }, 1000);
-      }
-    else {
-        $(`div[title|='${src}']`).mousedown();
-        if(src.charAt(0) === '.' || src.charAt(0) === '@') {
-            src.substring(1);
-        }
-        setStyle(src, style)
-    }
-}
-
-var contain = {'width' : '100%', 'height' : '100%', 'object-fit': 'contain'};
-var cover = {'width' : '100%', 'height' : '100%', 'object-fit': 'cover'};
+// function isJsonString(str) {
+//     try {
+//         JSON.parse(str);
+//     } catch (e) {
+//         return false;
+//     }
+//     return true;
+// }
 
 
-function setStyle(src, style) {
-    var element;
-    if (src.includes('deviceId')) {
-        element = $('#stream');
-    } else {
-        element = $(`[src*='${src}']`);
-    }  
-    
-    var popup = element[0].parentElement.parentElement;
-
-    if (style === 'contain' || style === 'cover') {
-        popup.style.top = '';
-        popup.style.left = '';
-        popup.style.width = '100%';
-        popup.style.height = '100%';
-        element[0].style.objectFit = style;
-        element[0].style.height = '100%';
-        if (element.is('video')) {
-            element[0].loop = false;
-            element[0].muted = false;
-        }
-    } else {
-        element[0].style.backgroundColor = style.backgroundColor;
-        element[0].style.backgroundImage = style.backgroundImage;
-        element[0].style.backgroundSize = style.backgroundSize;
-        element[0].style.backgroundRepeat = style.backgroundRepeat;
-        popup.style.width = style.width;
-        popup.style.height = style.height;
-
-        if (style.objectFit === 'contain' || style.objectFit === 'cover') {
-            element[0].style.objectFit = style.objectFit;
-            element[0].style.height = '100%';
-            popup.style.top = '';
-            popup.style.left = '';
-        }  else {
-            popup.style.top = style.top;
-            popup.style.left = style.left;
-        }
-
-        popup.style.zIndex = style.zIndex;
-        popup.style.transform = style.transform;
-
-        if (element.is('video')) {
-            element[0].loop = returnBoolean(style.loop);
-            element[0].muted = returnBoolean(style.muted);
-        }
-    }
-}
-
-function returnBoolean(str) {
-    if (str ==='true') return true
-    if (str ==='false' || str === 'null') return false
-}
+// function returnBoolean(str) {
+//     if (str ==='true') return true
+//     if (str ==='false' || str === 'null') return false
+// }
 // socket.on('language', (data) => {
 //     currentLanguage = data.currentLanguage;
 // })
@@ -986,16 +1342,56 @@ val.el.addClass('edit-element');
 
 var $media = $('#media');
 
-$media.on('mousedown', '.file', function() {
-    //CREATE UNIQUE DATA KEY TO BE ABLE TO ADD MEDIA WITH SAME SOURCE AND RECOGNIZE THEM
-    let data_key = makeid(5) + $(this).attr('title');
 
-    setElements($(this).attr('title'), this.parentElement.className, data_key);
-   
+// BOITES
+$boites_types = $('#boites_types');
+
+$.each(boites_mobiles, function(key, val) {
+  if ('radio' in val && val.radio === false) return;
+  $boites_types.append(
+    $(`<div class="button_radio">
+        <label class="boite_label" title="${key}">
+        <input class="boite_radio boite_radio--${key}" value="${key}" type="radio" name="type" />
+        <span>${key}</span>
+      </label>
+    </div>`)
+  );
+});
+
+$('.boite_radio--no_phone').prop('checked', true);
+
+$boites_types.on('dblclick', '.boite_label', function() {
+  $(this.form).submit();
+});
+
+function addAvatars() {
+    let data_key = createRandomString(5);
+     // ADD TO MAIN DATA MEDIA ORDER TO MANIPULATE Z INDEXES
+     mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].push(data_key);
+    const li = `<li data-key=${data_key} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Avatars</li>`;
+    $('#step-media ul').append(li);
+    setElements('', 'avatars', data_key);
+    applyZIndexes();
+    setTimeout(() => {
+        $(".ui-dialog-titlebar-close"). click();
+    }, 200);   
+}
+
+$media.on('mousedown', '.file', function() {
+    let data_key = createRandomString(5);
+
+    // ADD TO MAIN DATA MEDIA ORDER TO MANIPULATE Z INDEXES
+    mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].push(data_key);
+    // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media'][data_key] = newMediaObject;
+
     const li = `<li data-key=${data_key} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${getFileName($(this).attr('title'))}</li>`;
            
     $('#step-media ul').append(li);
-           
+    
+    setElements($(this).attr('title'), this.parentElement.className, data_key);
+
+    applyZIndexes();
+
     setTimeout(() => {
         $(".ui-dialog-titlebar-close"). click();
     }, 200);   
@@ -1109,483 +1505,107 @@ $(".media_cat p").click(function(){
 })
 }
 
-// ADD ELEMENTS
-function setElements(val, type, data_key, mediaObject) {
-    $('#media-editor')[0].innerHTML = '';
 
-    src = '/data/media/' + val;
-    // var id = Math.floor(100000 + Math.random() * 900000);
+// function addMenu(id) {
+//     var menuTemplate =  `<div  
+//                             class="menu"
+//                         >   
+//                         <div class="remove-element">
+//                             <img class="icon" src="../icons/xmark-solid.svg" onclick="removeElement(${id});"></img>
+//                         </div>
+//                         <div onclick="editElement(${id});">
+//                             Edit
+//                         </div>
+//                     </div>`
+//     $('#' + id).find('.popup-body')[0].innerHTML += menuTemplate;
+// }
 
-    // var zIndex ;
-    // var zIndexes = [];
-    // if ($('.popup')[0]) {
-    //     $('.popup').each(function() {
-    //         zIndexes.push(parseInt($(this).css('z-index')));
-    //     })
-    //     zIndex = Math.max.apply(Math,zIndexes) + 1;
-    // } else {
-    //     zIndex = 9;
+function toggleMediaList(e) {
+    e.target.classList.toggle('active')
+    $('#alert #media-backgrounds').toggleClass('d-none');
+}
+
+function editElement(key, type) {
+    // if (type === 'media_images' || type === 'media_gifs') {
+        $('#alert')
+        .empty()
+        .append(`<div  
+                    class = 'editor-menu'
+                >   
+                    <div class='menu-item size'>
+                        <p onClick="setSize(event, 'cover', '${key}', '${type}')">COVER</p>
+                        <p onClick="setSize(event, 'contain', '${key}',  '${type}')">CONTAIN</p>
+                    </div>
+                    <div class='menu-item bg-color'>
+                        <label for="background-color">BACKGROUND COLOR</label>
+                        <input
+                            id = ${key + '_background-color'} 
+                            autocomplete="off"
+                            _list="list_decors"
+                            class="color-picker _box-min d-none"
+                            type="text"
+                            name="background-color"
+                           
+                        />
+                    </div>
+                    <div class='menu-item bg-image'>
+                        <b onclick="toggleMediaList(event)">BACKGROUND IMAGE</b> 
+                        <div id="media-backgrounds" class='d-none'>
+                            <p onclick="removeBackgroundImage('${key}')">NONE</p>
+                            <div class="media_cat" id='background-gifs'>
+                            </div>
+                            <div class="media_cat media_images" id='background-images'>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class='menu-item rotation'>
+                        <p>ROTATION</p> 
+                        <div>
+                            <img class="icon" src="../icons/arrow-rotate-right-solid.svg" onclick="rotateRight('${key}');"></img>
+                        </div>
+                        <div>
+                            <img class="icon" src="../icons/arrow-rotate-left-solid.svg" onclick="rotateLeft('${key}');"></img>
+                        </div>
+                    </div>
+                </div>`)
+        .dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+        });
+        $('#media .media_images').clone().appendTo('#background-images').show();
+        $('#media .media_gifs').clone().appendTo('#background-gifs').show();
+        $('#background-images .media_images').children().click(function(){
+            $(`#preview [data-key=${key}]`).css({'background-image': `url('${htmlPathToMedia}${this.title}')`, 'background-size': 'cover', 'background-repeat': 'no-repeat'})
+        });
+        $('#background-gifs .media_gifs').children().click(function(){
+            $(`#preview [data-key=${key}]`).css({'background-image': `url('${htmlPathToMedia}${this.title}')`, 'background-size': 'cover', 'background-repeat': 'no-repeat'})
+        });
+        activateColorPicker();
     // }
 
-    // var avatars = `<div 
-    //                     id=${id}
-    //                     class = "popup image avatars"
-    //                     style = "z-index: ${zIndex};
-    //                             text-align: center;
-    //                             position: absolute;
-    //                             left: 0%; 
-    //                             top: 85%; 
-    //                             box-sizing: border-box;
-    //                             width: 25%;
-    //                             height: 15%;
-    //                             -webkit-touch-callout: none; 
-    //                             -webkit-user-select: none; 
-    //                             -khtml-user-select: none; 
-    //                             -moz-user-select: none; 
-    //                             -ms-user-select: none; 
-    //                             user-select: none;"
-    //                 >
-    //                     <div 
-    //                         class = "popup-body"
-    //                                 style = "width: 100%;
-    //                                 height: 100%;
-    //                                 overflow: hidden;
-    //                                 box-sizing: border-box;
-    //                                 border-radius: 45%;
-    //                                 border: 2px solid green;"
-    //                     >
-    //                         <div 
-    //                             class="popup-header" 
-    //                             id=${id + 'header'}
-    //                             style = "   position: absolute;
-    //                                         left: 7%;
-    //                                         top: 7%;
-    //                                         width: 85%;
-    //                                         height: 85%;
-    //                                         padding: 0;
-    //                                         cursor: move;
-    //                                         z-index: 10;
-    //                                     "
-    //                         ></div>
-    //                         <img style = "width: 100%; height: 100%;" id=${id + 'img'}></img>
-    //                     </div>
-    //                 </div>`
-
-
-    const imageElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key}><img style="width: 100%;" src=${src} id=${id + 'img'}></img></div>`
-
-    const videoElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key}><video autoplay style="width: 100%;" src=${src} id=${id + 'video'}></video></div>`
-                        
-    // var streamElement = ` 
-    //                     <div 
-    //                     id=${id}
-    //                     class = "popup video stream"
-    //                     style = "z-index: ${zIndex};
-    //                                 text-align: center;
-    //                                 position: absolute;
-    //                                 left: 0%; 
-    //                                 top: 85%;
-    //                                 box-sizing: border-box;
-    //                                 width: 40%;
-    //                                 height: auto;
-    //                                 -webkit-touch-callout: none; 
-    //                                 -webkit-user-select: none; 
-    //                                 -khtml-user-select: none; 
-    //                                 -moz-user-select: none; 
-    //                                 -ms-user-select: none; 
-    //                                 user-select: none; 
-    //                             "
-    //                     >
-    //                         <div 
-    //                             class = "popup-body"
-    //                                         style = "width: 100%;
-    //                                         height: 100%;
-    //                                         overflow: hidden;
-    //                                         box-sizing: border-box;"
-    //                         >
-    //                         <div 
-    //                             class="popup-header" 
-    //                             id=${id + 'header'}
-    //                             style = "   position: absolute;
-    //                                         left: 7%;
-    //                                         top: 20%;
-    //                                         width: 85%;
-    //                                         height: 80%;
-    //                                         padding: 0;
-    //                                         cursor: move;
-    //                                         z-index: 10;
-    //                                     "
-    //                         ></div>
-                        
-    //                         <video id="stream" autoplay style="width: 100%"></video>
-    //                         <div class="video-options">
-    //                             <select name="" id="" class="custom-select"><option value="">Select camera</option></select>
-    //                         </div>
-    //                         <div class="controls d-none">
-    //                             <button class="play streamControl" title="Play">&gt;</button>
-    //                             <button class="pause d-none streamControl" title="Pause">||</button>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    
-    
-    // `
-    
-    // var textElement = `<div 
-    //                         id=${id}
-    //                         class = "popup text"
-    //                         style = "z-index: ${zIndex};
-    //                                 text-align: center;
-    //                                 position: absolute;
-    //                                 left: 85%; 
-    //                                 top: 85%;
-    //                                 box-sizing: border-box;
-    //                                 width: 20%;
-    //                                 height: auto;
-    //                                 -webkit-touch-callout: none; 
-    //                                 -webkit-user-select: none; 
-    //                                 -khtml-user-select: none; 
-    //                                 -moz-user-select: none; 
-    //                                 -ms-user-select: none; 
-    //                                 user-select: none; 
-    //                                 "
-    //                     >
-    //                         <div 
-    //                             class = "popup-body"
-    //                                     style = "width: 100%;
-    //                                     height: 100%;
-    //                                     overflow: hidden;
-    //                                     box-sizing: border-box;"
-    //                         >
-    //                             <div 
-    //                                 class="popup-header text-box-header" 
-    //                                 id=${id + 'header'}
-    //                                 style = "   position: absolute;
-    //                                             left: -15px;
-    //                                             top: 0px;
-    //                                             width: 15px;
-    //                                             height: 24px;
-    //                                             padding: 0;
-    //                                             cursor: move;
-    //                                             z-index: 10;
-                                                
-    //                                         "
-    //                             ></div>
-    //                             <pre contenteditable="true" id=${id + 'text'} 
-    //                                 style=" 
-    //                                 white-space: pre-wrap; 
-    //                                 word-wrap: break-word;
-    //                                 color: white;
-    //                                 font-size: 16px;
-    //                                 margin: 0px;
-    //                                 font-family: Arial;
-    //                                 "
-    //                             >${val}</pre>
-    //                         </div>
-    //                     </div>`
-
     if (type === 'media_video') {
-        $('#preview').append(videoElement);
-        // initResizeElement(id);
-        // addMenu(id);
-        closeMediaList();
-    } else if (type === 'videoStream'){
-        $('#preview').append(streamElement);
-        hideIfDisplayed($('#add-stream-button')[0]);
-        // initResizeElement(id);
-        addMenu(id);
-    }
-    else if (type === 'media_images' || type === 'media_gifs') {
-        $('#preview').append(imageElement);
-        // initResizeElement(id);
-        // addMenu(id);
-        closeMediaList();
-    } else if (type === 'avatars') {
-        $('#preview').append(avatars);
-        hideIfDisplayed($('#add-avatars-button')[0]);
-        // initResizeElement(id);
-        addMenu(id);
-    } 
-    else if (type === 'media_layouts') {
-        // const iframe  = document.createElement("iframe");
-        // iframe.src = '/data/media/' + val;
-        // iframe.style.display = "none";
-        // document.body.appendChild(iframe);
-
-        // iframe.onload = function(e) {
-            const node = document.createElement('div');
-            node.innerHTML = val;
-
-            const popupElements = Array.from(node.getElementsByClassName("popup"));
-            var id = [];
-            popupElements.forEach(element => id.push(element.id));
-
-            // Adjust src of media elements to be seen by editor
-            var mediaElements = node.querySelectorAll('[src]');
-            for (var element of mediaElements) {
-                var adjustedSRC = element.getAttribute("src").replace("..", "/data/media");
-                element.setAttribute("src", adjustedSRC);
-            }
-
-            // adjust src of media for background images on elements if exists
-            var popupBodyElements = node.querySelectorAll('.popup-body');
-            for (var element of popupBodyElements) {
-                        if (element.style.backgroundImage !== '') {
-                            var adjustedSRC = element.style.backgroundImage.replace('url("..','url("data/media');
-                            element.style.backgroundImage = adjustedSRC;
-                        }
-                    }
-            // adjust main color picker value
-            $('#preview_background')[0].value = node.style.backgroundColor;
-            $('#preview_background').trigger('input');
-
-            document.getElementById("preview").remove();
-            document.getElementsByTagName("main")[0].append(node);
-         
-            e.target.remove();
-                  
-            const popupElementsNew = Array.from(node.getElementsById("preview"));
+        const video = $(`#preview [data-key=${key}] video`)[0];
+        $('#alert .editor-menu')
+        .append(`<div class='menu-item video-controls'>
+        <p class='editor-section'>CONTROLS</p> 
+        <div class='loop'>
+            <img class="icon ${(video.loop) ? ('active') : ('')}" src="../icons/arrow-rotate-right-solid.svg" onclick="setVideoAttribute('${key}', 'loop', event);"></img>
+        </div>
+        <div class='mute'>
+            <div class="icon mute ${(video.muted) ? ('active') : ('')}" onclick="setVideoAttribute('${key}', 'muted', event);"></div>
            
-            // initResizeElement();
-            if (typeof(id) === 'string') {
-                addMenu(id);
-            } else {
-                id.forEach(element => addMenu(element));
-            // }
-            
-            initDragElement();
-            closeMediaList();
-        }
-    } 
-    else if (type === 'media_decors') {
-        var decors = Array.from(document.querySelector(".media_decors").children);
-        var previewElement = document.querySelector("#preview");
-        // Remove previouse styles
-        decors.forEach(decor => {
-            var className = decor.innerHTML.substring(1);
-            if (previewElement.classList.contains(className)) {
-                previewElement.classList.remove(className);
-            }
-            if (previewElement.style.backgroundColor !== '') {
-                $('#preview_background')[0].value = '';
-                $('#preview_background').trigger('input');
-            }
-        });
-        previewElement.classList.add(val.substring(1));
-        closeMediaList();
-    } 
-    else if (type === 'background') {
-        var decors = Array.from(document.querySelector(".media_decors").children);
-        var previewElement = document.querySelector("#preview");
-        // Remove previouse styles
-        decors.forEach(decor => {
-            var className = decor.innerHTML.substring(1);
-            if (previewElement.classList.contains(className)) {
-                previewElement.classList.remove(className);
-            }
-            // if (previewElement.style.backgroundColor !== '') {
-                $('#preview_background')[0].value = val;
-                $('#preview_background').trigger('input');
-            // }
-        });
-        // previewElement.classList.add(val.substring(1));
-        closeMediaList();
-    }    
-    else if (type === 'text-box') {
-        $('#preview').append(textElement);
-        document.getElementById(id + 'text').focus();
-        // initResizeElement(id);
-        addMenu(id);
-        closeMediaList();
-        initDragElement();
-        hideIfDisplayed($('#add-text-button')[0]);
-        return id
+        </div>
+    </div>`)
     }
 
-    // MAKE MEDIA DRAGABLE
-    initDragElement();
-
-    // DEFINE FUNCTIONS FOR ELEMENT TO BE DRAGGABLE AND RESIZABLE
-    $('.draggable').mousedown(function(){
-        $('.draggable').not(this).removeClass('active');
-        $(this).addClass('active');
-        // MARK ACTIVE IN MEDIA LIST
-        $("#step-media ul li").not(`li[data-key="${this.dataset.key}"]`).removeClass('active');
-        $("#step-media").find(`li[data-key="${this.dataset.key}"]`).addClass('active');
-        // SET EVENT LISTENERS ON BUTTONS
-        $("#delete-media-button").unbind("click");
-        let previewElement = $(this);
-        let data_key = this.dataset.key;
-        if ($(this).hasClass('active')) {
-            $("#delete-media-button").click(function(){
-                $(previewElement).remove();
-                $("#step-media").find(`li[data-key="${data_key}"]`).remove();
-            })
-            // $("#edit-media-button").click(function(){
-            //     $(`[data-key='${e.target.dataset.key}']`).parent().remove();
-            //     $(e.target).remove();
-            // })
-        }
-    });
-
-    $(".resizable").resizable({
-        handles: "se"
-    });
-
-    // APPLY STYLE IF MEDIA OBJECT IS FROM STEP
-    if (mediaObject) {
-        if (type === 'media_images') {
-            let div_css = editor_media_div_css;
-            for (let property in div_css) {
-                div_css[property] = mediaObject[property];
-            }
-
-            let image_css = editor_image_css;
-            for (let property in image_css) {
-                image_css[property] = mediaObject[property];
-            }
-
-            if (image_css['object-fit'] !== '') {
-                image_css['height'] = '100%';
-            }
-            $("#preview").find(`*[data-key="${data_key}"]`).css(div_css);
-            $("#preview").find(`*[data-key="${data_key}"] img`).css(image_css);
-            
-        }
-    } else {
-        const zIndex = findBiggestIndex() + 1;
-        $("#preview").find(`*[data-key="${data_key}"]`).css('z-index', zIndex);
-    }
-}
-
-function addMenu(id) {
-    var menuTemplate =  `<div  
-                            class="menu"
-                        >   
-                        <div class="remove-element">
-                            <img class="icon" src="../icons/xmark-solid.svg" onclick="removeElement(${id});"></img>
-                        </div>
-                        <div onclick="editElement(${id});">
-                            Edit
-                        </div>
-                    </div>`
-    $('#' + id).find('.popup-body')[0].innerHTML += menuTemplate;
-}
-
-function editElement(id) {
-    // If already editing do nothing
-    if ($('#' + id + '_menu').length) {
-       
-    } else {
-        var type = $("#" + id)[0].classList[1]
-        if (type === 'image') {
-            addImageMenuOptions(id);
-        } else if (type === 'text') {
-            addMenuOptionsTextBox(id);
-        } else if (type === 'video') {
-            addVideoMenuOptions(id);
-        }
-    }
-    closeMediaList();
-}
-
-function closeMediaList() {
-    document.querySelector("#media").classList.add("d-none");
-}
-
-function removeElement(id) {
-    if ($('#' + id).hasClass('stream')) {
-        displayIfHidden($('#add-stream-button')[0]);
-    }
-    if ($('#' + id).hasClass('avatars')) {
-        displayIfHidden($('#add-avatars-button')[0]);
-    }
-    if ($('#' + id).hasClass('text')) {
-        displayIfHidden($('#add-text-button')[0]);
-    }
-    document.getElementById(id).remove();
-    $('#media-editor')[0].innerHTML = '';    
-}
-
-function getRelevantPopups(id) {
-    var popups = [];
-    if (id) {
-        if (id.length) {
-            id.forEach(id => popups.push(document.getElementById(id))) 
-        } else {
-            popups.push(document.getElementById(id));
-        }
-    } else {
-        popups = Array.from(document.getElementsByClassName("popup"));;
-    }
-    return popups;
-}
-
-function addImageMenuOptions(id) {
-    $('#media-editor')[0].innerHTML = '';
-
-    var imageStyle;
-
-    if ($("#" + id + "img")[0]) {
-       imageStyle = getComputedStyle($("#" + id + "img")[0]);
-    } else {
-        imageStyle = getComputedStyle($("#" + id ).find('.popup-body')[0]);
-    }
-
-    var menuTemplate =  `<div  
-                            id=${id + '_menu'} 
-                            class = 'editor-menu'
-                        >   
-                            <div class='menu-item size'>
-                                <p class='editor-section'>SIZE</p> 
-                                <button class="white" onClick="setSize('cover', ${id}, 'img')">cover</button>
-                                <button class="white" onClick="setSize('contain', ${id}, 'img')">contain</button>
-                                <inline onClick="setSize('reset', ${id}, 'img')">Reset</inline>
-                            </div>
-                            <div class='menu-item bg-color'>
-                                <p class='editor-section'>BACKGROUND COLOR<p> 
-                                <label for="background-color">Add background color</label>
-                                <input
-                                    id = ${id + '_background-color'} 
-                                    autocomplete="off"
-                                    _list="list_decors"
-                                    class="color-picker _box-min d-none"
-                                    type="text"
-                                    name="background-color"
-                                    value = ${(imageStyle.backgroundColor) ? (imageStyle.backgroundColor.replaceAll(' ', '')) : ('transparent')} 
-                                />
-                                <p style='text-decoration: underline;' onclick='removeBackgroundColor(${id})'>Remove background color</p>
-                            </div>
-                            <div class='menu-item bg-image'>
-                                <p class='editor-section'>BACKGROUND IMAGE</p> 
-                                <div id="media-backgrounds">
-                                    <div class="media_cat" id='background-gifs'>
-                                        <i title="gifs">🖼️</i>
-                                    </div>
-                                    <div class="media_cat media_images" id='background-images'>
-                                        <i title="images">📷</i>
-                                    </div>
-                                </div>
-                                <p style='text-decoration: underline;' onclick='removeBackgroundImage(${id})'>Remove background image</p>
-                            </div>
-                            <div class='menu-item rotation'>
-                                <p class='editor-section'>ROTATION<p> 
-                                <div>
-                                    <img class="icon" src="../icons/arrow-rotate-right-solid.svg" onclick="rotateRight(${id});"></img>
-                                </div>
-                                <div>
-                                    <img class="icon" src="../icons/arrow-rotate-left-solid.svg" onclick="rotateLeft(${id});"></img>
-                                </div>
-                            </div>
-                        </div>`
-   
-    $('#media-editor').append(menuTemplate);
-    if ($($('#' + id)).hasClass('avatars')) {
-        $('#' + id + '_menu').find($('.size')).remove();
-        $('#' + id + '_menu').find($('.rotation')).remove();
-    }
-    activateColorPicker();
-    addBackground(id);
+    // APPLY CURRENT STYLE
+    let objectFit = $(`#preview [data-key=${key}]`).css('object-fit').toUpperCase();
+    $(`.size p:contains('${objectFit}')`).toggleClass('active');
+    
+    // let bcgColor = $(`#preview [data-key=${key}]`).css('background-color')
+    // $('.bg-color input:text').val(bcgColor)
 }
 
 function addVideoMenuOptions(id) {
@@ -1826,41 +1846,21 @@ var setPopup = {'width' : '100%', 'height' : '100%', 'left': '0px', 'top' : '0px
 var resetPopup = {'width' : '20%', 'height' : 'auto', 'left': '25%', 'top' : '25%'};
 var resetMedia = {'height' : 'auto', 'object-fit': ''}
 
-function setSize(size, id, type) {
-    var element = document.getElementById(id);
-    for (property in setPopup) {
-        element.style[property] = setPopup[property];
-    }
+function setSize(event, size, key, type) {
+    $(event.target).siblings().removeClass('active');
+    $(event.target).toggleClass('active');
 
-    if ($('#' + id).find('#stream').length > 0) {
-        document.getElementById('stream').style.height = '100%';
-        document.getElementById('stream').style.objectFit = size;
-    } else {
-        document.getElementById(id + type).style.height = '100%';
-        document.getElementById(id + type).style.objectFit = size;
+    $(`#preview [data-key=${key}]`).css({'object-fit' : size, 'width' : '100%', 'height' : '100%', 'top' : '0%', 'left' : '0%'});
+    if (type === 'media_images' || type === 'media_gifs') {
+        $(`#preview [data-key=${key}] img`).css({'object-fit' : size, 'height' : '100%'})
     }
-
-    element.classList.add('cover');
-   
-    if (size === 'reset') {
-        for (property in resetPopup) {
-            element.style[property] = resetPopup[property];
-        }
-        if ($('#' + id).find('#stream').length > 0) {
-            for (property in resetMedia) {
-                document.getElementById('stream').style[property] = resetMedia[property];
-            }
-        } else {
-            for (property in resetMedia) {
-                document.getElementById(id + type).style[property] = resetMedia[property];
-            }
-        }
-        element.classList.remove('cover'); 
+    if (type === 'media_videos') {
+        $(`#preview [data-key=${key}] video`).css({'object-fit' : size, 'height' : '100%'})
     }
 }
 
-function rotateRight(id) {
-    var element = document.getElementById(id);
+function rotateRight(key) {
+    var element = document.querySelector(`#preview [data-key='${key}']`);
     var startAngle = parseInt(element.style.transform.replace('rotate(', '').replace('deg)', ''));
     var newAngle;
     if (startAngle) {
@@ -1871,8 +1871,8 @@ function rotateRight(id) {
     element.style.transform = 'rotate(' + newAngle + 'deg)'
 }
 
-function rotateLeft(id) {
-    var element = document.getElementById(id);
+function rotateLeft(key) {
+    var element = document.querySelector(`#preview [data-key='${key}']`);
     var startAngle = parseInt(element.style.transform.replace('rotate(', '').replace('deg)', ''));
     var newAngle;
     if (startAngle) {
@@ -1888,36 +1888,16 @@ function playVideo(id) {
     video.play();
 }
 
-function setVideoAttribute(id, attribute, e) {
-    var video = $('#' + id).find($('video'))[0];
-    
-    $(e.target).toggleClass('active');
+function setVideoAttribute(key, attribute, e) {
+    var video = $(`#preview [data-key=${key}] video`);
 
-    var booleanValue;
-
-    if ($(e.target).hasClass('active')){
-        video.setAttribute(attribute, true);
-        video.pause();
-        booleanValue = true;
+    if( $(video).prop(attribute) ) {
+            $(video).prop(attribute, false);
     } else {
-        video.removeAttribute(attribute);
-        video.pause();
-        booleanValue = false;
+        $(video).prop(attribute, true);
     }
-
-    if (attribute === 'muted' && booleanValue === true) {
-        $(e.target).attr("src","../icons/volume-xmark-solid.svg");
-    } 
-    if (attribute === 'muted' && booleanValue === false) {
-        $(e.target).attr("src","../icons/volume-high-solid.svg");
-    }
-
-    var newVideoElement = video.cloneNode(true);
-    var popupBody = video.parentElement;
-    video.remove();
-    popupBody.appendChild(newVideoElement)
-    video.setAttribute(attribute, booleanValue);
-    video.load()
+    $(e.target).toggleClass('active');
+    video.load();
 }
 
 function addBackground(id) {
@@ -1960,55 +1940,55 @@ function addBackground(id) {
     })
 }
 
-function removeBackgroundImage(id) {
-    var popupBody = $('#' + id).find($('.popup-body'))[0];
-    $(popupBody).css({'background-image' : ``, 'background-size' : '', 'background-repeat' : ''});
+function removeBackgroundImage(key) {
+    $(`#preview [data-key='${key}']`).css({'background-image' : '', 'background-size' : '', 'background-repeat' : ''});
 }
 
-function removeBackgroundColor(id) {
-    var elements = ['text', 'img', 'video'];
-    var count = 0;
-    elements.forEach(element => {
-        if ($("#" + id + element)[0]) {
-            $("#" + id + element).css({'background-color' : 'transparent'});
-            count = count + 1;
-        }
-    })
-    if (id === null) {
-        $("#preview").css({'background-color' : 'transparent'});
-    }
-    if (id !== null && count === 0) {
-        $("#" + id).find('.popup-body').css({'background-color' : 'transparent'});
-    }
-}
+// function removeBackgroundColor(id) {
+//     var elements = ['text', 'img', 'video'];
+//     var count = 0;
+//     elements.forEach(element => {
+//         if ($("#" + id + element)[0]) {
+//             $("#" + id + element).css({'background-color' : 'transparent'});
+//             count = count + 1;
+//         }
+//     })
+//     if (id === null) {
+//         $("#preview").css({'background-color' : 'transparent'});
+//     }
+//     if (id !== null && count === 0) {
+//         $("#" + id).find('.popup-body').css({'background-color' : 'transparent'});
+//     }
+// }
 
-function displayModal() {
-    displayIfHidden(document.getElementById("save-new-modal"));
-}
-function closeModal() {
-    document.getElementById("file-name").value = "";
-    hideIfDisplayed(document.getElementById("save-new-modal"));
-}
+// function displayModal() {
+//     displayIfHidden(document.getElementById("save-new-modal"));
+// }
 
-socket.on('response', (response) => {
-    alert(response);
-})
+// function closeModal() {
+//     document.getElementById("file-name").value = "";
+//     hideIfDisplayed(document.getElementById("save-new-modal"));
+// }
 
-function clearPreview() {
-    window.location.reload();
-}
+// socket.on('response', (response) => {
+//     alert(response);
+// })
 
-function hideIfDisplayed(element) {
-    if (element.classList.contains("d-none") === false) {
-        element.classList.add("d-none");
-    }
-}
+// function clearPreview() {
+//     window.location.reload();
+// }
 
-function displayIfHidden(element) {
-    if (element.classList.contains("d-none")) {
-        element.classList.remove("d-none");
-    }
-}
+// function hideIfDisplayed(element) {
+//     if (element.classList.contains("d-none") === false) {
+//         element.classList.add("d-none");
+//     }
+// }
+
+// function displayIfHidden(element) {
+//     if (element.classList.contains("d-none")) {
+//         element.classList.remove("d-none");
+//     }
+// }
 
 function displayMediaList() {
     $( "#media" ).dialog({
@@ -2017,150 +1997,8 @@ function displayMediaList() {
         maxHeight: 600,
         minWidth: 500
     });
-    // $('#media')[0].classList.toggle("d-none");
-    // $('#media-editor')[0].innerHTML = '';
 }
 
-function sendToScreenInput(screen) {
-    
-    // get all elements from screen
-    const preview = document.getElementById('preview')
-    const tempHTML = preview.cloneNode(true);
-
-    // ge all menu elements and avatars area
-    var resizerElements = tempHTML.querySelectorAll(".resizer-both");
-    var menuElements = tempHTML.querySelectorAll(".menu");
-    var avatarsAreas = tempHTML.querySelectorAll(".avatars");
-   
-    for (var element of resizerElements) {
-        element.remove()
-    }
-    for (var element of menuElements) {
-        element.remove()
-    }
-    if (avatarsAreas.length > 0) {
-        for (var element of avatarsAreas) {
-            element.remove()
-        }
-    }
-    
-    // remove main menu
-    tempHTML.querySelector('#media-menu').remove();
-
-    // Adjust src of media elements relative to file path
-    var mediaElements = tempHTML.querySelectorAll('[src]');
-    for (var element of mediaElements) {
-        var adjustedSRC = element.getAttribute("src").replace("/data/media/", "");
-        element.setAttribute("src", adjustedSRC);
-    }
-   
-    
-    let values = {'src' : [], 'style' : []}
-    if ($(tempHTML).css('background-color') !== '') {
-        values.src.push($(tempHTML).css('background-color'));
-        var tempSTYLE = {'' : ''};
-        JSON.stringify(tempSTYLE);
-        values.style.push(tempSTYLE);
-    }
-
-    var deviceId;
-    if ($(tempHTML).find('#stream').length > 0) {
-        deviceId = 'deviceId_' + document.querySelector('.video-options>select').value;
-        // $('.video-options').remove();
-        // $('.controls').remove();
-    }
-
-    // IMAGES
-    if ($(tempHTML).find('img').length > 0) {
-        $(tempHTML).find('img').each(function() {
-            values.src.push($(this)[0].getAttribute('src'));
-            
-            var tempSTYLE = {};
-            tempSTYLE.backgroundColor = $(this)[0].style.backgroundColor;
-            tempSTYLE.backgroundImage = $(this)[0].style.backgroundImage;
-            tempSTYLE.backgroundSize = $(this)[0].style.backgroundSize;
-            tempSTYLE.backgroundRepeat = $(this)[0].style.backgroundRepeat;
-            tempSTYLE.width = $(this)[0].parentElement.parentElement.style.width;
-            tempSTYLE.height = $(this)[0].parentElement.parentElement.style.height;
-            if ($(this)[0].style.objectFit !== '') {
-                tempSTYLE.objectFit = $(this)[0].style.objectFit;
-            } else {
-                tempSTYLE.top = $(this)[0].parentElement.parentElement.style.top;
-                tempSTYLE.left = $(this)[0].parentElement.parentElement.style.left;
-            }
-            tempSTYLE.zIndex = $(this)[0].parentElement.parentElement.style.zIndex;
-            tempSTYLE.transform = $(this)[0].parentElement.parentElement.style.transform;
-          
-            values.style.push(tempSTYLE);
-        })
-    }
-
-    // VIDEOS
-    if ($(tempHTML).find('video').length > 0) {
-        $(tempHTML).find('video').each(function() {
-            if ($(this)[0].getAttribute('src') !== null) {
-                values.src.push($(this)[0].getAttribute('src'));
-            } else {
-                values.src.push(deviceId);
-            }
-
-            var tempSTYLE = {};
-            tempSTYLE.backgroundColor = $(this)[0].style.backgroundColor;
-            tempSTYLE.backgroundImage = $(this)[0].style.backgroundImage;
-            tempSTYLE.backgroundSize = $(this)[0].style.backgroundSize;
-            tempSTYLE.backgroundRepeat = $(this)[0].style.backgroundRepeat;
-            tempSTYLE.width = $(this)[0].parentElement.parentElement.style.width;
-            tempSTYLE.height = $(this)[0].parentElement.parentElement.style.height;
-            if ($(this)[0].style.objectFit !== '') {
-                tempSTYLE.objectFit = $(this)[0].style.objectFit;
-            } else {
-                tempSTYLE.top = $(this)[0].parentElement.parentElement.style.top;
-                tempSTYLE.left = $(this)[0].parentElement.parentElement.style.left;
-            }
-            tempSTYLE.zIndex = $(this)[0].parentElement.parentElement.style.zIndex;
-            tempSTYLE.transform = $(this)[0].parentElement.parentElement.style.transform;
-            tempSTYLE.loop = $(this)[0].getAttribute('loop');
-            tempSTYLE.muted = $(this)[0].getAttribute('muted');
-            values.style.push(tempSTYLE);
-        })
-    }
-
-    let valuesTEXTE = {'texte' : [], 'style' : []}
-    if ($(tempHTML).find('pre').length > 0) {
-        $(tempHTML).find('pre').each(function() {
-            valuesTEXTE.texte.push($(this)[0].innerHTML);
-            valuesTEXTE.style.push($(this)[0].getAttribute('style') + $(this)[0].parentElement.parentElement.getAttribute('style'));
-        })
-    }
-
-    if (screen === 'boite') {
-        if (document.querySelector('.avatars')) {
-            var avatarArea = document.querySelector('.avatars');
-            var data = {
-                'width' : avatarArea.style.width,
-                'height' : avatarArea.style.height,
-                'top' : avatarArea.style.top,
-                'left' : avatarArea.style.left,
-                'border-radius' : $(avatarArea).find('.popup-body').css('border-radius'),
-                'background-color' : $(avatarArea).find('img').css('background-color'),
-                'background-image' : $(avatarArea).find('img')[0].style.backgroundImage,
-                'background-size' : $(avatarArea).find('img').css('background-size'),
-                'background-repeat' : $(avatarArea).find('img').css('background-repeat'),
-            }
-            socket.emit('avatars position', data);
-            alert ('Position and style of avatars area sent to master step')
-        } else {
-            alert ("Add avatars area first")
-        }  
-    }
-    if (screen !== 'boite') {
-        socket.emit('multimedia decor', {to : screen, layout : values});
-        if (valuesTEXTE.texte.length > 0) {
-            socket.emit('multimedia decor', {to : screen, layout : valuesTEXTE});
-        }
-        alert ('Send to master step')
-    }
-}
 
 function activateColorPicker() {
     $('.color-picker')
@@ -2169,14 +2007,15 @@ function activateColorPicker() {
       var val = $this.val();
     
       if($this.context.id !== "preview_background") {
-        var inputs = {"id" : $this.context.id.split("_")[0], "CSSparameter" : $this.context.id.split("_")[1]};
-        if ($("#" + inputs.id + "text")[0]) {
-            $("#" + inputs.id + "text").css(inputs['CSSparameter'], val);
-        } else if ($("#" + inputs.id + "img")[0]) {
-            $("#" + inputs.id + "img").css(inputs['CSSparameter'], val);
-        } else {
-            $("#" + inputs.id).find('.popup-body').css(inputs['CSSparameter'], val);
-        }
+        var inputs = {"key" : $this.context.id.split("_")[0], "CSSparameter" : $this.context.id.split("_")[1]};
+        // if ($("#" + inputs.id + "text")[0]) {
+        //     $("#" + inputs.id + "text").css(inputs['CSSparameter'], val);
+        // } else if ($("#" + inputs.id + "img")[0]) {
+        //     $("#" + inputs.id + "img").css(inputs['CSSparameter'], val);
+        // } else {
+        //     $("#" + inputs.id).find('.popup-body').css(inputs['CSSparameter'], val);
+        // }
+        $(`#preview [data-key=${inputs.key}]`).css(inputs['CSSparameter'], val)
         
       } else {
           // remove background classes 
@@ -2230,9 +2069,9 @@ function activateColorPicker() {
     });
 }
 
-function addAvatarsArea(e) {
-    setElements('', 'avatars');
-}
+// function addAvatarsArea(e) {
+//     setElements('', 'avatars');
+// }
 
 // function saveAvatarsPosition() {
 // var avatars = $('.avatars')[0];
@@ -2266,16 +2105,22 @@ function addAvatarsArea(e) {
 // document.getElementById("layout_modal").style.display = "none";
 // } 
 
-function newEtape() {
-    socket.emit('new etape');
-    alert ("New step added to master")
-
-}
 
 // LIVE STREAM
 function getMediaStream() {
-    setElements('', 'videoStream');
+    let data_key = createRandomString(5);
+    // ADD TO MAIN DATA MEDIA ORDER TO MANIPULATE Z INDEXES
+    mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].push(data_key);
+   const li = `<li data-key=${data_key} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Stream</li>`;
+   $('#step-media ul').append(li);
+   setElements('', 'videoStream', data_key);
     
+   applyZIndexes();
+   setTimeout(() => {
+       $(".ui-dialog-titlebar-close"). click();
+   }, 200);   
+
+   
     const controls = document.querySelector('.controls');
     const cameraOptions = document.querySelector('.video-options>select');
     const video = document.querySelector('#stream');

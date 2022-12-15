@@ -448,6 +448,15 @@ b::before {
     /* min-width: 200px; */
 }
 
+.editor-buttons fieldset input{
+  margin-left: 10px;
+  margin-right: 10px;
+    /* flex-direction: row;
+    justify-content: space-between; */
+    /* min-width: 200px; */
+}
+
+
 .editor-buttons button {
   margin-top: 10px;
   margin-left: 5px;

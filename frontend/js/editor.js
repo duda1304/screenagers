@@ -228,6 +228,41 @@ function displayStructure(fileName, data) {
     
 }
 
+let currentBoiteType;
+// BOITE
+$('#boites_types').on('click', '.button_radio', function(){
+    if ($(this).find('input').is(':checked')) {
+        const boiteObject =     {
+            "type": "",
+            "arg": ""
+            }
+        let data = {...boiteObject};
+        data.type = $(this).find('input').val();
+        $('#boite textarea').val('');
+        data.arg = $('#boite textarea').val();
+        currentBoiteType = $(this).find('input').val();
+
+        setBoite(data);
+    }
+});
+
+$('#boite textarea').on('input', function() {
+    const boiteObject =     {
+        "type": "",
+        "arg": ""
+        }
+    let data = {...boiteObject};
+    data.type = currentBoiteType;
+    data.arg = $(this).val();
+    setBoite(data);
+})
+
+$( "#boite" ).submit(function( event ) {
+    event.preventDefault();
+    sendStep();
+  });
+
+
 function saveStepOrder(fileName, sceneOrderNumber, stepsOrder) {
     socket.emit('reorder steps', {"fileName" : fileName, "sceneOrderNumber" : sceneOrderNumber, "stepsOrder" : stepsOrder})
 }
@@ -315,13 +350,12 @@ function setStep(e, fileName, scene, step) {
                 } else {
                     liName = stepMedia[data_key]['type']
                 }
-                const li = `<li data-key=${data_key} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${liName}</li>`;
+                const li = `<li data-key=${data_key} data-type=${stepMedia[data_key]['type']} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${liName}</li>`;
                 $('#step-media ul').append(li);
                 // DISPLAY STEP IN MEDIA PREVIEW
                 setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);
             }
             applyZIndexes();
-            // setElements("", "avatars", "", jsonData['scenes'][scene]['steps'][step]['screen']['avatars']);
             setElements("", "console", "", jsonData['scenes'][scene]['steps'][step]['screen']['console']);
             setElements("", "music", "", jsonData['scenes'][scene]['steps'][step]['screen']['music']);
         }) 
@@ -346,243 +380,156 @@ function setElements(val, type, data_key, stepMediaObject) {
                    
     const audioElement = `<audio id="music" src="" data-type=${type}></audio>`
 
-    const streamElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}><video autoplay id="stream" style="width: 100%;" src=${src} class="media"> </video><div class="video-options">
-    <select name="" id="" class="custom-select"><option value="">Select camera</option></select>
-</div>
-<div class="controls d-none">
-    <button class="play streamControl" title="Play">&gt;</button>
-    <button class="pause d-none streamControl" title="Pause">||</button>
-</div></div>`
-    // var streamElement = ` 
-    //                     <div 
-    //                     id=${id}
-    //                     class = "popup video stream"
-    //                     style = "z-index: ${zIndex};
-    //                                 text-align: center;
-    //                                 position: absolute;
-    //                                 left: 0%; 
-    //                                 top: 85%;
-    //                                 box-sizing: border-box;
-    //                                 width: 40%;
-    //                                 height: auto;
-    //                                 -webkit-touch-callout: none; 
-    //                                 -webkit-user-select: none; 
-    //                                 -khtml-user-select: none; 
-    //                                 -moz-user-select: none; 
-    //                                 -ms-user-select: none; 
-    //                                 user-select: none; 
-    //                             "
-    //                     >
-    //                         <div 
-    //                             class = "popup-body"
-    //                                         style = "width: 100%;
-    //                                         height: 100%;
-    //                                         overflow: hidden;
-    //                                         box-sizing: border-box;"
-    //                         >
-    //                         <div 
-    //                             class="popup-header" 
-    //                             id=${id + 'header'}
-    //                             style = "   position: absolute;
-    //                                         left: 7%;
-    //                                         top: 20%;
-    //                                         width: 85%;
-    //                                         height: 80%;
-    //                                         padding: 0;
-    //                                         cursor: move;
-    //                                         z-index: 10;
-    //                                     "
-    //                         ></div>
-                        
-    //                         <video id="stream" autoplay style="width: 100%"></video>
-    //                         <div class="video-options">
-    //                             <select name="" id="" class="custom-select"><option value="">Select camera</option></select>
-    //                         </div>
-    //                         <div class="controls d-none">
-    //                             <button class="play streamControl" title="Play">&gt;</button>
-    //                             <button class="pause d-none streamControl" title="Pause">||</button>
-    //                         </div>
-    //                     </div>
-    //                 </div>
+    const streamElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
+                            <video autoplay id="stream" style="width: 100%;" src=${src} class="media"> </video>
+                           </div>`
+   
+    const textElement = `
+                            <pre contenteditable="true" class="text draggable" style="position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type} 
+                                     style=" 
+                                     white-space: pre-wrap; 
+                                     word-wrap: break-word;
+                                     color: white;
+                                     font-size: 16px;
+                                     margin: 0px;
+                                     font-family: Arial;
+                                     "
+                            >${val}</pre>
+                        `
     
-    
-    // `
-    
-    // var textElement = `<div 
-    //                         id=${id}
-    //                         class = "popup text"
-    //                         style = "z-index: ${zIndex};
-    //                                 text-align: center;
-    //                                 position: absolute;
-    //                                 left: 85%; 
-    //                                 top: 85%;
-    //                                 box-sizing: border-box;
-    //                                 width: 20%;
-    //                                 height: auto;
-    //                                 -webkit-touch-callout: none; 
-    //                                 -webkit-user-select: none; 
-    //                                 -khtml-user-select: none; 
-    //                                 -moz-user-select: none; 
-    //                                 -ms-user-select: none; 
-    //                                 user-select: none; 
-    //                                 "
-    //                     >
-    //                         <div 
-    //                             class = "popup-body"
-    //                                     style = "width: 100%;
-    //                                     height: 100%;
-    //                                     overflow: hidden;
-    //                                     box-sizing: border-box;"
-    //                         >
-    //                             <div 
-    //                                 class="popup-header text-box-header" 
-    //                                 id=${id + 'header'}
-    //                                 style = "   position: absolute;
-    //                                             left: -15px;
-    //                                             top: 0px;
-    //                                             width: 15px;
-    //                                             height: 24px;
-    //                                             padding: 0;
-    //                                             cursor: move;
-    //                                             z-index: 10;
-                                                
-    //                                         "
-    //                             ></div>
-    //                             <pre contenteditable="true" id=${id + 'text'} 
-    //                                 style=" 
-    //                                 white-space: pre-wrap; 
-    //                                 word-wrap: break-word;
-    //                                 color: white;
-    //                                 font-size: 16px;
-    //                                 margin: 0px;
-    //                                 font-family: Arial;
-    //                                 "
-    //                             >${val}</pre>
-    //                         </div>
-    //                     </div>`
+    const elements = {
+        'media_images' : imageElement,
+        'media_gifs' : imageElement,
+        'media_video' : videoElement,
+        'videoStream' : streamElement,
+        'avatars' : avatarsElement,
+        'text' : textElement
+    }
 
-    if (type === 'media_video') {
+    if (type in elements) {
         if($(`#preview [data-key=${data_key}]`).length === 0) {
-            $('#preview').append(videoElement);
-        }
-    } else if (type === 'videoStream'){
-        if($(`#preview [data-key=${data_key}]`).length === 0) {
-            $('#preview').append(streamElement);
+            $('#preview').append(elements[type]);
         }
     }
-    else if (type === 'media_images' || type === 'media_gifs') {
-        //  IF ELEMENT DOES NOT ALREADY EXIST CREATE IT
-        if($(`#preview [data-key=${data_key}]`).length === 0) {
-            $('#preview').append(imageElement);
-        }
-    } else if (type === 'avatars') {
-        if($(`#preview [data-key=${data_key}]`).length === 0) {
-            $('#preview').append(avatarsElement);
-        }
+    // }
+    // if (type === 'media_video') {
+    //     if($(`#preview [data-key=${data_key}]`).length === 0) {
+    //         $('#preview').append(videoElement);
+    //     }
+    // } else if (type === 'videoStream'){
+    //     if($(`#preview [data-key=${data_key}]`).length === 0) {
+    //         $('#preview').append(streamElement);
+    //     }
+    // }
+    // else if (type === 'media_images' || type === 'media_gifs') {
+    //     //  IF ELEMENT DOES NOT ALREADY EXIST CREATE IT
+    //     if($(`#preview [data-key=${data_key}]`).length === 0) {
+    //         $('#preview').append(imageElement);
+    //     }
+    // } else if (type === 'avatars') {
+    //     if($(`#preview [data-key=${data_key}]`).length === 0) {
+    //         $('#preview').append(avatarsElement);
+    //     }
        
-    } else if(type === 'console') {
+    
+    if(type === 'console') {
         if($('#console').length === 0) {
             $('#preview').append(console);
         }
-    } else if (type === 'music') {
+    } 
+    
+    if (type === 'music') {
         if($('#music').length === 0) {
             $('#preview').append(audioElement);
         }
     }
-    else if (type === 'media_layouts') {
-        // const iframe  = document.createElement("iframe");
-        // iframe.src = '/data/media/' + val;
-        // iframe.style.display = "none";
-        // document.body.appendChild(iframe);
+    // else if (type === 'media_layouts') {
+    //     // const iframe  = document.createElement("iframe");
+    //     // iframe.src = '/data/media/' + val;
+    //     // iframe.style.display = "none";
+    //     // document.body.appendChild(iframe);
 
-        // iframe.onload = function(e) {
-            const node = document.createElement('div');
-            node.innerHTML = val;
+    //     // iframe.onload = function(e) {
+    //         const node = document.createElement('div');
+    //         node.innerHTML = val;
 
-            const popupElements = Array.from(node.getElementsByClassName("popup"));
-            var id = [];
-            popupElements.forEach(element => id.push(element.id));
+    //         const popupElements = Array.from(node.getElementsByClassName("popup"));
+    //         var id = [];
+    //         popupElements.forEach(element => id.push(element.id));
 
-            // Adjust src of media elements to be seen by editor
-            var mediaElements = node.querySelectorAll('[src]');
-            for (var element of mediaElements) {
-                var adjustedSRC = element.getAttribute("src").replace("..", "/data/media");
-                element.setAttribute("src", adjustedSRC);
-            }
+    //         // Adjust src of media elements to be seen by editor
+    //         var mediaElements = node.querySelectorAll('[src]');
+    //         for (var element of mediaElements) {
+    //             var adjustedSRC = element.getAttribute("src").replace("..", "/data/media");
+    //             element.setAttribute("src", adjustedSRC);
+    //         }
 
-            // adjust src of media for background images on elements if exists
-            var popupBodyElements = node.querySelectorAll('.popup-body');
-            for (var element of popupBodyElements) {
-                        if (element.style.backgroundImage !== '') {
-                            var adjustedSRC = element.style.backgroundImage.replace('url("..','url("data/media');
-                            element.style.backgroundImage = adjustedSRC;
-                        }
-                    }
-            // adjust main color picker value
-            $('#preview_background')[0].value = node.style.backgroundColor;
-            $('#preview_background').trigger('input');
+    //         // adjust src of media for background images on elements if exists
+    //         var popupBodyElements = node.querySelectorAll('.popup-body');
+    //         for (var element of popupBodyElements) {
+    //                     if (element.style.backgroundImage !== '') {
+    //                         var adjustedSRC = element.style.backgroundImage.replace('url("..','url("data/media');
+    //                         element.style.backgroundImage = adjustedSRC;
+    //                     }
+    //                 }
+    //         // adjust main color picker value
+    //         $('#preview_background')[0].value = node.style.backgroundColor;
+    //         $('#preview_background').trigger('input');
 
-            document.getElementById("preview").remove();
-            document.getElementsByTagName("main")[0].append(node);
+    //         document.getElementById("preview").remove();
+    //         document.getElementsByTagName("main")[0].append(node);
          
-            e.target.remove();
+    //         e.target.remove();
                   
-            const popupElementsNew = Array.from(node.getElementsById("preview"));
+    //         const popupElementsNew = Array.from(node.getElementsById("preview"));
            
-            // initResizeElement();
-            if (typeof(id) === 'string') {
-                addMenu(id);
-            } else {
-                id.forEach(element => addMenu(element));
-            // }
+    //         // initResizeElement();
+    //         if (typeof(id) === 'string') {
+    //             addMenu(id);
+    //         } else {
+    //             id.forEach(element => addMenu(element));
+    //         // }
             
-            // initDragElement();
-            closeMediaList();
-        }
-    } 
-    else if (type === 'media_decors') {
-        var decors = Array.from(document.querySelector(".media_decors").children);
-        var previewElement = document.querySelector("#preview");
-        // Remove previouse styles
-        decors.forEach(decor => {
-            var className = decor.innerHTML.substring(1);
-            if (previewElement.classList.contains(className)) {
-                previewElement.classList.remove(className);
-            }
-            if (previewElement.style.backgroundColor !== '') {
-                $('#preview_background')[0].value = '';
-                $('#preview_background').trigger('input');
-            }
-        });
-        previewElement.classList.add(val.substring(1));
-        closeMediaList();
-    } 
-    else if (type === 'background') {
-        var decors = Array.from(document.querySelector(".media_decors").children);
-        var previewElement = document.querySelector("#preview");
-        // Remove previouse styles
-        decors.forEach(decor => {
-            var className = decor.innerHTML.substring(1);
-            if (previewElement.classList.contains(className)) {
-                previewElement.classList.remove(className);
-            }
-            // if (previewElement.style.backgroundColor !== '') {
-                $('#preview_background')[0].value = val;
-                $('#preview_background').trigger('input');
-            // }
-        });
-        // previewElement.classList.add(val.substring(1));
-        closeMediaList();
-    }    
-    else if (type === 'text-box') {
-        $('#preview').append(textElement);
-        document.getElementById(id + 'text').focus();
-        // initResizeElement(id);
-        addMenu(id);
-        closeMediaList();
-        // initDragElement();
-        hideIfDisplayed($('#add-text-button')[0]);
-        return id
+    //         // initDragElement();
+    //         closeMediaList();
+    //     }
+    // } 
+    // else if (type === 'media_decors') {
+    //     var decors = Array.from(document.querySelector(".media_decors").children);
+    //     var previewElement = document.querySelector("#preview");
+    //     // Remove previouse styles
+    //     decors.forEach(decor => {
+    //         var className = decor.innerHTML.substring(1);
+    //         if (previewElement.classList.contains(className)) {
+    //             previewElement.classList.remove(className);
+    //         }
+    //         if (previewElement.style.backgroundColor !== '') {
+    //             $('#preview_background')[0].value = '';
+    //             $('#preview_background').trigger('input');
+    //         }
+    //     });
+    //     previewElement.classList.add(val.substring(1));
+    //     closeMediaList();
+    // } 
+    // else if (type === 'background') {
+    //     var decors = Array.from(document.querySelector(".media_decors").children);
+    //     var previewElement = document.querySelector("#preview");
+    //     // Remove previouse styles
+    //     decors.forEach(decor => {
+    //         var className = decor.innerHTML.substring(1);
+    //         if (previewElement.classList.contains(className)) {
+    //             previewElement.classList.remove(className);
+    //         }
+    //         // if (previewElement.style.backgroundColor !== '') {
+    //             $('#preview_background')[0].value = val;
+    //             $('#preview_background').trigger('input');
+    //         // }
+    //     });
+    //     // previewElement.classList.add(val.substring(1));
+    //     closeMediaList();
+    // }    
+    if (type === 'text') {
+        $(`#preview [data-key=${data_key}]`).focus();
     }
 
 
@@ -609,12 +556,6 @@ function setElements(val, type, data_key, stepMediaObject) {
         let type = this.dataset.type;
         if ($(this).hasClass('active')) {
             $("#delete-media-button").click(function(){
-                // DELETE FROM JSON
-                // deleteMedia(data_key);
-                // DELETE FROM MAIN DATA
-                // const index = mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].indexOf(data_key);
-                // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].splice(index, 1);
-                // delete mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media'][data_key];
                 $(previewElement).remove();
                 $("#step-media").find(`li[data-key="${data_key}"]`).remove();
                 applyZIndexes();
@@ -676,17 +617,28 @@ function setElements(val, type, data_key, stepMediaObject) {
                 }
             }
 
-            // if (stepMediaObject['type'] === 'videoStream') {
-            //     if (mediaElement.find('.media')[0].srcObject('id') !== stepMediaObject['attributes']['device']) {
-            //         async() => {
-            //             await navigator.mediaDevices.getUserMedia({
-            //               video: {
-            //                   deviceId: stepMediaObject['attributes']['device']
-            //               }}).then(stream => mediaElement.find('.media')[0].srcObject = stream)
-            //             } 
-            //     }
-            // }
+            if (stepMediaObject['type'] === 'videoStream') {
+                if (!mediaElement.find('video')[0].srcObject) {
+                    const constraints = {
+                        video: { deviceId: stepMediaObject['attributes']['device']}
+                    };
+                    startStream(constraints, data_key);
+                } else {
+                    if (mediaElement.find('video')[0].srcObject('id') !== stepMediaObject['attributes']['device']) {
+                        const constraints = {
+                            video: { deviceId: stepMediaObject['attributes']['device']}
+                        };
+                        startStream(constraints, data_key);
+                    }
+                }
+            }
 
+             // ADD NEW TEXT IF NEEDED
+             if (stepMediaObject['type'] === 'text') {
+                if (mediaElement.text() !== stepMediaObject['content']) {
+                    mediaElement.text(stepMediaObject['content']);
+                }
+             }
 
             // APPLY CLASSES
             let classes = "";
@@ -695,9 +647,7 @@ function setElements(val, type, data_key, stepMediaObject) {
             });
             mediaElement.addClass(classes);
 
-            // ADD TEXT
-            mediaElement.find('.text').text(stepMediaObject['content']);
-
+           
             if(stepMediaObject['css']['object-fit'] !== "") {
                 mediaElement.find('.media').css({"height" : "100%", "object-fit" : stepMediaObject['css']['object-fit']});
             }
@@ -825,16 +775,17 @@ function analyseStep() {
                 object['classes'].push(element);
             }
         })
-        object['content'] = $(this).children().text();
 
+        if ($(this).data('type') === 'text') {
+            object['content'] = $(this).text();
+        }
+       
         updatedMediaObject[$(this).data('key')] = object;
     })
 
     updatedStepObject['screen']['media'] = updatedMediaObject;
 
-    // updatedStepObject['screen']['avatars']['active'] = $('#avatars-checkbox').is(':checked');
-    // updatedStepObject['screen']['avatars']['css'] = styleToObject($('#avatars').attr('style'));
-
+    // add console
     updatedStepObject['screen']['console']['active'] = $('#console-checkbox').is(':checked');
     updatedStepObject['screen']['console']['css'] = styleToObject($('#console').attr('style'));
 
@@ -842,9 +793,22 @@ function analyseStep() {
         updatedStepObject['console'] = {...consoleObject};
     }
 
+    // add boite
+    if ($('#boite-checkbox').is(':checked')) {
+        updatedStepObject['boite'] = {...boiteObject};
+        let boite_type;
+        $('#boite input').each(function(){
+            if($(this).is(':checked')) {
+                boite_type = $(this).val();
+            } 
+        })
+        updatedStepObject['boite']['type'] = boite_type;
+        updatedStepObject['boite']['arg'] = $('#boite textarea').val();
+    }
+
+    // add audio
     updatedStepObject['screen']['music']['scr'] = $('#audio').attr('src');
 
-    // ADD IF BOITE
     return updatedStepObject;
 }
 
@@ -1206,6 +1170,9 @@ $('.editor-buttons fieldset input').change(function() {
     if (active.step !== "") {
         if ($(this).is(':checked')) {
             $(`#${$(this).attr('name')}` ).show();
+            // if($(this).name === 'boite') {
+            //     addBoite();
+            // }
             // $("this").prop("checked", false);
         } else {
             $(`#${$(this).attr('name')}` ).hide();
@@ -1216,6 +1183,10 @@ $('.editor-buttons fieldset input').change(function() {
     }
 });
 
+// function addBoite() {
+//     const li = `<li data-key=${data_key} data-type='avatars' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Avatars</li>`;
+//     $('#step-media ul').append(li);
+// }
 
 function addNewStep(newStepNumber, step) {
     socket.emit("add step", {"fileName" : active.fileName, "scene" : active.scene, "key" : newStepNumber, "step" : step});
@@ -1253,10 +1224,11 @@ function deleteShow() {
     socket.emit("delete show", {"fileName" : active.fileName});
 }
 
-// function sendStep() {
-//     const step = analyseStep();
-//     socket.emit('step', step)
-// }
+function sendStep() {
+    const step = analyseStep();
+    console.log(step)
+    socket.emit('step', step)
+}
 
 
 window.onload = function() {
@@ -1360,18 +1332,32 @@ $.each(boites_mobiles, function(key, val) {
 
 $('.boite_radio--no_phone').prop('checked', true);
 
-$boites_types.on('dblclick', '.boite_label', function() {
-  $(this.form).submit();
-});
+// $boites_types.on('dblclick', '.boite_label', function() {
+//   $(this.form).submit();
+// });
 
 function addAvatars() {
     let data_key = createRandomString(5);
      // ADD TO MAIN DATA MEDIA ORDER TO MANIPULATE Z INDEXES
-     mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].push(data_key);
-    const li = `<li data-key=${data_key} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Avatars</li>`;
+    // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].push(data_key);
+    const li = `<li data-key=${data_key} data-type='avatars' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Avatars</li>`;
     $('#step-media ul').append(li);
     setElements('', 'avatars', data_key);
     applyZIndexes();
+    setTimeout(() => {
+        $(".ui-dialog-titlebar-close"). click();
+    }, 200);   
+}
+
+function addText() {
+    let data_key = createRandomString(5);
+     // ADD TO MAIN DATA MEDIA ORDER TO MANIPULATE Z INDEXES
+    //  mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].push(data_key);
+    const li = `<li data-key=${data_key} data-type='text' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Text</li>`;
+    $('#step-media ul').append(li);
+    setElements('', 'text', data_key);
+    applyZIndexes();
+    $(`#preview [data-key=${data_key}]`).text($('#text-content').val());
     setTimeout(() => {
         $(".ui-dialog-titlebar-close"). click();
     }, 200);   
@@ -1381,10 +1367,10 @@ $media.on('mousedown', '.file', function() {
     let data_key = createRandomString(5);
 
     // ADD TO MAIN DATA MEDIA ORDER TO MANIPULATE Z INDEXES
-    mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].push(data_key);
+    // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].push(data_key);
     // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media'][data_key] = newMediaObject;
 
-    const li = `<li data-key=${data_key} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${getFileName($(this).attr('title'))}</li>`;
+    const li = `<li data-key=${data_key} data-type=${this.parentElement.className} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${getFileName($(this).attr('title'))}</li>`;
            
     $('#step-media ul').append(li);
     
@@ -1526,7 +1512,159 @@ function toggleMediaList(e) {
 }
 
 function editElement(key, type) {
-    // if (type === 'media_images' || type === 'media_gifs') {
+  
+    if (type === 'text') {
+
+        var textStyle = getComputedStyle($(`#preview [data-key=${key}]`)[0]);
+
+        var isActive = {
+            "bold" : (textStyle.fontWeight === '700') ? ('active') : (''),
+            "italic" : (textStyle.fontStyle === 'italic') ? ('active') : (''),
+            "underline" : (textStyle.textDecorationLine === 'underline') ? ('active') : (''),
+            "center" : (textStyle.textAlign === 'center') ? ('active') : (''),
+            "left" : (textStyle.textAlign === 'left') ? ('active') : (''),
+            "right" : (textStyle.textAlign === 'right') ? ('active') : ('')
+        }
+        $('#alert')
+        .empty()
+        .append(`<div class = 'editor-menu'>  
+                        <div class='menu-item'>
+                            <label for="color">FONT COLOR</label>
+                            <input
+                                id = ${key + '_color'} 
+                                autocomplete="off"
+                                _list="list_decors"
+                                class="color-picker _box-min d-none"
+                                type="text"
+                                name="color"
+                                value= ${(textStyle.color) ? (textStyle.color.replaceAll(' ', '')) : ('rgb(255,255,255)')}
+                            />
+                        </div>
+                        <div class='menu-item'>
+                            <label for="background-color">BACKGROUND COLOR</label>
+                            <input
+                                id = ${key + '_background-color'} 
+                                autocomplete="off"
+                                _list="list_decors"
+                                class="color-picker _box-min d-none"
+                                type="text"
+                                name="background-color"
+                                value = ${(textStyle.backgroundColor) ? (textStyle.backgroundColor.replaceAll(' ', '')) : ('transparent')} 
+                            />
+                        </div>
+                        <div class='menu-item'>
+                            <p>PADDING</p>
+                            <input class='padding' type="number" min = '0' id = ${key + '_padding'} value=${textStyle.padding.replace('px', '')}>
+                        </div>
+                        <div class='menu-item'>
+                            <p>FONT STYLE</p>
+                            <select class='font-family' id=${key + '_font-family'}>
+                                <option value='' disabled selected>Change font style</option>
+                                <option value='fixedsys'>fixedsys</option>
+                                <option value='AvenirBlack'>AvenirBlack</option>
+                                <option value='AvenirRoman'>AvenirRoman</option>
+                                <option value='DINLight'>DINLight</option>
+                                <option value='faBrands'>faBrands</option>
+                                <option value='fishbourne'>fishbourne</option>
+                                <option value='RobotoMedium'>RobotoMedium</option>
+                                <option value='RobotoRegular'>RobotoRegular</option>
+                            </select>
+                        </div>
+                        <div class='menu-item'>
+                            <p>FONT SIZE</p>
+                            <input class='font-size' type="number" min = '0' id = ${key + '_font-size'} value=${textStyle.fontSize.replace('px', '')}>
+                        </div>
+                        <div class='editor-buttons'>
+                            <div class='menu-item'>
+                                <button class='font-style ${isActive.bold}' id = ${key + '_font-weight_bold'}>
+                                    <img class='icon' src="../icons/bold.svg"></img>
+                                </div>
+                            </button>
+                            <div class='menu-item'>
+                                <button class='font-style ${isActive.italic}' id = ${key + '_font-style_italic'}>
+                                    <img class='icon' src="../icons/italic.svg"></img>
+                                </div>
+                            </button>
+                            <div class='menu-item'>
+                                <button class='font-style ${isActive.underline}' id = ${key + '_text-decoration_underline'}>
+                                    <img class='icon' src="../icons/underline.svg"></img>
+                                </button>
+                            </div>
+                        </div>
+                        <div class='editor-buttons'>
+                            <div class='menu-item'>
+                                <button class='text-align ${isActive.center}' id = ${key + '_text-align_center'}>
+                                    <img class='icon' src="../icons/align-center.svg"></img>
+                                </div>
+                            </button>
+                            <div class='menu-item'>
+                                <button class='text-align ${isActive.left}' id = ${key + '_text-align_left'}>
+                                    <img class='icon' src="../icons/align-left.svg"></img>
+                                </div>
+                            </button>
+                            <div class='menu-item'>
+                                <button class='text-align ${isActive.right}' id = ${key + '_text-align_right'}>
+                                    <img class='icon' src="../icons/align-right.svg"></img>
+                                </button>
+                            </div>
+                        </div>
+                        Border
+                        <div class='menu-item'>
+                            <input 
+                                class ='font-size menu-item border' 
+                                type ="number" 
+                                min = '0'
+                                id = ${key + '_border-width'} 
+                                value = ${(textStyle.borderWidth) ? (parseInt(textStyle.borderWidth.replace('px', ''))) : (0)} 
+                            >
+                        </div>
+                        <div class='menu-item'>
+                            <input
+                                id = ${key + '_border-color'} 
+                                autocomplete="off"
+                                _list="list_decors"
+                                class="color-picker _box-min d-none menu-item"
+                                type="text"
+                                name="border-color"
+                                value = ${(textStyle.borderColor) ? (textStyle.borderColor.replaceAll(' ', '')) : ('transparent')} 
+                            />
+                        </div>
+                        <select value = ${(textStyle.borderStyle) ? (textStyle.borderStyle) : ('none')}  class='menu-item border' id = ${key + '_border-style'}>
+                            <option value='solid' ${(textStyle.borderStyle == 'solid') ? ('selected') : (null)}>Solid</option>
+                            <option value='dashed' ${(textStyle.borderStyle == 'dashed') ? ('selected') : (null)}>Dashed</option>
+                            <option value='dotted' ${(textStyle.borderStyle == 'dotted') ? ('selected') : (null)}>Dotted</option>
+                            <option value='double' ${(textStyle.borderStyle === 'double') ? ('selected') : (null)}>Double</option>
+                            <option value='none' ${(textStyle.borderStyle === 'none' || textStyle.borderStyle === '') ? ('selected') : (null)}>none</option>
+                        </select>
+                        <div class='menu-item rotation'>
+                            <p>ROTATION</p>
+                            <div class='editor-buttons'>
+                                <button>
+                                <img class="icon" src="../icons/arrow-rotate-right-solid.svg" onclick="rotateRight('${key}');"></img>
+                                </button>
+                            </div>
+                            <div class='editor-buttons'>
+                            <button>
+                                <img class="icon" src="../icons/arrow-rotate-left-solid.svg" onclick="rotateLeft('${key}');"></img>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`)
+                .dialog({
+                    resizable: false,
+                    modal: true,
+                    maxHeight: 600,
+                });
+
+    activateColorPicker();
+    activateFontSizeControler();
+    activatePaddingControler();
+    activateFontStyleControler();
+    activateTextAlignControler();
+    activateBorderControler();
+    activateFontFamilyControler();
+    } else {
         $('#alert')
         .empty()
         .append(`<div  
@@ -1583,21 +1721,23 @@ function editElement(key, type) {
             $(`#preview [data-key=${key}]`).css({'background-image': `url('${htmlPathToMedia}${this.title}')`, 'background-size': 'cover', 'background-repeat': 'no-repeat'})
         });
         activateColorPicker();
-    // }
-
+    }
     if (type === 'media_video') {
         const video = $(`#preview [data-key=${key}] video`)[0];
         $('#alert .editor-menu')
         .append(`<div class='menu-item video-controls'>
-        <p class='editor-section'>CONTROLS</p> 
-        <div class='loop'>
-            <img class="icon ${(video.loop) ? ('active') : ('')}" src="../icons/arrow-rotate-right-solid.svg" onclick="setVideoAttribute('${key}', 'loop', event);"></img>
-        </div>
-        <div class='mute'>
-            <div class="icon mute ${(video.muted) ? ('active') : ('')}" onclick="setVideoAttribute('${key}', 'muted', event);"></div>
-           
-        </div>
-    </div>`)
+                    <p class='editor-section'>CONTROLS</p> 
+                    <div class='loop editor-buttons'>
+                        <button class="${(video.loop) ? ('active') : ('')}" onclick="setVideoAttribute('${key}', 'loop', event);">
+                            <img class="icon" src="../icons/arrow-rotate-right-solid.svg"></img>
+                        </button>
+                    </div>
+                    <div class='editor-buttons'>
+                        <button class="mute ${(video.muted) ? ('active') : ('')}" onclick="setVideoAttribute('${key}', 'muted', event);">
+                        </button>
+                    
+                    </div>
+                </div>`)
     }
 
     // APPLY CURRENT STYLE
@@ -1608,176 +1748,7 @@ function editElement(key, type) {
     // $('.bg-color input:text').val(bcgColor)
 }
 
-function addVideoMenuOptions(id) {
-    $('#media-editor')[0].innerHTML = '';
-    
-    var video = $('#' + id).find($('video'))[0];
-    
-    var menuTemplate =  `<div  
-                            id=${id + '_menu'} 
-                            class = 'editor-menu'
-                        >   
-                        <div class='menu-item size'>
-                                <p class='editor-section'>SIZE</p> 
-                                <button class="white" onClick="setSize('cover', ${id}, 'video')">cover</button>
-                                <button class="white" onClick="setSize('contain', ${id}, 'video')">contain</button>
-                                <inline onClick="setSize('reset', ${id}, 'video')">Reset</inline>
-                            </div>
-                            <div class='menu-item video-controls'>
-                                <p class='editor-section'>CONTROLS</p> 
-                                <div class='loop'>
-                                    <i style="margin-right: 10px;">Loop video</i><img class="icon ${(video.loop) ? ('active') : ('')}" src="../icons/arrow-rotate-right-solid.svg" onclick="setVideoAttribute(${id}, 'loop', event);"></img>
-                                </div>
-                                <div class='mute'>
-                                    <i style="margin-right: 10px;">Video Sound On/Off</i><img class="icon mute ${(video.muted) ? ('active') : ('')}" src="../icons/${(video.muted) ? ('volume-xmark-solid') : ('volume-high-solid')}.svg" onclick="setVideoAttribute(${id}, 'muted', event);"></img>
-                                </div>
-                            </div>
-                            <div>
-                            <div class='menu-item bg-image'>
-                                <p class='editor-section'>BACKGROUND IMAGE</p> 
-                                <div id="media-backgrounds">
-                                    <div class="media_cat" id='background-gifs'>
-                                        <i title="gifs">🖼️</i>
-                                    </div>
-                                    <div class="media_cat media_images" id='background-images'>
-                                        <i title="images">📷</i>
-                                    </div>
-                                </div>
-                                <p style='text-decoration: underline;' onclick='removeBackgroundImage(${id})'>Remove background image</p>
-                            </div>
-                            </div>
-                            <div class='menu-item rotation'>
-                                <p class='editor-section'>ROTATION<p> 
-                                <div>
-                                    <img class="icon" src="../icons/arrow-rotate-right-solid.svg" onclick="rotateRight(${id});"></img>
-                                </div>
-                                <div>
-                                    <img class="icon" src="../icons/arrow-rotate-left-solid.svg" onclick="rotateLeft(${id});"></img>
-                                </div>
-                            </div>
-                        </div>`
-    $('#media-editor').append(menuTemplate);
-    if ($($('#' + id)).hasClass('stream')) {
-        $('#' + id + '_menu').find($('.video-controls')).remove();
-    }
-    addBackground(id);
-}
-
 oncontextmenu = (event) => {console.log(event) };
-
-function addMenuOptionsTextBox(id) {
-    
-        $('#media-editor')[0].innerHTML = '';
-        // console.log(getComputedStyle($("#" + id + "text")[0]))
-        
-        var textStyle = getComputedStyle($("#" + id + "text")[0]);
-
-        var isActive = {
-            "bold" : (textStyle.fontWeight === '700') ? ('active') : (''),
-            "italic" : (textStyle.fontStyle === 'italic') ? ('active') : (''),
-            "underline" : (textStyle.textDecorationLine === 'underline') ? ('active') : ('')
-        }
-
-        var menuTemplate =  `<div  
-                                id=${id + 'menu'} 
-                                class = 'editor-menu'
-                            >  
-                                                    
-                                <div class='menu-item'>
-                                    <label for="color">Font color</label>
-                                    <input
-                                        id = ${id + '_color'} 
-                                        autocomplete="off"
-                                        _list="list_decors"
-                                        class="color-picker _box-min d-none"
-                                        type="text"
-                                        name="color"
-                                        value= ${(textStyle.color) ? (textStyle.color.replaceAll(' ', '')) : ('rgb(255,255,255)')}
-                                    />
-                                </div>
-                                <div class='menu-item'>
-                                    <label for="background-color">BG color</label>
-                                    <input
-                                        id = ${id + '_background-color'} 
-                                        autocomplete="off"
-                                        _list="list_decors"
-                                        class="color-picker _box-min d-none"
-                                        type="text"
-                                        name="background-color"
-                                        value = ${(textStyle.backgroundColor) ? (textStyle.backgroundColor.replaceAll(' ', '')) : ('transparent')} 
-                                    />
-                                </div>
-                                <p style='text-decoration: underline;' onclick='removeBackgroundColor(${id})'>Remove Background color</p>
-                                <div class='menu-item'>
-                                    <select class='font-family' id=${id + '_font-family'}>
-                                        <option value='' disabled selected>Change font style</option>
-                                        <option value='fixedsys'>fixedsys</option>
-                                        <option value='AvenirBlack'>AvenirBlack</option>
-                                        <option value='AvenirRoman'>AvenirRoman</option>
-                                        <option value='DINLight'>DINLight</option>
-                                        <option value='faBrands'>faBrands</option>
-                                        <option value='fishbourne'>fishbourne</option>
-                                        <option value='RobotoMedium'>RobotoMedium</option>
-                                        <option value='RobotoRegular'>RobotoRegular</option>
-                                    </select>
-                                </div>
-                                <div class='menu-item'>
-                                    <input class='font-size' type="number" min = '0' id = ${id + '_font-size'} value=${textStyle.fontSize.replace('px', '')}>
-                                </div>
-                                <div class='menu-item'>
-                                    <img class='icon font-style ${isActive.bold}' src="../icons/bold-solid.svg" id = ${id + '_font-weight_bold'}></img>
-                                </div>
-                                <div class='menu-item'>
-                                    <img class='icon font-style ${isActive.italic}' src="../icons/italic-solid.svg" id = ${id + '_font-style_italic'}></img>
-                                </div>
-                                <div class='menu-item'>
-                                    <img class='icon font-style ${isActive.underline}' src="../icons/underline-solid.svg" id = ${id + '_text-decoration_underline'}></img>
-                                </div>
-                                Border
-                                <div class='menu-item'>
-                                    <input 
-                                        class ='font-size menu-item border' 
-                                        type ="number" 
-                                        min = '0'
-                                        id = ${id + '_border-width'} 
-                                        value = ${(textStyle.borderWidth) ? (parseInt(textStyle.borderWidth.replace('px', ''))) : (0)} 
-                                    >
-                                </div>
-                                <div class='menu-item'>
-                                    <input
-                                        id = ${id + '_border-color'} 
-                                        autocomplete="off"
-                                        _list="list_decors"
-                                        class="color-picker _box-min d-none menu-item"
-                                        type="text"
-                                        name="border-color"
-                                        value = ${(textStyle.borderColor) ? (textStyle.borderColor.replaceAll(' ', '')) : ('transparent')} 
-                                    />
-                                </div>
-                                <select value = ${(textStyle.borderStyle) ? (textStyle.borderStyle) : ('none')}  class='menu-item border' id = ${id + '_border-style'}>
-                                    <option value='solid' ${(textStyle.borderStyle == 'solid') ? ('selected') : (null)}>Solid</option>
-                                    <option value='dashed' ${(textStyle.borderStyle == 'dashed') ? ('selected') : (null)}>Dashed</option>
-                                    <option value='dotted' ${(textStyle.borderStyle == 'dotted') ? ('selected') : (null)}>Dotted</option>
-                                    <option value='double' ${(textStyle.borderStyle === 'double') ? ('selected') : (null)}>Double</option>
-                                    <option value='none' ${(textStyle.borderStyle === 'none' || textStyle.borderStyle === '') ? ('selected') : (null)}>none</option>
-                                </select>
-                                <div class='menu-item'>
-                                    <img class="icon" src="../icons/arrow-rotate-right-solid.svg" onclick="rotateRight(${id});"></img>
-                                </div>
-                                <div class='menu-item'>
-                                    <img class="icon" src="../icons/arrow-rotate-left-solid.svg" onclick="rotateLeft(${id});"></img>
-                                </div>
-                            </div>
-                        </div>
-                    `
-
-        $('#media-editor')[0].innerHTML = menuTemplate;
-        activateColorPicker();
-        activateFontSizeControler();
-        activateFontStyleControler();
-        activateBorderControler();
-        activateFontFamilyControler();
-}
 
 function activateFontStyleControler() {
     $('.font-style')
@@ -1797,7 +1768,29 @@ function activateFontStyleControler() {
             $this.addClass('active');
         }
        
-        $('#' + inputs.id + 'text').css(inputs['CSSparameter'], newValue);
+        $(`#preview [data-key=${inputs.id}]`).css(inputs['CSSparameter'], newValue);
+      })
+}
+
+function activateTextAlignControler() {
+    $('.text-align')
+    .on('click', function() {
+        var $this = $(this);
+
+        var inputs = {'id' : $this.context.id.split('_')[0], 'CSSparameter' : $this.context.id.split('_')[1], 'value' : $this.context.id.split('_')[2]};
+        var isActive = $this.hasClass('active');
+
+        var newValue;
+
+        if ($this.hasClass('active')) {
+            newValue = '';
+            $this.removeClass('active');
+        } else {
+            newValue = inputs['value'];
+            $this.addClass('active');
+        }
+       
+        $(`#preview [data-key=${inputs.id}]`).css(inputs['CSSparameter'], newValue);
       })
 }
 
@@ -1808,7 +1801,18 @@ function activateFontSizeControler() {
       var val = $this.val();
     
       var inputs = {"id" : $this.context.id.split("_")[0], "CSSparameter" : $this.context.id.split("_")[1]};
-      $("#" + inputs.id + "text").css(inputs['CSSparameter'], val + 'px');
+      $(`#preview [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val + 'px');
+    })
+}
+
+function activatePaddingControler() {
+    $('.padding')
+    .on('input', function() {
+      var $this = $(this);
+      var val = $this.val();
+    
+      var inputs = {"id" : $this.context.id.split("_")[0], "CSSparameter" : $this.context.id.split("_")[1]};
+      $(`#preview [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val + 'px');
     })
 }
 
@@ -1819,7 +1823,7 @@ function activateFontFamilyControler() {
       var val = $this.val();
     
       var inputs = {"id" : $this.context.id.split("_")[0], "CSSparameter" : $this.context.id.split("_")[1]};
-      $("#" + inputs.id + "text").css(inputs['CSSparameter'], val);
+      $(`#preview [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val);
     })
 }
 
@@ -1837,7 +1841,7 @@ function activateBorderControler() {
             unit = '';
         }
 
-      $("#" + inputs.id + "text").css(inputs['CSSparameter'], val + unit);
+      $(`#preview [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val + unit);
     })
 }
 
@@ -1854,7 +1858,7 @@ function setSize(event, size, key, type) {
     if (type === 'media_images' || type === 'media_gifs') {
         $(`#preview [data-key=${key}] img`).css({'object-fit' : size, 'height' : '100%'})
     }
-    if (type === 'media_videos') {
+    if (type === 'media_videos' || type === 'videoStream') {
         $(`#preview [data-key=${key}] video`).css({'object-fit' : size, 'height' : '100%'})
     }
 }
@@ -1896,49 +1900,49 @@ function setVideoAttribute(key, attribute, e) {
     } else {
         $(video).prop(attribute, true);
     }
-    $(e.target).toggleClass('active');
+    $(e.currentTarget).toggleClass('active');
     video.load();
 }
 
-function addBackground(id) {
-    var gifs = $('.media_gifs')[0].cloneNode(true);
-    var images = $('.media_images')[0].cloneNode(true);
-    $('#background-gifs')[0].append(gifs);
-    $('#background-images')[0].append(images);
+// function addBackground(id) {
+//     var gifs = $('.media_gifs')[0].cloneNode(true);
+//     var images = $('.media_images')[0].cloneNode(true);
+//     $('#background-gifs')[0].append(gifs);
+//     $('#background-images')[0].append(images);
 
-    // add event listeners
-    var gifsElementsArray = Array.from(gifs.childNodes);
-    var imagesElementsArray = Array.from(images.childNodes);
+//     // add event listeners
+//     var gifsElementsArray = Array.from(gifs.childNodes);
+//     var imagesElementsArray = Array.from(images.childNodes);
 
     
 
-    gifsElementsArray.forEach(element => {
-        element.addEventListener('mousedown', function(e) {
-            var mediaElement;
-            if ($('#' + id).find($('img')).length > 0) {
-                mediaElement = $('#' + id + 'img')
-            } else {
-                mediaElement = $('#' + id + 'video')
-            }
-            // var popupBody = $('#' + id).find($('.popup-body'))[0];
-            var backgroundURL = $(e.target).attr('title');
-            mediaElement.css({'background-image' : `url(data/media/${backgroundURL})`, 'background-size' : 'cover', 'background-repeat' : 'no-repeat'});
-        })
-    })
+//     gifsElementsArray.forEach(element => {
+//         element.addEventListener('mousedown', function(e) {
+//             var mediaElement;
+//             if ($('#' + id).find($('img')).length > 0) {
+//                 mediaElement = $('#' + id + 'img')
+//             } else {
+//                 mediaElement = $('#' + id + 'video')
+//             }
+//             // var popupBody = $('#' + id).find($('.popup-body'))[0];
+//             var backgroundURL = $(e.target).attr('title');
+//             mediaElement.css({'background-image' : `url(data/media/${backgroundURL})`, 'background-size' : 'cover', 'background-repeat' : 'no-repeat'});
+//         })
+//     })
 
-    imagesElementsArray.forEach(element => {
-        element.addEventListener('mousedown', function(e) {
-            var mediaElement;
-            if ($('#' + id).find($('img')).length > 0) {
-                mediaElement = $('#' + id + 'img')
-            } else {
-                mediaElement = $('#' + id + 'video')
-            }
-            var backgroundURL = $(e.target).attr('title');
-            mediaElement.css({'background-image' : `url(data/media/${backgroundURL})`, 'background-size' : 'cover', 'background-repeat' : 'no-repeat'});
-        })
-    })
-}
+//     imagesElementsArray.forEach(element => {
+//         element.addEventListener('mousedown', function(e) {
+//             var mediaElement;
+//             if ($('#' + id).find($('img')).length > 0) {
+//                 mediaElement = $('#' + id + 'img')
+//             } else {
+//                 mediaElement = $('#' + id + 'video')
+//             }
+//             var backgroundURL = $(e.target).attr('title');
+//             mediaElement.css({'background-image' : `url(data/media/${backgroundURL})`, 'background-size' : 'cover', 'background-repeat' : 'no-repeat'});
+//         })
+//     })
+// }
 
 function removeBackgroundImage(key) {
     $(`#preview [data-key='${key}']`).css({'background-image' : '', 'background-size' : '', 'background-repeat' : ''});
@@ -1991,14 +1995,28 @@ function removeBackgroundImage(key) {
 // }
 
 function displayMediaList() {
+    $("#text-content").val('');
     $( "#media" ).dialog({
         resizable: false,
         modal: true,
         maxHeight: 600,
         minWidth: 500
-    });
+    })
+    getMediaStream();
+    // .append(`<div class='menu-item'>
+    //             <label for="background-color">BACKGROUND COLOR</label>
+    //             <input
+    //                 id = ${'preview_background-color'} 
+    //                 autocomplete="off"
+    //                 _list="list_decors"
+    //                 class="color-picker _box-min d-none"
+    //                 type="text"
+    //                 name="background-color"
+    //                 value = ${($('#preview').css('background-color')) ? ($('#preview').css('background-color').replaceAll(' ', '')) : ('transparent')} 
+    //             />
+    //         </div>`)
+    // activateColorPicker();
 }
-
 
 function activateColorPicker() {
     $('.color-picker')
@@ -2006,28 +2024,21 @@ function activateColorPicker() {
       var $this = $(this);
       var val = $this.val();
     
-      if($this.context.id !== "preview_background") {
+      if($this.context.id !== "preview_background-color") {
         var inputs = {"key" : $this.context.id.split("_")[0], "CSSparameter" : $this.context.id.split("_")[1]};
-        // if ($("#" + inputs.id + "text")[0]) {
-        //     $("#" + inputs.id + "text").css(inputs['CSSparameter'], val);
-        // } else if ($("#" + inputs.id + "img")[0]) {
-        //     $("#" + inputs.id + "img").css(inputs['CSSparameter'], val);
-        // } else {
-        //     $("#" + inputs.id).find('.popup-body').css(inputs['CSSparameter'], val);
-        // }
         $(`#preview [data-key=${inputs.key}]`).css(inputs['CSSparameter'], val)
         
       } else {
           // remove background classes 
-          var decors = Array.from(document.querySelector(".media_decors").children);
-          var previewElement = document.querySelector("#preview");
+        //   var decors = Array.from(document.querySelector(".media_decors").children);
+        //   var previewElement = document.querySelector("#preview");
           // Remove previouse styles
-          decors.forEach(decor => {
-              var className = decor.innerHTML.substring(1);
-              if (previewElement.classList.contains(className)) {
-                  previewElement.classList.remove(className);
-              }
-          });
+        //   decors.forEach(decor => {
+        //       var className = decor.innerHTML.substring(1);
+        //       if (previewElement.classList.contains(className)) {
+        //           previewElement.classList.remove(className);
+        //       }
+        //   });
           $('#preview').css('background-color', val);
       }
        
@@ -2069,128 +2080,74 @@ function activateColorPicker() {
     });
 }
 
-// function addAvatarsArea(e) {
-//     setElements('', 'avatars');
-// }
-
-// function saveAvatarsPosition() {
-// var avatars = $('.avatars')[0];
-
-// calculate width and height in %
-// var width = consoleDiv.style.width;
-// var height = consoleDiv.style.height;
-// const previewWindow = document.getElementById("preview-window");
-
-// if(width.includes('px')) {
-//     const vw = parseInt(getComputedStyle(previewWindow).width);
-//     width = Math.round(parseInt(width)*100/vw) + "%"; 
-// }
-
-// if(height.includes('px')) {
-//     const vh = parseInt(getComputedStyle(previewWindow).height);
-//     height = Math.round(parseInt(height)*100/vh) + "%"; 
-// } 
-
-// var data = {
-//     "top" : consoleDiv.style.top,
-//     "left" : consoleDiv.style.left,
-//     "width" : width,
-//     "height" : height
-// }
-
-// for(const property in data ) {
-//     $('#' + property)[0].focus();
-//     setEdit(data[property]);
-// }
-// document.getElementById("layout_modal").style.display = "none";
-// } 
-
-
 // LIVE STREAM
 function getMediaStream() {
-    let data_key = createRandomString(5);
-    // ADD TO MAIN DATA MEDIA ORDER TO MANIPULATE Z INDEXES
-    mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].push(data_key);
-   const li = `<li data-key=${data_key} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Stream</li>`;
-   $('#step-media ul').append(li);
-   setElements('', 'videoStream', data_key);
-    
-   applyZIndexes();
-   setTimeout(() => {
-       $(".ui-dialog-titlebar-close"). click();
-   }, 200);   
 
-   
-    const controls = document.querySelector('.controls');
     const cameraOptions = document.querySelector('.video-options>select');
-    const video = document.querySelector('#stream');
-    const buttons = [...controls.querySelectorAll('.streamControl')];
-    let streamStarted = false;
-
-    const [play, pause] = buttons;
 
     const constraints = {
-    video: {
-        deviceId: ''
-    }
+        video: { deviceId: ''}
     };
+
 
     cameraOptions.onchange = () => {
+        let data_key = createRandomString(5);
+        const li = `<li data-key=${data_key} data-type='videoStream' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Stream</li>`;
+        $('#step-media ul').append(li);
+        setElements('', 'videoStream', data_key);
+        applyZIndexes();
         constraints.video.deviceId = cameraOptions.value;
-        startStream(constraints);
+        startStream(constraints, data_key);
+        setTimeout(() => {
+            $(".ui-dialog-titlebar-close"). click();
+        }, 200); 
     };
 
-    play.onclick = () => {
-    if (streamStarted) {
-        video.play();
-        play.classList.add('d-none');
-        pause.classList.remove('d-none');
-        return;
-    }
-    if ('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia) {
-        constraints.video.deviceId = cameraOptions.value;
-        startStream(constraints);
-    }
-    };
-
-    const pauseStream = () => {
-    video.pause();
-    play.classList.remove('d-none');
-    pause.classList.add('d-none');
-    };
-
-    pause.onclick = pauseStream;
+    // const startStream = async (constraints, data_key) => {
+    //     navigator.mediaDevices.getUserMedia( constraints )
+    //     .then( MediaStream => {
+    //         handleStream(MediaStream, data_key);
+    //     })
+    //     .catch( error => {
+    //         console.log(error);
+    //         setTimeout(() => {
+    //             $(".ui-dialog-titlebar-close"). click();
+    //         }, 200); 
+    //     });
+    // };
 
 
-    const startStream = async (constraints) => {
-        controls.classList.add('d-none');
-        navigator.mediaDevices.getUserMedia( constraints )
-        .then( MediaStream => {
-            handleStream(MediaStream);
-        }).catch( error => {
-            console.log(error)
-        });
-    };
-
-
-    const handleStream = (stream) => {
-    video.srcObject = stream;
-    play.classList.add('d-none');
-    pause.classList.remove('d-none');
-    controls.classList.remove('d-none');
-    };
-
+    // const handleStream = (stream, data_key) => {
+    //     $(`#preview [data-key=${data_key}] video`)[0].srcObject = stream;
+    //     setTimeout(() => {
+    //         $(".ui-dialog-titlebar-close"). click();
+    //     }, 200); 
+    // };
 
     const getCameraSelection = async () => {
-    const devices = await navigator.mediaDevices.enumerateDevices();
-    const videoDevices = devices.filter(device => device.kind === 'videoinput');
-    const options = videoDevices.map(videoDevice => {
-        return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
-    });
-    cameraOptions.innerHTML = cameraOptions.innerHTML + options.join('');
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const videoDevices = devices.filter(device => device.kind === 'videoinput');
+        const options = videoDevices.map(videoDevice => {
+            return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
+        });
+        cameraOptions.innerHTML = `<option value="">Select camera</option>` + options.join('');
     };
 
     getCameraSelection();
+}
+
+async function startStream(constraints, data_key) {
+    navigator.mediaDevices.getUserMedia( constraints )
+    .then( MediaStream => {
+        handleStream(MediaStream, data_key);
+    })
+    .catch( error => {
+        console.log(error);
+    });
+}
+
+function handleStream(stream, data_key) {
+    $(`#preview [data-key=${data_key}] video`)[0].srcObject = stream;
 }
 
 

@@ -38,81 +38,9 @@
 <link rel="stylesheet" href="./css/editor.css" />
 
 <main id="master">
-  <div id="left-menu">
-    <header class="box-h box-debug closed">
-      <b>debug</b>
-      <div id="debug"></div>
-    </header>
-    <header class="box-h box-tools _closed">
-      <b>tools</b>
-      <div id="tools"></div>
-    </header>
-    <footer class="box-h box-shortcuts closed">
-      <b>osc settings</b>
-      <form action="" id="form_osc_ip">
-        <div class="box-v">
-          <button class="box-min icon" type="submit">💾</button>
-          <input id="osc_ip" name="ip" type="text" placeholder="ip" />
-        </div>
-      </form>
-    </footer>
-    <footer class="box-h box-shortcuts">
-      <b>step media</b>
-      <div id="media-menu">
-        <div id="step-media">
-          <ul></ul>
-        </div>
-        <!-- <h1 id="title"></h1> -->
-        <!-- <label for="decor.src">Background color</label>
-        <input
-          autocomplete="off"
-          _list="list_decors"
-          class="color-picker _box-min d-none"
-          id = "preview_background"
-          type="text"
-          placeholder="decor"
-          name="decor.src"
-        /><br> -->
-        <!-- <p style='text-decoration: underline; font-size: 0.8em;' onclick='removeBackgroundColor(null)'>Remove Background color</p> -->
-        <div class='editor-buttons'>
-          <!-- <button onclick="newEtape()" class="grey">+</button> -->
-          <button onclick="addMedia()"><img src="./icons/plus.svg"></img></button>
-          <button id="delete-media-button"><img src="./icons/trash.svg"></img></button>
-          <button id="edit-media-button"><img src="./icons/settings.svg"></img></button>
-          <!-- <button id="layer-down"><img src="./icons/arrowhead-down.svg"></img></button>
-          <button id="layer-up"><img src="./icons/arrowhead-up.svg"></img></button> -->
-          <button onclick="saveStep()">Save</button>
-          <fieldset>
-          <label for="avatars">Avatars</label>
-          <input type="checkbox" name="avatars" id="avatars-checkbox">
-          <label for="console">Console</label>
-          <input type="checkbox" name="console" id="console-checkbox">
-         </fieldset>
-  
-          <!-- <button onclick="clearPreview()" class="grey"><span>🚫</span> Clear all</button> -->
-          <!-- <button onclick="setElements('', 'text-box')" class="green" id="add-text-button" >Add text box</button>
-          <button onclick="displayMediaList()" class="green">Add media</button>
-          <button onclick="getMediaStream()" class="green" id="add-stream-button">Add video stream</button>
-          <button onclick="addAvatarsArea()" class="green" id="add-avatars-button">Add avatars area</button> -->
-        </div>
-      
-        <section id="media-editor"></section>
-      </div>
-    </footer>
-    <footer class="box-h box-shortcuts">
-      <b>structure</b>
-      <section id="structure">
-        <div id="structure-content"></div>
-        <div class='editor-buttons'>
-          <button id="add-scene-step-button" onclick="addInStructure()"><img src="./icons/plus.svg"></img></button>
-          <button id="delete-scene-step-button" onclick="deleteFromStructure()"><img src="./icons/trash.svg"></img></button>
-       </div>
-      </section>
-    </footer>
-  </div>
   <div class="box-h box-fit">
     <div class="box-v">
-      <div class="box-h resizable menu-left">
+      <div class="box-h">
         <div class="box-v">
           <div class="box-h">
             <header class="box-h box-debug closed">
@@ -123,84 +51,77 @@
               <b>tools</b>
               <div id="tools"></div>
             </header>
-            <footer class="box-h box-shortcuts closed">
-              <b>osc settings</b>
-              <form action="" id="form_osc_ip">
-                <div class="box-v">
-                  <button class="box-min icon" type="submit">💾</button>
-                  <input id="osc_ip" name="ip" type="text" placeholder="ip" />
-                </div>
-              </form>
+            <footer class="box-h box-emojis closed hide">
+              <b>emojis</b>
+              <div id="emojis"></div>
             </footer>
-            <footer class="box-h box-shortcuts">
-              <b>step media</b>
-              <div id="media-menu">
-                <div id="step-media">
-                  <ul></ul>
-                </div>
-                <!-- <h1 id="title"></h1> -->
-                <!-- <label for="decor.src">Background color</label>
+            <div class="box-h box-users">
+              <b>users</b>
+              <header class="_hide box-v box-random-users">
                 <input
-                  autocomplete="off"
-                  _list="list_decors"
-                  class="color-picker _box-min d-none"
-                  id = "preview_background"
-                  type="text"
-                  placeholder="decor"
-                  name="decor.src"
-                /><br> -->
-                <!-- <p style='text-decoration: underline; font-size: 0.8em;' onclick='removeBackgroundColor(null)'>Remove Background color</p> -->
-                <div class='editor-buttons'>
-                  <!-- <button onclick="newEtape()" class="grey">+</button> -->
-                  <button onclick="addMedia()"><img src="./icons/plus.svg"></img></button>
-                  <button id="delete-media-button"><img src="./icons/trash.svg"></img></button>
-                  <button id="edit-media-button"><img src="./icons/settings.svg"></img></button>
-                  <!-- <button id="layer-down"><img src="./icons/arrowhead-down.svg"></img></button>
-                  <button id="layer-up"><img src="./icons/arrowhead-up.svg"></img></button> -->
-                  <button onclick="saveStep()">Save</button>
-                  <fieldset>
-                  <label for="avatars">Avatars</label>
-                  <input type="checkbox" name="avatars" id="avatars-checkbox">
-                  <label for="console">Console</label>
-                  <input type="checkbox" name="console" id="console-checkbox">
-                 </fieldset>
-          
-                  <!-- <button onclick="clearPreview()" class="grey"><span>🚫</span> Clear all</button> -->
-                  <!-- <button onclick="setElements('', 'text-box')" class="green" id="add-text-button" >Add text box</button>
-                  <button onclick="displayMediaList()" class="green">Add media</button>
-                  <button onclick="getMediaStream()" class="green" id="add-stream-button">Add video stream</button>
-                  <button onclick="addAvatarsArea()" class="green" id="add-avatars-button">Add avatars area</button> -->
-                </div>
-              
-                <section id="media-editor"></section>
+                  title="Nombre d'utilisateurs tirés au sort"
+                  id="number_random_users"
+                  type="number"
+                  min="0"
+                  value="1"
+                />
+                <button id="select_random_users" class="icon box-min">🎲</button>
+              </header>
+              <div class="users_container">
+                <table class="table-users">
+                  <thead>
+                    <th><input checked id="users_check_all" type="checkbox" /></th>
+                    <th></th>
+                    <th>pseudo</th>
+                    <th>karma</th>
+                  </thead>
+                  <tbody id="users"></tbody>
+                </table>
               </div>
-            </footer>
-            <footer class="box-h box-shortcuts">
-              <b>structure</b>
-              <section id="structure">
-                <div id="structure-content"></div>
-                <div class='editor-buttons'>
-                  <button id="add-scene-step-button" onclick="addInStructure()"><img src="./icons/plus.svg"></img></button>
-                  <button id="delete-scene-step-button" onclick="deleteFromStructure()"><img src="./icons/trash.svg"></img></button>
-               </div>
-              </section>
+              <header id="users_stats">
+                <span id="nb_users_inscrits">0</span> inscrit(s) /
+                <span id="nb_users_connectes">0</span> connecté(s)
+              </header>
+              <footer id="reponses" class="box-v box-wrap"></footer>
+              <footer>
+                <form id="interactions">
+                  <div class="box-h">
+                    <textarea
+                      cols="44"
+                      rows="3"
+                      id="one_shot__message"
+                      placeholder="message"
+                      name="message"
+                    ></textarea>
+                    <img id="image-msg"></img>
+                    <button
+                      type="submit"
+                      title="Envoyer le message (Ctrl+Enter)"
+                      class="icon"
+                    >
+                      📩
+                    </button>
+                  </div>
+                </form>
+              </footer>
+            </div>
+          </div>
+          <div class="box-h box-visual">
+            <b>visual</b>
+            <section id="visual"></section>
+            <footer>
+              <div class="box-v">
+                <button id="visual__prev" class="icon">⬅️</button>
+                <button id="visual__next" class="icon">➡️</button>
+              </div>
             </footer>
           </div>
         </div>
       </div>
-      <div id="preview" style="height: 65%; width: 65%; border: 0 none; overflow: hidden; margin-left: auto;
-  margin-right: auto; margin-top: 10%; background-color: black; position: relative;"></div>
       <aside class="box-h box-fit" style="width: 25vw">
-        <div class="box-h box-users">
+        <!-- <div class="box-h box-users">
           <b>users</b>
           <header class="_hide box-v box-random-users">
-            <!-- <button
-              id="refresh_mobiles"
-              class="icon box-min"
-              title="Reload tout les mobiles"
-            >
-              ♻
-            </button> -->
             <input
               title="Nombre d'utilisateurs tirés au sort"
               id="number_random_users"
@@ -247,13 +168,15 @@
               </div>
             </form>
           </footer>
+        </div> -->
+        <div class="box-h box-monitoring_in">
+          <b>monitoring incoming</b>
+          <section id="monitoring_in"></section>
         </div>
-
-        <div class="box-h box-monitoring">
-          <b>monitoring</b>
-          <section id="monitoring"></section>
+        <div class="box-h box-monitoring_out">
+          <b>monitoring outgoing</b>
+          <section id="monitoring_out"></section>
         </div>
-
         <footer class="box-h box-boites">
           <b>états</b>
           <form id="boite">
@@ -317,7 +240,7 @@
         </footer>
       </aside>
     </div>
-    <div class="box-v">
+    <footer class="box-v">
       <button class="repet__rewind icon box-min">⏪</button>
       <button class="repet__pause toggle icon box-min">⏸️</button>
       <button class="repet__forward icon box-min">⏩</button>
@@ -331,48 +254,10 @@
         placeholder="minutes"
       />
       <button class="icon" id="send_all_screens">📢</button>
-    </div>
-    <button onclick="sendStep()">Send to screeen</button>
+    </footer>
   </div>
-  <!-- LIST OF AVAILABABLE MEDIA -->
-  <section id="media" class="d-none">
-    <!-- <div class="media_cat">
-    <i title="styles css">🗛</i>
-    <div class="media_styles"></div>
-    </div>
-    <div class="media_cat">
-      <i title="decors css">🌈</i>
-      <div class="media_decors"></div>
-    </div> -->
-    <!-- <div class="media_cat">
-    <i title="pages iframe">🌐</i>
-    <div class="media_pages"></div>
-    </div> -->
-    <!-- <div class="media_cat">
-      <i title="pages iframe">🌐</i>
-      <div class="media_layouts"></div>
-      </div> -->
-    <div class="media_cat">
-      <p title="videos">VIDEO<span>&#8964;</span></p>
-      <div class="media_video" style="display: none"></div>
-    </div>
-    <!-- <div class="media_cat">
-    <i title="audio">🎧</i>
-    <div class="media_audio"></div>
-    </div> -->
-    <div class="media_cat">
-      <p title="gifs">GIF<span>&#8964;</span></p>
-      <div class="media_gifs" style="display: none"></div>
-    </div>
-    <div class="media_cat">
-      <p title="images">IMAGE<span>&#8964;</span></p>
-      <div class="media_images" style="display: none"></div>
-    </div>
-    <button onclick="getMediaStream()" class="green" id="add-stream-button">Add video stream</button>
-  </section>
-</main>
 
-<div id="alert" class="d-none"></div>
+</main>
 
 <template id="tmpl_screen__ctrl">
   <div class="screen__ctrl">
@@ -508,6 +393,21 @@
   </div>
 </template>
 
+<!-- <div id="layout_modal" class="modal">
+  <div class="modal-content" style="display: flex; flex-direction: column; align-items: center;">
+    <span class="close" style="align-self: flex-end;">&times;</span>
+      <section style="width:65%; height: 65%; position: relative;" id="preview-window">
+          <iframe src="/screen" style="width:100%; height: 100%; border: none; position: relative;" id="screen-frame"></iframe>
+          <div style="position:absolute; width: 100%; height: 100%; top:0; left: 0; z-index:666665"></div>
+          <div style="position: absolute; top: 75%; left: 5%; width: 25%; height: 18%; resize: both; overflow: hidden; z-index:666666; background-color: green;" id="console-div">
+            <div style="width:100%; height: 100%; border: none; background-color: green; text-align: center;" id="console-frame">CONSOLE</div>
+            <div id="drag" style = "position: absolute; top: 5%; left: 5%; width: 90%; height: 90%; z-index:666667"></div>
+          </div>
+      </section>
+      <button onclick="saveEtapeLayout()">Save scene layout</button>
+  </div>
+</div> -->
+
 <div id="QR_modal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeQRmodal()">&times;</span>
@@ -525,7 +425,7 @@
   </div>
 </div>
 
-<script src="/js/common.js?v=1.0"></script>
+<script src="./js/common.js?v=1.0"></script>
 <script>
   cat = 'master';
 </script>
@@ -533,7 +433,5 @@
 <script src="./js/boites_mobile.js?v=1.0"></script>
 <script src="./js/boites_master.js?v=1.0"></script>
 <script src="./js/modes.js?v=1.0"></script>
-<script src="./js/master.js?v=1.0"></script>
-<script src="./js/editor.js"></script>
-
-
+<script src="./js/master_old.js"></script>
+<!-- <script src="./js/editor.js"></script> -->

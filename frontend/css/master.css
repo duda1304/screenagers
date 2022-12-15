@@ -677,7 +677,8 @@ video {
   background: rgba(0,0,0,0.2);
 }
 
-.video-options {
+/* video stream */
+/* .video-options {
   position: absolute;
   left: 20px;
   top: 30px;
@@ -700,11 +701,8 @@ video {
   background: transparent;
 }
 .controls button:hover svg {
-    /* svg { */
       color: white !important;
-    /* } */
   }
-
 
 @media (min-width: 300px) and (max-width: 400px) {
   .controls {
@@ -759,7 +757,7 @@ video {
 
 .controls > button:hover svg {
   color: white;
-}
+} */
 
 .d-none {
   display: none;

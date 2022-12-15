@@ -69,7 +69,7 @@
 <main id="editor-main">
   <div id="left-menu">
     <div id="media-menu">
-      <div class="section-header">Media</div>
+      <div class="section-header">Step media</div>
       <div id="step-media">
         <ul></ul>
       </div>
@@ -93,11 +93,12 @@
         <!-- <button id="layer-down"><img src="./icons/arrowhead-down.svg"></img></button>
         <button id="layer-up"><img src="./icons/arrowhead-up.svg"></img></button> -->
         <button onclick="saveStep()">Save</button>
+        <div class="break"></div>
         <fieldset>
-        <!-- <label for="avatars">Avatars</label>
-        <input type="checkbox" name="avatars" id="avatars-checkbox"> -->
-        <label for="console">Console</label>
-        <input type="checkbox" name="console" id="console-checkbox">
+          <label for="console">Console</label>
+          <input type="checkbox" name="console" id="console-checkbox" style="margin-left: 10px;">
+          <label for="boite">Boite</label>
+          <input type="checkbox" name="boite" id="boite-checkbox">
        </fieldset>
         <!-- <button onclick="clearPreview()" class="grey"><span>🚫</span> Clear all</button> -->
         <!-- <button onclick="setElements('', 'text-box')" class="green" id="add-text-button" >Add text box</button>
@@ -125,7 +126,7 @@
   
   <div id="preview" class="step" style="height: 65%; width: 65%; border: 0 none; overflow: hidden; margin-left: auto;
   margin-right: auto; margin-top: 10%; background-color: black; position: relative;">
-  <div id="boite"></div>
+  
   <!-- <div id="save-menu" class="edit-element"> -->
     <!-- <button onclick="clearPreview()">Clear all</button> -->
     <!-- <button onclick="saveScreenChanges()" class="d-none" id="save-changes">Save Changes</button> -->
@@ -149,7 +150,7 @@
   <div id="left-menu">
     <div id="media-menu">
       <div class="section-header">Etats</div>
-      <form id="boite">
+      <form id="boite" style="display: none;">
         <header class="box-h box-boites-type">
           <div id="boites_types" class="box-v box-wrap"></div>
         </header>
@@ -162,7 +163,7 @@
         ></textarea>
         <footer class="box-v">
           <button type="submit" title="Envoyer la boite (Ctrl+Enter)" class="icon">
-            📢
+            📢 Preview boite
           </button>
         </footer>
       </form>
@@ -170,7 +171,7 @@
       </div>
       <section id="structure">
         <div class="section-header">Monitoring outgoing</div>
-        <section id="monitoring_out"></section>
+        <section id="monitoring_outgoing" class="monitoring"></section>
   
       </section>
     
@@ -204,6 +205,7 @@
 </main>
 <div id="alert"></div>
 <section id="media">
+  Add content to step:
   <!-- <div class="media_cat">
   <i title="styles css">🗛</i>
   <div class="media_styles"></div>
@@ -236,8 +238,14 @@
     <p title="images">IMAGE<span>&#8964;</span></p>
     <div class="media_images" style="display: none"></div>
   </div>
-  <button onclick="getMediaStream()" id="add-stream-button">Add video stream</button>
-  <button onclick="addAvatars()">Add avatars</button>
+  <!-- <button onclick="getMediaStream()" id="add-stream-button">Add video stream</button> -->
+  <p>Add live stream</p>
+  <div class="menu-item video-options">
+    <select name="" id="" class="custom-select"></select>
+  </div>
+  <button class="menu-item" onclick="addAvatars()">Add avatars</button>
+  <textarea class="menu-item" rows="4" id="text-content"></textarea>
+  <button onclick="addText()">Add text</button>
 </section>
 <section id="media-editor"></section>
 <script src="./js/common.js?v=1.0"></script>

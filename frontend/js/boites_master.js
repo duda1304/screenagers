@@ -21,7 +21,7 @@ var $monitoring_outgoing = $('#monitoring_outgoing');
     });
   });
 
-  $monitoring_incoming.append($btn);
+  $monitoring_outgoing.append($btn);
   $btn.hide();
 
   boites.chatbot = {

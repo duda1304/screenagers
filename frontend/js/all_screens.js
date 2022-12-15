@@ -983,9 +983,9 @@ function checkMediaType(val) {
 socket.on('step', function(data){
   if ('boite' in data && 'type' in data.boite) setBoite(data.boite);
   if ('mode' in data) setMode(data.mode);
-  displayStep(data);
-  // if ('screen' in data) displayStep(data['screen']);
-  // if ('laptop' in data) displayStep(data['laptop']);
+  // displayStep(data);
+  if ('screen' in data) displayStep(data['screen']);
+  if ('laptop' in data) displayStep(data['laptop']);
 })
 
 // socket.on('step', function(data) {

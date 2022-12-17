@@ -234,24 +234,17 @@ function displayStructure(fileName, data) {
 }
 
 let currentBoiteType;
-let stepArg;
 // BOITE
 $('#boites_types').on('click', '.button_radio', function(){
     if ($(this).find('input').is(':checked')) {
-       
         const boiteObject =     {
             "type": "",
             "arg": ""
             }
         let data = {...boiteObject};
         data.type = $(this).find('input').val();
-        if (stepArg) {
-            data.arg = stepArg;
-        } else {
-            $('#boite textarea').val('');
-            data.arg = $('#boite textarea').val();
-        }
-       
+        $('#boite textarea').val('');
+        data.arg = $('#boite textarea').val();
         currentBoiteType = $(this).find('input').val();
         setBoite(data);
     }
@@ -375,10 +368,15 @@ function setStep(e, fileName, scene, step) {
             applyZIndexes();
             setElements("", "console", "", jsonData['scenes'][scene]['steps'][step]['screen']['console']);
             setElements("", "music", "", jsonData['scenes'][scene]['steps'][step]['screen']['music']);
+
+            // set boite
             if ('boite' in jsonData['scenes'][scene]['steps'][step]) {
-                $(`#boite input[value=${jsonData['scenes'][scene]['steps'][step]['boite']['type']}]`).click(jsonData['scenes'][scene]['steps'][step]['boite']['arg']);
-                // setBoite(jsonData['scenes'][scene]['steps'][step]['boite']);
-              }
+                setBoite(jsonData['scenes'][scene]['steps'][step]['boite']);
+                $('#boite input').each(function(){
+                    $(this).prop('checked', false);
+                    $(`#boite input[value=${jsonData['scenes'][scene]['steps'][step]['boite']['type']}]`).prop('checked', true);
+                })
+            }
              
         }) 
     } else {

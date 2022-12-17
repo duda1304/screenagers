@@ -11,6 +11,7 @@
             "name": "test",
             "step-order": [
                 1,
+                6,
                 2,
                 3,
                 4,
@@ -246,7 +247,7 @@
                         }
                     },
                     "boite": {
-                        "type": "collective_song",
+                        "type": "no_phone",
                         "arg": ""
                     }
                 },
@@ -273,6 +274,109 @@
                 "5": {
                     "screen": {
                         "media-order": [
+                            "ZNdV2",
+                            "R58pu",
+                            "yJ0pc",
+                            "Zb3rH"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "R58pu": {
+                                "type": "videoStream",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "11%",
+                                    "left": "34%",
+                                    "z-index": "2"
+                                },
+                                "attributes": {
+                                    "device": "SpcKPdn31AOREyDUKsFm0F12fIZ92tlrAYc2"
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "yJ0pc": {
+                                "type": "avatars",
+                                "css": {
+                                    "width": "29%",
+                                    "height": "23%",
+                                    "position": "absolute",
+                                    "top": "60%",
+                                    "left": "66%",
+                                    "border-radius": "45%",
+                                    "z-index": "3"
+                                },
+                                "attributes": {},
+                                "content": "",
+                                "classes": [
+                                    "avatars"
+                                ]
+                            },
+                            "Zb3rH": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "71%",
+                                    "left": "54%",
+                                    "z-index": "4",
+                                    "padding": "5px",
+                                    "color": "rgb(0, 0, 0)",
+                                    "font-size": "21px"
+                                },
+                                "attributes": {},
+                                "content": "ghvfghfhasdasdasd",
+                                "classes": [
+                                    "text"
+                                ]
+                            },
+                            "ZNdV2": {
+                                "type": "media_images",
+                                "css": {
+                                    "width": "100%",
+                                    "position": "absolute",
+                                    "top": "0%",
+                                    "left": "0%",
+                                    "z-index": "1",
+                                    "object-fit": "cover",
+                                    "height": "100%"
+                                },
+                                "attributes": {
+                                    "src": "CableStory/Histoire-des-cables007.jpeg"
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": true,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "block"
+                            }
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "boite": {
+                        "type": "choix",
+                        "arg": ""
+                    },
+                    "console": {
+                        "mode": "console"
+                    }
+                },
+                "6": {
+                    "screen": {
+                        "media-order": [
                             "orh4T",
                             "R58pu",
                             "yJ0pc",
@@ -297,23 +401,6 @@
                                 "content": "",
                                 "classes": []
                             },
-                            "Zb3rH": {
-                                "type": "text",
-                                "css": {
-                                    "position": "absolute",
-                                    "top": "71%",
-                                    "left": "54%",
-                                    "z-index": "4",
-                                    "padding": "5px",
-                                    "color": "rgb(0, 0, 0)",
-                                    "font-size": "21px"
-                                },
-                                "attributes": {},
-                                "content": "ghvfghfhasdasdasd",
-                                "classes": [
-                                    "text"
-                                ]
-                            },
                             "R58pu": {
                                 "type": "videoStream",
                                 "css": {
@@ -324,7 +411,7 @@
                                     "z-index": "2"
                                 },
                                 "attributes": {
-                                    "device": "7hrhewPso0gwvpgfXGv6ShCxDdJ3lGK0y2zv"
+                                    "device": "6J6SylXTwE3T5YNt4qdd33UmRvbU8IJLD3uC"
                                 },
                                 "content": "",
                                 "classes": []
@@ -344,6 +431,23 @@
                                 "content": "",
                                 "classes": [
                                     "avatars"
+                                ]
+                            },
+                            "Zb3rH": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "71%",
+                                    "left": "54%",
+                                    "z-index": "4",
+                                    "padding": "5px",
+                                    "color": "rgb(0, 0, 0)",
+                                    "font-size": "21px"
+                                },
+                                "attributes": {},
+                                "content": "ghvfghfhasdasdasd",
+                                "classes": [
+                                    "text"
                                 ]
                             }
                         },
@@ -367,7 +471,7 @@
                     },
                     "boite": {
                         "type": "choix",
-                        "arg": "choice 1\n\nchoice 2\n\n"
+                        "arg": "xzczxczx\n\nzxczxczxcz"
                     },
                     "console": {
                         "mode": "console"

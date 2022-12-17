@@ -8,6 +8,9 @@ let active = {
     step : ""
 }
 
+$('#delete-media-button').on('click', showTooltips);
+$('#edit-media-button').on('click', showTooltips);
+
 $( function() {
     $( ".draggable" ).draggable();
   } );
@@ -73,7 +76,6 @@ function displayStructure(fileName, data) {
                             <li style="display: none;" class="structure-buttons">
                                 <span onclick="addInStructure('scene')"><img src="./icons/plus.svg"></img></span>
                                 <span onclick="duplicate('show')"><img class="duplicate-icon" src="./icons/duplicate.png"></img></span>
-                                <span onclick="deleteFromStructure('show')"><img src="./icons/trash.svg"></img></span>
                                 <span onclick="editName('show')"><img class="edit-icon" src="./icons/edit.png"></img></span>
                             </li>
                             <li style="display: none;"><select class="languages"></select></li>
@@ -195,6 +197,8 @@ function displayStructure(fileName, data) {
             }
             $('#step-media ul').empty();
             $('#preview').empty();
+            $('#console-checkbox').prop('checked', false);
+            // $('#boite-checkbox').prop('checked', false);
         });
     })
 }
@@ -221,27 +225,34 @@ function displayStructure(fileName, data) {
         } else {
             setActiveStep("", "", "");
         }
-        console.log(active)
         $('#step-media ul').empty();
         $('#preview').empty();
+        $('#console-checkbox').prop('checked', false);
+        // $('#boite-checkbox').prop('checked', false);
     })
     
 }
 
 let currentBoiteType;
+let stepArg;
 // BOITE
 $('#boites_types').on('click', '.button_radio', function(){
     if ($(this).find('input').is(':checked')) {
+       
         const boiteObject =     {
             "type": "",
             "arg": ""
             }
         let data = {...boiteObject};
         data.type = $(this).find('input').val();
-        $('#boite textarea').val('');
-        data.arg = $('#boite textarea').val();
+        if (stepArg) {
+            data.arg = stepArg;
+        } else {
+            $('#boite textarea').val('');
+            data.arg = $('#boite textarea').val();
+        }
+       
         currentBoiteType = $(this).find('input').val();
-
         setBoite(data);
     }
 });
@@ -276,7 +287,6 @@ function setActiveStep(fileName, scene, step) {
     active.fileName = fileName;
     active.scene = scene;
     active.step = step;
-    console.log(active)
 }
 
 function applyZIndexes() {
@@ -319,14 +329,21 @@ $("#step-media ul").sortable({
     }
 });    
 
+// const dummyStep = {
+
+// } 
+
+
 // STEP IS DISPLAYED FROM SAVED JSON DATA
 function setStep(e, fileName, scene, step) {
     $(".step").not(e.target).removeClass('active');
     $(e.target).parent().find('.structure-buttons').remove();
     $(e.target).toggleClass('active');
 
-    // CLEAR PREVIOUS  STEP DATA LIST AND PREVIEW
+    // CLEAR PREVIOUS  STEP DATA LIST
     $('#step-media ul').empty();
+    $('#console-checkbox').prop('checked', false);
+    // $('#boite-checkbox').prop('checked', false);
 
     if($(e.target).hasClass('active')) {
         setActiveStep(fileName, scene, step);
@@ -358,6 +375,11 @@ function setStep(e, fileName, scene, step) {
             applyZIndexes();
             setElements("", "console", "", jsonData['scenes'][scene]['steps'][step]['screen']['console']);
             setElements("", "music", "", jsonData['scenes'][scene]['steps'][step]['screen']['music']);
+            if ('boite' in jsonData['scenes'][scene]['steps'][step]) {
+                $(`#boite input[value=${jsonData['scenes'][scene]['steps'][step]['boite']['type']}]`).click(jsonData['scenes'][scene]['steps'][step]['boite']['arg']);
+                // setBoite(jsonData['scenes'][scene]['steps'][step]['boite']);
+              }
+             
         }) 
     } else {
         setActiveStep(fileName, scene, ""); 
@@ -380,7 +402,7 @@ function setElements(val, type, data_key, stepMediaObject) {
                    
     const audioElement = `<audio id="music" src="" data-type=${type}></audio>`
 
-    const streamElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
+    const streamElement = `<div class="draggable resizable" style="width: 35%; height: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
                             <video autoplay id="stream" style="width: 100%;" src=${src} class="media"> </video>
                            </div>`
    
@@ -411,31 +433,17 @@ function setElements(val, type, data_key, stepMediaObject) {
             $('#preview').append(elements[type]);
         }
     }
-    // }
-    // if (type === 'media_video') {
-    //     if($(`#preview [data-key=${data_key}]`).length === 0) {
-    //         $('#preview').append(videoElement);
-    //     }
-    // } else if (type === 'videoStream'){
-    //     if($(`#preview [data-key=${data_key}]`).length === 0) {
-    //         $('#preview').append(streamElement);
-    //     }
-    // }
-    // else if (type === 'media_images' || type === 'media_gifs') {
-    //     //  IF ELEMENT DOES NOT ALREADY EXIST CREATE IT
-    //     if($(`#preview [data-key=${data_key}]`).length === 0) {
-    //         $('#preview').append(imageElement);
-    //     }
-    // } else if (type === 'avatars') {
-    //     if($(`#preview [data-key=${data_key}]`).length === 0) {
-    //         $('#preview').append(avatarsElement);
-    //     }
-       
-    
+  
     if(type === 'console') {
-        if($('#console').length === 0) {
+        if(stepMediaObject.active === true && $('#console').length === 0) {
             $('#preview').append(console);
         }
+        if ((stepMediaObject.active === false && $('#console').length !== 0)) {
+          $('#preview #console').remove();
+        }
+        // if($('#console').length === 0) {
+        //     $('#preview').append(console);
+        // }
     } 
     
     if (type === 'music') {
@@ -558,11 +566,20 @@ function setElements(val, type, data_key, stepMediaObject) {
             $("#delete-media-button").click(function(){
                 $(previewElement).remove();
                 $("#step-media").find(`li[data-key="${data_key}"]`).remove();
+                $("#delete-media-button").unbind("click");
+                $("#edit-media-button").unbind("click");
+                $("#delete-media-button").on("click", showTooltips);
+                $("#edit-media-button").on("click", showTooltips);
                 applyZIndexes();
             })
             $("#edit-media-button").click(function(){
                 editElement(data_key, type)
             })
+        } else {
+            $("#delete-media-button").unbind("click");
+            $("#edit-media-button").unbind("click");
+            $("#delete-media-button").on("click", showTooltips);
+            $("#edit-media-button").on("click", showTooltips);
         }
     });
 
@@ -624,7 +641,7 @@ function setElements(val, type, data_key, stepMediaObject) {
                     };
                     startStream(constraints, data_key);
                 } else {
-                    if (mediaElement.find('video')[0].srcObject('id') !== stepMediaObject['attributes']['device']) {
+                    if (mediaElement.find('video')[0].srcObject['id'] !== stepMediaObject['attributes']['device']) {
                         const constraints = {
                             video: { deviceId: stepMediaObject['attributes']['device']}
                         };
@@ -648,7 +665,7 @@ function setElements(val, type, data_key, stepMediaObject) {
             mediaElement.addClass(classes);
 
            
-            if(stepMediaObject['css']['object-fit'] !== "") {
+            if(stepMediaObject['css']['object-fit'] && stepMediaObject['css']['object-fit'] !== "") {
                 mediaElement.find('.media').css({"height" : "100%", "object-fit" : stepMediaObject['css']['object-fit']});
             }
         // }
@@ -696,23 +713,38 @@ function markActiveStepMediaElement(e) {
     $(`#preview .draggable[data-key='${e.target.dataset.key}']`).toggleClass('active');
 
     // ADD EVENT LISTENERS
-    $("#delete-media-button").unbind("click");
-    $("#edit-media-button").unbind("click");
     if ($(e.target).hasClass('active')) {
+        $("#delete-media-button").unbind("click");
+        $("#edit-media-button").unbind("click");
         $("#delete-media-button").click(function(){
             $(`#preview .draggable[data-key='${e.target.dataset.key}']`).remove();
             $(e.target).remove();
+            $("#delete-media-button").unbind("click");
+            $("#edit-media-button").unbind("click");
+            $("#delete-media-button").on("click", showTooltips);
+            $("#edit-media-button").on("click", showTooltips);
             applyZIndexes();
         })
         $("#edit-media-button").click(function(){
-            editElement(e.target.dataset.key, e.target.dataset.type)
+            editElement(e.target.dataset.key, e.target.dataset.type);
         })
+    } else {
+        $("#delete-media-button").unbind("click");
+        $("#edit-media-button").unbind("click");
+        $("#delete-media-button").on("click", showTooltips);
+        $("#edit-media-button").on("click", showTooltips);
     }
 }
 
-function addMedia() {
+function addMedia(e) {
     if (active.step !== "") {
         displayMediaList();
+    } else {
+        const button = e.currentTarget;
+        $(button).addClass('active');
+            setTimeout(() => {
+                $(button).removeClass('active');
+            }, 1800);
     }
 }
 
@@ -754,9 +786,6 @@ function analyseStep() {
         if ($(this).data('type') === 'media_video' || $(this).data('type') === 'media_images') {
             object['attributes']['src'] = $(this).children().attr('src').replace(htmlPathToMedia, '');
         } 
-        // else {
-        //     object['attributes']['src'] = '';
-        // }
 
         if($(this).data('type') === 'media_video') {
             object['attributes']['loop'] = $(this).find('video')[0].loop;
@@ -794,7 +823,7 @@ function analyseStep() {
     }
 
     // add boite
-    if ($('#boite-checkbox').is(':checked')) {
+    // if ($('#boite-checkbox').is(':checked')) {
         updatedStepObject['boite'] = {...boiteObject};
         let boite_type;
         $('#boite input').each(function(){
@@ -804,7 +833,7 @@ function analyseStep() {
         })
         updatedStepObject['boite']['type'] = boite_type;
         updatedStepObject['boite']['arg'] = $('#boite textarea').val();
-    }
+    // }
 
     // add audio
     updatedStepObject['screen']['music']['scr'] = $('#audio').attr('src');
@@ -812,11 +841,18 @@ function analyseStep() {
     return updatedStepObject;
 }
 
-function saveStep() {
+function saveStep(e) {
     if (active.step !== "") {
         const step = analyseStep();
+        console.log(step)
         // SAVE TO JSON
         socket.emit("save step", {"fileName" : active.fileName, "scene": active.scene, "step" : active.step, 'stepObject' : step})
+    } else {
+        const button = e.currentTarget;
+        $(button).addClass('active');
+        setTimeout(() => {
+            $(button).removeClass('active');
+        }, 1800);
     }
 }
 
@@ -826,6 +862,12 @@ function createNewObjectKey(array) {
     } else {
         return 1;
     }
+}
+
+function closeModal() {
+    setTimeout(() => {
+        $(".ui-dialog-titlebar-close"). click();
+    }, 200);  
 }
 
 function addInStructure(parameter) {
@@ -845,7 +887,7 @@ function addInStructure(parameter) {
                     <select name="language" required>${options}</select>
                     <small>* you need to select language due to multilingual support.<br>Languages can be edited later.</small>
                     <div class='editor-buttons' style='justify-content: center;'>
-                        <button type="submit">Ok</button>
+                        <button type="submit">Ok</button><button type='button'onclick="closeModal()">Cancel</button>
                     </div>
                  </form>`)
         .dialog({
@@ -853,8 +895,8 @@ function addInStructure(parameter) {
             modal: true,
             maxHeight: 600,
         });
-         // OK BUTTON FUNCTION
-         $('#alert form').submit(function(e) {
+        // OK BUTTON FUNCTION
+        $('#alert form').submit(function(e) {
             e.preventDefault();
             const showName = e.target.elements.name.value;
             const fileName = showName.replace(/ /g, '').trim();
@@ -873,7 +915,7 @@ function addInStructure(parameter) {
         .empty()
         .append(`<p>Add new step?</p>
                  <div class='editor-buttons' style='justify-content: center;'>
-                    <button>Ok</button>
+                    <button id="ok">Ok</button><button type='button'onclick="closeModal()">Cancel</button>
                  </div>`)
         .dialog({
             resizable: false,
@@ -882,9 +924,29 @@ function addInStructure(parameter) {
         });
 
         // OK BUTTON FUNCTION
-        $('#alert button').click(function() {
+        $('#alert #ok').click(function() {
             let newStepNumber = createNewObjectKey(mainData[active.fileName]['scenes'][active.scene]['step-order']);
-            let newStepObject = {...stepObject};
+            // let newStepObject = {...stepObject};
+            let newStepObject = { 
+                "screen" :  {
+                                "media-order": [],
+                                "background-color": "",
+                                "media": {},
+                                "console": {
+                                    "active": false,
+                                    "css": {}
+                                },
+                                "music" : {
+                                    "src": "",
+                                    "volume": "",
+                                    "loop": ""
+                                }
+                            },
+                "boite" : {
+                    "type": "no_phone",
+                    "arg": ""
+                }
+                }
             // SAVE TO JSON FILE
             addNewStep(newStepNumber, newStepObject);
             showSpinner();
@@ -896,7 +958,7 @@ function addInStructure(parameter) {
         .append(`<form>
                     <input type="text" name="name" placeholder="New scene name" required></input>
                     <div class='editor-buttons' style='justify-content: center;'>
-                        <button type="submit">Ok</button>
+                        <button type="submit">Ok</button><button type='button'onclick="closeModal()">Cancel</button>
                     </div>
                  </form>`)
         .dialog({
@@ -916,7 +978,26 @@ function addInStructure(parameter) {
             newSceneObject['name'] = sceneName;
             newSceneObject['step-order'] = [1];
             newSceneObject['steps'] = {
-                                        "1": {...stepObject}
+                                        "1": { 
+                                            "screen" :  {
+                                                            "media-order": [],
+                                                            "background-color": "",
+                                                            "media": {},
+                                                            "console": {
+                                                                "active": false,
+                                                                "css": {}
+                                                            },
+                                                            "music" : {
+                                                                "src": "",
+                                                                "volume": "",
+                                                                "loop": ""
+                                                            }
+                                                        },
+                                            "boite" : {
+                                                "type": "no_phone",
+                                                "arg": ""
+                                            }
+                                            }
                                     };
 
             // SAVE TO JSON FILE
@@ -932,7 +1013,7 @@ function duplicate(parameter) {
         .empty()
         .append(`<p>Duplicate ${mainData[active.fileName]['name']} ?</p>
                  <div class='editor-buttons' style='justify-content: center;'>
-                    <button>Ok</button>
+                    <button id="ok">Ok</button><button type='button' onclick="closeModal()">Cancel</button>
                  </div>`)
         .dialog({
             resizable: false,
@@ -940,7 +1021,7 @@ function duplicate(parameter) {
             maxHeight: 600,
         });
           // OK BUTTON FUNCTION
-        $('#alert button').click(function() {
+        $('#alert #ok').click(function() {
             // SAVE TO JSON FILE
             duplicateShow();
             showSpinner();
@@ -952,7 +1033,7 @@ function duplicate(parameter) {
         .empty()
         .append(`<p>Duplicate ${mainData[active.fileName]['scenes'][active.scene]['name']} ?</p>
                  <div class='editor-buttons' style='justify-content: center;'>
-                    <button>Ok</button>
+                    <button id="ok">Ok</button><button type='button' onclick="closeModal()">Cancel</button>
                  </div>`)
         .dialog({
             resizable: false,
@@ -960,7 +1041,7 @@ function duplicate(parameter) {
             maxHeight: 600,
         });
           // OK BUTTON FUNCTION
-        $('#alert button').click(function() {
+        $('#alert #ok').click(function() {
             const sceneName = mainData[active.fileName]['scenes'][active.scene]['name'] + '-copy';
             
             let newSceneNumber = createNewObjectKey(mainData[active.fileName]['scene-order'])
@@ -980,7 +1061,7 @@ function duplicate(parameter) {
         .empty()
         .append(`<p>Duplicate step?</p>
                  <div class='editor-buttons' style='justify-content: center;'>
-                    <button>Ok</button>
+                    <button id="ok">Ok</button><button type='button' onclick="closeModal()">Cancel</button>
                  </div>`)
         .dialog({
             resizable: false,
@@ -988,7 +1069,7 @@ function duplicate(parameter) {
             maxHeight: 600,
         });
           // OK BUTTON FUNCTION
-        $('#alert button').click(function() {
+        $('#alert #ok').click(function() {
             let newStepNumber = createNewObjectKey(mainData[active.fileName]['scenes'][active.scene]['step-order']);
             let newStepObject = {...mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]};
             // SAVE TO JSON FILE
@@ -1007,7 +1088,7 @@ function editName(parameter) {
         .append(`<form class="show-form">
                     <input type="text" name="name" placeholder="${mainData[active.fileName]['name']}" required oninput="this.value = this.value.replace(/[^a-zA-Z0-9 -]/g, '')"></input>
                     <div class='editor-buttons' style='justify-content: center;'>
-                        <button type="submit">Ok</button>
+                        <button type="submit">Ok</button><button type='button'onclick="closeModal()">Cancel</button>
                     </div>
                  </form>`)
         .dialog({
@@ -1032,7 +1113,7 @@ function editName(parameter) {
         .append(`<form class="show-form">
                     <input type="text" name="name" placeholder="${mainData[active.fileName]['scenes'][active.scene]['name']}" required></input>
                     <div class='editor-buttons' style='justify-content: center;'>
-                        <button type="submit">Ok</button>
+                        <button type="submit">Ok</button><button type='button'onclick="closeModal()">Cancel</button>
                     </div>
                  </form>`)
         .dialog({
@@ -1058,7 +1139,7 @@ function deleteFromStructure(parameter) {
         .empty()
         .append(`<p>Delete step?</p>
                 <div class='editor-buttons' style='justify-content: center;'>
-                    <button>Ok</button>
+                    <button id="ok">Ok</button><button type='button' onclick="closeModal()">Cancel</button>
                 </div>`)
         .dialog({
             resizable: false,
@@ -1067,7 +1148,7 @@ function deleteFromStructure(parameter) {
         });
 
         // OK BUTTON FUNCTION
-        $('#alert button').click(function() {
+        $('#alert #ok').click(function() {
             // SAVE CHANGES TO JSON FILE
             deleteStep();
             showSpinner();
@@ -1078,7 +1159,7 @@ function deleteFromStructure(parameter) {
         .empty()
         .append(`<p>Delete scene?</p>
                 <div class='editor-buttons' style='justify-content: center;'>
-                    <button>Ok</button>
+                    <button id="ok">Ok</button><button type='button' onclick="closeModal()">Cancel</button>
                 </div>`)
         .dialog({
             resizable: false,
@@ -1087,7 +1168,7 @@ function deleteFromStructure(parameter) {
         });
 
         // OK BUTTON FUNCTION
-        $('#alert button').click(function() {
+        $('#alert #ok').click(function() {
             // SAVE CHANGES TO JSON FILE
             deleteScene();
             showSpinner();
@@ -1097,23 +1178,40 @@ function deleteFromStructure(parameter) {
     if (parameter === 'show') {
         $('#alert')
         .empty()
-        .append(`<p>Delete ${mainData[active.fileName]['name']}?</p>
-                <div class='editor-buttons' style='justify-content: center;'>
-                    <button>Ok</button>
-                </div>`)
-        .dialog({
-            resizable: false,
-            modal: true,
-            maxHeight: 600,
-        });
 
-        // OK BUTTON FUNCTION
-        $('#alert button').click(function() {
-            // SAVE CHANGES TO JSON FILE
-            deleteShow();
-            showSpinner();
-        })
+        if (active.fileName === '') {
+            $('#delete-scene-step-button').addClass('active');
+            setTimeout(() => {
+                $('#delete-scene-step-button').removeClass('active');
+            }, 1800);
+        } else {
+            $('#alert')
+            .append(`<p>Delete ${mainData[active.fileName]['name']}?</p>
+                    <div class='editor-buttons' style='justify-content: center;'>
+                        <button id="ok">Ok</button><button type='button' onclick="closeModal()">Cancel</button>
+                    </div>`)
+            .dialog({
+                resizable: false,
+                modal: true,
+                maxHeight: 600,
+            });
+
+            // OK BUTTON FUNCTION
+            $('#alert #ok').click(function() {
+                // SAVE CHANGES TO JSON FILE
+                deleteShow();
+                showSpinner();
+            })
+        }
     }
+}
+
+function showTooltips(e) {
+    const button = e.currentTarget;
+    $(button).addClass('active');
+    setTimeout(() => {
+        $(button).removeClass('active');
+    }, 1800);
 }
 
 function showSpinner() {
@@ -1127,12 +1225,16 @@ socket.on('success', function(data){
     // EMPTY PREVIOUS STRUCTURE AND STEP PREVIEW
     $('#step-media ul').empty();
     $('#structure-content').empty();
+    $('#console-checkbox').prop('checked', false);
+    // $('#boite-checkbox').prop('checked', false);
 
     // UNBIND EVENT LISTENERS
     $("#delete-media-button").unbind("click");
     $("#edit-media-button").unbind("click");
     
-    
+    $("#delete-media-button").on("click", showTooltips);
+    $("#edit-media-button").on("click", showTooltips);
+
     // ADJUST constant ACTIVE
     if (data && data.deleted === 'step') {
         setActiveStep(active.fileName, active.scene, "");
@@ -1145,16 +1247,16 @@ socket.on('success', function(data){
     setJSONsdata(data.data);
 
     // CLOSE MODAL
-    setTimeout(() => {
-        $('#alert').empty();
-        $(".ui-dialog-titlebar-close"). click();
-    }, 500);
+    closeModal();
 })
 
 socket.on('error', function(data){
     $('#alert')
     .empty()
-    .append(`<p>Connection to server failed. Please try again.</p>`);
+    .append(`<p>Connection to server failed. Please try again.</p>
+            <div class='editor-buttons' style='justify-content: center;'>
+                <button type='button'onclick="closeModal()">Close</button>
+            </div>`);
 
     if (data.deleted) {
         $('#alert').dialog({
@@ -1226,8 +1328,9 @@ function deleteShow() {
 
 function sendStep() {
     const step = analyseStep();
+    socket.emit('step', step);
     console.log(step)
-    socket.emit('step', step)
+    // if (boite && 'send' in boite) boite.send();
 }
 
 
@@ -1344,9 +1447,7 @@ function addAvatars() {
     $('#step-media ul').append(li);
     setElements('', 'avatars', data_key);
     applyZIndexes();
-    setTimeout(() => {
-        $(".ui-dialog-titlebar-close"). click();
-    }, 200);   
+    closeModal(); 
 }
 
 function addText() {
@@ -1358,9 +1459,7 @@ function addText() {
     setElements('', 'text', data_key);
     applyZIndexes();
     $(`#preview [data-key=${data_key}]`).text($('#text-content').val());
-    setTimeout(() => {
-        $(".ui-dialog-titlebar-close"). click();
-    }, 200);   
+    closeModal();   
 }
 
 $media.on('mousedown', '.file', function() {
@@ -1378,9 +1477,7 @@ $media.on('mousedown', '.file', function() {
 
     applyZIndexes();
 
-    setTimeout(() => {
-        $(".ui-dialog-titlebar-close"). click();
-    }, 200);   
+    closeModal();  
 });
 
 var medias = {
@@ -1655,6 +1752,7 @@ function editElement(key, type) {
                     resizable: false,
                     modal: true,
                     maxHeight: 600,
+                    dialogClass: "no-titlebar"
                 });
 
     activateColorPicker();
@@ -1711,6 +1809,7 @@ function editElement(key, type) {
             resizable: false,
             modal: true,
             maxHeight: 600,
+            dialogClass: "no-titlebar"
         });
         $('#media .media_images').clone().appendTo('#background-images').show();
         $('#media .media_gifs').clone().appendTo('#background-gifs').show();
@@ -2000,7 +2099,8 @@ function displayMediaList() {
         resizable: false,
         modal: true,
         maxHeight: 600,
-        minWidth: 500
+        minWidth: 500,
+        dialogClass: "no-titlebar" 
     })
     getMediaStream();
     // .append(`<div class='menu-item'>

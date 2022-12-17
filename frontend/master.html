@@ -8,31 +8,36 @@
 <meta name="msapplication-navbutton-color" content="#333333" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<link rel="manifest" href="/static/manifest.json" />
-<link rel="icon" sizes="32x32" href="/static/icon.png" />
-<link rel="apple-touch-startup-image" href="/static/icon.png" />
-<link rel="stylesheet" href="/css/common.css?v=1.0" />
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/lib/jquery.min.js"></script>
-<script src="/js/lib/howler.min.js"></script>
-<script src="/js/lib/twemoji.min.js"></script>
+<link rel="manifest" href="./static/manifest.json" />
+<link rel="icon" sizes="32x32" href="./static/icon.png" />
+<link rel="apple-touch-startup-image" href="./static/icon.png" />
+<link rel="stylesheet" href="./css/common.css?v=1.0" />
+<script src="./socket.io/socket.io.js"></script>
+<script src="./js/lib/jquery.min.js"></script>
+<script src="./js/lib/howler.min.js"></script>
+<script src="./js/lib/twemoji.min.js"></script>
+<link rel="stylesheet" href="./js/lib/jquery-ui-1.13.2/jquery-ui.min.css" />
+<script src="./js/lib/jquery-ui-1.13.2/jquery-ui.min.js"></script>
 
 <title>🎛️ MASTER</title>
 
-<link rel="stylesheet" href="/data/decors.css?v=1.0" />
+<link rel="stylesheet" href="./data/decors.css?v=1.0" />
 
-<link rel="stylesheet" href="/js/lib/spectrum.css" />
-<script src="/js/lib/spectrum.min.js"></script>
+<link rel="stylesheet" href="./js/lib/spectrum.css" />
+<script src="./js/lib/spectrum.min.js"></script>
 
-<link rel="stylesheet" href="/js/lib/jquery-ui.min.css" />
-<script src="/js/lib/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="./js/lib/jquery-ui.min.css" />
+<script src="./js/lib/jquery-ui.min.js"></script>
 
-<script src="/js/lib/mousetrap.min.js"></script>
-<script src="/js/lib/jquery.scrollTo.min.js"></script>
+<script src="./js/lib/mousetrap.min.js"></script>
+<script src="./js/lib/jquery.scrollTo.min.js"></script>
 
-<link rel="stylesheet" href="/css/master.css?v=1.0" />
+<script src="./js/constants.js"></script>
 
-<main id="master" class="gradient">
+<link rel="stylesheet" href="./css/master.css?v=1.0" />
+<link rel="stylesheet" href="./css/editor.css" />
+
+<main id="master">
   <div class="box-h box-fit">
     <div class="box-v">
       <div class="box-h">
@@ -46,77 +51,63 @@
               <b>tools</b>
               <div id="tools"></div>
             </header>
-            <div class="box-h box-media">
-              <b>media</b>
-              <section id="media">
-                <div class="media_cat">
-                  <i title="styles css">🗛</i>
-                  <div class="media_styles"></div>
-                </div>
-                <div class="media_cat">
-                  <i title="decors css">🌈</i>
-                  <div class="media_decors"></div>
-                </div>
-                <div class="media_cat">
-                  <i title="pages iframe">🌐</i>
-                  <div class="media_pages"></div>
-                </div>
-                <div class="media_cat">
-                  <i title="pages iframe">🌐</i>
-                  <div class="media_layouts"></div>
-                </div>
-                <div class="media_cat">
-                  <i title="videos">📽️</i>
-                  <div class="media_video"></div>
-                </div>
-                <div class="media_cat">
-                  <i title="audio">🎧</i>
-                  <div class="media_audio"></div>
-                </div>
-                <div class="media_cat">
-                  <i title="gifs">🖼️</i>
-                  <div class="media_gifs"></div>
-                </div>
-                <div class="media_cat">
-                  <i title="images">📷</i>
-                  <div class="media_images"></div>
-                </div>
-              </section>
-            </div>
             <footer class="box-h box-emojis closed hide">
               <b>emojis</b>
               <div id="emojis"></div>
             </footer>
-            <footer class="box-h box-shortcuts closed">
-              <b>shortcuts</b>
-              <div id="shortcuts"></div>
-            </footer>
-            <footer class="box-h box-shortcuts closed">
-              <b>osc settings</b>
-              <form action="" id="form_osc_ip">
-                <div class="box-v">
-                  <button class="box-min icon" type="submit">💾</button>
-                  <input id="osc_ip" name="ip" type="text" placeholder="ip" />
-                </div>
-              </form>
-            </footer>
-            <footer class="box-h box-presets _closed">
-              <b>presets</b>
-              <div id="presets" class="box-v box-wrap"></div>
-            </footer>
+            <div class="box-h box-users">
+              <b>users</b>
+              <header class="_hide box-v box-random-users">
+                <input
+                  title="Nombre d'utilisateurs tirés au sort"
+                  id="number_random_users"
+                  type="number"
+                  min="0"
+                  value="1"
+                />
+                <button id="select_random_users" class="icon box-min">🎲</button>
+              </header>
+              <div class="users_container">
+                <table class="table-users">
+                  <thead>
+                    <th><input checked id="users_check_all" type="checkbox" /></th>
+                    <th></th>
+                    <th>pseudo</th>
+                    <th>karma</th>
+                  </thead>
+                  <tbody id="users"></tbody>
+                </table>
+              </div>
+              <header id="users_stats">
+                <span id="nb_users_inscrits">0</span> inscrit(s) /
+                <span id="nb_users_connectes">0</span> connecté(s)
+              </header>
+              <footer id="reponses" class="box-v box-wrap"></footer>
+              <footer>
+                <form id="interactions">
+                  <div class="box-h">
+                    <textarea
+                      cols="44"
+                      rows="3"
+                      id="one_shot__message"
+                      placeholder="message"
+                      name="message"
+                    ></textarea>
+                    <img id="image-msg"></img>
+                    <button
+                      type="submit"
+                      title="Envoyer le message (Ctrl+Enter)"
+                      class="icon"
+                    >
+                      📩
+                    </button>
+                  </div>
+                </form>
+              </footer>
+            </div>
           </div>
           <div class="box-h box-visual">
             <b>visual</b>
-            <header class="box-v">
-              <button id="visual__save" class="icon box-min">💾</button>
-              <button id="visual__add_scene"><span class="icon">➕</span> scène</button>
-              <button id="visual__add_step"><span class="icon">➕</span> étape</button>
-              <button id="visual__openall" title="Open all" class="icon">⏬</button>
-              <button id="visual__closeall" title="Close all" class="icon">⏫</button>
-              <button id="visual__rename" title="Rename" class="icon">✍</button>
-              <button id="visual__clone" title="Clone" class="icon">👬</button>
-              <button id="visual__delete" title="Delete" class="icon">🗑️</button>
-            </header>
             <section id="visual"></section>
             <footer>
               <div class="box-v">
@@ -126,31 +117,11 @@
             </footer>
           </div>
         </div>
-        <footer class="box-h box-screens">
-          <b>screens</b>
-          <div id="screens" class="box-v">
-            <form id="main-screen-layout" style="display: flex; flex-direction: column;">
-              Display layout
-              <input name="top" id="top" value="75%"></input>
-              <input name="left" id="left" value="5%"></input>
-              <input name="width" id="width" value="25%"></input>
-              <input name="height" id="height" value="auto"></input>
-              <div id="layout"></div>
-            </form>
-          </div>
-        </footer>
       </div>
       <aside class="box-h box-fit" style="width: 25vw">
-        <div class="box-h box-users">
+        <!-- <div class="box-h box-users">
           <b>users</b>
           <header class="_hide box-v box-random-users">
-            <!-- <button
-              id="refresh_mobiles"
-              class="icon box-min"
-              title="Reload tout les mobiles"
-            >
-              ♻
-            </button> -->
             <input
               title="Nombre d'utilisateurs tirés au sort"
               id="number_random_users"
@@ -197,13 +168,15 @@
               </div>
             </form>
           </footer>
+        </div> -->
+        <div class="box-h box-monitoring_incoming">
+          <b>monitoring incoming</b>
+          <section id="monitoring_incoming"></section>
         </div>
-
-        <div class="box-h box-monitoring">
-          <b>monitoring</b>
-          <section id="monitoring"></section>
+        <div class="box-h box-monitoring_outgoing">
+          <b>monitoring outgoing</b>
+          <section id="monitoring_outgoing"></section>
         </div>
-
         <footer class="box-h box-boites">
           <b>états</b>
           <form id="boite">
@@ -217,14 +190,14 @@
               placeholder="data"
               name="arg"
             ></textarea>
-            <footer class="box-v">
+            <!-- <footer class="box-v">
               <button type="submit" title="Envoyer la boite (Ctrl+Enter)" class="icon">
                 📢
               </button>
-            </footer>
+            </footer> -->
           </form>
         </footer>
-        <footer class="box-h box-jump">
+        <!-- <footer class="box-h box-jump">
           <b>saut ver sune scène</b>
           <form id="saut">
             <div class="box-h">
@@ -242,7 +215,7 @@
               </div>
             </div>
           </form>
-        </footer>
+        </footer> -->
 
         <footer class="box-h box-osc hide">
           <b>osc</b>
@@ -272,7 +245,7 @@
       <button class="repet__pause toggle icon box-min">⏸️</button>
       <button class="repet__forward icon box-min">⏩</button>
       <input
-        style="width:78px"
+        style="width:150px"
         min="0"
         max="59"
         id="repet__min"
@@ -280,9 +253,10 @@
         class="box-min"
         placeholder="minutes"
       />
-      <button class="icon" id="send_all_screens">📢</button>
+      <!-- <button class="icon" id="send_all_screens">📢</button> -->
     </footer>
   </div>
+
 </main>
 
 <template id="tmpl_screen__ctrl">
@@ -419,7 +393,7 @@
   </div>
 </template>
 
-<div id="layout_modal" class="modal">
+<!-- <div id="layout_modal" class="modal">
   <div class="modal-content" style="display: flex; flex-direction: column; align-items: center;">
     <span class="close" style="align-self: flex-end;">&times;</span>
       <section style="width:65%; height: 65%; position: relative;" id="preview-window">
@@ -432,9 +406,9 @@
       </section>
       <button onclick="saveEtapeLayout()">Save scene layout</button>
   </div>
-</div>
+</div> -->
 
-<div id="QR_modal" class="modal">
+<!-- <div id="QR_modal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeQRmodal()">&times;</span>
     <div class="display-cover">
@@ -449,15 +423,15 @@
     </div>
       <button onclick="readCode()">Save scene layout</button>
   </div>
-</div>
+</div> -->
 
-<script src="/js/common.js?v=1.0"></script>
+<script src="./js/common.js?v=1.0"></script>
 <script>
   cat = 'master';
 </script>
-<script src="/js/iso.js?v=1.0"></script>
-<script src="/js/boites_mobile.js?v=1.0"></script>
-<script src="/js/boites_master.js?v=1.0"></script>
-<script src="/js/modes.js?v=1.0"></script>
-<script src="/js/master.js?v=1.0"></script>
-
+<script src="./js/iso.js?v=1.0"></script>
+<script src="./js/boites_mobile.js?v=1.0"></script>
+<script src="./js/boites_master.js?v=1.0"></script>
+<script src="./js/modes.js?v=1.0"></script>
+<script src="./js/master.js"></script>
+<!-- <script src="./js/editor.js"></script> -->

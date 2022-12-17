@@ -1,5 +1,5 @@
 {
-    "name": "ScreeangersZagreb-copy",
+    "name": "ScreeangersZagreb-copy-copy",
     "languages": [
         "EN"
     ],
@@ -10,9 +10,9 @@
         "1": {
             "name": "test",
             "step-order": [
-                1,
                 2,
                 3,
+                1,
                 4,
                 5
             ],
@@ -21,9 +21,9 @@
                     "screen": {
                         "media-order": [
                             "orh4T",
-                            "R58pu",
-                            "yJ0pc",
-                            "Zb3rH"
+                            "Mvu1W",
+                            "KBynK",
+                            "wJjzC"
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
@@ -44,54 +44,152 @@
                                 "content": "",
                                 "classes": []
                             },
-                            "Zb3rH": {
+                            "Mvu1W": {
                                 "type": "text",
                                 "css": {
                                     "position": "absolute",
-                                    "top": "71%",
-                                    "left": "54%",
-                                    "z-index": "4",
-                                    "padding": "5px",
-                                    "color": "rgb(0, 0, 0)",
-                                    "font-size": "21px"
+                                    "top": "22%",
+                                    "left": "25%",
+                                    "z-index": "2",
+                                    "font-size": "24px",
+                                    "font-family": "AvenirRoman",
+                                    "padding": "19px",
+                                    "color": "rgb(249, 203, 156)",
+                                    "background-color": "rgb(255, 0, 255)",
+                                    "text-align": "right",
+                                    "border-width": "0px",
+                                    "border-style": "solid",
+                                    "transform": "rotate(15deg)"
                                 },
                                 "attributes": {},
-                                "content": "ghvfghfhasdasdasd",
+                                "content": "asdasdas\nasdasd",
                                 "classes": [
                                     "text"
                                 ]
                             },
-                            "R58pu": {
+                            "KBynK": {
                                 "type": "videoStream",
                                 "css": {
                                     "width": "35%",
+                                    "height": "35%",
                                     "position": "absolute",
-                                    "top": "11%",
-                                    "left": "34%",
-                                    "z-index": "2"
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "3"
                                 },
                                 "attributes": {
-                                    "device": "7hrhewPso0gwvpgfXGv6ShCxDdJ3lGK0y2zv"
+                                    "device": "5lARCiwxxAzmRJiQZgWvdXMDgHPZEjoBLMGt"
                                 },
                                 "content": "",
                                 "classes": []
                             },
-                            "yJ0pc": {
-                                "type": "avatars",
+                            "wJjzC": {
+                                "type": "videoStream",
                                 "css": {
-                                    "width": "29%",
-                                    "height": "23%",
+                                    "width": "34%",
+                                    "height": "37%",
                                     "position": "absolute",
-                                    "top": "60%",
-                                    "left": "66%",
-                                    "border-radius": "45%",
+                                    "top": "51%",
+                                    "left": "53%",
+                                    "z-index": "4"
+                                },
+                                "attributes": {
+                                    "device": "MbfDMpPLX61RZrtDgsrO3X7CZZZqG2qxm6eh"
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "2": {
+                    "screen": {
+                        "media-order": [
+                            "orh4T",
+                            "eMquc",
+                            "qWL6n",
+                            "7CmWN"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "orh4T": {
+                                "type": "media_images",
+                                "css": {
+                                    "width": "100%",
+                                    "position": "absolute",
+                                    "top": "0%",
+                                    "left": "0%",
+                                    "z-index": "1",
+                                    "object-fit": "cover",
+                                    "height": "100%"
+                                },
+                                "attributes": {
+                                    "src": "Press-Song/2022-05-07-21-15-13.png"
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "eMquc": {
+                                "type": "videoStream",
+                                "css": {
+                                    "width": "35%",
+                                    "height": "35%",
+                                    "position": "absolute",
+                                    "top": "16%",
+                                    "left": "44%",
+                                    "z-index": "2"
+                                },
+                                "attributes": {
+                                    "device": "XnhiqJPjXXCP4yYutMXk5hAe0pN6Nl2Etfx6"
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "qWL6n": {
+                                "type": "videoStream",
+                                "css": {
+                                    "width": "35%",
+                                    "height": "35%",
+                                    "position": "absolute",
+                                    "top": "49%",
+                                    "left": "18%",
                                     "z-index": "3"
                                 },
-                                "attributes": {},
+                                "attributes": {
+                                    "device": "hylhDt1RO7pF4phXdmQcVtZLXhNitWKWvDL8"
+                                },
                                 "content": "",
-                                "classes": [
-                                    "avatars"
-                                ]
+                                "classes": []
+                            },
+                            "7CmWN": {
+                                "type": "media_video",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "4"
+                                },
+                                "attributes": {
+                                    "src": "Animationconnexion/animationconnexion.webm",
+                                    "loop": true,
+                                    "muted": false
+                                },
+                                "content": "",
+                                "classes": []
                             }
                         },
                         "console": {
@@ -112,50 +210,33 @@
                             "loop": ""
                         }
                     },
-                    "boite": {
-                        "type": "choix",
-                        "arg": "choice 1\n\nchoice 2\n\n"
-                    },
                     "console": {
                         "mode": "console"
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
                     }
                 },
-                "2": {
+                "3": {
                     "screen": {
                         "media-order": [
-                            "18xxH",
                             "orh4T",
-                            "jc16p"
+                            "7CmWN",
+                            "oVwxm"
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
-                            "18xxH": {
-                                "type": "videoStream",
+                            "orh4T": {
+                                "type": "media_images",
                                 "css": {
                                     "width": "100%",
                                     "position": "absolute",
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "transform": "rotate(0deg)",
-                                    "height": "100%",
-                                    "object-fit": "cover"
-                                },
-                                "attributes": {
-                                    "device": "8V1VntU3wmtZB0OqLeR6qKq4v2p6T0KFSyxj"
-                                },
-                                "content": "",
-                                "classes": []
-                            },
-                            "orh4T": {
-                                "type": "media_images",
-                                "css": {
-                                    "width": "46%",
-                                    "position": "absolute",
-                                    "top": "0%",
-                                    "left": "0%",
-                                    "z-index": "2",
-                                    "height": "32%"
+                                    "object-fit": "cover",
+                                    "height": "100%"
                                 },
                                 "attributes": {
                                     "src": "Press-Song/2022-05-07-21-15-13.png"
@@ -163,61 +244,7 @@
                                 "content": "",
                                 "classes": []
                             },
-                            "jc16p": {
-                                "type": "media_images",
-                                "css": {
-                                    "width": "35%",
-                                    "position": "absolute",
-                                    "top": "30%",
-                                    "left": "15%",
-                                    "z-index": "3"
-                                },
-                                "attributes": {
-                                    "src": "CableStory/Histoire-des-cables004.jpeg"
-                                },
-                                "content": "",
-                                "classes": []
-                            }
-                        },
-                        "console": {
-                            "active": false,
-                            "css": {}
-                        },
-                        "music": {
-                            "src": "",
-                            "volume": "",
-                            "loop": ""
-                        }
-                    },
-                    "boite": {
-                        "type": "gameboy",
-                        "arg": ""
-                    }
-                },
-                "3": {
-                    "screen": {
-                        "media-order": [
-                            "tDQ7l",
-                            "gg7nF"
-                        ],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {
-                            "tDQ7l": {
-                                "type": "media_images",
-                                "css": {
-                                    "width": "35%",
-                                    "position": "absolute",
-                                    "top": "25%",
-                                    "left": "25%",
-                                    "z-index": "1"
-                                },
-                                "attributes": {
-                                    "src": "VN/7eb6046ba17024414f94cb8db703f424.jpg"
-                                },
-                                "content": "",
-                                "classes": []
-                            },
-                            "gg7nF": {
+                            "7CmWN": {
                                 "type": "media_video",
                                 "css": {
                                     "width": "35%",
@@ -233,11 +260,34 @@
                                 },
                                 "content": "",
                                 "classes": []
+                            },
+                            "oVwxm": {
+                                "type": "media_images",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "33%",
+                                    "left": "49%",
+                                    "z-index": "3"
+                                },
+                                "attributes": {
+                                    "src": "CableStory/Histoire-des-cables016.jpeg"
+                                },
+                                "content": "",
+                                "classes": []
                             }
                         },
                         "console": {
-                            "active": false,
-                            "css": {}
+                            "active": true,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "block"
+                            }
                         },
                         "music": {
                             "src": "",
@@ -245,15 +295,18 @@
                             "loop": ""
                         }
                     },
+                    "console": {
+                        "mode": "console"
+                    },
                     "boite": {
-                        "type": "collective_song",
+                        "type": "no_phone",
                         "arg": ""
                     }
                 },
                 "4": {
                     "screen": {
                         "media-order": [],
-                        "background-color": "",
+                        "background-color": "rgb(0, 0, 0)",
                         "media": {},
                         "console": {
                             "active": false,
@@ -274,9 +327,9 @@
                     "screen": {
                         "media-order": [
                             "orh4T",
-                            "R58pu",
-                            "yJ0pc",
-                            "Zb3rH"
+                            "Mvu1W",
+                            "KBynK",
+                            "wJjzC"
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
@@ -297,67 +350,65 @@
                                 "content": "",
                                 "classes": []
                             },
-                            "Zb3rH": {
+                            "Mvu1W": {
                                 "type": "text",
                                 "css": {
                                     "position": "absolute",
-                                    "top": "71%",
-                                    "left": "54%",
-                                    "z-index": "4",
-                                    "padding": "5px",
-                                    "color": "rgb(0, 0, 0)",
-                                    "font-size": "21px"
+                                    "top": "22%",
+                                    "left": "25%",
+                                    "z-index": "2",
+                                    "font-size": "24px",
+                                    "font-family": "AvenirRoman",
+                                    "padding": "19px",
+                                    "color": "rgb(249, 203, 156)",
+                                    "background-color": "rgb(255, 0, 255)",
+                                    "text-align": "right",
+                                    "border-width": "0px",
+                                    "border-style": "solid",
+                                    "transform": "rotate(15deg)"
                                 },
                                 "attributes": {},
-                                "content": "ghvfghfhasdasdasd",
+                                "content": "asdasdas\nasdasd",
                                 "classes": [
                                     "text"
                                 ]
                             },
-                            "R58pu": {
+                            "KBynK": {
                                 "type": "videoStream",
                                 "css": {
                                     "width": "35%",
+                                    "height": "35%",
                                     "position": "absolute",
-                                    "top": "11%",
-                                    "left": "34%",
-                                    "z-index": "2"
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "3"
                                 },
                                 "attributes": {
-                                    "device": "7hrhewPso0gwvpgfXGv6ShCxDdJ3lGK0y2zv"
+                                    "device": "uYLWwheFtsw5ua3PlMfzVLz0YijH55r9l3X3"
                                 },
                                 "content": "",
                                 "classes": []
                             },
-                            "yJ0pc": {
-                                "type": "avatars",
+                            "wJjzC": {
+                                "type": "videoStream",
                                 "css": {
-                                    "width": "29%",
-                                    "height": "23%",
+                                    "width": "34%",
+                                    "height": "37%",
                                     "position": "absolute",
-                                    "top": "60%",
-                                    "left": "66%",
-                                    "border-radius": "45%",
-                                    "z-index": "3"
+                                    "top": "51%",
+                                    "left": "53%",
+                                    "z-index": "4"
                                 },
-                                "attributes": {},
+                                "attributes": {
+                                    "device": "iv5xuDUwvbNpeeuMuB1urgXUJOT1X6abtzEw"
+                                },
                                 "content": "",
-                                "classes": [
-                                    "avatars"
-                                ]
+                                "classes": []
                             }
                         },
                         "console": {
-                            "active": true,
-                            "css": {
-                                "width": "25%",
-                                "height": "95%",
-                                "position": "absolute",
-                                "top": "2.5%",
-                                "left": "5%",
-                                "z-index": "100",
-                                "display": "block"
-                            }
+                            "active": false,
+                            "css": {}
                         },
                         "music": {
                             "src": "",
@@ -366,11 +417,8 @@
                         }
                     },
                     "boite": {
-                        "type": "choix",
-                        "arg": "choice 1\n\nchoice 2\n\n"
-                    },
-                    "console": {
-                        "mode": "console"
+                        "type": "no_phone",
+                        "arg": ""
                     }
                 }
             }

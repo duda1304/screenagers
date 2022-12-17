@@ -257,7 +257,6 @@ var $monitoring_outgoing = $('#monitoring_outgoing');
           questions[letters[i]] = dataArray[i];
         }
       }
-      console.log(questions)
     },
 
     destroy: function() {

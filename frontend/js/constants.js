@@ -23,8 +23,12 @@ const stepObject = {
                         "volume": "",
                         "loop": ""
                     }
-                }
+            },
+            "boite" : {
+                "type": "no_phone",
+                "arg": ""
             }
+        }
 
 const consoleObject =   {
                         "mode": "console"

@@ -25,10 +25,11 @@ function createQRCodeImage(data, fileName) {
     if(err) return ('error')
     let base64Image = code.split(';base64,').pop();
     fs.writeFile(`${__dirname}/frontend/data/media/QRcodes/${fileName}.png`, base64Image, {encoding: 'base64'}, function(err) {
-      return ('success')
-  });
-    // Printing the code
-    console.log(code)
+      if (err) {
+        groups['masters'].emit('QR code response', {'message' : 'Error creating QR code, please try again.'});
+      }
+        groups['masters'].emit('QR code response', {'message' : 'QR code created in data/media/QRcodes'}); 
+    });
   })
 }
 
@@ -141,6 +142,7 @@ const groups = {
 
 var performerConnected = false;
 
+
 const set = {
   console(socket) {
     groups.consoles.add(socket.id);
@@ -149,6 +151,7 @@ const set = {
       var step = deepMerge({}, states.step.console, { boite: states.step.boite });
       socket.emit('step', step);
     }
+    // socket.emit('step', states.step);
     return 'console';
   },
 
@@ -165,6 +168,7 @@ const set = {
       var step = deepMerge({}, states.step.screen, { boite: states.step.boite });
       socket.emit('step', step);
     }
+    // socket.emit('step', states.step)
     socket.emit('current language', currentLanguage);
     return 'screen';
   },
@@ -186,6 +190,7 @@ const set = {
       var step = deepMerge({}, states.step.laptop, { boite: states.step.boite });
       socket.emit('step', step);
     }
+    // socket.emit('step', states.step)
     return 'laptop';
   },
 
@@ -205,7 +210,7 @@ const set = {
     
     socket.emit('initial json', json);
   
-    socket.emit('language', {'currentLanguage' : currentLanguage});
+    // socket.emit('language', {'currentLanguage' : currentLanguage});
 
     // NEW reorder steps
     socket.on('reorder steps', (data) => {
@@ -429,6 +434,139 @@ const set = {
       });
     })
 
+    // socket.on('step', function(data) {
+    //   if (!data) return;
+
+    //   currentStep = data;
+    //   // var needSendEffect = 'effect' in data;
+      
+    //   // var needSendBoite = 'boite' in data;
+    //   // if (
+    //   //   needSendBoite &&
+    //   //   states.step &&
+    //   //   states.step.boite &&
+    //   //   states.step.boite.type &&
+    //   //   data.boite.type
+    //   // ) {
+    //   //   if (data.boite.type === states.step.boite.type) {
+    //   //     if (data.boite.arg === states.step.boite.arg) {
+    //   //       needSendBoite = false;
+    //   //     }
+    //   //   }
+    //   // }
+
+
+    //   keys.forEach(key => {
+    //     if (key in data) states.step[key] = data[key];
+    //   });
+
+     
+
+    //   states.step = deepMerge(states.step, data);
+
+    //   groups['screens'].emit('step', states.step);
+    //   groups['laptops'].emit('step', states.step);
+    //   groups['consoles'].emit('step', states.step);
+    //   // if (data['laptop']) {
+    //   //   var step = deepMerge({}, states.step.laptop, { boite: states.step.boite });
+    //   //   groups['laptops'].emit('step', step)
+    //   // }
+
+    //   // if (data['console']) {
+    //   //   groups['consoles'].emit('console', data['console'])
+    //   // }
+
+    //   // if (data['boite']) {
+    //   //   // groups.screens.emit('step', { boite: data.boite });
+    //   //   groups.mobiles.emit('step', { boite: data.boite });
+    //   //   setBoite(data.boite);
+    //   // }
+
+    //   // if (data['screen']) {
+    //   //   var step = deepMerge({}, states.step.screen, { boite: states.step.boite });
+    //   //   groups['screens'].emit('step', step)
+    //   // }
+
+
+    //   // groups.screens.emit('step', data['screen'])
+
+
+    //   // Object.entries(data).forEach(([key, val]) => {
+    //   //   if (key !== 'boite' && key !== 'to') {
+    //   //     val.repet = Object.assign({}, data.repet);
+    //   //     val.boite = Object.assign({}, data.boite);
+    //   //     var name = key + 's';
+    //   //     if (name in groups) {
+    //   //       groups[name].emit('step', val);
+    //   //     }
+    //   //     if (key === 'console') {
+    //   //       groups['mainScreens'].emit('console', val);
+    //   //     }
+    //   //   }
+    //   // });
+
+    //   // if (needSendBoite) {
+    //   //   groups.screens.emit('step', { boite: data.boite });
+    //   //   groups.mobiles.emit('step', { boite: data.boite });
+    //   //   setBoite(data.boite);
+    //   // }
+
+    //   if ('osc' in data && 'message' in data.osc && data.osc.message) {
+    //     if (lastOscMessage === data.osc.message) return;
+    //     lastOscMessage = data.osc.message;
+    //     sendOscMessage(data.osc.message);
+    //   }
+    // });
+    socket.on('step', function(data) {
+      if (!data) return;
+
+      var needSendEffect = 'effect' in data;
+      
+      var needSendBoite = 'boite' in data;
+      if (
+        needSendBoite &&
+        states.step &&
+        states.step.boite &&
+        states.step.boite.type &&
+        data.boite.type
+      ) {
+        if (data.boite.type === states.step.boite.type) {
+          if (data.boite.arg === states.step.boite.arg) {
+            needSendBoite = false;
+          }
+        }
+      }
+
+      keys.forEach(key => {
+        if (key in data) states.step[key] = data[key];
+      });
+
+      Object.entries(data).forEach(([key, val]) => {
+        if (key !== 'boite' && key !== 'to') {
+          val.repet = Object.assign({}, data.repet);
+          val.boite = Object.assign({}, data.boite);
+          var name = key + 's';
+          if (name in groups) {
+            groups[name].emit('step', val);
+          }
+          if (key === 'console') {
+            groups['mainScreens'].emit('console', val);
+          }
+        }
+      });
+
+      if (needSendBoite) {
+        groups.screens.emit('step', { boite: data.boite });
+        groups.mobiles.emit('step', { boite: data.boite });
+        setBoite(data.boite);
+      }
+
+      if ('osc' in data && 'message' in data.osc && data.osc.message) {
+        if (lastOscMessage === data.osc.message) return;
+        lastOscMessage = data.osc.message;
+        sendOscMessage(data.osc.message);
+      }
+    });
 
     socket.on('refresh media list', () => {
       states.media = walkSync('./frontend/data/media');
@@ -473,134 +611,7 @@ const set = {
     
     socket.emit('initial json', json);
   
-    socket.emit('language', {'currentLanguage' : currentLanguage});
-
-    // NEW reorder steps
-    socket.on('reorder steps', (data) => {
-      const filePath = `./frontend/data/json/${data.fileName}.json`;
-      const file = require(filePath);
-          
-      file['scenes'][data.sceneOrderNumber]['step-order'] = data.stepsOrder;
-          
-      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
-        if (err) return console.log(err);
-      });
-    })
-
-    // NEW reorder scenes
-    socket.on('reorder scenes', (data) => {
-      const filePath = `./frontend/data/json/${data.fileName}.json`;
-      const file = require(filePath);
-          
-      file['scene-order'] = data.scenesOrder;
-          
-      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
-        if (err) return console.log(err);
-        
-      });
-    })
-
-    // NEW save step
-    socket.on('save step', (data) => {
-      const filePath = `./frontend/data/json/${data.fileName}.json`;
-      const file = require(filePath);
-          
-     
-      file['scenes'][data.scene]['steps'][data.step] = data.stepObject;
-
-      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
-        if (err) {
-          groups['masters'].emit('error');
-        }
-          const json = walkSync('./frontend/data/json');
-          groups['masters'].emit('success', {'saved' : 'step', 'data' : json});     
-      });
-    })
-    
-    // NEW add step
-    socket.on('add step', (data) => {
-      const filePath = `./frontend/data/json/${data.fileName}.json`;
-      const file = require(filePath);
-          
-      file['scenes'][data.scene]['step-order'].push(data.key);
-      file['scenes'][data.scene]['steps'][data.key] = data.step;
-          
-      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
-        if (err) {
-          groups['masters'].emit('error');
-        }
-          const json = walkSync('./frontend/data/json');
-          groups['masters'].emit('success', {'added' : 'step', 'data' : json});     
-      });
-    })
-
-     // NEW delete step
-     socket.on('delete step', (data) => {
-      const filePath = `./frontend/data/json/${data.fileName}.json`;
-      const file = require(filePath);
-
-      const index = file['scenes'][data.scene]['step-order'].indexOf(data.step);
-      file['scenes'][data.scene]['step-order'].splice(index, 1);
-      delete file['scenes'][data.scene]['steps'][data.step];
-          
-      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
-        if (err) {
-          groups['masters'].emit('error');
-        }
-        const json = walkSync('./frontend/data/json');
-        groups['masters'].emit('success', {'deleted' : 'step', 'data' : json}); 
-      });
-    })
-
-    // NEW add scene
-    socket.on('add scene', (data) => {
-      const filePath = `./frontend/data/json/${data.fileName}.json`;
-      const file = require(filePath);
-          
-      file['scene-order'].push(data.key);
-      file['scenes'][data.key] = data.scene;
-          
-      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
-        if (err) {
-          groups['masters'].emit('error');
-        }
-        const json = walkSync('./frontend/data/json');
-        groups['masters'].emit('success', {'added' : 'scene', 'data' : json}); 
-       
-      });
-    })
-
-    // NEW delete scene
-    socket.on('delete scene', (data) => {
-      const filePath = `./frontend/data/json/${data.fileName}.json`;
-      const file = require(filePath);
-
-      const index = file['scene-order'].indexOf(data.scene);
-      file['scene-order'].splice(index, 1);
-      delete file['scenes'][data.scene];
-          
-      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
-        if (err) {
-          groups['masters'].emit('error');
-        }
-        const json = walkSync('./frontend/data/json');
-        groups['masters'].emit('success', {'deleted' : 'scene', 'data' : json});     
-      });
-    })
-
-    // NEW add show
-    socket.on('add show', (data) => {
-      const filePath = `./frontend/data/json/${data.fileName}.json`;
-      
-      fs.writeFile(filePath, JSON.stringify(data.content, null, 4), function writeJSON(err) {
-        if (err) {
-          groups['masters'].emit('error');
-        }
-        const json = walkSync('./frontend/data/json');
-        groups['masters'].emit('success', {'added' : 'scene', 'data' : json}); 
-       
-      });
-    })
+    // socket.emit('language', {'currentLanguage' : currentLanguage});
 
     socket.on('reset all', () => {
       states = deepMerge({}, defaultStates);
@@ -622,70 +633,47 @@ const set = {
 
     socket.on('step', function(data) {
       if (!data) return;
-      // var needSendEffect = 'effect' in data;
+
+      var needSendEffect = 'effect' in data;
       
-      // var needSendBoite = 'boite' in data;
-      // if (
-      //   needSendBoite &&
-      //   states.step &&
-      //   states.step.boite &&
-      //   states.step.boite.type &&
-      //   data.boite.type
-      // ) {
-      //   if (data.boite.type === states.step.boite.type) {
-      //     if (data.boite.arg === states.step.boite.arg) {
-      //       needSendBoite = false;
-      //     }
-      //   }
-      // }
+      var needSendBoite = 'boite' in data;
+      if (
+        needSendBoite &&
+        states.step &&
+        states.step.boite &&
+        states.step.boite.type &&
+        data.boite.type
+      ) {
+        if (data.boite.type === states.step.boite.type) {
+          if (data.boite.arg === states.step.boite.arg) {
+            needSendBoite = false;
+          }
+        }
+      }
 
       keys.forEach(key => {
         if (key in data) states.step[key] = data[key];
       });
 
-    
+      Object.entries(data).forEach(([key, val]) => {
+        if (key !== 'boite' && key !== 'to') {
+          val.repet = Object.assign({}, data.repet);
+          val.boite = Object.assign({}, data.boite);
+          var name = key + 's';
+          if (name in groups) {
+            groups[name].emit('step', val);
+          }
+          if (key === 'console') {
+            groups['mainScreens'].emit('console', val);
+          }
+        }
+      });
 
-      if (data['laptop']) {
-        var step = deepMerge({}, states.step.laptop, { boite: states.step.boite });
-        groups['laptops'].emit('step', step)
-      }
-
-      if (data['console']) {
-        groups['consoles'].emit('console', data['console'])
-      }
-
-      if (data['boite']) {
-        // groups.screens.emit('step', { boite: data.boite });
+      if (needSendBoite) {
+        groups.screens.emit('step', { boite: data.boite });
         groups.mobiles.emit('step', { boite: data.boite });
         setBoite(data.boite);
       }
-
-      if (data['screen']) {
-        var step = deepMerge({}, states.step.screen, { boite: states.step.boite });
-        groups['screens'].emit('step', step)
-      }
-      // groups.screens.emit('step', data['screen'])
-
-
-      // Object.entries(data).forEach(([key, val]) => {
-      //   if (key !== 'boite' && key !== 'to') {
-      //     val.repet = Object.assign({}, data.repet);
-      //     val.boite = Object.assign({}, data.boite);
-      //     var name = key + 's';
-      //     if (name in groups) {
-      //       groups[name].emit('step', val);
-      //     }
-      //     if (key === 'console') {
-      //       groups['mainScreens'].emit('console', val);
-      //     }
-      //   }
-      // });
-
-      // if (needSendBoite) {
-      //   groups.screens.emit('step', { boite: data.boite });
-      //   groups.mobiles.emit('step', { boite: data.boite });
-      //   setBoite(data.boite);
-      // }
 
       if ('osc' in data && 'message' in data.osc && data.osc.message) {
         if (lastOscMessage === data.osc.message) return;
@@ -693,6 +681,7 @@ const set = {
         sendOscMessage(data.osc.message);
       }
     });
+
 
     socket.on('broadcast', data => {
       broadcast(data.to, 'interaction', data, function(user) {
@@ -927,7 +916,7 @@ io.on('connection', socket => {
   if (path === '/master') from = set.master(socket);
   else if (path === '/console') from = set.console(socket);
   else if (path === '/screen') from = set.screen(socket);
-  else if (path === '/emo') from = set.emo(socket);
+  // else if (path === '/emo') from = set.emo(socket);
   else if (path === '/laptop') from = set.laptop(socket);
   else if (path === '/main') from = set.mainScreen(socket);
   else if (path === '/performer') from = set.performer(socket);
@@ -1020,21 +1009,21 @@ io.on('connection', socket => {
     groups.masters.emit('new etape')
   })
 
-  // socket.on('create qr code', (data) => {
-  //   var file = data.src.split('/');
-  //   var index = file.length;
-  //   var fileName = file[index - 1].split('.')[0];
-  //   createQRCodeImage(data.src, fileName);
+  socket.on('create qr code', (data) => {
+    var file = data.src.split('/');
+    var index = file.length;
+    var fileName = file[index - 1].split('.')[0];
+    createQRCodeImage(data.src, fileName);
 
-  //   states.media = walkSync('./frontend/data/media');
-  //   states.media = states.media.reduce((acc, item) => {
-  //     acc.push(item.replace('frontend/data/media/', ''));
-  //     return acc;
-  //   }, []);
+    // states.media = walkSync('./frontend/data/media');
+    // states.media = states.media.reduce((acc, item) => {
+    //   acc.push(item.replace('frontend/data/media/', ''));
+    //   return acc;
+    // }, []);
 
-  //   socket.emit('init states', states);
-  //   groups.masters.emit('init states', states);
-  // }) 
+    // socket.emit('init states', states);
+    // groups.masters.emit('init states', states);
+  }) 
 
   // socket.on('save editor JSON', data => {
   //   try {
@@ -1172,6 +1161,7 @@ try {
 var dgram = require('dgram');
 var osc = require('a2r-osc');
 const { group } = require('console');
+const { stat } = require('fs');
 
 var oscPort = 53000;
 var oscClient = dgram.createSocket('udp4');

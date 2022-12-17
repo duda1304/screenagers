@@ -1,12 +1,12 @@
 var $main = $('main');
 var $step = $('<div class="step"></div>');
-// var $decor = $('<div class="step__decor"></div>');
-// var $texte = $('<div class="step__texte"></div>');
+var $decor = $('<div class="step__decor"></div>');
+var $texte = $('<div class="step__texte"></div>');
 var $boite = $('<div id="boite"></div>');
 // var $boiteAvatars = $('<div id="avatars"></div>');
 $boite.hide();
 
-$step.append($boite);
+$step.append($decor, $texte, $boite);
 $main.append($step);
 
 var audio = new Audio();
@@ -269,16 +269,21 @@ function setVideo({ src, style, volume, fit, loop }) {
   }
 }
 
-async function startStream(streamDeviceId) {
-  await navigator.mediaDevices.getUserMedia({
-  video: {
-      deviceId: streamDeviceId
-  }}).then(stream => document.getElementById('stream').srcObject = stream)
+async function startStream(constraints, data_key) {
+  navigator.mediaDevices.getUserMedia( constraints )
+  .then( MediaStream => {
+      handleStream(MediaStream, data_key);
+  })
+  .catch( error => {
+      console.log(error);
+  });
 }
 
-const handleStream = (stream) => {
-  document.querySelector('#stream').srcObject = stream;
-};
+function handleStream(stream, data_key) {
+  $(`[data-key=${data_key}] video`)[0].srcObject = stream;
+}
+
+
 
 // var lastImageSrc;
 function setImage({ src, style, fit }) {
@@ -629,10 +634,10 @@ socket.on('remove avatar', (data) =>{
 })
 
 function clearUnwantedMedia(data){
-  const div = document.getElementsByClassName('step')[0];
+  // const div = document.getElementsByClassName('step')[0];
   const stepMedia = data['media'];
 
-  let keysArray = [].map.call($('.step').children().not('#boite'), function (e) {
+  let keysArray = [].map.call($decor.children(), function (e) {
   return e.getAttribute('data-key')
   })
 
@@ -646,7 +651,7 @@ function clearUnwantedMedia(data){
 
 function applyZIndexes(data) {
   data['media-order'].forEach((value, index) => {
-      $(`.step [data-key=${value}]`).css({"z-index" : index + 1});
+      $(`.step__decor [data-key=${value}]`).css({"z-index" : index + 1});
   })
 }
 
@@ -658,262 +663,82 @@ function displayStep(data) {
     const stepMedia = data['media'];
 
     for (let data_key of mediaOrder) {
-      setElements(stepMedia[data_key].attributes.src, checkMediaType(stepMedia[data_key]['attributes']['src']), data_key, stepMedia[data_key]);
+      setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);
     }
     applyZIndexes(data);
     
-    setElements("", "avatars", "", data['avatars']);
     setElements("", "console", "", data['console']);
     setElements("", "music", "", data['music']);
 }
 
 function setElements(val, type, data_key, stepMediaObject) {
   // $('#media-editor')[0].innerHTML = '';
-  src = dataFolder + val;
+  src = '/data/media/' + val;
  
-  const avatars = `<div id="avatars" style="width: 25%; height: 15%; position: absolute; top: 25%; left:25%; border-radius: 45%; z-index:99;"><img style = "width: 100%; height: 100%;" class="media"></img></div>`;
+  const avatarsElement = `<div class="avatars" style="width: 25%; height: 15%; position: absolute; top: 25%; left:25%; border-radius: 45%; z-index:99;" data-key=${data_key} data-type=${type}><img style = "width: 100%; height: 100%;" class="media"></img></div>`;
 
   const console = `<div id="console" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:100;"><iframe src="/console" style="width:100%; height: 100%; border: none;"></iframe></div>`;
 
-  const imageElement = `<div style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key}><img style="width: 100%;" src=${src} class="media"></img></div>`
+  const imageElement = `<div style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}><img style="width: 100%;" src=${src} class="media"></img></div>`
 
-  const videoElement = `<div style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key}><video autoplay style="width: 100%;" src=${src} class="media"></video></div>`
+  const videoElement = `<div style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}><video autoplay style="width: 100%;" src=${src} class="media"></video></div>`
                  
-  const audioElement = '<audio id="music" src=""></audio>'
-  // var streamElement = ` 
-  //                     <div 
-  //                     id=${id}
-  //                     class = "popup video stream"
-  //                     style = "z-index: ${zIndex};
-  //                                 text-align: center;
-  //                                 position: absolute;
-  //                                 left: 0%; 
-  //                                 top: 85%;
-  //                                 box-sizing: border-box;
-  //                                 width: 40%;
-  //                                 height: auto;
-  //                                 -webkit-touch-callout: none; 
-  //                                 -webkit-user-select: none; 
-  //                                 -khtml-user-select: none; 
-  //                                 -moz-user-select: none; 
-  //                                 -ms-user-select: none; 
-  //                                 user-select: none; 
-  //                             "
-  //                     >
-  //                         <div 
-  //                             class = "popup-body"
-  //                                         style = "width: 100%;
-  //                                         height: 100%;
-  //                                         overflow: hidden;
-  //                                         box-sizing: border-box;"
-  //                         >
-  //                         <div 
-  //                             class="popup-header" 
-  //                             id=${id + 'header'}
-  //                             style = "   position: absolute;
-  //                                         left: 7%;
-  //                                         top: 20%;
-  //                                         width: 85%;
-  //                                         height: 80%;
-  //                                         padding: 0;
-  //                                         cursor: move;
-  //                                         z-index: 10;
-  //                                     "
-  //                         ></div>
-                      
-  //                         <video id="stream" autoplay style="width: 100%"></video>
-  //                         <div class="video-options">
-  //                             <select name="" id="" class="custom-select"><option value="">Select camera</option></select>
-  //                         </div>
-  //                         <div class="controls d-none">
-  //                             <button class="play streamControl" title="Play">&gt;</button>
-  //                             <button class="pause d-none streamControl" title="Pause">||</button>
-  //                         </div>
-  //                     </div>
-  //                 </div>
-  
-  
-  // `
-  
-  // var textElement = `<div 
-  //                         id=${id}
-  //                         class = "popup text"
-  //                         style = "z-index: ${zIndex};
-  //                                 text-align: center;
-  //                                 position: absolute;
-  //                                 left: 85%; 
-  //                                 top: 85%;
-  //                                 box-sizing: border-box;
-  //                                 width: 20%;
-  //                                 height: auto;
-  //                                 -webkit-touch-callout: none; 
-  //                                 -webkit-user-select: none; 
-  //                                 -khtml-user-select: none; 
-  //                                 -moz-user-select: none; 
-  //                                 -ms-user-select: none; 
-  //                                 user-select: none; 
-  //                                 "
-  //                     >
-  //                         <div 
-  //                             class = "popup-body"
-  //                                     style = "width: 100%;
-  //                                     height: 100%;
-  //                                     overflow: hidden;
-  //                                     box-sizing: border-box;"
-  //                         >
-  //                             <div 
-  //                                 class="popup-header text-box-header" 
-  //                                 id=${id + 'header'}
-  //                                 style = "   position: absolute;
-  //                                             left: -15px;
-  //                                             top: 0px;
-  //                                             width: 15px;
-  //                                             height: 24px;
-  //                                             padding: 0;
-  //                                             cursor: move;
-  //                                             z-index: 10;
-                                              
-  //                                         "
-  //                             ></div>
-  //                             <pre contenteditable="true" id=${id + 'text'} 
-  //                                 style=" 
-  //                                 white-space: pre-wrap; 
-  //                                 word-wrap: break-word;
-  //                                 color: white;
-  //                                 font-size: 16px;
-  //                                 margin: 0px;
-  //                                 font-family: Arial;
-  //                                 "
-  //                             >${val}</pre>
-  //                         </div>
-  //                     </div>`
+  const audioElement = `<audio id="music" src="" data-type=${type}></audio>`
 
-  if (type === 'media_video') {
-      if($(`.step [data-key=${data_key}]`).length === 0) {
-          $('.step').append(videoElement);
-      }
-  } else if (type === 'videoStream'){
-      $('.step').append(streamElement);
-      hideIfDisplayed($('#add-stream-button')[0]);
-      addMenu(id);
+  const streamElement = `<div style="width: 35%; height: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
+                          <video autoplay id="stream" style="width: 100%;" src=${src} class="media"> </video>
+                         </div>`
+ 
+  const textElement = `
+                          <pre contenteditable="true" class="text" style="position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type} 
+                                   style=" 
+                                   white-space: pre-wrap; 
+                                   word-wrap: break-word;
+                                   color: white;
+                                   font-size: 16px;
+                                   margin: 0px;
+                                   font-family: Arial;
+                                   "
+                          >${val}</pre>
+                      `
+  
+  const elements = {
+      'media_images' : imageElement,
+      'media_gifs' : imageElement,
+      'media_video' : videoElement,
+      'videoStream' : streamElement,
+      'avatars' : avatarsElement,
+      'text' : textElement
   }
-  else if (type === 'media_images' || type === 'media_gifs') {
-      //  IF ELEMENT DOES NOT ALREADY EXIST CREATE IT
-      if($(`.step [data-key=${data_key}]`).length === 0) {
-          $('.step').append(imageElement);
+
+  if (type in elements) {
+      if($(`.step__decor [data-key=${data_key}]`).length === 0) {
+          $('.step__decor').append(elements[type]);
       }
-  } else if (type === 'avatars') {
-      if($('#avatars').length === 0) {
-          $('.step').append(avatars);
-      }
-     
-  } else if(type === 'console') {
-      if($('#console').length === 0) {
+  }
+  
+  if(type === 'console') {
+      if(stepMediaObject.active === true && $('#console').length === 0) {
           $('.step').append(console);
       }
-  } else if (type === 'music') {
+      if ((stepMediaObject.active === false && $('#console').length !== 0)) {
+        $('.step #console').remove();
+      }
+  } 
+  
+  if (type === 'music') {
       if($('#music').length === 0) {
-          $('.step').append(audioElement);
+          $('.step__decor').append(audioElement);
       }
   }
-  else if (type === 'media_layouts') {
-      // const iframe  = document.createElement("iframe");
-      // iframe.src = '/data/media/' + val;
-      // iframe.style.display = "none";
-      // document.body.appendChild(iframe);
-
-      // iframe.onload = function(e) {
-          const node = document.createElement('div');
-          node.innerHTML = val;
-
-          const popupElements = Array.from(node.getElementsByClassName("popup"));
-          var id = [];
-          popupElements.forEach(element => id.push(element.id));
-
-          // Adjust src of media elements to be seen by editor
-          var mediaElements = node.querySelectorAll('[src]');
-          for (var element of mediaElements) {
-              var adjustedSRC = element.getAttribute("src").replace("..", "/data/media");
-              element.setAttribute("src", adjustedSRC);
-          }
-
-          // adjust src of media for background images on elements if exists
-          var popupBodyElements = node.querySelectorAll('.popup-body');
-          for (var element of popupBodyElements) {
-                      if (element.style.backgroundImage !== '') {
-                          var adjustedSRC = element.style.backgroundImage.replace('url("..','url("data/media');
-                          element.style.backgroundImage = adjustedSRC;
-                      }
-                  }
-          // adjust main color picker value
-          $('.step_background')[0].value = node.style.backgroundColor;
-          $('.step_background').trigger('input');
-
-          document.getElementById("preview").remove();
-          document.getElementsByTagName("main")[0].append(node);
-       
-          e.target.remove();
-                
-          const popupElementsNew = Array.from(node.getElementsById("preview"));
-         
-          // initResizeElement();
-          if (typeof(id) === 'string') {
-              addMenu(id);
-          } else {
-              id.forEach(element => addMenu(element));
-          // }
-          
-          // initDragElement();
-          closeMediaList();
-      }
-  } 
-  else if (type === 'media_decors') {
-      var decors = Array.from(document.querySelector(".media_decors").children);
-      var previewElement = document.querySelector(".step");
-      // Remove previouse styles
-      decors.forEach(decor => {
-          var className = decor.innerHTML.substring(1);
-          if (previewElement.classList.contains(className)) {
-              previewElement.classList.remove(className);
-          }
-          if (previewElement.style.backgroundColor !== '') {
-              $('.step_background')[0].value = '';
-              $('.step_background').trigger('input');
-          }
-      });
-      previewElement.classList.add(val.substring(1));
-      closeMediaList();
-  } 
-  else if (type === 'background') {
-      var decors = Array.from(document.querySelector(".media_decors").children);
-      var previewElement = document.querySelector(".step");
-      // Remove previouse styles
-      decors.forEach(decor => {
-          var className = decor.innerHTML.substring(1);
-          if (previewElement.classList.contains(className)) {
-              previewElement.classList.remove(className);
-          }
-          // if (previewElement.style.backgroundColor !== '') {
-              $('.step_background')[0].value = val;
-              $('.step_background').trigger('input');
-          // }
-      });
-      // previewElement.classList.add(val.substring(1));
-  }    
-  else if (type === 'text-box') {
-      $('.step').append(textElement);
-      document.getElementById(id + 'text').focus();
-      // initResizeElement(id);
-      addMenu(id);
-      closeMediaList();
-      // initDragElement();
-      hideIfDisplayed($('#add-text-button')[0]);
-      return id
-  }
+  
+  // if (type === 'text') {
+  //     $(`.step__decor [data-key=${data_key}]`).focus();
+  // }
 
   // APPLY STYLE IF MEDIA OBJECT IS FROM STEP
   if (stepMediaObject) {
-      if (type === 'avatars' || type === 'console') {
+      if (type === 'console') {
           if (!stepMediaObject['active']) {
               $(`#${type}`).hide();
           } else {
@@ -922,21 +747,54 @@ function setElements(val, type, data_key, stepMediaObject) {
           $(`#${type}`).css(stepMediaObject['css']);
       } else if (type === 'music') {
           if (!$('#music').attr('src').includes(stepMediaObject['src'])) {
-              $('#music').attr('src', dataFolder +  stepMediaObject['src']); 
+              $('#music').attr('src', htmlPathToMedia +  stepMediaObject['src']); 
           }
           $('#music').attr('volume', stepMediaObject['volume'])
           $('#music').attr('loop', stepMediaObject['loop'])
       }   
       
       else {
+      // if (type === 'media_images') {
           // APPLY CSS
           let mediaElement = $(".step").find(`*[data-key="${data_key}"]`);
+          mediaElement.removeAttr('style');
           mediaElement.css(stepMediaObject['css']);
 
-          // CHECK IF NEW SRC SHOULD BE APPLIED
-          if (!mediaElement.find('.media').attr('src').includes(stepMediaObject['attributes']['src'])) {
-              mediaElement.find('.media').attr('src', dataFolder +  stepMediaObject['attributes']['src']); 
+          // APPLY LOOP AND MUTED TO VIDEOS
+          if(stepMediaObject['type'] === 'media_video') {
+              mediaElement.find('.media').prop('muted', stepMediaObject['attributes']['muted'])
+              mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop'])
           }
+
+          // CHECK IF NEW SRC SHOULD BE APPLIED
+          if (stepMediaObject['type'] === 'media_video' || stepMediaObject['type'] === 'media_images') {
+              if (!mediaElement.find('.media').attr('src').includes(stepMediaObject['attributes']['src'])) {
+                  mediaElement.find('.media').attr('src', htmlPathToMedia +  stepMediaObject['attributes']['src']); 
+              }
+          }
+
+          if (stepMediaObject['type'] === 'videoStream') {
+              if (!mediaElement.find('video')[0].srcObject) {
+                  const constraints = {
+                      video: { deviceId: stepMediaObject['attributes']['device']}
+                  };
+                  startStream(constraints, data_key);
+              } else {
+                  if (mediaElement.find('video')[0].srcObject['id'] !== stepMediaObject['attributes']['device']) {
+                      const constraints = {
+                          video: { deviceId: stepMediaObject['attributes']['device']}
+                      };
+                      startStream(constraints, data_key);
+                  }
+              }
+          }
+
+           // ADD NEW TEXT IF NEEDED
+           if (stepMediaObject['type'] === 'text') {
+              if (mediaElement.text() !== stepMediaObject['content']) {
+                  mediaElement.text(stepMediaObject['content']);
+              }
+           }
 
           // APPLY CLASSES
           let classes = "";
@@ -945,47 +803,27 @@ function setElements(val, type, data_key, stepMediaObject) {
           });
           mediaElement.addClass(classes);
 
-          // ADD TEXT
-          mediaElement.find('.text').text(stepMediaObject['content']);
-
-          if(stepMediaObject['css']['object-fit'] !== "") {
+         
+          if(stepMediaObject['css']['object-fit'] && stepMediaObject['css']['object-fit'] !== "") {
               mediaElement.find('.media').css({"height" : "100%", "object-fit" : stepMediaObject['css']['object-fit']});
           }
+      // }
       }
   } 
 }
 
-function checkMediaType(val) {
-  if (
-  val.toLowerCase().endsWith('.jpeg') ||
-  val.toLowerCase().endsWith('.gif') ||
-  val.toLowerCase().endsWith('.jpg') ||
-  val.toLowerCase().endsWith('.png') ||
-  val.toLowerCase().endsWith('.svg') ||
-  val.toLowerCase().endsWith('.webp') ||
-  val.toLowerCase().endsWith('.jfif') ) {
-      return 'media_images'
-  }
-  if (
-  val.toLowerCase().endsWith('.webm') ||
-  val.toLowerCase().endsWith('.mp4') ||
-  val.toLowerCase().endsWith('.mov') ||
-  val.toLowerCase().endsWith('.wmv') ||
-  val.toLowerCase().endsWith('.avi') ||
-  val.toLowerCase().endsWith('.ogv') ) {
-      return 'media_video'
-  }
 
-  return 'media_stream'
-}
 
 
 socket.on('step', function(data){
+  console.log(data)
+  console.log(cat)
   if ('boite' in data && 'type' in data.boite) setBoite(data.boite);
-  if ('mode' in data) setMode(data.mode);
-  // displayStep(data);
-  if ('screen' in data) displayStep(data['screen']);
-  if ('laptop' in data) displayStep(data['laptop']);
+ 
+  if ('media-order' in data) displayStep(data);
+  if ('mode' in data) setMode(data['mode']);
+  // if ('screen' in data) displayStep(data['screen']);
+  // if ('laptop' in data) displayStep(data['laptop']);
 })
 
 // socket.on('step', function(data) {

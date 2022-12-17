@@ -35,10 +35,6 @@
 <script src="./js/lib/mousetrap.min.js"></script>
 <script src="./js/lib/jquery.scrollTo.min.js"></script>
 
-<script src="./js/lib/jquery-ui-rotatable/jquery.ui.rotatablejs"></script>
-<!-- this is small and will allow you to override look/feel of handle -->
-<link rel="stylesheet" href="./js/lib/jquery-ui-rotatable/jquery.ui.rotatable.css">
-
 <script src="./js/processor.js"></script>
 
 <script src="./js/constants.js"></script>
@@ -87,18 +83,30 @@
       <!-- <p style='text-decoration: underline; font-size: 0.8em;' onclick='removeBackgroundColor(null)'>Remove Background color</p> -->
       <div class='editor-buttons'>
         <!-- <button onclick="newEtape()" class="grey">+</button> -->
-        <button onclick="addMedia()"><img src="./icons/plus.svg"></img></button>
-        <button id="delete-media-button"><img src="./icons/trash.svg"></img></button>
-        <button id="edit-media-button"><img src="./icons/settings.svg"></img></button>
+        <button onclick="addMedia(event)" class="tooltip">
+          <img src="./icons/plus.svg"></img>
+          <span class="tooltiptext">Click on step in novel to add media</span></button>
+        </button>
+        <button id="delete-media-button" class="tooltip">
+          <img src="./icons/trash.svg"></img>
+          <span class="tooltiptext">Click on media to delete</span></button>
+        </button>
+        <button id="edit-media-button" class="tooltip">
+          <img src="./icons/settings.svg"></img>
+          <span class="tooltiptext">Click on media to edit</span></button>
+        </button>
         <!-- <button id="layer-down"><img src="./icons/arrowhead-down.svg"></img></button>
         <button id="layer-up"><img src="./icons/arrowhead-up.svg"></img></button> -->
-        <button onclick="saveStep()">Save</button>
+        <button onclick="saveStep(event)" class="tooltip">
+          Save
+          <span class="tooltiptext">Click on step in novel to save</span></button>
+        </button>
         <div class="break"></div>
         <fieldset>
           <label for="console">Console</label>
           <input type="checkbox" name="console" id="console-checkbox">
-          <label for="boite">Boite</label>
-          <input type="checkbox" name="boite" id="boite-checkbox">
+          <label for="boite" style="display: none;">Boite</label>
+          <input style="display: none;" type="checkbox" name="boite" id="boite-checkbox" checked>
        </fieldset>
         <!-- <button onclick="clearPreview()" class="grey"><span>🚫</span> Clear all</button> -->
         <!-- <button onclick="setElements('', 'text-box')" class="green" id="add-text-button" >Add text box</button>
@@ -117,7 +125,9 @@
       <div id="structure-content"></div>
       <div class='editor-buttons'>
         <button id="add-scene-step-button" onclick="addInStructure('show')"><img src="./icons/plus.svg"></img></button>
-        <!-- <button id="delete-scene-step-button" onclick="deleteFromStructure()"><img src="./icons/trash.svg"></img></button> -->
+        <button id="delete-scene-step-button" onclick="deleteFromStructure('show')" class="tooltip">
+          <img src="./icons/trash.svg"></img>
+          <span class="tooltiptext">Click on visual novel you want to delete</span></button>
      </div>
     </section>
   </div>
@@ -149,8 +159,8 @@
   </div>
   <div id="left-menu">
     <div id="media-menu">
-      <div class="section-header">Etats</div>
-      <form id="boite" style="display: none;">
+      <div class="section-header">States</div>
+      <form id="boite">
         <header class="box-h box-boites-type">
           <div id="boites_types" class="box-v box-wrap"></div>
         </header>
@@ -161,11 +171,11 @@
           placeholder="data"
           name="arg"
         ></textarea>
-        <footer class="box-v">
+        <!-- <footer class="box-v">
           <button type="submit" title="Envoyer la boite (Ctrl+Enter)" class="icon">
-            📢 Preview boite
+            📢 Add
           </button>
-        </footer>
+        </footer> -->
       </form>
      
       </div>
@@ -178,6 +188,7 @@
     </div>
    
   </div>
+  <button style="position: absolute; bottom: 5%; left: 50%;" id="preview-step" onclick="sendStep()">SendStep</button>
    <!-- <footer class="box-h box-boites">
           <b>états</b>
           <form id="boite">
@@ -259,4 +270,5 @@
 <script src='./listcomponent/Draggable.min.js'></script>
 <script src='./listcomponent/TweenMax.min.js'></script>
 <script  src="./listcomponent/script.js"></script>
+
 </body>

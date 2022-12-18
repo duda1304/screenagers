@@ -1,0 +1,343 @@
+{
+    "name": "test novel",
+    "languages": [
+        "HR"
+    ],
+    "scene-order": [
+        1,
+        2
+    ],
+    "scenes": {
+        "1": {
+            "name": "test scene",
+            "step-order": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "steps": {
+                "1": {
+                    "screen": {
+                        "media-order": [
+                            "56hLy",
+                            "Jg84O",
+                            "kWXK3",
+                            "8KFGz"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "56hLy": {
+                                "type": "media_video",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "7%",
+                                    "left": "5%",
+                                    "z-index": "1"
+                                },
+                                "attributes": {
+                                    "src": "Grindcore/grind-1-screen.webm",
+                                    "loop": true,
+                                    "muted": false
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "Jg84O": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "21%",
+                                    "left": "50%",
+                                    "z-index": "2"
+                                },
+                                "attributes": {},
+                                "content": "sdsfdsfsdf\nsdfdsfds\n",
+                                "classes": [
+                                    "text"
+                                ]
+                            },
+                            "kWXK3": {
+                                "type": "media_images",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "46%",
+                                    "left": "55%",
+                                    "z-index": "3"
+                                },
+                                "attributes": {
+                                    "src": "VN/blade-runner-2049-image-ryan-gosling.jpg"
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "8KFGz": {
+                                "type": "media_gifs",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "26%",
+                                    "left": "13%",
+                                    "z-index": "4"
+                                },
+                                "attributes": {
+                                    "src": "Gif/Avatars/Avatars1.gif"
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [
+                            "c99Fh"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "c99Fh": {
+                                "type": "media_gifs",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "1"
+                                },
+                                "attributes": {
+                                    "src": "Gif/astronaut.gif"
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "2": {
+                    "screen": {
+                        "media-order": [],
+                        "background-color": "",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "3": {
+                    "screen": {
+                        "media-order": [],
+                        "background-color": "",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "4": {
+                    "screen": {
+                        "media-order": [
+                            "adPYE"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "adPYE": {
+                                "type": "media_images",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "1"
+                                },
+                                "attributes": {
+                                    "src": "VN/istockphoto-1133368387-1024x1024.jpg"
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [
+                            "TQFTN"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "TQFTN": {
+                                "type": "media_images",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "1"
+                                },
+                                "attributes": {
+                                    "src": "Animationconnexion/Animationconnexion/3."
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "5": {
+                    "screen": {
+                        "media-order": [],
+                        "background-color": "",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                }
+            }
+        },
+        "2": {
+            "name": "test scene-copy",
+            "step-order": [
+                1
+            ],
+            "steps": {
+                "1": {
+                    "screen": {
+                        "media-order": [],
+                        "background-color": "",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                }
+            }
+        }
+    }
+}

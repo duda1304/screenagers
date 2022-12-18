@@ -10,25 +10,39 @@ const sceneObject = {
     "steps" : {}
 }
 const stepObject = { 
-    "screen" :  {
-                    "media-order": [],
-                    "background-color": "",
-                    "media": {},
-                    "console": {
-                        "active": false,
-                        "css": {}
-                    },
-                    "music" : {
-                        "src": "",
-                        "volume": "",
-                        "loop": ""
+                    "screen" :  {
+                                    "media-order": [],
+                                    "background-color": "",
+                                    "media": {},
+                                    "console": {
+                                        "active": false,
+                                        "css": {}
+                                    },
+                                    "music" : {
+                                        "src": "",
+                                        "volume": "",
+                                        "loop": ""
+                                    }
+                                },
+                    "laptop" :  {
+                                    "media-order": [],
+                                    "background-color": "",
+                                    "media": {},
+                                    "console": {
+                                        "active": false,
+                                        "css": {}
+                                    },
+                                    "music" : {
+                                        "src": "",
+                                        "volume": "",
+                                        "loop": ""
+                                    }
+                                },
+                    "boite" :   {
+                                    "type": "no_phone",
+                                    "arg": ""
+                                }
                     }
-            },
-            "boite" : {
-                "type": "no_phone",
-                "arg": ""
-            }
-        }
 
 const consoleObject =   {
                         "mode": "console"

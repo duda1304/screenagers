@@ -11,7 +11,6 @@
             "name": "test",
             "step-order": [
                 1,
-                6,
                 2,
                 3,
                 4,
@@ -21,91 +20,61 @@
                 "1": {
                     "screen": {
                         "media-order": [
-                            "orh4T",
-                            "R58pu",
-                            "yJ0pc",
-                            "Zb3rH"
+                            "fwv67"
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
-                            "orh4T": {
-                                "type": "media_images",
-                                "css": {
-                                    "width": "100%",
-                                    "position": "absolute",
-                                    "top": "0%",
-                                    "left": "0%",
-                                    "z-index": "1",
-                                    "object-fit": "cover",
-                                    "height": "100%"
-                                },
-                                "attributes": {
-                                    "src": "Press-Song/2022-05-07-21-15-13.png"
-                                },
-                                "content": "",
-                                "classes": []
-                            },
-                            "Zb3rH": {
-                                "type": "text",
-                                "css": {
-                                    "position": "absolute",
-                                    "top": "71%",
-                                    "left": "54%",
-                                    "z-index": "4",
-                                    "padding": "5px",
-                                    "color": "rgb(0, 0, 0)",
-                                    "font-size": "21px"
-                                },
-                                "attributes": {},
-                                "content": "ghvfghfhasdasdasd",
-                                "classes": [
-                                    "text"
-                                ]
-                            },
-                            "R58pu": {
-                                "type": "videoStream",
+                            "fwv67": {
+                                "type": "media_gifs",
                                 "css": {
                                     "width": "35%",
                                     "position": "absolute",
-                                    "top": "11%",
-                                    "left": "34%",
-                                    "z-index": "2"
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "1"
                                 },
                                 "attributes": {
-                                    "device": "7hrhewPso0gwvpgfXGv6ShCxDdJ3lGK0y2zv"
+                                    "src": "CableStory/Sharkconnection.gif"
                                 },
                                 "content": "",
                                 "classes": []
-                            },
-                            "yJ0pc": {
-                                "type": "avatars",
-                                "css": {
-                                    "width": "29%",
-                                    "height": "23%",
-                                    "position": "absolute",
-                                    "top": "60%",
-                                    "left": "66%",
-                                    "border-radius": "45%",
-                                    "z-index": "3"
-                                },
-                                "attributes": {},
-                                "content": "",
-                                "classes": [
-                                    "avatars"
-                                ]
                             }
                         },
                         "console": {
-                            "active": true,
-                            "css": {
-                                "width": "25%",
-                                "height": "95%",
-                                "position": "absolute",
-                                "top": "2.5%",
-                                "left": "5%",
-                                "z-index": "100",
-                                "display": "block"
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [
+                            "0TqJ9"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "0TqJ9": {
+                                "type": "media_gifs",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "1"
+                                },
+                                "attributes": {
+                                    "src": "Gif/Avatars/Avatars0.gif"
+                                },
+                                "content": "",
+                                "classes": []
                             }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {}
                         },
                         "music": {
                             "src": "",
@@ -114,11 +83,8 @@
                         }
                     },
                     "boite": {
-                        "type": "choix",
-                        "arg": "choice 1\n\nchoice 2\n\n"
-                    },
-                    "console": {
-                        "mode": "console"
+                        "type": "gameboy",
+                        "arg": ""
                     }
                 },
                 "2": {
@@ -190,6 +156,20 @@
                             "loop": ""
                         }
                     },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
                     "boite": {
                         "type": "gameboy",
                         "arg": ""
@@ -198,12 +178,12 @@
                 "3": {
                     "screen": {
                         "media-order": [
-                            "tDQ7l",
-                            "gg7nF"
+                            "xPvHN",
+                            "vNPFh"
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
-                            "tDQ7l": {
+                            "xPvHN": {
                                 "type": "media_images",
                                 "css": {
                                     "width": "35%",
@@ -213,24 +193,54 @@
                                     "z-index": "1"
                                 },
                                 "attributes": {
-                                    "src": "VN/7eb6046ba17024414f94cb8db703f424.jpg"
+                                    "src": "Press-Song/2022-06-19-16-14-07.png"
                                 },
                                 "content": "",
                                 "classes": []
                             },
-                            "gg7nF": {
-                                "type": "media_video",
+                            "vNPFh": {
+                                "type": "media_images",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "11%",
+                                    "left": "60%",
+                                    "z-index": "2"
+                                },
+                                "attributes": {
+                                    "src": "Unoriginalsong/Unoriginalsong.026.jpeg"
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [
+                            "pZm7f"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "pZm7f": {
+                                "type": "media_images",
                                 "css": {
                                     "width": "35%",
                                     "position": "absolute",
                                     "top": "25%",
                                     "left": "25%",
-                                    "z-index": "2"
+                                    "z-index": "1"
                                 },
                                 "attributes": {
-                                    "src": "Animationconnexion/animationconnexion.webm",
-                                    "loop": true,
-                                    "muted": false
+                                    "src": "pepe-the-frog.jpg"
                                 },
                                 "content": "",
                                 "classes": []
@@ -266,6 +276,20 @@
                             "loop": ""
                         }
                     },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
                     "boite": {
                         "type": "no_phone",
                         "arg": ""
@@ -274,91 +298,93 @@
                 "5": {
                     "screen": {
                         "media-order": [
-                            "ZNdV2",
-                            "R58pu",
-                            "yJ0pc",
-                            "Zb3rH"
+                            "xPvHN",
+                            "vNPFh"
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
-                            "R58pu": {
-                                "type": "videoStream",
+                            "xPvHN": {
+                                "type": "media_images",
                                 "css": {
                                     "width": "35%",
                                     "position": "absolute",
-                                    "top": "11%",
-                                    "left": "34%",
-                                    "z-index": "2"
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "1"
                                 },
                                 "attributes": {
-                                    "device": "SpcKPdn31AOREyDUKsFm0F12fIZ92tlrAYc2"
+                                    "src": "Press-Song/2022-06-19-16-14-07.png"
                                 },
                                 "content": "",
                                 "classes": []
                             },
-                            "yJ0pc": {
-                                "type": "avatars",
-                                "css": {
-                                    "width": "29%",
-                                    "height": "23%",
-                                    "position": "absolute",
-                                    "top": "60%",
-                                    "left": "66%",
-                                    "border-radius": "45%",
-                                    "z-index": "3"
-                                },
-                                "attributes": {},
-                                "content": "",
-                                "classes": [
-                                    "avatars"
-                                ]
-                            },
-                            "Zb3rH": {
-                                "type": "text",
-                                "css": {
-                                    "position": "absolute",
-                                    "top": "71%",
-                                    "left": "54%",
-                                    "z-index": "4",
-                                    "padding": "5px",
-                                    "color": "rgb(0, 0, 0)",
-                                    "font-size": "21px"
-                                },
-                                "attributes": {},
-                                "content": "ghvfghfhasdasdasd",
-                                "classes": [
-                                    "text"
-                                ]
-                            },
-                            "ZNdV2": {
+                            "vNPFh": {
                                 "type": "media_images",
                                 "css": {
-                                    "width": "100%",
+                                    "width": "35%",
                                     "position": "absolute",
-                                    "top": "0%",
-                                    "left": "0%",
-                                    "z-index": "1",
-                                    "object-fit": "cover",
-                                    "height": "100%"
+                                    "top": "11%",
+                                    "left": "60%",
+                                    "z-index": "2"
                                 },
                                 "attributes": {
-                                    "src": "CableStory/Histoire-des-cables007.jpeg"
+                                    "src": "Unoriginalsong/Unoriginalsong.026.jpeg"
                                 },
                                 "content": "",
                                 "classes": []
                             }
                         },
                         "console": {
-                            "active": true,
-                            "css": {
-                                "width": "25%",
-                                "height": "95%",
-                                "position": "absolute",
-                                "top": "2.5%",
-                                "left": "5%",
-                                "z-index": "100",
-                                "display": "block"
+                            "active": false,
+                            "css": {}
+                        },
+                        "music": {
+                            "src": "",
+                            "volume": "",
+                            "loop": ""
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [
+                            "XLiZe",
+                            "h2hGz"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "XLiZe": {
+                                "type": "media_gifs",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "1"
+                                },
+                                "attributes": {
+                                    "src": "Gif/Avatars/Avatars15.gif"
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "h2hGz": {
+                                "type": "media_images",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "2"
+                                },
+                                "attributes": {
+                                    "src": "VN/istockphoto-1133368387-1024x1024.jpg"
+                                },
+                                "content": "",
+                                "classes": []
                             }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {}
                         },
                         "music": {
                             "src": "",
@@ -369,112 +395,6 @@
                     "boite": {
                         "type": "choix",
                         "arg": ""
-                    },
-                    "console": {
-                        "mode": "console"
-                    }
-                },
-                "6": {
-                    "screen": {
-                        "media-order": [
-                            "orh4T",
-                            "R58pu",
-                            "yJ0pc",
-                            "Zb3rH"
-                        ],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {
-                            "orh4T": {
-                                "type": "media_images",
-                                "css": {
-                                    "width": "100%",
-                                    "position": "absolute",
-                                    "top": "0%",
-                                    "left": "0%",
-                                    "z-index": "1",
-                                    "object-fit": "cover",
-                                    "height": "100%"
-                                },
-                                "attributes": {
-                                    "src": "Press-Song/2022-05-07-21-15-13.png"
-                                },
-                                "content": "",
-                                "classes": []
-                            },
-                            "R58pu": {
-                                "type": "videoStream",
-                                "css": {
-                                    "width": "35%",
-                                    "position": "absolute",
-                                    "top": "11%",
-                                    "left": "34%",
-                                    "z-index": "2"
-                                },
-                                "attributes": {
-                                    "device": "6J6SylXTwE3T5YNt4qdd33UmRvbU8IJLD3uC"
-                                },
-                                "content": "",
-                                "classes": []
-                            },
-                            "yJ0pc": {
-                                "type": "avatars",
-                                "css": {
-                                    "width": "29%",
-                                    "height": "23%",
-                                    "position": "absolute",
-                                    "top": "60%",
-                                    "left": "66%",
-                                    "border-radius": "45%",
-                                    "z-index": "3"
-                                },
-                                "attributes": {},
-                                "content": "",
-                                "classes": [
-                                    "avatars"
-                                ]
-                            },
-                            "Zb3rH": {
-                                "type": "text",
-                                "css": {
-                                    "position": "absolute",
-                                    "top": "71%",
-                                    "left": "54%",
-                                    "z-index": "4",
-                                    "padding": "5px",
-                                    "color": "rgb(0, 0, 0)",
-                                    "font-size": "21px"
-                                },
-                                "attributes": {},
-                                "content": "ghvfghfhasdasdasd",
-                                "classes": [
-                                    "text"
-                                ]
-                            }
-                        },
-                        "console": {
-                            "active": true,
-                            "css": {
-                                "width": "25%",
-                                "height": "95%",
-                                "position": "absolute",
-                                "top": "2.5%",
-                                "left": "5%",
-                                "z-index": "100",
-                                "display": "block"
-                            }
-                        },
-                        "music": {
-                            "src": "",
-                            "volume": "",
-                            "loop": ""
-                        }
-                    },
-                    "boite": {
-                        "type": "choix",
-                        "arg": "xzczxczx\n\nzxczxczxcz"
-                    },
-                    "console": {
-                        "mode": "console"
                     }
                 }
             }

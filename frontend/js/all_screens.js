@@ -270,6 +270,7 @@ function setVideo({ src, style, volume, fit, loop }) {
 }
 
 async function startStream(constraints, data_key) {
+  $(`.step [data-key=${data_key}] video`).data('data-device', constraints.video.deviceId);
   navigator.mediaDevices.getUserMedia( constraints )
   .then( MediaStream => {
       handleStream(MediaStream, data_key);
@@ -774,20 +775,26 @@ function setElements(val, type, data_key, stepMediaObject) {
           }
 
           if (stepMediaObject['type'] === 'videoStream') {
-              if (!mediaElement.find('video')[0].srcObject) {
-                  const constraints = {
-                      video: { deviceId: stepMediaObject['attributes']['device']}
-                  };
-                  startStream(constraints, data_key);
-              } else {
-                  if (mediaElement.find('video')[0].srcObject['id'] !== stepMediaObject['attributes']['device']) {
-                      const constraints = {
-                          video: { deviceId: stepMediaObject['attributes']['device']}
-                      };
-                      startStream(constraints, data_key);
-                  }
-              }
-          }
+            if (mediaElement.find('video').data('data-device') !== stepMediaObject['attributes']['device']) {
+                const constraints = {
+                    video: { deviceId: stepMediaObject['attributes']['device']}
+                };
+                startStream(constraints, data_key);
+            }
+            // if (!mediaElement.find('video')[0].srcObject) {
+            //     const constraints = {
+            //         video: { deviceId: stepMediaObject['attributes']['device']}
+            //     };
+            //     startStream(constraints, data_key);
+            // } else {
+            //     if (mediaElement.find('video')[0].srcObject['id'] !== stepMediaObject['attributes']['device']) {
+            //         const constraints = {
+            //             video: { deviceId: stepMediaObject['attributes']['device']}
+            //         };
+            //         startStream(constraints, data_key);
+            //     }
+            // }
+        }
 
            // ADD NEW TEXT IF NEEDED
            if (stepMediaObject['type'] === 'text') {

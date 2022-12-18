@@ -106,6 +106,8 @@ app.get('/assistant', (req, res) => res.sendFile(path.resolve('frontend/assistan
 
 app.get('/editor', (req, res) => res.sendFile(path.resolve('frontend/editor.html')));
 
+app.get('/debug', (req, res) => res.sendFile(path.resolve('frontend/debug.html')));
+
 const auth = require('basic-auth');
 const admins = { toto: { password: 'toto' } };
 app.get('/master', (req, res, next) => {

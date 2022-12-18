@@ -8,8 +8,24 @@ let active = {
     step : ""
 }
 
+let activeScreen = 'screen';
+
 $('#delete-media-button').on('click', showTooltips);
 $('#edit-media-button').on('click', showTooltips);
+
+$('.screens div').on('click', function(){
+    $('.screens div').not(this).removeClass('active');
+    $(this).addClass('active');
+    activeScreen = $(this).text().toLowerCase();
+    $(`#step-media .${activeScreen}`).show();
+    $(`#step-media ul`).not(`.${activeScreen}`).hide();
+    if(active.step !== '') {
+        // CLEAR PREVIOUS  STEP DATA LIST
+        $(`#step-media .${activeScreen}`).empty();
+        $('#console-checkbox').prop('checked', false);
+        displayActiveStepMedia();
+    }
+})
 
 $( function() {
     $( ".draggable" ).draggable();
@@ -195,7 +211,7 @@ function displayStructure(fileName, data) {
                 setActiveStep(fileName, "", "");
                 $(".step").removeClass('active');
             }
-            $('#step-media ul').empty();
+            $(`#step-media .${activeScreen}`).empty();
             $('#preview').empty();
             $('#console-checkbox').prop('checked', false);
             // $('#boite-checkbox').prop('checked', false);
@@ -225,7 +241,7 @@ function displayStructure(fileName, data) {
         } else {
             setActiveStep("", "", "");
         }
-        $('#step-media ul').empty();
+        $(`#step-media .${activeScreen}`).empty();
         $('#preview').empty();
         $('#console-checkbox').prop('checked', false);
         // $('#boite-checkbox').prop('checked', false);
@@ -261,10 +277,10 @@ $('#boite textarea').on('input', function() {
     setBoite(data);
 })
 
-$( "#boite" ).submit(function( event ) {
-    event.preventDefault();
-    sendStep();
-  });
+// $( "#boite" ).submit(function( event ) {
+//     event.preventDefault();
+//     sendStep();
+//   });
 
 
 function saveStepOrder(fileName, sceneOrderNumber, stepsOrder) {
@@ -284,7 +300,7 @@ function setActiveStep(fileName, scene, step) {
 
 function applyZIndexes() {
     let mediaOrder = [];
-    $('#step-media li').each(function(){mediaOrder.push($(this).data('key'))})
+    $(`#step-media .${activeScreen} li`).each(function(){mediaOrder.push($(this).data('key'))})
     mediaOrder.forEach((value, index) => {
         $(`#preview [data-key=${value}]`).css({"z-index" : index + 1});
     })
@@ -292,9 +308,9 @@ function applyZIndexes() {
 
 function clearUnwantedMedia(stepMedia){
     // const div = document.getElementById(container);
-    // const stepMedia = mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media'];
+    // const stepMedia = mainData[active.fileName]['scenes'][active.scene]['steps'][active.step][activeScreen]['media'];
 
-    let keysArray = [].map.call($('.step').children().not('#boite'), function (e) {
+    let keysArray = [].map.call($('#preview').children().not('#boite'), function (e) {
     return e.getAttribute('data-key')
     })
 
@@ -305,7 +321,7 @@ function clearUnwantedMedia(stepMedia){
     })
 }
 
-$("#step-media ul").sortable({
+$(`#step-media .${activeScreen}`).sortable({
     start : function (event, ui) {
        startPosition = ui.item.index();
     },
@@ -313,8 +329,8 @@ $("#step-media ul").sortable({
         let endPosition = ui.item.index();
         if (endPosition !== startPosition) {
             // ADJUST MAIN DATA
-            // let movedElement = mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].splice(startPosition, 1)[0];
-            // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].splice(endPosition, 0, movedElement);
+            // let movedElement = mainData[active.fileName]['scenes'][active.scene]['steps'][active.step][activeScreen]['media-order'].splice(startPosition, 1)[0];
+            // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step][activeScreen]['media-order'].splice(endPosition, 0, movedElement);
 
             applyZIndexes();
            
@@ -334,60 +350,94 @@ function setStep(e, fileName, scene, step) {
     $(e.target).toggleClass('active');
 
     // CLEAR PREVIOUS  STEP DATA LIST
-    $('#step-media ul').empty();
+    $(`#step-media .${activeScreen}`).empty();
     $('#console-checkbox').prop('checked', false);
     // $('#boite-checkbox').prop('checked', false);
 
     if($(e.target).hasClass('active')) {
         setActiveStep(fileName, scene, step);
 
-        // APPEND clone and delete buttons
+        // APPEND clone and delete buttons to step
         $(e.target).append(`<div class="structure-buttons">
                                 <span onclick="duplicate('step')"><img class="duplicate-icon" src="./icons/duplicate.png"></img></span>
                                 <span onclick="deleteFromStructure('step')"><img src="./icons/trash.svg"></img></span>
                             </div>`)
 
-        $.getJSON('./data/json/' + fileName + '.json', function(jsonData) {
-            const mediaOrder = jsonData['scenes'][scene]['steps'][step]['screen']['media-order'];
-            const stepMedia = jsonData['scenes'][scene]['steps'][step]['screen']['media'];
+        // DISPLAY step media
+        displayActiveStepMedia();
+        // $.getJSON('./data/json/' + fileName + '.json', function(jsonData) {
+        //     const mediaOrder = jsonData['scenes'][scene]['steps'][step][activeScreen]['media-order'];
+        //     const stepMedia = jsonData['scenes'][scene]['steps'][step][activeScreen]['media'];
             
-            clearUnwantedMedia(stepMedia);
-            for (let data_key of mediaOrder) {
-                // DISPLAY MEDIA IN MEDIA LIST
-                let liName;
-                if (stepMedia[data_key]['type'] === 'media_images' || stepMedia[data_key]['type'] === 'media_video' || stepMedia[data_key]['type'] === 'media_gifs') {
-                    liName = getFileName(stepMedia[data_key]['attributes']['src']);
-                } else {
-                    liName = stepMedia[data_key]['type']
-                }
-                const li = `<li data-key=${data_key} data-type=${stepMedia[data_key]['type']} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${liName}</li>`;
-                $('#step-media ul').append(li);
-                // DISPLAY STEP IN MEDIA PREVIEW
-                setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);
-            }
-            applyZIndexes();
-            setElements("", "console", "", jsonData['scenes'][scene]['steps'][step]['screen']['console']);
-            setElements("", "music", "", jsonData['scenes'][scene]['steps'][step]['screen']['music']);
+        //     clearUnwantedMedia(stepMedia);
+        //     for (let data_key of mediaOrder) {
+        //         // DISPLAY MEDIA IN MEDIA LIST
+        //         let liName;
+        //         if (stepMedia[data_key]['type'] === 'media_images' || stepMedia[data_key]['type'] === 'media_video' || stepMedia[data_key]['type'] === 'media_gifs') {
+        //             liName = getFileName(stepMedia[data_key]['attributes']['src']);
+        //         } else {
+        //             liName = stepMedia[data_key]['type']
+        //         }
+        //         const li = `<li data-key=${data_key} data-type=${stepMedia[data_key]['type']} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${liName}</li>`;
+        //         $(`#step-media .${activeScreen}`).append(li);
+        //         // DISPLAY STEP IN MEDIA PREVIEW
+        //         setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);
+        //     }
+        //     applyZIndexes();
+        //     setElements("", "console", "", jsonData['scenes'][scene]['steps'][step][activeScreen]['console']);
+        //     setElements("", "music", "", jsonData['scenes'][scene]['steps'][step][activeScreen]['music']);
 
-            // set boite
-            if ('boite' in jsonData['scenes'][scene]['steps'][step]) {
-                setBoite(jsonData['scenes'][scene]['steps'][step]['boite']);
-                $('#boite input').each(function(){
-                    $(this).prop('checked', false);
-                    $(`#boite input[value=${jsonData['scenes'][scene]['steps'][step]['boite']['type']}]`).prop('checked', true);
-                })
-            }
-             
-        }) 
+        //     // set boite
+        //     if ('boite' in jsonData['scenes'][scene]['steps'][step]) {
+        //         setBoite(jsonData['scenes'][scene]['steps'][step]['boite']);
+        //         $('#boite input').each(function(){
+        //             $(this).prop('checked', false);
+        //             $(`#boite input[value=${jsonData['scenes'][scene]['steps'][step]['boite']['type']}]`).prop('checked', true);
+        //         })
+        //     }
+        // }) 
     } else {
         setActiveStep(fileName, scene, ""); 
         $('#preview').empty();
     }
 }
 
+function displayActiveStepMedia() {
+    $.getJSON('./data/json/' + active.fileName + '.json', function(jsonData) {
+        const mediaOrder = jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['media-order'];
+        const stepMedia = jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['media'];
+        
+        clearUnwantedMedia(stepMedia);
+        for (let data_key of mediaOrder) {
+            // DISPLAY MEDIA IN MEDIA LIST
+            let liName;
+            if (stepMedia[data_key]['type'] === 'media_images' || stepMedia[data_key]['type'] === 'media_video' || stepMedia[data_key]['type'] === 'media_gifs') {
+                liName = getFileName(stepMedia[data_key]['attributes']['src']);
+            } else {
+                liName = stepMedia[data_key]['type']
+            }
+            const li = `<li data-key=${data_key} data-type=${stepMedia[data_key]['type']} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${liName}</li>`;
+            $(`#step-media .${activeScreen}`).append(li);
+            // DISPLAY STEP IN MEDIA PREVIEW
+            setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);
+        }
+        applyZIndexes();
+        setElements("", "console", "", jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['console']);
+        setElements("", "music", "", jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['music']);
+
+        // set boite
+        if ('boite' in jsonData['scenes'][active.scene]['steps'][active.step]) {
+            setBoite(jsonData['scenes'][active.scene]['steps'][active.step]['boite']);
+            $('#boite input').each(function(){
+                $(this).prop('checked', false);
+                $(`#boite input[value=${jsonData['scenes'][active.scene]['steps'][active.step]['boite']['type']}]`).prop('checked', true);
+            })
+        }
+    }) 
+}
+
 // ADD ELEMENTS
 function setElements(val, type, data_key, stepMediaObject) {
-    // $('#media-editor')[0].innerHTML = '';
     src = htmlPathToMedia + val;
    
     const avatarsElement = `<div class="avatars draggable resizable" style="width: 25%; height: 15%; position: absolute; top: 25%; left:25%; border-radius: 45%; z-index:99;" data-key=${data_key} data-type=${type}><img style = "width: 100%; height: 100%;" class="media"></img></div>`;
@@ -439,9 +489,6 @@ function setElements(val, type, data_key, stepMediaObject) {
         if ((stepMediaObject.active === false && $('#console').length !== 0)) {
           $('#preview #console').remove();
         }
-        // if($('#console').length === 0) {
-        //     $('#preview').append(console);
-        // }
     } 
     
     if (type === 'music') {
@@ -552,8 +599,8 @@ function setElements(val, type, data_key, stepMediaObject) {
         $('#preview .draggable').not(this).removeClass('active');
         $(this).addClass('active');
         // MARK ACTIVE IN MEDIA LIST
-        $("#step-media ul li").not(`li[data-key="${this.dataset.key}"]`).removeClass('active');
-        $("#step-media").find(`li[data-key="${this.dataset.key}"]`).addClass('active');
+        $(`#step-media .${activeScreen} li`).not(`li[data-key="${this.dataset.key}"]`).removeClass('active');
+        $(`#step-media .${activeScreen}`).find(`li[data-key="${this.dataset.key}"]`).addClass('active');
         // SET EVENT LISTENERS ON BUTTONS
         $("#delete-media-button").unbind("click");
         $("#edit-media-button").unbind("click");
@@ -563,7 +610,7 @@ function setElements(val, type, data_key, stepMediaObject) {
         if ($(this).hasClass('active')) {
             $("#delete-media-button").click(function(){
                 $(previewElement).remove();
-                $("#step-media").find(`li[data-key="${data_key}"]`).remove();
+                $(`#step-media .${activeScreen}`).find(`li[data-key="${data_key}"]`).remove();
                 $("#delete-media-button").unbind("click");
                 $("#edit-media-button").unbind("click");
                 $("#delete-media-button").on("click", showTooltips);
@@ -613,7 +660,6 @@ function setElements(val, type, data_key, stepMediaObject) {
         }   
         
         else {
-        // if (type === 'media_images') {
             // APPLY CSS
             let mediaElement = $("#preview").find(`*[data-key="${data_key}"]`);
             mediaElement.removeAttr('style');
@@ -626,26 +672,32 @@ function setElements(val, type, data_key, stepMediaObject) {
             }
 
             // CHECK IF NEW SRC SHOULD BE APPLIED
-            if (stepMediaObject['type'] === 'media_video' || stepMediaObject['type'] === 'media_images') {
+            if (stepMediaObject['type'] === 'media_video' || stepMediaObject['type'] === 'media_images' || stepMediaObject['type'] === 'media_gifs') {
                 if (!mediaElement.find('.media').attr('src').includes(stepMediaObject['attributes']['src'])) {
                     mediaElement.find('.media').attr('src', htmlPathToMedia +  stepMediaObject['attributes']['src']); 
                 }
             }
 
             if (stepMediaObject['type'] === 'videoStream') {
-                if (!mediaElement.find('video')[0].srcObject) {
+                if (mediaElement.find('video').data('data-device') !== stepMediaObject['attributes']['device']) {
                     const constraints = {
                         video: { deviceId: stepMediaObject['attributes']['device']}
                     };
                     startStream(constraints, data_key);
-                } else {
-                    if (mediaElement.find('video')[0].srcObject['id'] !== stepMediaObject['attributes']['device']) {
-                        const constraints = {
-                            video: { deviceId: stepMediaObject['attributes']['device']}
-                        };
-                        startStream(constraints, data_key);
-                    }
                 }
+                // if (!mediaElement.find('video')[0].srcObject) {
+                //     const constraints = {
+                //         video: { deviceId: stepMediaObject['attributes']['device']}
+                //     };
+                //     startStream(constraints, data_key);
+                // } else {
+                //     if (mediaElement.find('video')[0].srcObject['id'] !== stepMediaObject['attributes']['device']) {
+                //         const constraints = {
+                //             video: { deviceId: stepMediaObject['attributes']['device']}
+                //         };
+                //         startStream(constraints, data_key);
+                //     }
+                // }
             }
 
              // ADD NEW TEXT IF NEEDED
@@ -666,7 +718,6 @@ function setElements(val, type, data_key, stepMediaObject) {
             if(stepMediaObject['css']['object-fit'] && stepMediaObject['css']['object-fit'] !== "") {
                 mediaElement.find('.media').css({"height" : "100%", "object-fit" : stepMediaObject['css']['object-fit']});
             }
-        // }
         }
     } 
 }
@@ -703,7 +754,7 @@ function toggleVisibility(e) {
 
 function markActiveStepMediaElement(e) {
     // MARK IN MEDIA LIST
-    $("#step-media ul li").not(e.target).removeClass('active');
+    $(`#step-media .${activeScreen} li`).not(e.target).removeClass('active');
     $(e.target).toggleClass('active');
 
     // MARK IN PREVIEW
@@ -756,11 +807,11 @@ function styleToObject(style) {
 function analyseStep() {
     let updatedStepObject = {...stepObject};
 
-    updatedStepObject['screen']['background-color'] = $('#preview').css('background-color');
+    updatedStepObject[activeScreen]['background-color'] = $('#preview').css('background-color');
 
     let mediaOrder = [];
-    $('#step-media li').each(function(){mediaOrder.push($(this).data('key'))});
-    updatedStepObject['screen']['media-order'] = mediaOrder;
+    $(`#step-media .${activeScreen} li`).each(function(){mediaOrder.push($(this).data('key'))});
+    updatedStepObject[activeScreen]['media-order'] = mediaOrder;
 
 
     let updatedMediaObject = {};
@@ -781,7 +832,7 @@ function analyseStep() {
         // display none can be present if visibility was toggled
         delete object['css']['display'];
 
-        if ($(this).data('type') === 'media_video' || $(this).data('type') === 'media_images') {
+        if ($(this).data('type') === 'media_video' || $(this).data('type') === 'media_images' || $(this).data('type') === 'media_gifs') {
             object['attributes']['src'] = $(this).children().attr('src').replace(htmlPathToMedia, '');
         } 
 
@@ -791,7 +842,7 @@ function analyseStep() {
         }
 
         if ($(this).data('type') === 'videoStream') {
-            object['attributes']['device'] = $(this).find('video')[0].srcObject.id;
+            object['attributes']['device'] = $(this).find('video').data('data-device');
         }
        
 
@@ -810,11 +861,11 @@ function analyseStep() {
         updatedMediaObject[$(this).data('key')] = object;
     })
 
-    updatedStepObject['screen']['media'] = updatedMediaObject;
+    updatedStepObject[activeScreen]['media'] = updatedMediaObject;
 
     // add console
-    updatedStepObject['screen']['console']['active'] = $('#console-checkbox').is(':checked');
-    updatedStepObject['screen']['console']['css'] = styleToObject($('#console').attr('style'));
+    updatedStepObject[activeScreen]['console']['active'] = $('#console-checkbox').is(':checked');
+    updatedStepObject[activeScreen]['console']['css'] = styleToObject($('#console').attr('style'));
 
     if ($('#console-checkbox').is(':checked')) {
         updatedStepObject['console'] = {...consoleObject};
@@ -834,7 +885,7 @@ function analyseStep() {
     // }
 
     // add audio
-    updatedStepObject['screen']['music']['scr'] = $('#audio').attr('src');
+    updatedStepObject[activeScreen]['music']['scr'] = $('#audio').attr('src');
 
     return updatedStepObject;
 }
@@ -940,6 +991,20 @@ function addInStructure(parameter) {
                                     "loop": ""
                                 }
                             },
+                "laptop": {
+                    "media-order": [],
+                    "background-color": "",
+                    "media": {},
+                    "console": {
+                        "active": false,
+                        "css": {}
+                    },
+                    "music": {
+                        "src": "",
+                        "volume": "",
+                        "loop": ""
+                    }
+                },
                 "boite" : {
                     "type": "no_phone",
                     "arg": ""
@@ -1221,7 +1286,7 @@ function showSpinner() {
 socket.on('success', function(data){
 
     // EMPTY PREVIOUS STRUCTURE AND STEP PREVIEW
-    $('#step-media ul').empty();
+    $(`#step-media .${activeScreen}`).empty();
     $('#structure-content').empty();
     $('#console-checkbox').prop('checked', false);
     // $('#boite-checkbox').prop('checked', false);
@@ -1285,7 +1350,7 @@ $('.editor-buttons fieldset input').change(function() {
 
 // function addBoite() {
 //     const li = `<li data-key=${data_key} data-type='avatars' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Avatars</li>`;
-//     $('#step-media ul').append(li);
+//     $(`#step-media .${activeScreen}`).append(li);
 // }
 
 function addNewStep(newStepNumber, step) {
@@ -1324,10 +1389,25 @@ function deleteShow() {
     socket.emit("delete show", {"fileName" : active.fileName});
 }
 
+function toggleDebugger() {
+    $('#debug').toggleClass('active');
+    sendStep();
+    if ($('#debug').hasClass('active')) {
+        $('#preview').hide();
+        $('#preview-step').text('Close debugger');
+    } else {
+        $('#preview').show();
+        $('#preview-step').text('Preview in debugger');
+    }
+    
+    // $('#preview').hide();
+    // $('#debugg').show();
+    // $('#preview-step').text('Close debugger')
+}
+
 function sendStep() {
     const step = analyseStep();
     socket.emit('step', step);
-    console.log(step)
     // if (boite && 'send' in boite) boite.send();
 }
 
@@ -1440,9 +1520,9 @@ $('.boite_radio--no_phone').prop('checked', true);
 function addAvatars() {
     let data_key = createRandomString(5);
      // ADD TO MAIN DATA MEDIA ORDER TO MANIPULATE Z INDEXES
-    // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].push(data_key);
+    // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step][activeScreen]['media-order'].push(data_key);
     const li = `<li data-key=${data_key} data-type='avatars' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Avatars</li>`;
-    $('#step-media ul').append(li);
+    $(`#step-media .${activeScreen}`).append(li);
     setElements('', 'avatars', data_key);
     applyZIndexes();
     closeModal(); 
@@ -1451,9 +1531,9 @@ function addAvatars() {
 function addText() {
     let data_key = createRandomString(5);
      // ADD TO MAIN DATA MEDIA ORDER TO MANIPULATE Z INDEXES
-    //  mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].push(data_key);
+    //  mainData[active.fileName]['scenes'][active.scene]['steps'][active.step][activeScreen]['media-order'].push(data_key);
     const li = `<li data-key=${data_key} data-type='text' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Text</li>`;
-    $('#step-media ul').append(li);
+    $(`#step-media .${activeScreen}`).append(li);
     setElements('', 'text', data_key);
     applyZIndexes();
     $(`#preview [data-key=${data_key}]`).text($('#text-content').val());
@@ -1464,12 +1544,12 @@ $media.on('mousedown', '.file', function() {
     let data_key = createRandomString(5);
 
     // ADD TO MAIN DATA MEDIA ORDER TO MANIPULATE Z INDEXES
-    // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media-order'].push(data_key);
-    // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]['screen']['media'][data_key] = newMediaObject;
+    // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step][activeScreen]['media-order'].push(data_key);
+    // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step][activeScreen]['media'][data_key] = newMediaObject;
 
     const li = `<li data-key=${data_key} data-type=${this.parentElement.className} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${getFileName($(this).attr('title'))}</li>`;
            
-    $('#step-media ul').append(li);
+    $(`#step-media .${activeScreen}`).append(li);
     
     setElements($(this).attr('title'), this.parentElement.className, data_key);
 
@@ -2191,7 +2271,7 @@ function getMediaStream() {
     cameraOptions.onchange = () => {
         let data_key = createRandomString(5);
         const li = `<li data-key=${data_key} data-type='videoStream' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Stream</li>`;
-        $('#step-media ul').append(li);
+        $(`#step-media .${activeScreen}`).append(li);
         setElements('', 'videoStream', data_key);
         applyZIndexes();
         constraints.video.deviceId = cameraOptions.value;
@@ -2235,6 +2315,7 @@ function getMediaStream() {
 }
 
 async function startStream(constraints, data_key) {
+    $(`#preview [data-key=${data_key}] video`).data('data-device', constraints.video.deviceId);
     navigator.mediaDevices.getUserMedia( constraints )
     .then( MediaStream => {
         handleStream(MediaStream, data_key);

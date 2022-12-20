@@ -806,7 +806,7 @@ $('.boite_radio--no_phone').prop('checked', true);
 // var $screens = $('#screens');
 // var tmpl_screen__ctrl = $('#tmpl_screen__ctrl').html();
 
-// var isRepetMode = true;
+var isRepetMode = true;
 
 // var screenName = {
 //   screen: '<i>📽️</i> SCREEN',
@@ -950,19 +950,19 @@ $('.boite_radio--no_phone').prop('checked', true);
 //   return $step.length ? walkSteps($step) : getScreens();
 // }
 
-// function addRepetData(data) {
-//   if (isRepetMode) {
-//     var time = $('#repet__min')
-//       .val()
-//       .trim();
-//     if (time !== '') time = Number($('#repet__min').val()) * 60;
-//     data.repet = {
-//       time: time,
-//       pause: $('.repet__pause').hasClass('active')
-//     };
-//   }
-//   return data;
-// }
+function addRepetData(data) {
+  if (isRepetMode) {
+    var time = $('#repet__min')
+      .val()
+      .trim();
+    if (time !== '') time = Number($('#repet__min').val()) * 60;
+    data.repet = {
+      time: time,
+      pause: $('.repet__pause').hasClass('active')
+    };
+  }
+  return data;
+}
 
 // function addEtapeSlideEffect(data) {
 //   if ($('#select_effect').val() !== 'none') {
@@ -1086,7 +1086,12 @@ function setJSONsdata(data) {
   mainData = {};
   // let count = 0;
   $('#visual').empty();
-
+  $('#visual').append('<select id="select-novel"><option selected disabled>Select visual novel</option></select>')
+  $('#select-novel').change(function(){
+    $('#visual .show').hide();
+    $(`#visual #${$(this).val()}`).show();
+  });
+   
   const sorted = data.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
   
   sorted.forEach(async(src) => {
@@ -1136,7 +1141,7 @@ function setActiveStep(fileName, scene, step) {
 }
 
 function displayStructure(fileName, data) {
-  let showElement =  `<ul id=${fileName} class="show">
+  let showElement =  `<ul id=${fileName} class="show" style="display: none;">
                           <li class="show-name"><b><u>${data.name}</u></b></li>
                           <li style="display: none;"><select class="languages"></select></li>
                           <li style="display: none;">
@@ -1144,6 +1149,7 @@ function displayStructure(fileName, data) {
                           </li>
                       </ul>`
   $('#visual').append(showElement);
+  $('#visual select').append(`<option value=${fileName}>${data.name}</option>`)
 
 
   // APPEND AVAILABLE LANGUAGES

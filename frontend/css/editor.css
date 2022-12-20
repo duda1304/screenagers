@@ -238,9 +238,9 @@ b::before {
   word-break: normal;
 }
 
-#console iframe {
+/* #console iframe {
   pointer-events: none;
-}
+} */
 
 .arrow-right {
   width: 0; 
@@ -547,7 +547,7 @@ b::before {
   text-align: center;
 }
 
-#console {
+.console {
   background-color: black;
 }
 
@@ -896,12 +896,12 @@ video {
 
 /* NEW VERSION */
 
-#preview .draggable:not(.text) {
+.preview .draggable:not(.text) {
   border: 1px solid #FF0000;
   overflow: hidden;
 }
 
-#preview .draggable.active:not(.text) {
+.preview .draggable.active:not(.text) {
   border: 1px solid #00FF00;
 }
 

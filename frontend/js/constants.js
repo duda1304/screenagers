@@ -12,13 +12,13 @@ const sceneObject = {
 const stepObject = { 
                     "screen" :  {
                                     "media-order": [],
-                                    "background-color": "",
+                                    "background-color": "rgb(0, 0, 0)",
                                     "media": {},
                                     "console": {
                                         "active": false,
                                         "css": {}
                                     },
-                                    "music" : {
+                                    "audio" : {
                                         "src": "",
                                         "volume": "",
                                         "loop": ""
@@ -26,13 +26,13 @@ const stepObject = {
                                 },
                     "laptop" :  {
                                     "media-order": [],
-                                    "background-color": "",
+                                    "background-color": "rgb(0, 0, 0)",
                                     "media": {},
                                     "console": {
                                         "active": false,
                                         "css": {}
                                     },
-                                    "music" : {
+                                    "audio" : {
                                         "src": "",
                                         "volume": "",
                                         "loop": ""
@@ -66,7 +66,7 @@ const boiteObject =     {
 //                             "avatar" : {}, 
 //                             "console" : {}
 //                         },
-//                         "music": {
+//                         "audio": {
 //                             "src": "",
 //                             "volume": "",
 //                             "loop": ""

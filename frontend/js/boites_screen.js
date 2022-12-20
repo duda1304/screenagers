@@ -202,7 +202,8 @@ boites.choix = {
     $boite[0].className = '';
   },
   stop: function(key) {
-    setMusic({ src: 'Sons/reveil.mp3', volume: 20, loop: false });
+    // setMusic({ src: 'Sons/reveil.mp3', volume: 20, loop: false });
+    setMusic({ src: $('audio').attr('scr'), volume: 20, loop: false });
     $boite
       .find('button')
       .addClass('stopped')

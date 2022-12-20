@@ -8,6 +8,8 @@ let active = {
     step : ""
 }
 
+const screens = ['screen', 'laptop'];
+
 let activeScreen = 'screen';
 
 $('#delete-media-button').on('click', showTooltips);
@@ -17,15 +19,38 @@ $('.screens div').on('click', function(){
     $('.screens div').not(this).removeClass('active');
     $(this).addClass('active');
     activeScreen = $(this).text().toLowerCase();
+
+     // deactivate active media
+     if ($('#step-media li.active').length !== 0){
+        $('#step-media li.active').click();
+    }
+
+    // adjust console radio button
+    if ($(`#${activeScreen} .console`).css('display') === 'none') {
+        $('#console-checkbox').prop('checked', false);
+    } else {
+        $('#console-checkbox').prop('checked', true);
+    }
+
+    // toggle media list
     $(`#step-media .${activeScreen}`).show();
     $(`#step-media ul`).not(`.${activeScreen}`).hide();
-    if(active.step !== '') {
-        // CLEAR PREVIOUS  STEP DATA LIST
-        $(`#step-media .${activeScreen}`).empty();
-        $('#console-checkbox').prop('checked', false);
-        displayActiveStepMedia();
-    }
-})
+
+    // pause music on previous screen and start on active
+    // $(`.preview`).not(`#${activeScreen}`).find('audio').pause();
+    // $(`#${activeScreen} audio`).play();
+
+    // pause videos on previus screena and start on active
+    // $(`.preview`).not(`#${activeScreen}`).find('video').pause();
+    // $(`#${activeScreen} video`).play();
+
+    // toggle preview
+    $(`#${activeScreen}`).show();
+    $('.preview').not(`#${activeScreen}`).hide();
+
+    
+
+});
 
 $( function() {
     $( ".draggable" ).draggable();
@@ -192,10 +217,9 @@ function displayStructure(fileName, data) {
             }
         });    
 
-        // DEFINE TOGGLE FUNCTIONS FOR STEP LIST
+        // TOGGLE SCENE
         $("#" + id + "toggler").click(function() {
             $(".toggler").not(this).nextAll().hide();
-            // $( "#" + id ).toggle();
             $(this).nextAll().toggle();
             
             $(".toggler").not(this).removeClass('active');
@@ -211,10 +235,9 @@ function displayStructure(fileName, data) {
                 setActiveStep(fileName, "", "");
                 $(".step").removeClass('active');
             }
-            $(`#step-media .${activeScreen}`).empty();
-            $('#preview').empty();
+            $(`#step-media ul`).empty();
+            screens.forEach(screen => $(`#${screen}`).empty());
             $('#console-checkbox').prop('checked', false);
-            // $('#boite-checkbox').prop('checked', false);
         });
     })
 }
@@ -241,10 +264,9 @@ function displayStructure(fileName, data) {
         } else {
             setActiveStep("", "", "");
         }
-        $(`#step-media .${activeScreen}`).empty();
-        $('#preview').empty();
+        $(`#step-media ul`).empty();
+        screens.forEach(screen => $(`#${screen}`).empty());
         $('#console-checkbox').prop('checked', false);
-        // $('#boite-checkbox').prop('checked', false);
     })
     
 }
@@ -277,12 +299,6 @@ $('#boite textarea').on('input', function() {
     setBoite(data);
 })
 
-// $( "#boite" ).submit(function( event ) {
-//     event.preventDefault();
-//     sendStep();
-//   });
-
-
 function saveStepOrder(fileName, sceneOrderNumber, stepsOrder) {
     socket.emit('reorder steps', {"fileName" : fileName, "sceneOrderNumber" : sceneOrderNumber, "stepsOrder" : stepsOrder})
 }
@@ -296,27 +312,30 @@ function setActiveStep(fileName, scene, step) {
     active.fileName = fileName;
     active.scene = scene;
     active.step = step;
+
+    if (step !== '') {
+        $('#select-audio').prop('disabled', false);
+    } else {
+        $('#select-audio').prop('disabled', true);
+    }
 }
 
 function applyZIndexes() {
     let mediaOrder = [];
     $(`#step-media .${activeScreen} li`).each(function(){mediaOrder.push($(this).data('key'))})
     mediaOrder.forEach((value, index) => {
-        $(`#preview [data-key=${value}]`).css({"z-index" : index + 1});
+        $(`#${activeScreen} [data-key=${value}]`).css({"z-index" : index + 1});
     })
 }
 
-function clearUnwantedMedia(stepMedia){
-    // const div = document.getElementById(container);
-    // const stepMedia = mainData[active.fileName]['scenes'][active.scene]['steps'][active.step][activeScreen]['media'];
-
-    let keysArray = [].map.call($('#preview').children().not('#boite'), function (e) {
+function clearUnwantedMedia(stepMedia){ 
+    let keysArray = [].map.call($(`#${activeScreen}`).children().not('#boite, audio'), function (e) {
     return e.getAttribute('data-key')
     })
 
     keysArray.forEach(key => {
         if (!stepMedia[key]) {
-            $(`#preview [data-key=${key}]`).remove();
+            $(`#${activeScreen} [data-key=${key}]`).remove();
         }
     })
 }
@@ -328,19 +347,10 @@ $(`#step-media .${activeScreen}`).sortable({
     stop: function(event, ui) {
         let endPosition = ui.item.index();
         if (endPosition !== startPosition) {
-            // ADJUST MAIN DATA
-            // let movedElement = mainData[active.fileName]['scenes'][active.scene]['steps'][active.step][activeScreen]['media-order'].splice(startPosition, 1)[0];
-            // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step][activeScreen]['media-order'].splice(endPosition, 0, movedElement);
-
             applyZIndexes();
-           
         }
     }
 });    
-
-// const dummyStep = {
-
-// } 
 
 
 // STEP IS DISPLAYED FROM SAVED JSON DATA
@@ -350,9 +360,8 @@ function setStep(e, fileName, scene, step) {
     $(e.target).toggleClass('active');
 
     // CLEAR PREVIOUS  STEP DATA LIST
-    $(`#step-media .${activeScreen}`).empty();
+    $(`#step-media ul`).empty();
     $('#console-checkbox').prop('checked', false);
-    // $('#boite-checkbox').prop('checked', false);
 
     if($(e.target).hasClass('active')) {
         setActiveStep(fileName, scene, step);
@@ -364,66 +373,51 @@ function setStep(e, fileName, scene, step) {
                             </div>`)
 
         // DISPLAY step media
-        displayActiveStepMedia();
-        // $.getJSON('./data/json/' + fileName + '.json', function(jsonData) {
-        //     const mediaOrder = jsonData['scenes'][scene]['steps'][step][activeScreen]['media-order'];
-        //     const stepMedia = jsonData['scenes'][scene]['steps'][step][activeScreen]['media'];
-            
-        //     clearUnwantedMedia(stepMedia);
-        //     for (let data_key of mediaOrder) {
-        //         // DISPLAY MEDIA IN MEDIA LIST
-        //         let liName;
-        //         if (stepMedia[data_key]['type'] === 'media_images' || stepMedia[data_key]['type'] === 'media_video' || stepMedia[data_key]['type'] === 'media_gifs') {
-        //             liName = getFileName(stepMedia[data_key]['attributes']['src']);
-        //         } else {
-        //             liName = stepMedia[data_key]['type']
-        //         }
-        //         const li = `<li data-key=${data_key} data-type=${stepMedia[data_key]['type']} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${liName}</li>`;
-        //         $(`#step-media .${activeScreen}`).append(li);
-        //         // DISPLAY STEP IN MEDIA PREVIEW
-        //         setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);
-        //     }
-        //     applyZIndexes();
-        //     setElements("", "console", "", jsonData['scenes'][scene]['steps'][step][activeScreen]['console']);
-        //     setElements("", "music", "", jsonData['scenes'][scene]['steps'][step][activeScreen]['music']);
-
-        //     // set boite
-        //     if ('boite' in jsonData['scenes'][scene]['steps'][step]) {
-        //         setBoite(jsonData['scenes'][scene]['steps'][step]['boite']);
-        //         $('#boite input').each(function(){
-        //             $(this).prop('checked', false);
-        //             $(`#boite input[value=${jsonData['scenes'][scene]['steps'][step]['boite']['type']}]`).prop('checked', true);
-        //         })
-        //     }
-        // }) 
+        displayActiveStepMedia(); 
+      
     } else {
         setActiveStep(fileName, scene, ""); 
-        $('#preview').empty();
+        screens.forEach(screen => $(`#${screen}`).empty());
     }
 }
 
 function displayActiveStepMedia() {
     $.getJSON('./data/json/' + active.fileName + '.json', function(jsonData) {
-        const mediaOrder = jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['media-order'];
-        const stepMedia = jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['media'];
-        
-        clearUnwantedMedia(stepMedia);
-        for (let data_key of mediaOrder) {
-            // DISPLAY MEDIA IN MEDIA LIST
-            let liName;
-            if (stepMedia[data_key]['type'] === 'media_images' || stepMedia[data_key]['type'] === 'media_video' || stepMedia[data_key]['type'] === 'media_gifs') {
-                liName = getFileName(stepMedia[data_key]['attributes']['src']);
-            } else {
-                liName = stepMedia[data_key]['type']
+        let currentActiveScreen = activeScreen;
+
+        screens.forEach(screen => {
+            activeScreen = screen;
+            const mediaOrder = jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['media-order'];
+            const stepMedia = jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['media'];
+            
+            clearUnwantedMedia(stepMedia);
+            for (let data_key of mediaOrder) {
+                // DISPLAY MEDIA IN MEDIA LIST
+                let liName;
+                if (stepMedia[data_key]['type'] === 'media_images' || stepMedia[data_key]['type'] === 'media_video' || stepMedia[data_key]['type'] === 'media_gifs') {
+                    liName = getFileName(stepMedia[data_key]['attributes']['src']);
+                } else {
+                    liName = stepMedia[data_key]['type']
+                }
+                const li = `<li data-key=${data_key} data-type=${stepMedia[data_key]['type']} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${liName}</li>`;
+                $(`#step-media .${activeScreen}`).append(li);
+                // DISPLAY STEP IN MEDIA PREVIEW
+                setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);
             }
-            const li = `<li data-key=${data_key} data-type=${stepMedia[data_key]['type']} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${liName}</li>`;
-            $(`#step-media .${activeScreen}`).append(li);
-            // DISPLAY STEP IN MEDIA PREVIEW
-            setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);
+            applyZIndexes();
+            setElements("", "console", "", jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['console']);
+            setElements("", "media_audio", "", jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['audio']);
+            $(`#${screen}`).css('background-color', jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['background-color']);
+        });
+
+        activeScreen = currentActiveScreen;
+       
+        // SET console radio box state for active screen
+        if ( $(`#${activeScreen} .console`).css('display') === 'none' ) {
+            $(`#console-checkbox`).prop("checked", false);
+        } else {
+            $(`#console-checkbox`).prop("checked", true);
         }
-        applyZIndexes();
-        setElements("", "console", "", jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['console']);
-        setElements("", "music", "", jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['music']);
 
         // set boite
         if ('boite' in jsonData['scenes'][active.scene]['steps'][active.step]) {
@@ -442,16 +436,16 @@ function setElements(val, type, data_key, stepMediaObject) {
    
     const avatarsElement = `<div class="avatars draggable resizable" style="width: 25%; height: 15%; position: absolute; top: 25%; left:25%; border-radius: 45%; z-index:99;" data-key=${data_key} data-type=${type}><img style = "width: 100%; height: 100%;" class="media"></img></div>`;
 
-    const console = `<div id="console" class="draggable resizable" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:100;"><iframe src="/console" style="width:100%; height: 100%; border: none;"></iframe></div>`;
+    const console = `<div class="console draggable resizable" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:100;"><iframe src="/console" style="width:100%; height: 100%; border: none;"></iframe></div>`;
 
     const imageElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}><img style="width: 100%;" src=${src} class="media"></img></div>`
 
     const videoElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}><video autoplay style="width: 100%;" src=${src} class="media"></video></div>`
                    
-    const audioElement = `<audio id="music" src="" data-type=${type}></audio>`
+    const audioElement = `<audio autoplay class="audio" data-key=${data_key} data-type=${type} src=""></audio>`
 
     const streamElement = `<div class="draggable resizable" style="width: 35%; height: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
-                            <video autoplay id="stream" style="width: 100%;" src=${src} class="media"> </video>
+                            <video autoplay style="width: 100%;" class="media"> </video>
                            </div>`
    
     const textElement = `
@@ -471,132 +465,49 @@ function setElements(val, type, data_key, stepMediaObject) {
         'media_images' : imageElement,
         'media_gifs' : imageElement,
         'media_video' : videoElement,
+        // 'media_audio' : audioElement,
         'videoStream' : streamElement,
         'avatars' : avatarsElement,
         'text' : textElement
     }
 
     if (type in elements) {
-        if($(`#preview [data-key=${data_key}]`).length === 0) {
-            $('#preview').append(elements[type]);
+        if($(`#${activeScreen} [data-key=${data_key}]`).length === 0) {
+            $(`#${activeScreen}`).append(elements[type]);
         }
     }
   
     if(type === 'console') {
-        if(stepMediaObject.active === true && $('#console').length === 0) {
-            $('#preview').append(console);
-        }
-        if ((stepMediaObject.active === false && $('#console').length !== 0)) {
-          $('#preview #console').remove();
+        if($(`#${activeScreen} .console`).length === 0) {
+            $(`#${activeScreen}`).append(console);
         }
     } 
     
-    if (type === 'music') {
-        if($('#music').length === 0) {
-            $('#preview').append(audioElement);
+    if (type === 'media_audio') {
+        if($(`#${activeScreen} audio`).length === 0) {
+            $(`#${activeScreen}`).append(audioElement);
+        }
+        if (val !== '' && !$(`#${activeScreen} audio`).attr('src').includes(val)) {
+            $(`#${activeScreen} audio`).attr('src', src)
         }
     }
-    // else if (type === 'media_layouts') {
-    //     // const iframe  = document.createElement("iframe");
-    //     // iframe.src = '/data/media/' + val;
-    //     // iframe.style.display = "none";
-    //     // document.body.appendChild(iframe);
-
-    //     // iframe.onload = function(e) {
-    //         const node = document.createElement('div');
-    //         node.innerHTML = val;
-
-    //         const popupElements = Array.from(node.getElementsByClassName("popup"));
-    //         var id = [];
-    //         popupElements.forEach(element => id.push(element.id));
-
-    //         // Adjust src of media elements to be seen by editor
-    //         var mediaElements = node.querySelectorAll('[src]');
-    //         for (var element of mediaElements) {
-    //             var adjustedSRC = element.getAttribute("src").replace("..", "/data/media");
-    //             element.setAttribute("src", adjustedSRC);
-    //         }
-
-    //         // adjust src of media for background images on elements if exists
-    //         var popupBodyElements = node.querySelectorAll('.popup-body');
-    //         for (var element of popupBodyElements) {
-    //                     if (element.style.backgroundImage !== '') {
-    //                         var adjustedSRC = element.style.backgroundImage.replace('url("..','url("data/media');
-    //                         element.style.backgroundImage = adjustedSRC;
-    //                     }
-    //                 }
-    //         // adjust main color picker value
-    //         $('#preview_background')[0].value = node.style.backgroundColor;
-    //         $('#preview_background').trigger('input');
-
-    //         document.getElementById("preview").remove();
-    //         document.getElementsByTagName("main")[0].append(node);
-         
-    //         e.target.remove();
-                  
-    //         const popupElementsNew = Array.from(node.getElementsById("preview"));
-           
-    //         // initResizeElement();
-    //         if (typeof(id) === 'string') {
-    //             addMenu(id);
-    //         } else {
-    //             id.forEach(element => addMenu(element));
-    //         // }
-            
-    //         // initDragElement();
-    //         closeMediaList();
-    //     }
-    // } 
-    // else if (type === 'media_decors') {
-    //     var decors = Array.from(document.querySelector(".media_decors").children);
-    //     var previewElement = document.querySelector("#preview");
-    //     // Remove previouse styles
-    //     decors.forEach(decor => {
-    //         var className = decor.innerHTML.substring(1);
-    //         if (previewElement.classList.contains(className)) {
-    //             previewElement.classList.remove(className);
-    //         }
-    //         if (previewElement.style.backgroundColor !== '') {
-    //             $('#preview_background')[0].value = '';
-    //             $('#preview_background').trigger('input');
-    //         }
-    //     });
-    //     previewElement.classList.add(val.substring(1));
-    //     closeMediaList();
-    // } 
-    // else if (type === 'background') {
-    //     var decors = Array.from(document.querySelector(".media_decors").children);
-    //     var previewElement = document.querySelector("#preview");
-    //     // Remove previouse styles
-    //     decors.forEach(decor => {
-    //         var className = decor.innerHTML.substring(1);
-    //         if (previewElement.classList.contains(className)) {
-    //             previewElement.classList.remove(className);
-    //         }
-    //         // if (previewElement.style.backgroundColor !== '') {
-    //             $('#preview_background')[0].value = val;
-    //             $('#preview_background').trigger('input');
-    //         // }
-    //     });
-    //     // previewElement.classList.add(val.substring(1));
-    //     closeMediaList();
-    // }    
+   
     if (type === 'text') {
-        $(`#preview [data-key=${data_key}]`).focus();
+        $(`#${activeScreen} [data-key=${data_key}]`).focus();
     }
 
-
     // DEFINE FUNCTIONS FOR ELEMENT TO BE DRAGGABLE AND RESIZABLE
-    $("#preview .draggable").draggable({
+    $(`#${activeScreen} .draggable`).draggable({
         stop: function () {
-            const l = Math.round(( 100 * parseFloat($(this).position().left / parseFloat($('#preview').width())) )) + "%" ;
-            const t = Math.round(( 100 * parseFloat($(this).position().top / parseFloat($('#preview').height())) )) + "%" ;
+            const l = Math.round(( 100 * parseFloat($(this).position().left / parseFloat($(`#${activeScreen}`).width())) )) + "%" ;
+            const t = Math.round(( 100 * parseFloat($(this).position().top / parseFloat($(`#${activeScreen}`).height())) )) + "%" ;
             $(this).css("left", l);
             $(this).css("top", t);
         }
     });
-    $('#preview .draggable').mousedown(function(){
-        $('#preview .draggable').not(this).removeClass('active');
+
+    $(`#${activeScreen} .draggable`).mousedown(function(){
+        $(`#${activeScreen} .draggable`).not(this).removeClass('active');
         $(this).addClass('active');
         // MARK ACTIVE IN MEDIA LIST
         $(`#step-media .${activeScreen} li`).not(`li[data-key="${this.dataset.key}"]`).removeClass('active');
@@ -633,8 +544,8 @@ function setElements(val, type, data_key, stepMediaObject) {
         resize: function () {
             $(this).css("object-fit", "");
             $(this).children().each(function(){$(this).css("object-fit", "");$(this).css("height", "");})
-            const w = Math.round(( 100 * $(this).width() / $('#preview').width() )) + "%" ;
-            const h = Math.round(( 100 * $(this).height() / $('#preview').height() )) + "%" ;
+            const w = Math.round(( 100 * $(this).width() / $(`#${activeScreen}`).width() )) + "%" ;
+            const h = Math.round(( 100 * $(this).height() / $(`#${activeScreen}`).height() )) + "%" ;
             $(this).css("width", w);
             $(this).css("height", h);
         }
@@ -644,24 +555,25 @@ function setElements(val, type, data_key, stepMediaObject) {
     if (stepMediaObject) {
         if (type === 'console') {
             if (!stepMediaObject['active']) {
-                $(`#${type}`).hide();
-                $(`#${type}-checkbox`).prop("checked", false);
+                $(`#${activeScreen} .${type}`).hide();
+                // $(`#${type}-checkbox`).prop("checked", false);
             } else {
-                $(`#${type}`).show();
-                $(`#${type}-checkbox`).prop("checked", true);
+                $(`#${activeScreen} .${type}`).show();
+                // $(`#${type}-checkbox`).prop("checked", true);
             }
-            $(`#${type}`).css(stepMediaObject['css']);
-        } else if (type === 'music') {
-            if (!$('#music').attr('src').includes(stepMediaObject['src'])) {
-                $('#music').attr('src', htmlPathToMedia +  stepMediaObject['src']); 
+            $(`#${activeScreen} .${type}`).css(stepMediaObject['css']);
+        } else if (type === 'media_audio') {
+            let mediaElement = $(`#${activeScreen} audio`);
+            if (!mediaElement.attr('src').includes(stepMediaObject['src'])) {
+                mediaElement.attr('src', htmlPathToMedia +  stepMediaObject['src']); 
             }
-            $('#music').attr('volume', stepMediaObject['volume'])
-            $('#music').attr('loop', stepMediaObject['loop'])
+            mediaElement.attr('volume', stepMediaObject['volume'])
+            mediaElement.attr('loop', stepMediaObject['loop'])
         }   
         
         else {
             // APPLY CSS
-            let mediaElement = $("#preview").find(`*[data-key="${data_key}"]`);
+            let mediaElement = $(`#${activeScreen}`).find(`*[data-key="${data_key}"]`);
             mediaElement.removeAttr('style');
             mediaElement.css(stepMediaObject['css']);
 
@@ -679,25 +591,13 @@ function setElements(val, type, data_key, stepMediaObject) {
             }
 
             if (stepMediaObject['type'] === 'videoStream') {
-                if (mediaElement.find('video').data('data-device') !== stepMediaObject['attributes']['device']) {
+                if (mediaElement.find('video').data('device') !== stepMediaObject['attributes']['device']) {
                     const constraints = {
                         video: { deviceId: stepMediaObject['attributes']['device']}
                     };
-                    startStream(constraints, data_key);
+                    mediaElement.find('video').data('device', stepMediaObject['attributes']['device']);
+                    startStream(constraints, data_key, activeScreen);
                 }
-                // if (!mediaElement.find('video')[0].srcObject) {
-                //     const constraints = {
-                //         video: { deviceId: stepMediaObject['attributes']['device']}
-                //     };
-                //     startStream(constraints, data_key);
-                // } else {
-                //     if (mediaElement.find('video')[0].srcObject['id'] !== stepMediaObject['attributes']['device']) {
-                //         const constraints = {
-                //             video: { deviceId: stepMediaObject['attributes']['device']}
-                //         };
-                //         startStream(constraints, data_key);
-                //     }
-                // }
             }
 
              // ADD NEW TEXT IF NEEDED
@@ -749,7 +649,7 @@ function checkMediaType(val) {
 
 function toggleVisibility(e) {
     $(e.target).toggleClass('visible');
-    $('#preview').find(`[data-key='${e.target.dataset.key}']`).toggle();
+    $(`#${activeScreen}`).find(`[data-key='${e.target.dataset.key}']`).toggle();
 }
 
 function markActiveStepMediaElement(e) {
@@ -758,15 +658,15 @@ function markActiveStepMediaElement(e) {
     $(e.target).toggleClass('active');
 
     // MARK IN PREVIEW
-    $('#preview .draggable').not(`#preview .draggable[data-key='${e.target.dataset.key}']`).removeClass('active');
-    $(`#preview .draggable[data-key='${e.target.dataset.key}']`).toggleClass('active');
+    $(`#${activeScreen} .draggable`).not(`#${activeScreen} .draggable[data-key='${e.target.dataset.key}']`).removeClass('active');
+    $(`#${activeScreen} .draggable[data-key='${e.target.dataset.key}']`).toggleClass('active');
 
     // ADD EVENT LISTENERS
     if ($(e.target).hasClass('active')) {
         $("#delete-media-button").unbind("click");
         $("#edit-media-button").unbind("click");
         $("#delete-media-button").click(function(){
-            $(`#preview .draggable[data-key='${e.target.dataset.key}']`).remove();
+            $(`#${activeScreen} .draggable[data-key='${e.target.dataset.key}']`).remove();
             $(e.target).remove();
             $("#delete-media-button").unbind("click");
             $("#edit-media-button").unbind("click");
@@ -804,10 +704,10 @@ function styleToObject(style) {
     return properties;
 }
 
-function analyseStep() {
-    let updatedStepObject = {...stepObject};
+function analyseStep(updatedStepObject) {
+    // let updatedStepObject = Object.assign({}, stepObject);
 
-    updatedStepObject[activeScreen]['background-color'] = $('#preview').css('background-color');
+    updatedStepObject[activeScreen]['background-color'] = $(`#${activeScreen}`).css('background-color');
 
     let mediaOrder = [];
     $(`#step-media .${activeScreen} li`).each(function(){mediaOrder.push($(this).data('key'))});
@@ -817,7 +717,7 @@ function analyseStep() {
     let updatedMediaObject = {};
 
     // get all media elements
-    $("#preview").children().not('#console, #music, #boite').each(function(){
+    $(`#${activeScreen}`).children().not('.console, .audio, #boite').each(function(){
         let object =   {   "type" : "",     
                             "css" : {},
                             "attributes" : {},
@@ -841,11 +741,6 @@ function analyseStep() {
             object['attributes']['muted'] = $(this).find('video')[0].muted;
         }
 
-        if ($(this).data('type') === 'videoStream') {
-            object['attributes']['device'] = $(this).find('video').data('data-device');
-        }
-       
-
         let classArray = $(this).attr('class').split(" ");
 
         classArray.forEach(element => {
@@ -864,15 +759,19 @@ function analyseStep() {
     updatedStepObject[activeScreen]['media'] = updatedMediaObject;
 
     // add console
-    updatedStepObject[activeScreen]['console']['active'] = $('#console-checkbox').is(':checked');
-    updatedStepObject[activeScreen]['console']['css'] = styleToObject($('#console').attr('style'));
-
-    if ($('#console-checkbox').is(':checked')) {
-        updatedStepObject['console'] = {...consoleObject};
+    if ($(`#${activeScreen} .console`).css('display') === 'none') {
+        updatedStepObject[activeScreen]['console']['active'] = false;
+    } else {
+        updatedStepObject[activeScreen]['console']['active'] = true;
     }
+    // updatedStepObject[activeScreen]['console']['active'] = $('#console-checkbox').is(':checked');
+    updatedStepObject[activeScreen]['console']['css'] = styleToObject($(`#${activeScreen} .console`).attr('style'));
+
+    // if ($('#console-checkbox').is(':checked')) {
+    //     updatedStepObject['console'] = {...consoleObject};
+    // }
 
     // add boite
-    // if ($('#boite-checkbox').is(':checked')) {
         updatedStepObject['boite'] = {...boiteObject};
         let boite_type;
         $('#boite input').each(function(){
@@ -882,18 +781,58 @@ function analyseStep() {
         })
         updatedStepObject['boite']['type'] = boite_type;
         updatedStepObject['boite']['arg'] = $('#boite textarea').val();
-    // }
 
     // add audio
-    updatedStepObject[activeScreen]['music']['scr'] = $('#audio').attr('src');
+    updatedStepObject[activeScreen]['audio']['scr'] = $(`#${activeScreen} audio`).attr('src');
+    updatedStepObject[activeScreen]['audio']['loop'] = $(`#${activeScreen} audio`).loop;
 
     return updatedStepObject;
 }
 
 function saveStep(e) {
     if (active.step !== "") {
-        const step = analyseStep();
-        console.log(step)
+        let currentActiveScreen = activeScreen;
+        let step = { 
+            "screen" :  {
+                            "media-order": [],
+                            "background-color": "rgb(0, 0, 0)",
+                            "media": {},
+                            "console": {
+                                "active": false,
+                                "css": {}
+                            },
+                            "audio" : {
+                                "src": "",
+                                "volume": "",
+                                "loop": ""
+                            }
+                        },
+            "laptop" :  {
+                            "media-order": [],
+                            "background-color": "rgb(0, 0, 0)",
+                            "media": {},
+                            "console": {
+                                "active": false,
+                                "css": {}
+                            },
+                            "audio" : {
+                                "src": "",
+                                "volume": "",
+                                "loop": ""
+                            }
+                        },
+            "boite" :   {
+                            "type": "no_phone",
+                            "arg": ""
+                        }
+            }
+
+        screens.forEach(screen => {
+            activeScreen = screen;
+            const update = analyseStep(step);
+            Object.assign(step, update);
+        });
+        activeScreen = currentActiveScreen;
         // SAVE TO JSON
         socket.emit("save step", {"fileName" : active.fileName, "scene": active.scene, "step" : active.step, 'stepObject' : step})
     } else {
@@ -950,7 +889,7 @@ function addInStructure(parameter) {
             const showName = e.target.elements.name.value;
             const fileName = showName.replace(/ /g, '').trim();
 
-            let newShowObject = {...showObject};
+            let newShowObject = Object.assign({}, showObject);
             newShowObject.name = showName;
             newShowObject.languages.push(e.target.elements.language.value.toUpperCase())
             
@@ -976,40 +915,41 @@ function addInStructure(parameter) {
         $('#alert #ok').click(function() {
             let newStepNumber = createNewObjectKey(mainData[active.fileName]['scenes'][active.scene]['step-order']);
             // let newStepObject = {...stepObject};
-            let newStepObject = { 
-                "screen" :  {
-                                "media-order": [],
-                                "background-color": "",
-                                "media": {},
-                                "console": {
-                                    "active": false,
-                                    "css": {}
-                                },
-                                "music" : {
-                                    "src": "",
-                                    "volume": "",
-                                    "loop": ""
-                                }
-                            },
-                "laptop": {
-                    "media-order": [],
-                    "background-color": "",
-                    "media": {},
-                    "console": {
-                        "active": false,
-                        "css": {}
-                    },
-                    "music": {
-                        "src": "",
-                        "volume": "",
-                        "loop": ""
-                    }
-                },
-                "boite" : {
-                    "type": "no_phone",
-                    "arg": ""
-                }
-                }
+            let newStepObject = Object.assign({}, stepObject);
+            // let newStepObject = { 
+            //     "screen" :  {
+            //                     "media-order": [],
+            //                     "background-color": "",
+            //                     "media": {},
+            //                     "console": {
+            //                         "active": false,
+            //                         "css": {}
+            //                     },
+            //                     "audio" : {
+            //                         "src": "",
+            //                         "volume": "",
+            //                         "loop": ""
+            //                     }
+            //                 },
+            //     "laptop": {
+            //         "media-order": [],
+            //         "background-color": "",
+            //         "media": {},
+            //         "console": {
+            //             "active": false,
+            //             "css": {}
+            //         },
+            //         "audio": {
+            //             "src": "",
+            //             "volume": "",
+            //             "loop": ""
+            //         }
+            //     },
+            //     "boite" : {
+            //         "type": "no_phone",
+            //         "arg": ""
+            //     }
+            //     }
             // SAVE TO JSON FILE
             addNewStep(newStepNumber, newStepObject);
             showSpinner();
@@ -1037,32 +977,12 @@ function addInStructure(parameter) {
             let newSceneNumber = createNewObjectKey(mainData[active.fileName]['scene-order'])
 
             // DEFINE NEW SCENE OBJECT
-            let newSceneObject = {...sceneObject};
+            let newSceneObject = Object.assign({}, sceneObject);
             newSceneObject['name'] = sceneName;
             newSceneObject['step-order'] = [1];
-            newSceneObject['steps'] = {
-                                        "1": { 
-                                            "screen" :  {
-                                                            "media-order": [],
-                                                            "background-color": "",
-                                                            "media": {},
-                                                            "console": {
-                                                                "active": false,
-                                                                "css": {}
-                                                            },
-                                                            "music" : {
-                                                                "src": "",
-                                                                "volume": "",
-                                                                "loop": ""
-                                                            }
-                                                        },
-                                            "boite" : {
-                                                "type": "no_phone",
-                                                "arg": ""
-                                            }
-                                            }
-                                    };
-
+            let emptyStep = Object.assign({}, stepObject);
+            newSceneObject['steps']['1'] = emptyStep;
+           
             // SAVE TO JSON FILE
             addNewScene(newSceneNumber, newSceneObject);
             showSpinner();
@@ -1286,10 +1206,9 @@ function showSpinner() {
 socket.on('success', function(data){
 
     // EMPTY PREVIOUS STRUCTURE AND STEP PREVIEW
-    $(`#step-media .${activeScreen}`).empty();
+    $(`#step-media ul`).empty();
     $('#structure-content').empty();
     $('#console-checkbox').prop('checked', false);
-    // $('#boite-checkbox').prop('checked', false);
 
     // UNBIND EVENT LISTENERS
     $("#delete-media-button").unbind("click");
@@ -1334,27 +1253,19 @@ socket.on('error', function(data){
 $('.editor-buttons fieldset input').change(function() {
     if (active.step !== "") {
         if ($(this).is(':checked')) {
-            $(`#${$(this).attr('name')}` ).show();
-            // if($(this).name === 'boite') {
-            //     addBoite();
-            // }
-            // $("this").prop("checked", false);
+            $(`#${activeScreen} .${$(this).attr('name')}` ).show();
         } else {
-            $(`#${$(this).attr('name')}` ).hide();
-            // $(this).prop("checked", false);
+            $(`#${activeScreen} .${$(this).attr('name')}` ).hide();
         }
-    } else {
+    } 
+    else {
         $(this).prop("checked", false);
     }
+    
 });
 
-// function addBoite() {
-//     const li = `<li data-key=${data_key} data-type='avatars' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Avatars</li>`;
-//     $(`#step-media .${activeScreen}`).append(li);
-// }
-
 function addNewStep(newStepNumber, step) {
-    socket.emit("add step", {"fileName" : active.fileName, "scene" : active.scene, "key" : newStepNumber, "step" : step});
+    socket.emit("add step", {"fileName" : active.fileName, "scene" : active.scene, "key" : newStepNumber, "step" : step, "activeStep" : active.step});
 }
 
 function deleteStep() {
@@ -1390,23 +1301,30 @@ function deleteShow() {
 }
 
 function toggleDebugger() {
-    $('#debug').toggleClass('active');
-    sendStep();
-    if ($('#debug').hasClass('active')) {
-        $('#preview').hide();
-        $('#preview-step').text('Close debugger');
-    } else {
-        $('#preview').show();
-        $('#preview-step').text('Preview in debugger');
-    }
+//     if (active.step !== "") {
+//     $('#debug').toggleClass('active');
     
-    // $('#preview').hide();
-    // $('#debugg').show();
-    // $('#preview-step').text('Close debugger')
+//     if ($('#debug').hasClass('active')) {
+//         let currentActiveScreen = activeScreen;
+//     let step = {};
+//     screens.forEach(screen => {
+//         activeScreen = screen;
+//         step = Object.assign(step, analyseStep());
+
+//     });
+//     activeScreen = currentActiveScreen;
+//     sendStep(step);
+//         $(`#${activeScreen}`).hide();
+//         $('#preview-step').text('Close debugger');
+//     } else {
+//         $('#preview').show();
+//         $('#preview-step').text('Preview in debugger');
+//     }
+// }
 }
 
-function sendStep() {
-    const step = analyseStep();
+function sendStep(step) {
+    // const step = analyseStep();
     socket.emit('step', step);
     // if (boite && 'send' in boite) boite.send();
 }
@@ -1435,40 +1353,12 @@ socket.on('init states', function(data) {
     displayMedia();
 });
 
-// function isJsonString(str) {
-//     try {
-//         JSON.parse(str);
-//     } catch (e) {
-//         return false;
-//     }
-//     return true;
-// }
-
-
-// function returnBoolean(str) {
-//     if (str ==='true') return true
-//     if (str ==='false' || str === 'null') return false
-// }
-// socket.on('language', (data) => {
-//     currentLanguage = data.currentLanguage;
-// })
-
-// socket.on('change language', (data) => {
-//     currentLanguage = data;
-//     $.getJSON(`/data/editor_${data}.json`, function(data) {
-//         editorSteps = data;
-//       });
-// })
-
 var datalists = {
     decors: {
       el: $('<datalist id="list_decors"></datalist>'),
       data: []
     },
-    musics: {
-      el: $('<datalist id="list_musics"></datalist>'),
-      data: []
-    },
+    
     styles: {
       el: $('<datalist id="list_styles"></datalist>'),
       data: []
@@ -1513,14 +1403,9 @@ $.each(boites_mobiles, function(key, val) {
 
 $('.boite_radio--no_phone').prop('checked', true);
 
-// $boites_types.on('dblclick', '.boite_label', function() {
-//   $(this.form).submit();
-// });
 
 function addAvatars() {
     let data_key = createRandomString(5);
-     // ADD TO MAIN DATA MEDIA ORDER TO MANIPULATE Z INDEXES
-    // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step][activeScreen]['media-order'].push(data_key);
     const li = `<li data-key=${data_key} data-type='avatars' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Avatars</li>`;
     $(`#step-media .${activeScreen}`).append(li);
     setElements('', 'avatars', data_key);
@@ -1530,31 +1415,22 @@ function addAvatars() {
 
 function addText() {
     let data_key = createRandomString(5);
-     // ADD TO MAIN DATA MEDIA ORDER TO MANIPULATE Z INDEXES
-    //  mainData[active.fileName]['scenes'][active.scene]['steps'][active.step][activeScreen]['media-order'].push(data_key);
     const li = `<li data-key=${data_key} data-type='text' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Text</li>`;
     $(`#step-media .${activeScreen}`).append(li);
     setElements('', 'text', data_key);
     applyZIndexes();
-    $(`#preview [data-key=${data_key}]`).text($('#text-content').val());
+    $(`${activeScreen} [data-key=${data_key}]`).text($('#text-content').val());
     closeModal();   
 }
 
 $media.on('mousedown', '.file', function() {
     let data_key = createRandomString(5);
-
-    // ADD TO MAIN DATA MEDIA ORDER TO MANIPULATE Z INDEXES
-    // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step][activeScreen]['media-order'].push(data_key);
-    // mainData[active.fileName]['scenes'][active.scene]['steps'][active.step][activeScreen]['media'][data_key] = newMediaObject;
-
     const li = `<li data-key=${data_key} data-type=${this.parentElement.className} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${getFileName($(this).attr('title'))}</li>`;
-           
     $(`#step-media .${activeScreen}`).append(li);
     
     setElements($(this).attr('title'), this.parentElement.className, data_key);
 
     applyZIndexes();
-
     closeModal();  
 });
 
@@ -1564,7 +1440,7 @@ var medias = {
 // pages: $('.media_pages'),
 // layouts: $('.media_layouts'),
 video: $('.media_video'),
-// audio: $('.media_audio'),
+audio: $('.media_audio'),
 gifs: $('.media_gifs'),
 images: $('.media_images')
 };
@@ -1617,17 +1493,16 @@ $.each(datalists, function(key, val) {
 /* Media
 ======== */
 $.each(states.media, function(key, val) {
-    var file = `<div title="${val.replace("frontend\\data\\media\\", "").replaceAll("\\", "/")}" class="file">${val.replace("frontend\\data\\media\\", "").replaceAll("\\", "/")}</div>`;
-    
-    // if (
-    // val.endsWith('.wav') ||
-    // val.endsWith('.flac') ||
-    // val.endsWith('.mp3') ||
-    // val.endsWith('.ogg')
-    // ) {
-    // medias.audio.append(file);
-    // datalists.musics.data.push(val);
+    // var file = `<div title="${val.replace("frontend\\data\\media\\", "").replaceAll("\\", "/")}" class="file">${val.replace("frontend\\data\\media\\", "").replaceAll("\\", "/")}</div>`;
+    var file = `<div title="${val}" class="file">${val}</div>`;
     if (
+    val.endsWith('.wav') ||
+    val.endsWith('.flac') ||
+    val.endsWith('.mp3') ||
+    val.endsWith('.ogg')
+    ) {
+        $('#select-audio').append(`<option>${val}</option>`);
+    } else if (
     val.toLowerCase().endsWith('.jpeg') ||
     val.toLowerCase().endsWith('.jpg') ||
     val.toLowerCase().endsWith('.png') ||
@@ -1666,31 +1541,23 @@ $(".media_cat p").click(function(){
 })
 }
 
-
-// function addMenu(id) {
-//     var menuTemplate =  `<div  
-//                             class="menu"
-//                         >   
-//                         <div class="remove-element">
-//                             <img class="icon" src="../icons/xmark-solid.svg" onclick="removeElement(${id});"></img>
-//                         </div>
-//                         <div onclick="editElement(${id});">
-//                             Edit
-//                         </div>
-//                     </div>`
-//     $('#' + id).find('.popup-body')[0].innerHTML += menuTemplate;
-// }
+$('#select-audio').change(function(){
+    setElements('', 'media_audio', '', $(`#select-audio option:selected`).text());
+    // $(`#${activeScreen} audio`).attr('src', htmlPathToMedia + $(`#select-audio option:selected`).text());
+});
 
 function toggleMediaList(e) {
     e.target.classList.toggle('active')
     $('#alert #media-backgrounds').toggleClass('d-none');
 }
 
+// EDITING
+
 function editElement(key, type) {
   
     if (type === 'text') {
 
-        var textStyle = getComputedStyle($(`#preview [data-key=${key}]`)[0]);
+        var textStyle = getComputedStyle($(`#${activeScreen} [data-key=${key}]`)[0]);
 
         var isActive = {
             "bold" : (textStyle.fontWeight === '700') ? ('active') : (''),
@@ -1892,15 +1759,15 @@ function editElement(key, type) {
         $('#media .media_images').clone().appendTo('#background-images').show();
         $('#media .media_gifs').clone().appendTo('#background-gifs').show();
         $('#background-images .media_images').children().click(function(){
-            $(`#preview [data-key=${key}]`).css({'background-image': `url('${htmlPathToMedia}${this.title}')`, 'background-size': 'cover', 'background-repeat': 'no-repeat'})
+            $(`#${activeScreen} [data-key=${key}]`).css({'background-image': `url('${htmlPathToMedia}${this.title}')`, 'background-size': 'cover', 'background-repeat': 'no-repeat'})
         });
         $('#background-gifs .media_gifs').children().click(function(){
-            $(`#preview [data-key=${key}]`).css({'background-image': `url('${htmlPathToMedia}${this.title}')`, 'background-size': 'cover', 'background-repeat': 'no-repeat'})
+            $(`#${activeScreen} [data-key=${key}]`).css({'background-image': `url('${htmlPathToMedia}${this.title}')`, 'background-size': 'cover', 'background-repeat': 'no-repeat'})
         });
         activateColorPicker();
     }
     if (type === 'media_video') {
-        const video = $(`#preview [data-key=${key}] video`)[0];
+        const video = $(`#${activeScreen} [data-key=${key}] video`)[0];
         $('#alert .editor-menu')
         .append(`<div class='menu-item video-controls'>
                     <p class='editor-section'>CONTROLS</p> 
@@ -1918,11 +1785,8 @@ function editElement(key, type) {
     }
 
     // APPLY CURRENT STYLE
-    let objectFit = $(`#preview [data-key=${key}]`).css('object-fit').toUpperCase();
+    let objectFit = $(`#${activeScreen} [data-key=${key}]`).css('object-fit').toUpperCase();
     $(`.size p:contains('${objectFit}')`).toggleClass('active');
-    
-    // let bcgColor = $(`#preview [data-key=${key}]`).css('background-color')
-    // $('.bg-color input:text').val(bcgColor)
 }
 
 oncontextmenu = (event) => {console.log(event) };
@@ -1945,7 +1809,7 @@ function activateFontStyleControler() {
             $this.addClass('active');
         }
        
-        $(`#preview [data-key=${inputs.id}]`).css(inputs['CSSparameter'], newValue);
+        $(`#${activeScreen} [data-key=${inputs.id}]`).css(inputs['CSSparameter'], newValue);
       })
 }
 
@@ -1967,7 +1831,7 @@ function activateTextAlignControler() {
             $this.addClass('active');
         }
        
-        $(`#preview [data-key=${inputs.id}]`).css(inputs['CSSparameter'], newValue);
+        $(`#${activeScreen} [data-key=${inputs.id}]`).css(inputs['CSSparameter'], newValue);
       })
 }
 
@@ -1978,7 +1842,7 @@ function activateFontSizeControler() {
       var val = $this.val();
     
       var inputs = {"id" : $this.context.id.split("_")[0], "CSSparameter" : $this.context.id.split("_")[1]};
-      $(`#preview [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val + 'px');
+      $(`#${activeScreen} [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val + 'px');
     })
 }
 
@@ -1989,7 +1853,7 @@ function activatePaddingControler() {
       var val = $this.val();
     
       var inputs = {"id" : $this.context.id.split("_")[0], "CSSparameter" : $this.context.id.split("_")[1]};
-      $(`#preview [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val + 'px');
+      $(`#${activeScreen} [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val + 'px');
     })
 }
 
@@ -2000,7 +1864,7 @@ function activateFontFamilyControler() {
       var val = $this.val();
     
       var inputs = {"id" : $this.context.id.split("_")[0], "CSSparameter" : $this.context.id.split("_")[1]};
-      $(`#preview [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val);
+      $(`#${activeScreen} [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val);
     })
 }
 
@@ -2018,30 +1882,25 @@ function activateBorderControler() {
             unit = '';
         }
 
-      $(`#preview [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val + unit);
+      $(`#${activeScreen} [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val + unit);
     })
 }
-
-// EDITING
-var setPopup = {'width' : '100%', 'height' : '100%', 'left': '0px', 'top' : '0px'};
-var resetPopup = {'width' : '20%', 'height' : 'auto', 'left': '25%', 'top' : '25%'};
-var resetMedia = {'height' : 'auto', 'object-fit': ''}
 
 function setSize(event, size, key, type) {
     $(event.target).siblings().removeClass('active');
     $(event.target).toggleClass('active');
 
-    $(`#preview [data-key=${key}]`).css({'object-fit' : size, 'width' : '100%', 'height' : '100%', 'top' : '0%', 'left' : '0%'});
+    $(`#${activeScreen} [data-key=${key}]`).css({'object-fit' : size, 'width' : '100%', 'height' : '100%', 'top' : '0%', 'left' : '0%'});
     if (type === 'media_images' || type === 'media_gifs') {
-        $(`#preview [data-key=${key}] img`).css({'object-fit' : size, 'height' : '100%'})
+        $(`#${activeScreen} [data-key=${key}] img`).css({'object-fit' : size, 'height' : '100%'})
     }
     if (type === 'media_videos' || type === 'videoStream') {
-        $(`#preview [data-key=${key}] video`).css({'object-fit' : size, 'height' : '100%'})
+        $(`#${activeScreen} [data-key=${key}] video`).css({'object-fit' : size, 'height' : '100%'})
     }
 }
 
 function rotateRight(key) {
-    var element = document.querySelector(`#preview [data-key='${key}']`);
+    var element = document.querySelector(`#${activeScreen} [data-key='${key}']`);
     var startAngle = parseInt(element.style.transform.replace('rotate(', '').replace('deg)', ''));
     var newAngle;
     if (startAngle) {
@@ -2053,7 +1912,7 @@ function rotateRight(key) {
 }
 
 function rotateLeft(key) {
-    var element = document.querySelector(`#preview [data-key='${key}']`);
+    var element = document.querySelector(`#${activeScreen} [data-key='${key}']`);
     var startAngle = parseInt(element.style.transform.replace('rotate(', '').replace('deg)', ''));
     var newAngle;
     if (startAngle) {
@@ -2070,7 +1929,7 @@ function playVideo(id) {
 }
 
 function setVideoAttribute(key, attribute, e) {
-    var video = $(`#preview [data-key=${key}] video`);
+    var video = $(`#${activeScreen} [data-key=${key}] video`);
 
     if( $(video).prop(attribute) ) {
             $(video).prop(attribute, false);
@@ -2081,95 +1940,9 @@ function setVideoAttribute(key, attribute, e) {
     video.load();
 }
 
-// function addBackground(id) {
-//     var gifs = $('.media_gifs')[0].cloneNode(true);
-//     var images = $('.media_images')[0].cloneNode(true);
-//     $('#background-gifs')[0].append(gifs);
-//     $('#background-images')[0].append(images);
-
-//     // add event listeners
-//     var gifsElementsArray = Array.from(gifs.childNodes);
-//     var imagesElementsArray = Array.from(images.childNodes);
-
-    
-
-//     gifsElementsArray.forEach(element => {
-//         element.addEventListener('mousedown', function(e) {
-//             var mediaElement;
-//             if ($('#' + id).find($('img')).length > 0) {
-//                 mediaElement = $('#' + id + 'img')
-//             } else {
-//                 mediaElement = $('#' + id + 'video')
-//             }
-//             // var popupBody = $('#' + id).find($('.popup-body'))[0];
-//             var backgroundURL = $(e.target).attr('title');
-//             mediaElement.css({'background-image' : `url(data/media/${backgroundURL})`, 'background-size' : 'cover', 'background-repeat' : 'no-repeat'});
-//         })
-//     })
-
-//     imagesElementsArray.forEach(element => {
-//         element.addEventListener('mousedown', function(e) {
-//             var mediaElement;
-//             if ($('#' + id).find($('img')).length > 0) {
-//                 mediaElement = $('#' + id + 'img')
-//             } else {
-//                 mediaElement = $('#' + id + 'video')
-//             }
-//             var backgroundURL = $(e.target).attr('title');
-//             mediaElement.css({'background-image' : `url(data/media/${backgroundURL})`, 'background-size' : 'cover', 'background-repeat' : 'no-repeat'});
-//         })
-//     })
-// }
-
 function removeBackgroundImage(key) {
-    $(`#preview [data-key='${key}']`).css({'background-image' : '', 'background-size' : '', 'background-repeat' : ''});
+    $(`#${activeScreen} [data-key='${key}']`).css({'background-image' : '', 'background-size' : '', 'background-repeat' : ''});
 }
-
-// function removeBackgroundColor(id) {
-//     var elements = ['text', 'img', 'video'];
-//     var count = 0;
-//     elements.forEach(element => {
-//         if ($("#" + id + element)[0]) {
-//             $("#" + id + element).css({'background-color' : 'transparent'});
-//             count = count + 1;
-//         }
-//     })
-//     if (id === null) {
-//         $("#preview").css({'background-color' : 'transparent'});
-//     }
-//     if (id !== null && count === 0) {
-//         $("#" + id).find('.popup-body').css({'background-color' : 'transparent'});
-//     }
-// }
-
-// function displayModal() {
-//     displayIfHidden(document.getElementById("save-new-modal"));
-// }
-
-// function closeModal() {
-//     document.getElementById("file-name").value = "";
-//     hideIfDisplayed(document.getElementById("save-new-modal"));
-// }
-
-// socket.on('response', (response) => {
-//     alert(response);
-// })
-
-// function clearPreview() {
-//     window.location.reload();
-// }
-
-// function hideIfDisplayed(element) {
-//     if (element.classList.contains("d-none") === false) {
-//         element.classList.add("d-none");
-//     }
-// }
-
-// function displayIfHidden(element) {
-//     if (element.classList.contains("d-none")) {
-//         element.classList.remove("d-none");
-//     }
-// }
 
 function displayMediaList() {
     $("#text-content").val('');
@@ -2181,19 +1954,6 @@ function displayMediaList() {
         dialogClass: "no-titlebar" 
     })
     getMediaStream();
-    // .append(`<div class='menu-item'>
-    //             <label for="background-color">BACKGROUND COLOR</label>
-    //             <input
-    //                 id = ${'preview_background-color'} 
-    //                 autocomplete="off"
-    //                 _list="list_decors"
-    //                 class="color-picker _box-min d-none"
-    //                 type="text"
-    //                 name="background-color"
-    //                 value = ${($('#preview').css('background-color')) ? ($('#preview').css('background-color').replaceAll(' ', '')) : ('transparent')} 
-    //             />
-    //         </div>`)
-    // activateColorPicker();
 }
 
 function activateColorPicker() {
@@ -2204,20 +1964,10 @@ function activateColorPicker() {
     
       if($this.context.id !== "preview_background-color") {
         var inputs = {"key" : $this.context.id.split("_")[0], "CSSparameter" : $this.context.id.split("_")[1]};
-        $(`#preview [data-key=${inputs.key}]`).css(inputs['CSSparameter'], val)
+        $(`#${activeScreen} [data-key=${inputs.key}]`).css(inputs['CSSparameter'], val)
         
       } else {
-          // remove background classes 
-        //   var decors = Array.from(document.querySelector(".media_decors").children);
-        //   var previewElement = document.querySelector("#preview");
-          // Remove previouse styles
-        //   decors.forEach(decor => {
-        //       var className = decor.innerHTML.substring(1);
-        //       if (previewElement.classList.contains(className)) {
-        //           previewElement.classList.remove(className);
-        //       }
-        //   });
-          $('#preview').css('background-color', val);
+          $(`#${activeScreen}`).css('background-color', val);
       }
        
       var $prev = $(this)
@@ -2260,13 +2010,11 @@ function activateColorPicker() {
 
 // LIVE STREAM
 function getMediaStream() {
-
     const cameraOptions = document.querySelector('.video-options>select');
 
     const constraints = {
         video: { deviceId: ''}
     };
-
 
     cameraOptions.onchange = () => {
         let data_key = createRandomString(5);
@@ -2275,32 +2023,12 @@ function getMediaStream() {
         setElements('', 'videoStream', data_key);
         applyZIndexes();
         constraints.video.deviceId = cameraOptions.value;
-        startStream(constraints, data_key);
+        $(`#${activeScreen} [data-key=${data_key}] video`).data('device', cameraOptions.value);
+        startStream(constraints, data_key, activeScreen);
         setTimeout(() => {
             $(".ui-dialog-titlebar-close"). click();
         }, 200); 
     };
-
-    // const startStream = async (constraints, data_key) => {
-    //     navigator.mediaDevices.getUserMedia( constraints )
-    //     .then( MediaStream => {
-    //         handleStream(MediaStream, data_key);
-    //     })
-    //     .catch( error => {
-    //         console.log(error);
-    //         setTimeout(() => {
-    //             $(".ui-dialog-titlebar-close"). click();
-    //         }, 200); 
-    //     });
-    // };
-
-
-    // const handleStream = (stream, data_key) => {
-    //     $(`#preview [data-key=${data_key}] video`)[0].srcObject = stream;
-    //     setTimeout(() => {
-    //         $(".ui-dialog-titlebar-close"). click();
-    //     }, 200); 
-    // };
 
     const getCameraSelection = async () => {
         const devices = await navigator.mediaDevices.enumerateDevices();
@@ -2314,19 +2042,18 @@ function getMediaStream() {
     getCameraSelection();
 }
 
-async function startStream(constraints, data_key) {
-    $(`#preview [data-key=${data_key}] video`).data('data-device', constraints.video.deviceId);
+async function startStream(constraints, data_key, screen) {
     navigator.mediaDevices.getUserMedia( constraints )
     .then( MediaStream => {
-        handleStream(MediaStream, data_key);
+        handleStream(MediaStream, data_key, screen);
     })
     .catch( error => {
         console.log(error);
     });
 }
 
-function handleStream(stream, data_key) {
-    $(`#preview [data-key=${data_key}] video`)[0].srcObject = stream;
+function handleStream(stream, data_key, screen) {
+    $(`#${screen} [data-key=${data_key}] video`)[0].srcObject = stream;
 }
 
 

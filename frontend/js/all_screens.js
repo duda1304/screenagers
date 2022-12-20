@@ -193,81 +193,81 @@ actions.forward = function() {
   forward(video);
 };
 
-var containCSS = {'width' : '100%', 'height' : '100%', 'object-fit': 'contain'};
-var coverCSS = {'width' : '100%', 'height' : '100%', 'object-fit': 'cover'};
+// var containCSS = {'width' : '100%', 'height' : '100%', 'object-fit': 'contain'};
+// var coverCSS = {'width' : '100%', 'height' : '100%', 'object-fit': 'cover'};
 
 // var lastVideoSrc;
-function setVideo({ src, style, volume, fit, loop }) {
-  var $video = $('<video></video>');
-    if (style !== " " && style !== undefined && style !== "[]") {
-      $video.css(style);
-    } else {
-      if (fit === 'contain') {
-        $video.css(containCSS);
-      } else {
-        $video.css(coverCSS);
-      }
-    }
+// function setVideo({ src, style, volume, fit, loop }) {
+//   var $video = $('<video></video>');
+//     if (style !== " " && style !== undefined && style !== "[]") {
+//       $video.css(style);
+//     } else {
+//       if (fit === 'contain') {
+//         $video.css(containCSS);
+//       } else {
+//         $video.css(coverCSS);
+//       }
+//     }
     
-    var loop;
-    var muted;
+//     var loop;
+//     var muted;
 
-    if (style.loop && style.loop !== null) {
-       loop = true;
-    }
+//     if (style.loop && style.loop !== null) {
+//        loop = true;
+//     }
 
-    if (style.muted && style.muted !== null) {
-     muted = true;
-    }
+//     if (style.muted && style.muted !== null) {
+//      muted = true;
+//     }
 
-  var deviceId;
+//   var deviceId;
 
-  if (src.includes('deviceId')) {
-    deviceId = src.split('_')[1];
-    $video.attr('id', 'stream');
-    $video.attr('autoplay', true);
-    $decor.append($video); 
-    // afterFirstClick(
-      async() => {
-      await navigator.mediaDevices.getUserMedia({
-        video: {
-            deviceId: deviceId
-        }}).then(stream => document.getElementById('stream').srcObject = stream)}
-    // })
-    ;
+//   if (src.includes('deviceId')) {
+//     deviceId = src.split('_')[1];
+//     $video.attr('id', 'stream');
+//     $video.attr('autoplay', true);
+//     $decor.append($video); 
+//     // afterFirstClick(
+//       async() => {
+//       await navigator.mediaDevices.getUserMedia({
+//         video: {
+//             deviceId: deviceId
+//         }}).then(stream => document.getElementById('stream').srcObject = stream)}
+//     // })
+//     ;
    
-  } else {
-    src = dataFolder + src;
-    var video = $video[0];
-    video.loop = loop;
-    if (!style.muted || style.muted === null) {
-      if (typeof volume === 'number') video.volume = volume / 100;
-      else video.volume = 0.5;
-    }
+//   } else {
+//     src = dataFolder + src;
+//     var video = $video[0];
+//     video.loop = loop;
+//     if (!style.muted || style.muted === null) {
+//       if (typeof volume === 'number') video.volume = volume / 100;
+//       else video.volume = 0.5;
+//     }
    
-    if (repet.time !== '') {
-      if (Number.isNaN(video.duration) !== false) {
-        video.currentTime = repet.time > video.duration ? video.duration : repet.time;
-      } else {
-        video.currentTime = repet.time;
-      }
-    }
-    $decor.append($video);  
-    // afterFirstClick(() => {
-      video.src = src;
-      video.muted = muted;
-      video.addEventListener('canplay', event => {
-        if (repet.pause) video.pause();
-        else video.play();
-      });
-      video.addEventListener('ended', event => {
-        if (video.loop === false) {
-          $video.hide();
-        }
-      });
-    // });
-  }
-}
+//     if (repet.time !== '') {
+//       if (Number.isNaN(video.duration) !== false) {
+//         video.currentTime = repet.time > video.duration ? video.duration : repet.time;
+//       } else {
+//         video.currentTime = repet.time;
+//       }
+//     }
+//     $decor.append($video);  
+//     // afterFirstClick(() => {
+//       video.src = src;
+//       video.muted = muted;
+//       video.addEventListener('canplay', event => {
+//         if (repet.pause) video.pause();
+//         else video.play();
+//       });
+//       video.addEventListener('ended', event => {
+//         if (video.loop === false) {
+//           $video.hide();
+//         }
+//       });
+//     // });
+//   }
+// }
 
 async function startStream(constraints, data_key) {
   $(`.step [data-key=${data_key}] video`).data('data-device', constraints.video.deviceId);
@@ -287,34 +287,34 @@ function handleStream(stream, data_key) {
 
 
 // var lastImageSrc;
-function setImage({ src, style, fit }) {
-  var $image = $('<img style="position:absolute"></img>');
+// function setImage({ src, style, fit }) {
+//   var $image = $('<img style="position:absolute"></img>');
 
-    if (style !== " " && style !== undefined && style !== "[]") {
-      $image.css(style);
-    } else {
-      if (fit === 'contain') {
-        $image.css(containCSS);
-      } else {
-        $image.css(coverCSS);
-      }
-    }
+//     if (style !== " " && style !== undefined && style !== "[]") {
+//       $image.css(style);
+//     } else {
+//       if (fit === 'contain') {
+//         $image.css(containCSS);
+//       } else {
+//         $image.css(coverCSS);
+//       }
+//     }
   
-  src = dataFolder + src;
-  $decor.append($image);
-  // $decor.css('background-color', '');
-  var image = $image[0];
+//   src = dataFolder + src;
+//   $decor.append($image);
+//   // $decor.css('background-color', '');
+//   var image = $image[0];
 
-  // $image.show();
+//   // $image.show();
 
-  // if (lastImageSrc === src) return;
-  // afterFirstClick(() => {
-    image.src = src;
-    // lastImageSrc = src;
+//   // if (lastImageSrc === src) return;
+//   // afterFirstClick(() => {
+//     image.src = src;
+//     // lastImageSrc = src;
     
    
-  // });
-}
+//   // });
+// }
 
 var lastMusicSrc;
 function setMusic({ src, volume, loop = false }) {
@@ -344,79 +344,79 @@ function setMusic({ src, volume, loop = false }) {
 }
 
 // var lastIframeSrc;
-function setIframe({ src, style, fit }) {
-  var $iframe = $('<iframe />');
+// function setIframe({ src, style, fit }) {
+//   var $iframe = $('<iframe />');
 
-    if (style !== " " && style !== undefined && style !== "[]") {
-      $iframe.css(style);
-    } else {
-      if (fit === 'contain') {
-        $iframe.css(containCSS);
-      } else {
-        $iframe.css(coverCSS);
-      }
-    }
+//     if (style !== " " && style !== undefined && style !== "[]") {
+//       $iframe.css(style);
+//     } else {
+//       if (fit === 'contain') {
+//         $iframe.css(containCSS);
+//       } else {
+//         $iframe.css(coverCSS);
+//       }
+//     }
   
-  if (src.includes("layouts")) {
-    src = src.startsWith('http') ? src : `/data/media/${src}`;
-  } else {
-    src = src.slice(1);
-    src = src.startsWith('http') ? src : `/data/pages/${src}/index.html`;
-  }
-  $decor.append($iframe);
-  var iframe = $iframe[0];
-    // if (lastIframeSrc === src) return;
-    // afterFirstClick(() => {
-      // $iframe.show();
-      // $iframe.css(style);
-      iframe.src = src;
-      // lastIframeSrc = src;
-      // iframe.addEventListener('load', () => {
-      //   console.log('iframe loaded');
-      // });
-      // iframe.onload = function(e) {
-      //   if (e.target.contentWindow.document.getElementsByTagName('video')[0]) {
-      //     video = e.target.contentWindow.document.getElementsByTagName('video')[0];
+//   if (src.includes("layouts")) {
+//     src = src.startsWith('http') ? src : `/data/media/${src}`;
+//   } else {
+//     src = src.slice(1);
+//     src = src.startsWith('http') ? src : `/data/pages/${src}/index.html`;
+//   }
+//   $decor.append($iframe);
+//   var iframe = $iframe[0];
+//     // if (lastIframeSrc === src) return;
+//     // afterFirstClick(() => {
+//       // $iframe.show();
+//       // $iframe.css(style);
+//       iframe.src = src;
+//       // lastIframeSrc = src;
+//       // iframe.addEventListener('load', () => {
+//       //   console.log('iframe loaded');
+//       // });
+//       // iframe.onload = function(e) {
+//       //   if (e.target.contentWindow.document.getElementsByTagName('video')[0]) {
+//       //     video = e.target.contentWindow.document.getElementsByTagName('video')[0];
           
-      //     video.addEventListener('canplay', event => {
-      //       if (repet.pause) video.pause();
-      //       else video.play();
-      //     });
-      //     video.addEventListener('ended', event => {
-      //       if (video.loop === false) {
-      //         $(iframe).contents().find("video").hide();
-      //         // $video.hide();
-      //         // $decor.css('background-color', '#000');
-      //       }
-      //     });
-      //     if (e.target.contentWindow.document.getElementsByTagName('canvas')[0]) {
-      //       processor.start(video);
-      //     }
-      //   } 
-      // }
+//       //     video.addEventListener('canplay', event => {
+//       //       if (repet.pause) video.pause();
+//       //       else video.play();
+//       //     });
+//       //     video.addEventListener('ended', event => {
+//       //       if (video.loop === false) {
+//       //         $(iframe).contents().find("video").hide();
+//       //         // $video.hide();
+//       //         // $decor.css('background-color', '#000');
+//       //       }
+//       //     });
+//       //     if (e.target.contentWindow.document.getElementsByTagName('canvas')[0]) {
+//       //       processor.start(video);
+//       //     }
+//       //   } 
+//       // }
      
       
-    // });
+//     // });
   
-}
+// }
 
-function killDecors(expect) {
+// function killDecors(expect) {
  
-  $('.step__decor').find('img').each(function(){$(this).remove()})
-  $('.step__decor').find('iframe').each(function(){$(this).remove()})
-  $decor.css('background-color', '');
-  $step[0].className = 'step';
+//   $('.step__decor').find('img').each(function(){$(this).remove()})
+//   $('.step__decor').find('iframe').each(function(){$(this).remove()})
+//   $decor.css('background-color', '');
+//   $step[0].className = 'step';
   
-}
+// }
 
-function isJsonString(str) {
-  try {
-      JSON.parse(str);
-  } catch (e) {
-      return false;
-  }
-  return true;
-}
+// function isJsonString(str) {
+//   try {
+//       JSON.parse(str);
+//   } catch (e) {
+//       return false;
+//   }
+//   return true;
+// }
 
 // function setDecor(data) {
 //   var src = data.src;
@@ -668,8 +668,9 @@ function displayStep(data) {
     }
     applyZIndexes(data);
     
-    setElements("", "console", "", data['console']);
+    setElements("", "console", "", "", data['console']);
     setElements("", "music", "", data['music']);
+    $('.step').css('background-color', data['background-color']);
 }
 
 function setElements(val, type, data_key, stepMediaObject) {

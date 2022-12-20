@@ -260,8 +260,9 @@ const set = {
     socket.on('add step', (data) => {
       const filePath = `./frontend/data/json/${data.fileName}.json`;
       const file = require(filePath);
-          
-      file['scenes'][data.scene]['step-order'].push(data.key);
+      let index = file['scenes'][data.scene]['step-order'].indexOf(data.activeStep)
+      // file['scenes'][data.scene]['step-order'].push(data.key);
+      file['scenes'][data.scene]['step-order'].splice(index + 1, 0, data.key);
       file['scenes'][data.scene]['steps'][data.key] = data.step;
           
       fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
@@ -315,7 +316,7 @@ const set = {
           
       file['scene-order'].push(data.key);
       file['scenes'][data.key] = data.scene;
-          
+
       fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
         if (err) {
           groups['editors'].emit('error');

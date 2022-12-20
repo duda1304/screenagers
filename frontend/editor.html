@@ -110,6 +110,9 @@
           <label for="boite" style="display: none;">Boite</label>
           <input style="display: none;" type="checkbox" name="boite" id="boite-checkbox" checked>
        </fieldset>
+       <select id="select-audio" disabled>
+        <option selected value="">Select audio</option>
+       </select>
       </div>
     </div>
     <section id="structure">
@@ -123,7 +126,9 @@
      </div>
     </section>
   </div>
-  <div id="preview" style="height: 65%; width: 65%; border: 0 none; overflow: hidden; margin-left: auto; margin-right: auto; margin-top: 10%; background-color: black; position: relative;">
+  <div id="screen" class="preview" style="height: 65%; width: 65%; border: 0 none; overflow: hidden; margin-left: auto; margin-right: auto; margin-top: 10%; background-color: black; position: relative;">
+  </div>
+  <div id="laptop" class="preview" style="display:none; height: 65%; width: 65%; border: 0 none; overflow: hidden; margin-left: auto; margin-right: auto; margin-top: 10%; background-color: black; position: relative;">
   </div>
   <div id="debug" style="height: 65%; width: 65%; border: 0 none; overflow: hidden; margin-left: auto; margin-right: auto; margin-top: 10%; background-color: black; position: relative;">
     <iframe src="/debug" style="width:100%; height: 100%; border: none;"></iframe>
@@ -156,7 +161,6 @@
   </div>
   <div class="editor-buttons">
     <button style="position: absolute; bottom: 5%; left: 50%;" id="preview-step" onclick="toggleDebugger()">Preview in debugger</button>
-
   </div>
 </main>
 <div id="alert"></div>
@@ -183,8 +187,8 @@
     <div class="media_video" style="display: none"></div>
   </div>
   <!-- <div class="media_cat">
-  <i title="audio">🎧</i>
-  <div class="media_audio"></div>
+    <p title="audio">AUDIO<span>&#8964;</span></p>
+    <div class="media_audio" style="display: none"></div>
   </div> -->
   <div class="media_cat">
     <p title="gifs">GIF<span>&#8964;</span></p>

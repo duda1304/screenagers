@@ -112,10 +112,10 @@ main #console {
 }
 
 #boite.boite--gameboy {
-  top: 2em;
-  bottom: 2em;
-  left: 2em;
-  right: 2em;
+  top: 2em !important;
+  bottom: 2em !important;
+  left: 2em !important;
+  right: 2em !important;
 }
 
 .screen_cover .step__decor {
@@ -233,6 +233,7 @@ main #console {
   overflow: auto;
   padding: 1em 0;
   padding-bottom: 3em;
+  display: block !important;
 }
 
 .boite--choix button {

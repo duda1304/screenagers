@@ -37,10 +37,30 @@ $('.screens div').on('click', function(){
     $(`#step-media ul`).not(`.${activeScreen}`).hide();
 
     // pause music on previous screen and start on active
+    // if ($(`.preview`).not(`#${activeScreen}`).find('audio').length !== 0) {
+    //     $(`.preview`).not(`#${activeScreen}`).find('audio').each(function() {
+    //         $(this).pause();
+    //     });
+    // }
+    // if ($(`#${activeScreen}`).find('audio').length !== 0) {
+    //     $(`#${activeScreen}`).find('audio').each(function() {
+    //         $(this).play();
+    //     });
+    // }
     // $(`.preview`).not(`#${activeScreen}`).find('audio').pause();
     // $(`#${activeScreen} audio`).play();
 
     // pause videos on previus screena and start on active
+    // if ($(`.preview`).not(`#${activeScreen}`).find('video').length !== 0) {
+    //     $(`.preview`).not(`#${activeScreen}`).find('video').each(function() {
+    //         $(this).pause();
+    //     });
+    // }
+    // if ($(`#${activeScreen}`).find('video').length !== 0) {
+    //     $(`#${activeScreen}`).find('video').each(function() {
+    //         $(this).play();
+    //     });
+    // }
     // $(`.preview`).not(`#${activeScreen}`).find('video').pause();
     // $(`#${activeScreen} video`).play();
 

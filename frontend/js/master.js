@@ -1156,8 +1156,8 @@ function setActiveStep(fileName, scene, step) {
 function displayStructure(fileName, data) {
   let showElement =  `<ul id=${fileName} class="show" style="display: none;">
                           <li class="show-name"><b><u>${data.name}</u></b></li>
-                          <li style="display: none;"><select class="languages"></select></li>
-                          <li style="display: none;">
+                          <li><select class="languages"></select></li>
+                          <li>
                               <ul id=${fileName + 'sceneList'} class="scenes"></ul>
                           </li>
                       </ul>`

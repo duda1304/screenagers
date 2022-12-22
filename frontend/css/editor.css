@@ -72,8 +72,31 @@ body {
   margin: 0px;
 }
 
+#camera-select {
+  color: white;
+  background-color: #605d5d;
+}
+
+#media hr {
+  width: 100%;
+}
+
+#create-QRcode {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#create-QRcode input {
+  margin-bottom: 10px;
+}
+
 #text-content {
   resize: both;
+}
+
+#text-content::placeholder {
+  font-style: italic;
+  font-size: 0.9em;
 }
 /* #background-images {
   font-size: 80%;
@@ -270,13 +293,17 @@ b::before {
 
 .steps {
   margin-top: 10px;
-  list-style-type: arrows;
+  /* list-style-type: arrows; */
+  max-height: 100px;
+  overflow-y: auto;
 }
 
 .step {
   width: fit-content;
-  padding: 5px;
+  padding: 2px;
   border-radius: 5px;
+  align-items: center;
+  display: flex;
 }
 
 .step.active {
@@ -288,13 +315,9 @@ b::before {
   border: none;
   background-color: transparent;
   color: white;
-}
-
-
-#structure-content .languages {
   width: fit-content;
 }
- 
+
 @font-face {
   font-family: 'fixedsys';
   src: url('/fonts/FSEX300.ttf') format('truetype');
@@ -583,6 +606,11 @@ b::before {
 
 .media_cat {
   padding-top: 10px;
+}
+
+.media_cat div {
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 #send-to-master {
@@ -895,6 +923,17 @@ video {
 
 
 /* NEW VERSION */
+.preview {
+  height: 65%; 
+  width: 65%; 
+  border: 0 none; 
+  overflow: hidden; 
+  margin-left: auto; 
+  margin-right: auto; 
+  margin-top: 5%; 
+  background-color: black; 
+  position: relative;
+}
 
 .preview .draggable:not(.text) {
   border: 1px solid #FF0000;

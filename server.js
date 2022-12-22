@@ -26,9 +26,18 @@ function createQRCodeImage(data, fileName) {
     let base64Image = code.split(';base64,').pop();
     fs.writeFile(`${__dirname}/frontend/data/media/QRcodes/${fileName}.png`, base64Image, {encoding: 'base64'}, function(err) {
       if (err) {
-        groups['masters'].emit('QR code response', {'message' : 'Error creating QR code, please try again.'});
+        groups['editors'].emit('error');   
+        // groups['editors'].emit('QR code response', {'status' : 'error', 'message' : 'QR code created in data/media/QRcodes'}); 
       }
-        groups['masters'].emit('QR code response', {'message' : 'QR code created in data/media/QRcodes'}); 
+      groups['editors'].emit('success', {'qrcode' : 'added'}); 
+      states.media = walkSync('./frontend/data/media');
+      states.media = states.media.reduce((acc, item) => {
+        acc.push(item.replace('frontend/data/media/', ''));
+        return acc;
+      }, []);
+
+      groups['editors'].emit('init states', states);   
+      // groups['editors'].emit('QR code response', {'status' : 'success', 'message' : 'Error creating QR code, please try again.'});
     });
   })
 }
@@ -692,6 +701,11 @@ const set = {
       });
     });
 
+    socket.on('refresh visual', function() {
+      const json = walkSync('./frontend/data/json');
+      socket.emit('initial json', json);
+    })
+
     // socket.on('save', data => {
     //   try {
     //     var str = JSON.stringify(data, null, 2) + '\n';
@@ -1013,10 +1027,10 @@ io.on('connection', socket => {
   })
 
   socket.on('create qr code', (data) => {
-    var file = data.src.split('/');
-    var index = file.length;
-    var fileName = file[index - 1].split('.')[0];
-    createQRCodeImage(data.src, fileName);
+    // var file = data.src.split('/');
+    // var index = file.length;
+    // var fileName = file[index - 1].split('.')[0];
+    createQRCodeImage(data.content, data.fileName);
 
     // states.media = walkSync('./frontend/data/media');
     // states.media = states.media.reduce((acc, item) => {

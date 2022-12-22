@@ -32,44 +32,24 @@ $('.screens div').on('click', function(){
         $('#console-checkbox').prop('checked', true);
     }
 
+    //adjust background color
+    $('#preview_background-color').val($(`#${activeScreen}`).css('background-color'));
+    activateColorPicker();
+
     // toggle media list
     $(`#step-media .${activeScreen}`).show();
     $(`#step-media ul`).not(`.${activeScreen}`).hide();
 
-    // pause music on previous screen and start on active
-    // if ($(`.preview`).not(`#${activeScreen}`).find('audio').length !== 0) {
-    //     $(`.preview`).not(`#${activeScreen}`).find('audio').each(function() {
-    //         $(this).pause();
-    //     });
-    // }
-    // if ($(`#${activeScreen}`).find('audio').length !== 0) {
-    //     $(`#${activeScreen}`).find('audio').each(function() {
-    //         $(this).play();
-    //     });
-    // }
-    // $(`.preview`).not(`#${activeScreen}`).find('audio').pause();
-    // $(`#${activeScreen} audio`).play();
+    // pause video and audio on previous screen and start on active
+    $(`.preview:not(#${activeScreen}) audio`).each(function(){$(this)[0].pause()});
+    $(`.preview:not(#${activeScreen}) video`).each(function(){$(this)[0].pause()});
 
-    // pause videos on previus screena and start on active
-    // if ($(`.preview`).not(`#${activeScreen}`).find('video').length !== 0) {
-    //     $(`.preview`).not(`#${activeScreen}`).find('video').each(function() {
-    //         $(this).pause();
-    //     });
-    // }
-    // if ($(`#${activeScreen}`).find('video').length !== 0) {
-    //     $(`#${activeScreen}`).find('video').each(function() {
-    //         $(this).play();
-    //     });
-    // }
-    // $(`.preview`).not(`#${activeScreen}`).find('video').pause();
-    // $(`#${activeScreen} video`).play();
-
+    $(`#${activeScreen} audio`).each(function(){$(this)[0].play()})
+    $(`#${activeScreen} video`).each(function(){$(this)[0].play()})
+   
     // toggle preview
     $(`#${activeScreen}`).show();
     $('.preview').not(`#${activeScreen}`).hide();
-
-    
-
 });
 
 $( function() {
@@ -183,6 +163,7 @@ function displayStructure(fileName, data) {
 
         // DEFINE SORTABLE FUNCTIONS FOR SCENES
         $('#' + fileName + 'sceneList').sortable({
+            opacity: 0.5,
             start : function (event, ui) {
                 startPosition = ui.item.index();
              },
@@ -200,6 +181,7 @@ function displayStructure(fileName, data) {
 
         // DEFINE SORTABLE FUNCTIONS FOR STEPS
         $("#" + id).sortable({
+            opacity: 0.5,
             start : function (event, ui) {
                startPosition = ui.item.index();
             },
@@ -333,23 +315,25 @@ function setActiveStep(fileName, scene, step) {
     active.scene = scene;
     active.step = step;
 
-    if (step !== '') {
-        $('#select-audio').prop('disabled', false);
-    } else {
-        $('#select-audio').prop('disabled', true);
-    }
+    // if (step !== '') {
+    //     $('#select-audio').prop('disabled', false);
+    // } else {
+    //     $('#select-audio').prop('disabled', true);
+    // }
 }
 
 function applyZIndexes() {
     let mediaOrder = [];
     $(`#step-media .${activeScreen} li`).each(function(){mediaOrder.push($(this).data('key'))})
-    mediaOrder.forEach((value, index) => {
-        $(`#${activeScreen} [data-key=${value}]`).css({"z-index" : index + 1});
+    let zIndex = mediaOrder.length;
+    mediaOrder.forEach((value) => {
+        $(`#${activeScreen} [data-key=${value}]`).css({"z-index" : zIndex});
+        zIndex = zIndex - 1;
     })
 }
 
 function clearUnwantedMedia(stepMedia){ 
-    let keysArray = [].map.call($(`#${activeScreen}`).children().not('#boite, audio'), function (e) {
+    let keysArray = [].map.call($(`#${activeScreen}`).children().not('#boite, .console'), function (e) {
     return e.getAttribute('data-key')
     })
 
@@ -361,6 +345,7 @@ function clearUnwantedMedia(stepMedia){
 }
 
 $(`#step-media .${activeScreen}`).sortable({
+    opacity: 0.5,
     start : function (event, ui) {
        startPosition = ui.item.index();
     },
@@ -394,9 +379,10 @@ function setStep(e, fileName, scene, step) {
 
         // DISPLAY step media
         displayActiveStepMedia(); 
-      
+
     } else {
         setActiveStep(fileName, scene, ""); 
+        $('#preview_background-color').val('');
         screens.forEach(screen => $(`#${screen}`).empty());
     }
 }
@@ -404,21 +390,23 @@ function setStep(e, fileName, scene, step) {
 function displayActiveStepMedia() {
     $.getJSON('./data/json/' + active.fileName + '.json', function(jsonData) {
         let currentActiveScreen = activeScreen;
-
         screens.forEach(screen => {
             activeScreen = screen;
             const mediaOrder = jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['media-order'];
             const stepMedia = jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['media'];
             
             clearUnwantedMedia(stepMedia);
+
             for (let data_key of mediaOrder) {
                 // DISPLAY MEDIA IN MEDIA LIST
                 let liName;
-                if (stepMedia[data_key]['type'] === 'media_images' || stepMedia[data_key]['type'] === 'media_video' || stepMedia[data_key]['type'] === 'media_gifs') {
-                    liName = getFileName(stepMedia[data_key]['attributes']['src']);
-                } else {
-                    liName = stepMedia[data_key]['type']
+                if (stepMedia[data_key]['type'] === 'media_images' || stepMedia[data_key]['type'] === 'media_video' || stepMedia[data_key]['type'] === 'media_gifs' || stepMedia[data_key]['type'] === 'media_audio') {
+                    liName = getFileName(decodeURI(stepMedia[data_key]['attributes']['src']));
+                } 
+                if (stepMedia[data_key]['type'] === 'videoStream') {
+                    liName = stepMedia[data_key]['attributes']['label'];
                 }
+               
                 const li = `<li data-key=${data_key} data-type=${stepMedia[data_key]['type']} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${liName}</li>`;
                 $(`#step-media .${activeScreen}`).append(li);
                 // DISPLAY STEP IN MEDIA PREVIEW
@@ -426,11 +414,21 @@ function displayActiveStepMedia() {
             }
             applyZIndexes();
             setElements("", "console", "", jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['console']);
-            setElements("", "media_audio", "", jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['audio']);
             $(`#${screen}`).css('background-color', jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['background-color']);
         });
 
         activeScreen = currentActiveScreen;
+
+        // ADJUST background color value
+        $('#preview_background-color').val($(`#${currentActiveScreen}`).css('background-color'));
+        activateColorPicker();
+
+          // pause video and audio on not active screen and start on active
+        $(`.preview:not(#${activeScreen}) audio`).each(function(){$(this)[0].pause()});
+        $(`.preview:not(#${activeScreen}) video`).each(function(){$(this)[0].pause()});
+
+        $(`#${activeScreen} audio`).each(function(){$(this)[0].play()})
+        $(`#${activeScreen} video`).each(function(){$(this)[0].play()})
        
         // SET console radio box state for active screen
         if ( $(`#${activeScreen} .console`).css('display') === 'none' ) {
@@ -450,32 +448,51 @@ function displayActiveStepMedia() {
     }) 
 }
 
-// ADD ELEMENTS
+let audioElementPosition = {
+    'top' : 25,
+    'left' : 85
+}
+
+// ADD MEDIA ELEMENTS
 function setElements(val, type, data_key, stepMediaObject) {
     src = htmlPathToMedia + val;
    
-    const avatarsElement = `<div class="avatars draggable resizable" style="width: 25%; height: 15%; position: absolute; top: 25%; left:25%; border-radius: 45%; z-index:99;" data-key=${data_key} data-type=${type}><img style = "width: 100%; height: 100%;" class="media"></img></div>`;
+    const avatarsElement = `<div class="avatars draggable resizable" style="width: 25%; height: 15%; position: absolute; top: 25%; left:25%; border-radius: 45%; z-index:99;" data-key=${data_key} data-type=${type}>
+                                <img style = "width: 100%; height: 100%;" class="media"></img>
+                            </div>`;
 
-    const console = `<div class="console draggable resizable" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:100;"><iframe src="/console" style="width:100%; height: 100%; border: none;"></iframe></div>`;
+    const console = `<div class="console draggable resizable" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:100;" data-type=${type}>
+                        <iframe src="/console" style="width:100%; height: 100%; border: none;"></iframe>
+                    </div>`;
 
-    const imageElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}><img style="width: 100%;" src=${src} class="media"></img></div>`
+    const imageElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
+                            <img style="width: 100%;" src=${src} class="media"></img>
+                            </div>`
 
-    const videoElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}><video autoplay style="width: 100%;" src=${src} class="media"></video></div>`
+    const videoElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
+                            <video autoplay style="width: 100%;" src=${src} class="media"></video>
+                          </div>`
                    
-    const audioElement = `<audio autoplay class="audio" data-key=${data_key} data-type=${type} src=""></audio>`
+    const audioElement = `<div class="draggable" style="width: 5%; position: absolute; top: ${audioElementPosition.top}%; left:${audioElementPosition.left}%; padding:5px;" data-key=${data_key} data-type=${type}>
+                            📢<audio autoplay volume=0.5 class="media" src=${src}></audio>
+                          </div>`
 
     const streamElement = `<div class="draggable resizable" style="width: 35%; height: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
-                            <video autoplay style="width: 100%;" class="media"> </video>
+                            <video autoplay style="width: 100%;" class="media"></video>
                            </div>`
    
     const textElement = `
-                            <pre contenteditable="true" class="text draggable" style="position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type} 
+                            <pre contenteditable="true" class="text draggable" data-key=${data_key} data-type=${type} 
                                      style=" 
+                                     position: absolute; 
+                                     top: 25%; 
+                                     left:25%;
                                      white-space: pre-wrap; 
                                      word-wrap: break-word;
                                      color: white;
                                      font-size: 16px;
                                      margin: 0px;
+                                     padding: 10px;
                                      font-family: Arial;
                                      "
                             >${val}</pre>
@@ -485,7 +502,7 @@ function setElements(val, type, data_key, stepMediaObject) {
         'media_images' : imageElement,
         'media_gifs' : imageElement,
         'media_video' : videoElement,
-        // 'media_audio' : audioElement,
+        'media_audio' : audioElement,
         'videoStream' : streamElement,
         'avatars' : avatarsElement,
         'text' : textElement
@@ -496,25 +513,21 @@ function setElements(val, type, data_key, stepMediaObject) {
             $(`#${activeScreen}`).append(elements[type]);
         }
     }
+
+    if (type === 'media_audio') {
+        audioElementPosition.top = audioElementPosition.top + 2;
+        audioElementPosition.left = audioElementPosition.left + 2;
+    }
   
     if(type === 'console') {
         if($(`#${activeScreen} .console`).length === 0) {
             $(`#${activeScreen}`).append(console);
         }
     } 
-    
-    if (type === 'media_audio') {
-        if($(`#${activeScreen} audio`).length === 0) {
-            $(`#${activeScreen}`).append(audioElement);
-        }
-        if (val !== '' && !$(`#${activeScreen} audio`).attr('src').includes(val)) {
-            $(`#${activeScreen} audio`).attr('src', src)
-        }
-    }
    
-    if (type === 'text') {
-        $(`#${activeScreen} [data-key=${data_key}]`).focus();
-    }
+    // if (type === 'text') {
+    //     $(`#${activeScreen} [data-key=${data_key}]`).focus();
+    // }
 
     // DEFINE FUNCTIONS FOR ELEMENT TO BE DRAGGABLE AND RESIZABLE
     $(`#${activeScreen} .draggable`).draggable({
@@ -582,13 +595,15 @@ function setElements(val, type, data_key, stepMediaObject) {
                 // $(`#${type}-checkbox`).prop("checked", true);
             }
             $(`#${activeScreen} .${type}`).css(stepMediaObject['css']);
-        } else if (type === 'media_audio') {
-            let mediaElement = $(`#${activeScreen} audio`);
-            if (!mediaElement.attr('src').includes(stepMediaObject['src'])) {
-                mediaElement.attr('src', htmlPathToMedia +  stepMediaObject['src']); 
+        } else 
+        
+        if (type === 'media_audio') {
+            let mediaElement = $(`#${activeScreen}`).find(`*[data-key="${data_key}"]`);
+            if (!mediaElement.find('.media').attr('src').includes(stepMediaObject['attributes']['src'])) {
+                mediaElement.find('.media').attr('src', htmlPathToMedia +  stepMediaObject['attributes']['src']); 
             }
-            mediaElement.attr('volume', stepMediaObject['volume'])
-            mediaElement.attr('loop', stepMediaObject['loop'])
+            mediaElement.find('.media').prop('volume', stepMediaObject['attributes']['volume'])
+            mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop'])
         }   
         
         else {
@@ -611,13 +626,15 @@ function setElements(val, type, data_key, stepMediaObject) {
             }
 
             if (stepMediaObject['type'] === 'videoStream') {
-                if (mediaElement.find('video').data('device') !== stepMediaObject['attributes']['device']) {
+                if (mediaElement.data('device') !== stepMediaObject['attributes']['device']) {
                     const constraints = {
                         video: { deviceId: stepMediaObject['attributes']['device']}
                     };
-                    mediaElement.find('video').data('device', stepMediaObject['attributes']['device']);
+                    mediaElement.data('device', stepMediaObject['attributes']['device']);
+                    mediaElement.data('label', stepMediaObject['attributes']['label']);
+
                     startStream(constraints, data_key, activeScreen);
-                }
+                } 
             }
 
              // ADD NEW TEXT IF NEEDED
@@ -633,7 +650,6 @@ function setElements(val, type, data_key, stepMediaObject) {
                 classes = classes + element;
             });
             mediaElement.addClass(classes);
-
            
             if(stepMediaObject['css']['object-fit'] && stepMediaObject['css']['object-fit'] !== "") {
                 mediaElement.find('.media').css({"height" : "100%", "object-fit" : stepMediaObject['css']['object-fit']});
@@ -737,7 +753,7 @@ function analyseStep(updatedStepObject) {
     let updatedMediaObject = {};
 
     // get all media elements
-    $(`#${activeScreen}`).children().not('.console, .audio, #boite').each(function(){
+    $(`#${activeScreen}`).children().not('.console, #boite').each(function(){
         let object =   {   "type" : "",     
                             "css" : {},
                             "attributes" : {},
@@ -752,13 +768,23 @@ function analyseStep(updatedStepObject) {
         // display none can be present if visibility was toggled
         delete object['css']['display'];
 
-        if ($(this).data('type') === 'media_video' || $(this).data('type') === 'media_images' || $(this).data('type') === 'media_gifs') {
+        if ($(this).data('type') === 'media_video' || $(this).data('type') === 'media_images' || $(this).data('type') === 'media_gifs' || $(this).data('type') === 'media_audio') {
             object['attributes']['src'] = $(this).children().attr('src').replace(htmlPathToMedia, '');
         } 
 
         if($(this).data('type') === 'media_video') {
             object['attributes']['loop'] = $(this).find('video')[0].loop;
             object['attributes']['muted'] = $(this).find('video')[0].muted;
+        }
+
+        if($(this).data('type') === 'videoStream') {
+            object['attributes']['device'] = $(this).data('device');
+            object['attributes']['label'] = $(this).data('label');
+        }
+
+        if($(this).data('type') === 'media_audio') {
+            object['attributes']['loop'] = $(this).find('audio')[0].loop;
+            object['attributes']['volume'] = $(this).find('audio')[0].volume;
         }
 
         let classArray = $(this).attr('class').split(" ");
@@ -783,28 +809,20 @@ function analyseStep(updatedStepObject) {
         updatedStepObject[activeScreen]['console']['active'] = false;
     } else {
         updatedStepObject[activeScreen]['console']['active'] = true;
+        updatedStepObject['console'] = consoleObject;
     }
-    // updatedStepObject[activeScreen]['console']['active'] = $('#console-checkbox').is(':checked');
     updatedStepObject[activeScreen]['console']['css'] = styleToObject($(`#${activeScreen} .console`).attr('style'));
 
-    // if ($('#console-checkbox').is(':checked')) {
-    //     updatedStepObject['console'] = {...consoleObject};
-    // }
-
     // add boite
-        updatedStepObject['boite'] = {...boiteObject};
-        let boite_type;
-        $('#boite input').each(function(){
-            if($(this).is(':checked')) {
-                boite_type = $(this).val();
-            } 
-        })
-        updatedStepObject['boite']['type'] = boite_type;
-        updatedStepObject['boite']['arg'] = $('#boite textarea').val();
-
-    // add audio
-    updatedStepObject[activeScreen]['audio']['scr'] = $(`#${activeScreen} audio`).attr('src');
-    updatedStepObject[activeScreen]['audio']['loop'] = $(`#${activeScreen} audio`).loop;
+    updatedStepObject['boite'] = {...boiteObject};
+    let boite_type;
+    $('#boite input').each(function(){
+        if($(this).is(':checked')) {
+            boite_type = $(this).val();
+        } 
+    })
+    updatedStepObject['boite']['type'] = boite_type;
+    updatedStepObject['boite']['arg'] = $('#boite textarea').val();
 
     return updatedStepObject;
 }
@@ -820,11 +838,6 @@ function saveStep(e) {
                             "console": {
                                 "active": false,
                                 "css": {}
-                            },
-                            "audio" : {
-                                "src": "",
-                                "volume": "",
-                                "loop": ""
                             }
                         },
             "laptop" :  {
@@ -834,11 +847,6 @@ function saveStep(e) {
                             "console": {
                                 "active": false,
                                 "css": {}
-                            },
-                            "audio" : {
-                                "src": "",
-                                "volume": "",
-                                "loop": ""
                             }
                         },
             "boite" :   {
@@ -874,6 +882,7 @@ function createNewObjectKey(array) {
 
 function closeModal() {
     setTimeout(() => {
+        $('.media_cat p.active').click();
         $(".ui-dialog-titlebar-close"). click();
     }, 200);  
 }
@@ -915,7 +924,7 @@ function addInStructure(parameter) {
             
             // SAVE TO JSON FILE
             addNewShow(fileName, newShowObject);
-            showSpinner();
+            showSpinner('alert');
         })
     }
     if (parameter === 'step') {
@@ -936,43 +945,9 @@ function addInStructure(parameter) {
             let newStepNumber = createNewObjectKey(mainData[active.fileName]['scenes'][active.scene]['step-order']);
             // let newStepObject = {...stepObject};
             let newStepObject = Object.assign({}, stepObject);
-            // let newStepObject = { 
-            //     "screen" :  {
-            //                     "media-order": [],
-            //                     "background-color": "",
-            //                     "media": {},
-            //                     "console": {
-            //                         "active": false,
-            //                         "css": {}
-            //                     },
-            //                     "audio" : {
-            //                         "src": "",
-            //                         "volume": "",
-            //                         "loop": ""
-            //                     }
-            //                 },
-            //     "laptop": {
-            //         "media-order": [],
-            //         "background-color": "",
-            //         "media": {},
-            //         "console": {
-            //             "active": false,
-            //             "css": {}
-            //         },
-            //         "audio": {
-            //             "src": "",
-            //             "volume": "",
-            //             "loop": ""
-            //         }
-            //     },
-            //     "boite" : {
-            //         "type": "no_phone",
-            //         "arg": ""
-            //     }
-            //     }
             // SAVE TO JSON FILE
             addNewStep(newStepNumber, newStepObject);
-            showSpinner();
+            showSpinner('alert');
         })
     } 
     if (parameter === 'scene') {
@@ -1005,7 +980,7 @@ function addInStructure(parameter) {
            
             // SAVE TO JSON FILE
             addNewScene(newSceneNumber, newSceneObject);
-            showSpinner();
+            showSpinner('alert');
         })
     }
 }
@@ -1027,7 +1002,7 @@ function duplicate(parameter) {
         $('#alert #ok').click(function() {
             // SAVE TO JSON FILE
             duplicateShow();
-            showSpinner();
+            showSpinner('alert');
         })
     } 
     
@@ -1055,7 +1030,7 @@ function duplicate(parameter) {
            
             // SAVE TO JSON FILE
             addNewScene(newSceneNumber, newSceneObject);
-            showSpinner();
+            showSpinner('alert');
         })
     }
 
@@ -1077,7 +1052,7 @@ function duplicate(parameter) {
             let newStepObject = {...mainData[active.fileName]['scenes'][active.scene]['steps'][active.step]};
             // SAVE TO JSON FILE
             addNewStep(newStepNumber, newStepObject);
-            showSpinner();
+            showSpinner('alert');
         })
     }
 
@@ -1107,7 +1082,7 @@ function editName(parameter) {
             
             // SAVE TO JSON FILE
             renameShow(newFileName, showName);
-            showSpinner();
+            showSpinner('alert');
         })
     } 
     if (parameter === 'scene') {
@@ -1131,7 +1106,7 @@ function editName(parameter) {
             
             // SAVE TO JSON FILE
             renameScene(sceneName);
-            showSpinner();
+            showSpinner('alert');
         })
     }
 }
@@ -1154,7 +1129,7 @@ function deleteFromStructure(parameter) {
         $('#alert #ok').click(function() {
             // SAVE CHANGES TO JSON FILE
             deleteStep();
-            showSpinner();
+            showSpinner('alert');
         })
     } 
     if (parameter === 'scene') {
@@ -1174,7 +1149,7 @@ function deleteFromStructure(parameter) {
         $('#alert #ok').click(function() {
             // SAVE CHANGES TO JSON FILE
             deleteScene();
-            showSpinner();
+            showSpinner('alert');
         })
     }
 
@@ -1203,7 +1178,7 @@ function deleteFromStructure(parameter) {
             $('#alert #ok').click(function() {
                 // SAVE CHANGES TO JSON FILE
                 deleteShow();
-                showSpinner();
+                showSpinner('alert');
             })
         }
     }
@@ -1217,14 +1192,36 @@ function showTooltips(e) {
     }, 1800);
 }
 
-function showSpinner() {
-    $('#alert')
+function showSpinner(div) {
+    $(`#${div}`)
     .empty()
     .append(`<div class="spinner"><div>`);
 }
 
 socket.on('success', function(data){
+    if ('qrcode' in data) {
+        $('#create-QRcode').append(`<label>
+                                        Filename
+                                        <input id="fileName" name='fileName' required oninput="this.value = this.value.replace(/[^a-zA-Z0-9 -]/g, '')">
+                                    </label>
+                                    <label for="fileName" class="opacity-label">.png</label><br>
+                                    <label>
+                                        Content
+                                        <input id="content" name='content' required>
+                                    </label><br>
+                                    <small>* content displayed when QR code is scanned</small>`)
+        setTimeout(() => {
+            $('.spinner').hide();
+        }, 1000); 
+        $(".media_cat p").click(function(){
+            $(".media_cat p").not(this).next().hide();
+            $(this).next().toggle();
+            $(".media_cat p").not(this).removeClass('active');
+            $(this).toggleClass('active');
+        })
+    } else {
 
+    
     // EMPTY PREVIOUS STRUCTURE AND STEP PREVIEW
     $(`#step-media ul`).empty();
     $('#structure-content').empty();
@@ -1250,6 +1247,7 @@ socket.on('success', function(data){
 
     // CLOSE MODAL
     closeModal();
+}
 })
 
 socket.on('error', function(data){
@@ -1260,14 +1258,15 @@ socket.on('error', function(data){
                 <button type='button'onclick="closeModal()">Close</button>
             </div>`);
 
-    if (data.deleted) {
-        $('#alert').dialog({
-            resizable: false,
-            modal: true,
-            maxHeight: 600,
-            minWidth: 500
-        });
-    }
+    // if (data.deleted) {
+    //     $('#alert').dialog({
+    //         resizable: false,
+    //         modal: true,
+    //         maxHeight: 600,
+    //         minWidth: 500
+    //     });
+    // }
+    closeModal();
 })
 
 $('.editor-buttons fieldset input').change(function() {
@@ -1439,13 +1438,13 @@ function addText() {
     $(`#step-media .${activeScreen}`).append(li);
     setElements('', 'text', data_key);
     applyZIndexes();
-    $(`${activeScreen} [data-key=${data_key}]`).text($('#text-content').val());
+    $(`#${activeScreen} [data-key=${data_key}]`).text($('#text-content').val());
     closeModal();   
 }
 
 $media.on('mousedown', '.file', function() {
     let data_key = createRandomString(5);
-    const li = `<li data-key=${data_key} data-type=${this.parentElement.className} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${getFileName($(this).attr('title'))}</li>`;
+    const li = `<li data-key=${data_key} data-type=${this.parentElement.className} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${getFileName(decodeURI($(this).attr('title')))}</li>`;
     $(`#step-media .${activeScreen}`).append(li);
     
     setElements($(this).attr('title'), this.parentElement.className, data_key);
@@ -1462,7 +1461,8 @@ var medias = {
 video: $('.media_video'),
 audio: $('.media_audio'),
 gifs: $('.media_gifs'),
-images: $('.media_images')
+images: $('#media_images'),
+QRcodes : $('#media_QRcodes')
 };
 
 function displayMedia() {
@@ -1471,9 +1471,10 @@ function displayMedia() {
 // medias.pages.empty();
 // medias.layouts.empty();
 medias.video.empty();
-// medias.audio.empty();
+medias.audio.empty();
 medias.gifs.empty();
 medias.images.empty();
+medias.QRcodes.empty();
 
 $.each(datalists, function(key, val) {
     val.el.empty();
@@ -1514,14 +1515,16 @@ $.each(datalists, function(key, val) {
 ======== */
 $.each(states.media, function(key, val) {
     // var file = `<div title="${val.replace("frontend\\data\\media\\", "").replaceAll("\\", "/")}" class="file">${val.replace("frontend\\data\\media\\", "").replaceAll("\\", "/")}</div>`;
-    var file = `<div title="${val}" class="file">${val}</div>`;
+    var file = `<div title="${encodeURI(val)}" class="file">${val}</div>`;
     if (
     val.endsWith('.wav') ||
     val.endsWith('.flac') ||
     val.endsWith('.mp3') ||
     val.endsWith('.ogg')
     ) {
-        $('#select-audio').append(`<option>${val}</option>`);
+        medias.audio.append(file);
+        // datalists.decors.data.push(val);
+        // $('#select-audio').append(`<option>${val}</option>`);
     } else if (
     val.toLowerCase().endsWith('.jpeg') ||
     val.toLowerCase().endsWith('.jpg') ||
@@ -1530,18 +1533,23 @@ $.each(states.media, function(key, val) {
     val.toLowerCase().endsWith('.webp') ||
     val.toLowerCase().endsWith('.jfif')
     ) {
-    medias.images.append(file);
-    datalists.decors.data.push(val);
+        if (val.includes('QRcodes')) {
+            medias.QRcodes.append(file);
+        } else {
+            medias.images.append(file);
+        }
+    
+    // datalists.decors.data.push(val);
     } else if (
         val.toLowerCase().endsWith('.html')
     ) {
     medias.layouts.append(file);
-    datalists.decors.data.push(val);
+    // datalists.decors.data.push(val);
     } else if (
     val.toLowerCase().endsWith('.gif') //
     ) {
     medias.gifs.append(file);
-    datalists.decors.data.push(val);
+    // datalists.decors.data.push(val);
     } else if (
     val.toLowerCase().endsWith('.webm') ||
     val.toLowerCase().endsWith('.mp4') ||
@@ -1551,20 +1559,22 @@ $.each(states.media, function(key, val) {
     val.toLowerCase().endsWith('.ogv')
     ) {
     medias.video.append(file);
-    datalists.decors.data.push(val);
+    // datalists.decors.data.push(val);
     }
 });
-datalistsWrite();
+// datalistsWrite();
 $(".media_cat p").click(function(){
     $(".media_cat p").not(this).next().hide();
     $(this).next().toggle();
+    $(".media_cat p").not(this).removeClass('active');
+    $(this).toggleClass('active');
 })
 }
 
-$('#select-audio').change(function(){
-    setElements('', 'media_audio', '', $(`#select-audio option:selected`).text());
-    // $(`#${activeScreen} audio`).attr('src', htmlPathToMedia + $(`#select-audio option:selected`).text());
-});
+// $('#select-audio').change(function(){
+//     setElements('', 'media_audio', '', $(`#select-audio option:selected`).text());
+//     // $(`#${activeScreen} audio`).attr('src', htmlPathToMedia + $(`#select-audio option:selected`).text());
+// });
 
 function toggleMediaList(e) {
     e.target.classList.toggle('active')
@@ -1804,12 +1814,48 @@ function editElement(key, type) {
                 </div>`)
     }
 
+    if (type === 'media_audio') {
+        const audio = $(`#${activeScreen} [data-key=${key}]`)[0];
+        $('#alert .editor-menu')
+        .empty()
+        .append(`<div class='menu-item audio-controls'>
+                    <p class='editor-section'>CONTROLS</p> 
+                    <div class='loop editor-buttons'>
+                        <button class="${(audio.loop) ? ('active') : ('')}" onclick="setAudioAttribute('${key}', 'loop', event);">
+                            <img class="icon" src="../icons/arrow-rotate-right-solid.svg"></img>
+                        </button>
+                    </div>
+                    <div>
+                        <input type="range" id="volume" name="volume" min="0" max="100" value="50" onchange="adjustAudioVolume('${key}', 'volume', event)">
+                        <label for="volume">Volume</label>
+                    </div>
+                </div>`)
+    }
+
     // APPLY CURRENT STYLE
     let objectFit = $(`#${activeScreen} [data-key=${key}]`).css('object-fit').toUpperCase();
     $(`.size p:contains('${objectFit}')`).toggleClass('active');
 }
 
 oncontextmenu = (event) => {console.log(event) };
+
+function setAudioAttribute(key, attribute, e) {
+    let audio = $(`#${activeScreen} [data-key=${key}] audio`);
+
+    if( $(audio).prop(attribute) ) {
+            $(audio).prop(attribute, false);
+    } else {
+        $(audio).prop(attribute, true);
+    }
+    $(e.currentTarget).toggleClass('active');
+    audio.load();
+}
+
+function adjustAudioVolume(key, attribute, e) {
+    let audio = $(`#${activeScreen} [data-key=${key}] audio`);
+
+    $(audio).prop(attribute, parseInt(e.target.value) / 100);
+}
 
 function activateFontStyleControler() {
     $('.font-style')
@@ -1974,6 +2020,12 @@ function displayMediaList() {
         dialogClass: "no-titlebar" 
     })
     getMediaStream();
+    $('#media .opacity-label').css('opacity', 0.4);
+}
+
+function createQRcode() {
+    socket.emit('create qr code', {'fileName' : $('#create-QRcode #fileName').val(), 'content' : $('#create-QRcode #content').val()});
+    showSpinner('create-QRcode');
 }
 
 function activateColorPicker() {
@@ -2032,18 +2084,19 @@ function activateColorPicker() {
 function getMediaStream() {
     const cameraOptions = document.querySelector('.video-options>select');
 
-    const constraints = {
+    let constraints = {
         video: { deviceId: ''}
     };
 
     cameraOptions.onchange = () => {
         let data_key = createRandomString(5);
-        const li = `<li data-key=${data_key} data-type='videoStream' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Stream</li>`;
+        const li = `<li data-key=${data_key} data-type='videoStream' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${$(cameraOptions).find(":selected").text()}</li>`;
         $(`#step-media .${activeScreen}`).append(li);
         setElements('', 'videoStream', data_key);
         applyZIndexes();
         constraints.video.deviceId = cameraOptions.value;
-        $(`#${activeScreen} [data-key=${data_key}] video`).data('device', cameraOptions.value);
+        $(`#${activeScreen} [data-key=${data_key}]`).data('device', cameraOptions.value);
+        $(`#${activeScreen} [data-key=${data_key}]`).data('label', $(cameraOptions).find(":selected").text());
         startStream(constraints, data_key, activeScreen);
         setTimeout(() => {
             $(".ui-dialog-titlebar-close"). click();
@@ -2056,7 +2109,7 @@ function getMediaStream() {
         const options = videoDevices.map(videoDevice => {
             return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
         });
-        cameraOptions.innerHTML = `<option value="">Select camera</option>` + options.join('');
+        cameraOptions.innerHTML = `<option value="" disabled selected>LIVE STREAM</option>` + options.join('');
     };
 
     getCameraSelection();
@@ -2068,12 +2121,11 @@ async function startStream(constraints, data_key, screen) {
         handleStream(MediaStream, data_key, screen);
     })
     .catch( error => {
-        console.log(error);
+        alert(error);
     });
 }
 
 function handleStream(stream, data_key, screen) {
     $(`#${screen} [data-key=${data_key}] video`)[0].srcObject = stream;
 }
-
 

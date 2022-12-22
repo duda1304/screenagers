@@ -270,19 +270,21 @@ actions.forward = function() {
 // }
 
 async function startStream(constraints, data_key) {
-  $(`.step [data-key=${data_key}] video`).data('data-device', constraints.video.deviceId);
   navigator.mediaDevices.getUserMedia( constraints )
   .then( MediaStream => {
       handleStream(MediaStream, data_key);
   })
   .catch( error => {
-      console.log(error);
+      alert(error);
   });
 }
 
 function handleStream(stream, data_key) {
-  $(`[data-key=${data_key}] video`)[0].srcObject = stream;
+  $(`.step [data-key=${data_key}] video`)[0].srcObject = stream;
 }
+
+
+
 
 
 
@@ -638,7 +640,7 @@ function clearUnwantedMedia(data){
   // const div = document.getElementsByClassName('step')[0];
   const stepMedia = data['media'];
 
-  let keysArray = [].map.call($decor.children(), function (e) {
+  let keysArray = [].map.call($decor.children().not('#boite, .console'), function (e) {
   return e.getAttribute('data-key')
   })
 
@@ -666,10 +668,9 @@ function displayStep(data) {
     for (let data_key of mediaOrder) {
       setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);
     }
-    applyZIndexes(data);
+    applyZIndexes(data); //here
     
-    setElements("", "console", "", "", data['console']);
-    setElements("", "music", "", data['music']);
+    setElements("", "console", "", data['console']);
     $('.step').css('background-color', data['background-color']);
 }
 
@@ -677,41 +678,56 @@ function setElements(val, type, data_key, stepMediaObject) {
   // $('#media-editor')[0].innerHTML = '';
   src = '/data/media/' + val;
  
-  const avatarsElement = `<div class="avatars" style="width: 25%; height: 15%; position: absolute; top: 25%; left:25%; border-radius: 45%; z-index:99;" data-key=${data_key} data-type=${type}><img style = "width: 100%; height: 100%;" class="media"></img></div>`;
+  const avatarsElement = `<div class="avatars" style="width: 25%; height: 15%; position: absolute; top: 25%; left:25%; border-radius: 45%; z-index:99;" data-key=${data_key} data-type=${type}>
+                            <img style = "width: 100%; height: 100%;" class="media"></img>
+                          </div>`;
 
-  const console = `<div id="console" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:100;"><iframe src="/console" style="width:100%; height: 100%; border: none;"></iframe></div>`;
+  const console = `<div id="console" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:100;">
+                    <iframe src="/console" style="width:100%; height: 100%; border: none;"></iframe>
+                  </div>`;
 
-  const imageElement = `<div style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}><img style="width: 100%;" src=${src} class="media"></img></div>`
+  const imageElement = `<div style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
+                          <img style="width: 100%;" src=${src} class="media"></img>
+                        </div>`
 
-  const videoElement = `<div style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}><video autoplay style="width: 100%;" src=${src} class="media"></video></div>`
+  const videoElement = `<div style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
+                          <video autoplay style="width: 100%;" src=${src} class="media"></video>
+                        </div>`
                  
-  const audioElement = `<audio id="music" src="" data-type=${type}></audio>`
+  const audioElement = `<div style="width: 5%; position: absolute; top: 25%; left:85%; padding:5px;" data-key=${data_key} data-type=${type}>
+                            <audio autoplay volume=0.5 class="media" src=${src}></audio>
+                          </div>`
 
   const streamElement = `<div style="width: 35%; height: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
-                          <video autoplay id="stream" style="width: 100%;" src=${src} class="media"> </video>
-                         </div>`
+                            <video autoplay style="width: 100%;" class="media"></video>
+                          </div>`
  
   const textElement = `
-                          <pre contenteditable="true" class="text" style="position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type} 
-                                   style=" 
-                                   white-space: pre-wrap; 
-                                   word-wrap: break-word;
-                                   color: white;
-                                   font-size: 16px;
-                                   margin: 0px;
-                                   font-family: Arial;
-                                   "
-                          >${val}</pre>
-                      `
+                        <pre contenteditable="true" class="text draggable" data-key=${data_key} data-type=${type} 
+                                  style=" 
+                                  position: absolute; 
+                                  top: 25%; 
+                                  left:25%;
+                                  white-space: pre-wrap; 
+                                  word-wrap: break-word;
+                                  color: white;
+                                  font-size: 16px;
+                                  margin: 0px;
+                                  padding: 10px;
+                                  font-family: Arial;
+                                  "
+                        >${val}</pre>
+                    `
   
   const elements = {
-      'media_images' : imageElement,
-      'media_gifs' : imageElement,
-      'media_video' : videoElement,
-      'videoStream' : streamElement,
-      'avatars' : avatarsElement,
-      'text' : textElement
-  }
+    'media_images' : imageElement,
+    'media_gifs' : imageElement,
+    'media_video' : videoElement,
+    'media_audio' : audioElement,
+    'videoStream' : streamElement,
+    'avatars' : avatarsElement,
+    'text' : textElement
+  } 
 
   if (type in elements) {
       if($(`.step__decor [data-key=${data_key}]`).length === 0) {
@@ -720,40 +736,39 @@ function setElements(val, type, data_key, stepMediaObject) {
   }
   
   if(type === 'console') {
-      if(stepMediaObject.active === true && $('#console').length === 0) {
+      if(stepMediaObject.active === true && $('.console').length === 0) {
           $('.step').append(console);
       }
-      if ((stepMediaObject.active === false && $('#console').length !== 0)) {
-        $('.step #console').remove();
+      if ((stepMediaObject.active === false && $('.console').length !== 0)) {
+        $('.step .console').remove();
       }
   } 
   
-  if (type === 'music') {
-      if($('#music').length === 0) {
-          $('.step__decor').append(audioElement);
-      }
-  }
-  
-  // if (type === 'text') {
-  //     $(`.step__decor [data-key=${data_key}]`).focus();
-  // }
-
   // APPLY STYLE IF MEDIA OBJECT IS FROM STEP
   if (stepMediaObject) {
       if (type === 'console') {
-          if (!stepMediaObject['active']) {
-              $(`#${type}`).hide();
-          } else {
-              $(`#${type}`).show();
-          }
-          $(`#${type}`).css(stepMediaObject['css']);
-      } else if (type === 'music') {
-          if (!$('#music').attr('src').includes(stepMediaObject['src'])) {
-              $('#music').attr('src', htmlPathToMedia +  stepMediaObject['src']); 
-          }
-          $('#music').attr('volume', stepMediaObject['volume'])
-          $('#music').attr('loop', stepMediaObject['loop'])
+          // if (!stepMediaObject['active']) {
+          //     $(`#${type}`).hide();
+          // } else {
+          //     $(`#${type}`).show();
+          // }
+          $(`.${type}`).css(stepMediaObject['css']);
+      } else if (type === 'media_audio') {
+        let mediaElement = $(`.step`).find(`*[data-key="${data_key}"]`);
+        if (!mediaElement.find('.media').attr('src').includes(stepMediaObject['attributes']['src'])) {
+            mediaElement.find('.media').attr('src', htmlPathToMedia +  stepMediaObject['attributes']['src']); 
+        }
+        mediaElement.find('.media').prop('volume', stepMediaObject['attributes']['volume'])
+        mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop'])
       }   
+    
+      // if (type === 'music') {
+      //     if (!$('#music').attr('src').includes(stepMediaObject['src'])) {
+      //         $('#music').attr('src', htmlPathToMedia +  stepMediaObject['src']); 
+      //     }
+      //     $('#music').attr('volume', stepMediaObject['volume'])
+      //     $('#music').attr('loop', stepMediaObject['loop'])
+      // }   
       
       else {
       // if (type === 'media_images') {
@@ -768,49 +783,39 @@ function setElements(val, type, data_key, stepMediaObject) {
               mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop'])
           }
 
-          // CHECK IF NEW SRC SHOULD BE APPLIED
-          if (stepMediaObject['type'] === 'media_video' || stepMediaObject['type'] === 'media_images') {
-              if (!mediaElement.find('.media').attr('src').includes(stepMediaObject['attributes']['src'])) {
-                  mediaElement.find('.media').attr('src', htmlPathToMedia +  stepMediaObject['attributes']['src']); 
-              }
+           // CHECK IF NEW SRC SHOULD BE APPLIED
+           if (stepMediaObject['type'] === 'media_video' || stepMediaObject['type'] === 'media_images' || stepMediaObject['type'] === 'media_gifs') {
+            if (!mediaElement.find('.media').attr('src').includes(stepMediaObject['attributes']['src'])) {
+                mediaElement.find('.media').attr('src', htmlPathToMedia +  stepMediaObject['attributes']['src']); 
+            }
           }
 
           if (stepMediaObject['type'] === 'videoStream') {
-            if (mediaElement.find('video').data('data-device') !== stepMediaObject['attributes']['device']) {
-                const constraints = {
-                    video: { deviceId: stepMediaObject['attributes']['device']}
-                };
-                startStream(constraints, data_key);
-            }
-            // if (!mediaElement.find('video')[0].srcObject) {
-            //     const constraints = {
-            //         video: { deviceId: stepMediaObject['attributes']['device']}
-            //     };
-            //     startStream(constraints, data_key);
-            // } else {
-            //     if (mediaElement.find('video')[0].srcObject['id'] !== stepMediaObject['attributes']['device']) {
-            //         const constraints = {
-            //             video: { deviceId: stepMediaObject['attributes']['device']}
-            //         };
-            //         startStream(constraints, data_key);
-            //     }
-            // }
-        }
+              if (mediaElement.data('device') !== stepMediaObject['attributes']['device']) {
+                  const constraints = {
+                      video: { deviceId: stepMediaObject['attributes']['device']}
+                  };
+                  mediaElement.data('device', stepMediaObject['attributes']['device']);
+                  mediaElement.data('label', stepMediaObject['attributes']['label']);
+
+                  startStream(constraints, data_key);
+              } 
+          }
 
            // ADD NEW TEXT IF NEEDED
            if (stepMediaObject['type'] === 'text') {
               if (mediaElement.text() !== stepMediaObject['content']) {
                   mediaElement.text(stepMediaObject['content']);
               }
-           }
+          }
 
           // APPLY CLASSES
           let classes = "";
-          stepMediaObject['classes'].forEach(element => {
-              classes = classes + element;
-          });
-          mediaElement.addClass(classes);
-
+          
+          // stepMediaObject['classes'].forEach(element => {
+          //     classes = classes + element;
+          // });
+          // mediaElement.addClass(classes);
          
           if(stepMediaObject['css']['object-fit'] && stepMediaObject['css']['object-fit'] !== "") {
               mediaElement.find('.media').css({"height" : "100%", "object-fit" : stepMediaObject['css']['object-fit']});
@@ -820,14 +825,8 @@ function setElements(val, type, data_key, stepMediaObject) {
   } 
 }
 
-
-
-
 socket.on('step', function(data){
-  console.log(data)
-  console.log(cat)
   if ('boite' in data && 'type' in data.boite) setBoite(data.boite);
- 
   if ('media-order' in data) displayStep(data);
   if ('mode' in data) setMode(data['mode']);
   // if ('screen' in data) displayStep(data['screen']);

@@ -190,9 +190,9 @@ socket.on('disconnect', function(reason) {
   // console.log('📡 ' + name, 'disconnect', reason);
 
   connected = false;
-  $online.addClass('disconnected').text('Déconnecté');
+  $online.addClass('disconnected').text('Disconnected');
   actions.alert(
-    { text: 'Vous étes deconnecté', buttons: [['Re-Connection']] },
+    { text: 'You are disconnected', buttons: [['Re-Connection']] },
     function() {
       window.location.reload();
     }
@@ -203,7 +203,7 @@ socket.on('connect', function() {
   var name = user && user.name;
   // console.log('📡 ' + name, 'connect');
   connected = true;
-  $online.removeClass('disconnected').text('Connecté');
+  $online.removeClass('disconnected').text('Connected');
   socket.emit('join', id);
 });
 

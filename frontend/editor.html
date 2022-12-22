@@ -110,9 +110,9 @@
           <label for="boite" style="display: none;">Boite</label>
           <input style="display: none;" type="checkbox" name="boite" id="boite-checkbox" checked>
        </fieldset>
-       <select id="select-audio" disabled>
+       <!-- <select id="select-audio" disabled>
         <option selected value="">Select audio</option>
-       </select>
+       </select> -->
       </div>
     </div>
     <section id="structure">
@@ -126,13 +126,13 @@
      </div>
     </section>
   </div>
-  <div id="screen" class="preview" style="height: 65%; width: 65%; border: 0 none; overflow: hidden; margin-left: auto; margin-right: auto; margin-top: 10%; background-color: black; position: relative;">
+  <div id="screen" class="preview">
   </div>
-  <div id="laptop" class="preview" style="display:none; height: 65%; width: 65%; border: 0 none; overflow: hidden; margin-left: auto; margin-right: auto; margin-top: 10%; background-color: black; position: relative;">
+  <div id="laptop" class="preview" style="display:none;">
   </div>
-  <div id="debug" style="height: 65%; width: 65%; border: 0 none; overflow: hidden; margin-left: auto; margin-right: auto; margin-top: 10%; background-color: black; position: relative;">
+  <!-- <div id="debug" style="height: 65%; width: 65%; border: 0 none; overflow: hidden; margin-left: auto; margin-right: auto; margin-top: 10%; background-color: black; position: relative;">
     <iframe src="/debug" style="width:100%; height: 100%; border: none;"></iframe>
-  </div>
+  </div> -->
   <div id="left-menu">
     <div id="media-menu">
       <div class="section-header">States</div>
@@ -159,13 +159,13 @@
       <section id="monitoring_outgoing" class="monitoring"></section>
     </section>
   </div>
-  <div class="editor-buttons">
+  <!-- <div class="editor-buttons">
     <button style="position: absolute; bottom: 5%; left: 50%;" id="preview-step" onclick="toggleDebugger()">Preview in debugger</button>
-  </div>
+  </div> -->
 </main>
 <div id="alert"></div>
 <section id="media">
-  Add content to step:
+  Add media to step:
   <!-- <div class="media_cat">
   <i title="styles css">🗛</i>
   <div class="media_styles"></div>
@@ -186,26 +186,50 @@
     <p title="videos">VIDEO<span>&#8964;</span></p>
     <div class="media_video" style="display: none"></div>
   </div>
-  <!-- <div class="media_cat">
+  <div class="media_cat">
     <p title="audio">AUDIO<span>&#8964;</span></p>
     <div class="media_audio" style="display: none"></div>
-  </div> -->
+  </div>
   <div class="media_cat">
     <p title="gifs">GIF<span>&#8964;</span></p>
     <div class="media_gifs" style="display: none"></div>
   </div>
   <div class="media_cat">
     <p title="images">IMAGE<span>&#8964;</span></p>
-    <div class="media_images" style="display: none"></div>
+    <div class="media_images" id="media_images" style="display: none"></div>
   </div>
-  <!-- <button onclick="getMediaStream()" id="add-stream-button">Add video stream</button> -->
-  <p>Add live stream</p>
+  <div class="media_cat">
+    <p title="images">QR CODE<span>&#8964;</span></p>
+    <div class="media_images" id="media_QRcodes" style="display: none"></div>
+  </div>
   <div class="menu-item video-options">
-    <select name="" id="" class="custom-select"></select>
+    <select name="" id="camera-select" class="custom-select"></select>
   </div>
+  <hr>
+  <div>
+    <textarea class="menu-item" rows="4" id="text-content" placeholder="add text content to step"></textarea>
+    <button onclick="addText()">Add text</button>
+  </div>
+  <hr>
   <button class="menu-item" onclick="addAvatars()">Add avatars</button>
-  <textarea class="menu-item" rows="4" id="text-content"></textarea>
-  <button onclick="addText()">Add text</button>
+  <hr>
+  <div class="menu-item">
+    <p>Create QR code:</p>
+    <form id="create-QRcode">
+      <label>
+        Filename
+        <input id="fileName" name='fileName' required oninput="this.value = this.value.replace(/[^a-zA-Z0-9 -]/g, '')">
+      </label>
+      <label for="fileName" class="opacity-label">.png</label><br>
+      <label>
+        Content
+        <input id="content" name='content' required>
+      </label><br>
+      <small>* content displayed when QR code is scanned</small>
+    </form>
+    <button type='file' onclick="createQRcode()">Create</button>
+  </div>
+  <hr>
 </section>
 
 <script src="./js/common.js?v=1.0"></script>

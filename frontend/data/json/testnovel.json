@@ -1,0 +1,98 @@
+{
+    "name": "test novel",
+    "languages": [
+        "HR"
+    ],
+    "scene-order": [
+        1
+    ],
+    "scenes": {
+        "1": {
+            "name": "test scene",
+            "step-order": [
+                1
+            ],
+            "steps": {
+                "1": {
+                    "screen": {
+                        "media-order": [
+                            "sB6sv",
+                            "0nsqX"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "sB6sv": {
+                                "type": "media_gifs",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "43%",
+                                    "left": "64%",
+                                    "z-index": "2"
+                                },
+                                "attributes": {
+                                    "src": "Gif/Ai.gif"
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "0nsqX": {
+                                "type": "videoStream",
+                                "css": {
+                                    "width": "35%",
+                                    "height": "35%",
+                                    "position": "absolute",
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "1"
+                                },
+                                "attributes": {
+                                    "device": "5600b61abe74af5a4d253231c4d6abda36a399d64be058eb5961c2f4ab28ac2e",
+                                    "label": "USB Camera (0c45:636b)"
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": true,
+                            "css": {
+                                "width": "25%",
+                                "height": "94%",
+                                "position": "absolute",
+                                "top": "1%",
+                                "left": "9%",
+                                "z-index": "100",
+                                "display": "block"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": true,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "block"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "avertissement",
+                        "arg": ""
+                    },
+                    "console": {
+                        "mode": "console"
+                    }
+                }
+            }
+        }
+    }
+}

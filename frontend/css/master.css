@@ -82,6 +82,16 @@ margin: 10px;
 #select-novel {
   background-color: #242424;
   color: white;
+  width: fit-content;
+}
+
+#refresh_visual {
+  float: right;
+  margin-left: 20px;
+}
+
+#refresh_visual img {
+  width: 100%;
 }
 
 #shortcuts {

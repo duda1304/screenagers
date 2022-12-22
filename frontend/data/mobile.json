@@ -20,7 +20,7 @@
         "image_photo_icon" : ["Envoyer une photo"],
         "singe_savant" : ["C'est (peut-être) bientôt", "votre tour d'écrire"],
         "gifs" : ["téléportation", "tonus", "glissade"],
-        "avertissement-boite" : {"title" : "Bienvenue !", "text" : "Votre pseudo est", "console" : "est connecté"},
+        "avertissement-boite" : {"title" : "Bienvenue !", "text" : "Votre pseudo est", "console" : "connected"},
         "choix-boite" : {"text" : "Les votes sont clos !"},
         "image-boite" : {"text" : "Probleme de lecture d'image"},
         "musique-boite" : {"title" : "Musique", "text" : "Montez le volume de votre téléphone."}

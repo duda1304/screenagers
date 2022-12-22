@@ -1,5 +1,8 @@
 toggleFullScreen = function() {};
 
+// ACTIVATE title of elements to be shown as tooltip on hover
+$( document ).tooltip();
+
 const isPositiveInteger = val => val >>> 0 === parseFloat(val);
 
 function locate(obj, path, sep = '.') {
@@ -316,24 +319,24 @@ $('#tools').append(
     //       }
     //   )
     // ),
-    $(`<div></div>`).append(
-      $(`<label for='select_language'>Create QR code image</label>`),
-      $(`<input type='text' id='QR_input'></inpuut>`),
-      $(`<button type='file'>Save</button>`)
-      .on(
-        'click',
-          function() {
-            socket.emit('create qr code', {src : $('#QR_input')[0].value});
-            $('#QR_input')[0].value = '';
-          }
-      )
-    )
+    // $(`<div></div>`).append(
+    //   $(`<label for='select_language'>Create QR code image</label>`),
+    //   $(`<input type='text' id='QR_input'></inpuut>`),
+    //   $(`<button type='file'>Save</button>`)
+    //   .on(
+    //     'click',
+    //       function() {
+    //         socket.emit('create qr code', {src : $('#QR_input')[0].value});
+    //         $('#QR_input')[0].value = '';
+    //       }
+    //   )
+    // )
   )
 );
 
-socket.on('QR code response', function(data){
-  alert(data.message)
-})
+// socket.on('QR code response', function(data){
+//   alert(data.message)
+// })
 
 // $('#layout').append(
 //   $(`<div class="box-v"></div>`).append(
@@ -1082,11 +1085,17 @@ socket.on('initial json', function(data) {
   setJSONsdata(data);
 });
 
+
 function setJSONsdata(data) { 
   mainData = {};
   // let count = 0;
   $('#visual').empty();
-  $('#visual').append('<select id="select-novel"><option selected disabled>Select visual novel</option></select>')
+  $('#visual')
+  .append('<select id="select-novel"><option selected disabled>Select visual novel</option></select>')
+  .append(`<button id="refresh_visual" class="icon box-min" title="Refresh data" onclick="refreshVisual()">
+            <img src='icons/refresh.png'></img>
+          </button>`)
+
   $('#select-novel').change(function(){
     $('#visual .show').hide();
     $(`#visual #${$(this).val()}`).show();
@@ -1133,6 +1142,10 @@ function createRandomString(length) {
   return result;
 }
 
+function refreshVisual() {
+  socket.emit('refresh visual');
+}
+
 
 function setActiveStep(fileName, scene, step) {
   active.fileName = fileName;
@@ -1149,7 +1162,7 @@ function displayStructure(fileName, data) {
                           </li>
                       </ul>`
   $('#visual').append(showElement);
-  $('#visual select').append(`<option value=${fileName}>${data.name}</option>`)
+  $('#select-novel').append(`<option value=${fileName}>${data.name}</option>`)
 
 
   // APPEND AVAILABLE LANGUAGES

@@ -17,11 +17,6 @@ const stepObject = {
                                     "console": {
                                         "active": false,
                                         "css": {}
-                                    },
-                                    "audio" : {
-                                        "src": "",
-                                        "volume": "",
-                                        "loop": ""
                                     }
                                 },
                     "laptop" :  {
@@ -31,11 +26,6 @@ const stepObject = {
                                     "console": {
                                         "active": false,
                                         "css": {}
-                                    },
-                                    "audio" : {
-                                        "src": "",
-                                        "volume": "",
-                                        "loop": ""
                                     }
                                 },
                     "boite" :   {
@@ -54,26 +44,6 @@ const boiteObject =     {
                         }
 
 
-// const stepObject = {     
-//                     "screen" : {
-//                         "decor" : {
-//                             "media-order" : [],   
-//                             "background-color" : "", 
-//                             "image" : [],
-//                             "video" : [],
-//                             "stream" : [],
-//                             "text" : [],
-//                             "avatar" : {}, 
-//                             "console" : {}
-//                         },
-//                         "audio": {
-//                             "src": "",
-//                             "volume": "",
-//                             "loop": ""
-//                         }
-//                     }
-                        
-//                     };
 const htmlPathToMedia = '/data/media/';
 
 const mediaObject = {   
@@ -84,72 +54,7 @@ const mediaObject = {
                         "classes" : [] 
                     };
 
-const global = {
-                "top" : "",
-                "left" : ""
-                };
-
-const editor_media_div_css = {
-                        "position" : "absolute",
-                        "top": "",
-                        "left": "",
-                        "width": "",
-                        "height": "",
-                    };
-
-const editor_image_css = {
-                            "object-fit" : "",
-                            "background-color" : "",
-                            "background-image" : "",
-                            "transform" : ""
-                        };
-                        
-const imageObject = {   "width" : "",
-                        "height" : "",
-                        "object-fit" : "",
-                        "background-color" : "",
-                        "background-image" : "",
-                        "transform" : "",
-                    };
-
 // only if object-fit => inner elelemtn height:100% + object-fit property
-
-const videoObject = {   "width" : "",
-                        "height" : "",
-                        "object-fit" : "",
-                        "background-image" : "",
-                        "transform" : "",
-                        "loop" : false,
-                        "muted" : false,
-                        "src" : ""
-                    };
-
-const streamObject = {  "width" : "",
-                        "height" : "",
-                        "object-fit" : "",
-                        "background-image" : "",
-                        "transform" : "",
-                        "deviceId" : ""
-                    };
-
-const textObject = {    "background-color" : "",
-                        "color" : "",
-                        "font-family" : "", 
-                        "font-size" : "", 
-                        "font-weight" : "", 
-                        "font-style" : "", 
-                        "text-decoration" : "", 
-                        "border" : "", 
-                        "transform" : ""
-                    };
-
-const avatarObject = {  "width" : "", 
-                        "height" : "", 
-                        "background-color" : "", 
-                        "background-image" : ""
-                    };
-
-
 
 const languages = {
                     'sq' : 'Albanian',

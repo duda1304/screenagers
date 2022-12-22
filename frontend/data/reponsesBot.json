@@ -1,6 +1,6 @@
 {
   "👍": {
-    "title": "reponse positive",
+    "title": "positive response",
     "type": "message",
     "data": {
       "FR" : [ "Très juste",
@@ -62,7 +62,7 @@
       }
   },
   "👎": {
-    "title": "reponse negative",
+    "title": "negative response",
     "type": "message",
     "data": {
       "FR" : [
@@ -108,7 +108,7 @@
     }
   },
   "🚨": {
-    "title": "alerte simple",
+    "title": "simple alert",
     "type": "alert",
     "data": {
       "FR" : [
@@ -148,7 +148,7 @@
     }
   },
   "🌪": {
-    "title": "réchauffement climatique",
+    "title": "global warming",
     "type": "message",
     "data": {
       "FR" : [

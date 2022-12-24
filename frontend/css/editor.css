@@ -38,14 +38,6 @@ body {
   flex-direction: column;
 }
 
-#debug {
-  display: none;
-}
-
-#debug.active {
-  display: block;
-}
-
 #media {
   display: flex;
   flex-direction: column;
@@ -466,6 +458,10 @@ b::before {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.video-controls button.active {
+  background-color: #008496;
 }
 
 .screens {
@@ -944,7 +940,7 @@ video {
   border: 1px solid #00FF00;
 }
 
-.media_cat p {
+#media .media_cat p {
   background-color: #605d5d;
   padding: 10px;
   margin-top: 0px;

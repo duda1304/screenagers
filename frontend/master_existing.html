@@ -38,26 +38,26 @@
 <link rel="stylesheet" href="./css/editor.css" />
 
 <main id="master">
-  <!-- <div class=" "> -->
-    <!-- <div class=""> -->
-      <!-- <div class=""> -->
-        <!-- <div class=""> -->
-          <!-- <div class=""> -->
-            <div class="box box-debug closed draggable resizable">
+  <div class="box-h box-fit">
+    <div class="box-v">
+      <div class="box-h">
+        <div class="box-v">
+          <div class="box-h">
+            <header class="box-h box-debug closed">
               <b>debug</b>
               <div id="debug"></div>
-            </div>
-            <div class="box box-tools closed draggable resizable">
+            </header>
+            <header class="box-h box-tools _closed">
               <b>tools</b>
               <div id="tools"></div>
-            </div>
-            <div class="box box-emojis closed draggable resizable hide">
+            </header>
+            <footer class="box-h box-emojis closed hide">
               <b>emojis</b>
               <div id="emojis"></div>
-            </div>
-            <div class="box box-users closed draggable resizable">
+            </footer>
+            <div class="box-h box-users">
               <b>users</b>
-              <div class="_hide  box-random-users">
+              <header class="_hide box-v box-random-users">
                 <input
                   title="Nombre d'utilisateurs tirés au sort"
                   id="number_random_users"
@@ -66,7 +66,7 @@
                   value="1"
                 />
                 <button id="select_random_users" class="icon box-min">🎲</button>
-              </div>
+              </header>
               <div class="users_container">
                 <table class="table-users">
                   <thead>
@@ -78,14 +78,14 @@
                   <tbody id="users"></tbody>
                 </table>
               </div>
-              <div id="users_stats">
+              <header id="users_stats">
                 <span id="nb_users_inscrits">0</span> registered /
                 <span id="nb_users_connectes">0</span> connected
-              </div>
-              <div id="reponses" class="box-wrap"></div>
-              <div>
+              </header>
+              <footer id="reponses" class="box-v box-wrap"></footer>
+              <footer>
                 <form id="interactions">
-                  <div class="">
+                  <div class="box-h">
                     <textarea
                       cols="44"
                       rows="12"
@@ -96,55 +96,115 @@
                     <img id="image-msg"></img>
                     <button
                       type="submit"
-                      title="Send message"
+                      title="Envoyer le message (Ctrl+Enter)"
                       class="icon"
                     >
                       📩
                     </button>
                   </div>
                 </form>
-              </div>
+              </footer>
             </div>
-          <!-- </div> -->
-          <div class="box box-visual closed draggable resizable">
+          </div>
+          <div class="box-h box-visual">
             <b>visual</b>
-            <div id="visual"></div>
-            <div>
-              <div class="">
+            <section id="visual"></section>
+            <footer>
+              <div class="box-v">
                 <button id="visual__prev" class="icon">⬅️</button>
                 <button id="visual__next" class="icon">➡️</button>
               </div>
-            </div>
+            </footer>
           </div>
-        <!-- </div> -->
-      <!-- </div> -->
-      <!-- <aside class=" " style="width: 25vw"> -->
-        <div class="box box-monitoring_incoming closed draggable resizable">
+        </div>
+      </div>
+      <aside class="box-h box-fit" style="width: 25vw">
+        <!-- <div class="box-h box-users">
+          <b>users</b>
+          <header class="_hide box-v box-random-users">
+            <input
+              title="Nombre d'utilisateurs tirés au sort"
+              id="number_random_users"
+              type="number"
+              min="0"
+              value="1"
+            />
+            <button id="select_random_users" class="icon box-min">🎲</button>
+          </header>
+          <div class="users_container">
+            <table class="table-users">
+              <thead>
+                <th><input checked id="users_check_all" type="checkbox" /></th>
+                <th></th>
+                <th>pseudo</th>
+                <th>karma</th>
+              </thead>
+              <tbody id="users"></tbody>
+            </table>
+          </div>
+          <header id="users_stats">
+            <span id="nb_users_inscrits">0</span> inscrit(s) /
+            <span id="nb_users_connectes">0</span> connecté(s)
+          </header>
+          <footer id="reponses" class="box-v box-wrap"></footer>
+          <footer>
+            <form id="interactions">
+              <div class="box-h">
+                <textarea
+                  cols="44"
+                  rows="3"
+                  id="one_shot__message"
+                  placeholder="message"
+                  name="message"
+                ></textarea>
+                <img id="image-msg"></img>
+                <button
+                  type="submit"
+                  title="Envoyer le message (Ctrl+Enter)"
+                  class="icon"
+                >
+                  📩
+                </button>
+              </div>
+            </form>
+          </footer>
+        </div> -->
+        <div class="box-h box-monitoring_incoming">
           <b>monitoring incoming</b>
-          <div id="monitoring_incoming"></div>
+          <section id="monitoring_incoming"></section>
         </div>
-        <div class="box box-monitoring_outgoing closed draggable resizable">
+        <div class="box-h box-monitoring_outgoing">
           <b>monitoring outgoing</b>
-          <div id="monitoring_outgoing"></div>
+          <section id="monitoring_outgoing"></section>
         </div>
-        <div class="box box-boites closed draggable resizable">
-          <b>states</b>
+        <footer class="box-h box-boites">
+          <b>états</b>
           <form id="boite">
-            <div class=" box-boites-type">
-              <div id="boites_types" class=" box-wrap"></div>
-            </div>
+            <header class="box-h box-boites-type">
+              <div id="boites_types" class="box-v box-wrap"></div>
+            </header>
+            <!-- <textarea
+              class="screen__input screen__texte"
+              cols="44"
+              rows="6"
+              placeholder="data"
+              name="arg"
+            ></textarea> -->
+            <!-- <footer class="box-v">
+              <button type="submit" title="Envoyer la boite (Ctrl+Enter)" class="icon">
+                📢
+              </button>
+            </footer> -->
           </form>
-        </div>
-        <div class="box box-osc hide draggable resizable">
-          <b>osc</b>
-          <form id="osc">
-            <div class="">
-              <input
-                type="number"
-                name="message"
-                placeholder="preset number (0 = Noir)"
-              />
-              <div class="">
+        </footer>
+        <!-- <footer class="box-h box-jump">
+          <b>saut ver sune scène</b>
+          <form id="saut">
+            <div class="box-h">
+              <select name="scene" id="saut_select">
+                <option value="">...</option>
+              </select>
+              <div class="box-v">
                 <button
                   type="submit"
                   title="Envoyer le message OSC (Ctrl+Enter)"
@@ -155,12 +215,32 @@
               </div>
             </div>
           </form>
-        </div>
-      <!-- </aside> -->
-    <!-- </div> -->
-    <div class="box box-audio_video_control closed draggable resizable">
-        <b>audio/video control</b>
-        <div>
+        </footer> -->
+
+        <footer class="box-h box-osc hide">
+          <b>osc</b>
+          <form id="osc">
+            <div class="box-h">
+              <input
+                type="number"
+                name="message"
+                placeholder="preset number (0 = Noir)"
+              />
+              <div class="box-v">
+                <button
+                  type="submit"
+                  title="Envoyer le message OSC (Ctrl+Enter)"
+                  class="icon"
+                >
+                  📢
+                </button>
+              </div>
+            </div>
+          </form>
+        </footer>
+      </aside>
+    </div>
+    <footer class="box-v">
       <button class="repet__rewind icon box-min">⏪</button>
       <button class="repet__pause toggle icon box-min">⏸️</button>
       <button class="repet__forward icon box-min">⏩</button>
@@ -173,16 +253,15 @@
         class="box-min"
         placeholder="minutes"
       />
-    </div>
       <!-- <button class="icon" id="send_all_screens">📢</button> -->
-    </div>
-  <!-- </div> -->
+    </footer>
+  </div>
 
 </main>
 
-<!-- <template id="tmpl_screen__ctrl">
+<template id="tmpl_screen__ctrl">
   <div class="screen__ctrl">
-    <div class="">
+    <div class="box-v">
       <input
         autocomplete="off"
         _list="list_decors"
@@ -214,7 +293,7 @@
         </label>
       </div>
     </div>
-    <div class=" button_radio">
+    <div class="box-v button_radio">
       <label title="L'image ou la video recouvre tout l'écran (avec crop)">
         <input class="radio_fit" checked type="radio" value="cover" name="decor.fit" />
         <span>cover</span>
@@ -240,7 +319,7 @@
       name="avatars_area"
       id="avatars_area"
     ></input>
-    <div class="">
+    <div class="box-v">
       <input
         autocomplete="off"
         list="list_musics"
@@ -264,11 +343,11 @@
         </label>
       </div>
     </div>
-    <!-- <div class="">
+    <!-- <div class="box-v">
       <select class="select_text_language">
       </select>
     </div> -->
-    <!-- <div class="">
+    <div class="box-v">
       <textarea
         autocomplete="off"
         cols="44"
@@ -277,7 +356,7 @@
         name="texte"
       ></textarea>
     </div>
-    <div class="">
+    <div class="box-v">
       <input
         autocomplete="off"
         list="list_styles"
@@ -293,7 +372,7 @@
         name="color"
       />
     </div>
-    <div class="">
+    <div class="box-v">
       <input
         autocomplete="off"
         list="list_modes"
@@ -302,8 +381,33 @@
         name="mode_aff"
       />
     </div>
+    <!-- <div class="box-v">
+      <textarea
+        autocomplete="off"
+        cols="44"
+        rows="2"
+        placeholder="code"
+        name="code"
+      ></textarea>
+    </div> -->
   </div>
-</template> --> -->
+</template>
+
+<!-- <div id="layout_modal" class="modal">
+  <div class="modal-content" style="display: flex; flex-direction: column; align-items: center;">
+    <span class="close" style="align-self: flex-end;">&times;</span>
+      <section style="width:65%; height: 65%; position: relative;" id="preview-window">
+          <iframe src="/screen" style="width:100%; height: 100%; border: none; position: relative;" id="screen-frame"></iframe>
+          <div style="position:absolute; width: 100%; height: 100%; top:0; left: 0; z-index:666665"></div>
+          <div style="position: absolute; top: 75%; left: 5%; width: 25%; height: 18%; resize: both; overflow: hidden; z-index:666666; background-color: green;" id="console-div">
+            <div style="width:100%; height: 100%; border: none; background-color: green; text-align: center;" id="console-frame">CONSOLE</div>
+            <div id="drag" style = "position: absolute; top: 5%; left: 5%; width: 90%; height: 90%; z-index:666667"></div>
+          </div>
+      </section>
+      <button onclick="saveEtapeLayout()">Save scene layout</button>
+  </div>
+</div> -->
+
 <!-- <div id="QR_modal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeQRmodal()">&times;</span>
@@ -330,3 +434,4 @@
 <script src="./js/boites_master.js?v=1.0"></script>
 <script src="./js/modes.js?v=1.0"></script>
 <script src="./js/master.js"></script>
+<!-- <script src="./js/editor.js"></script> -->

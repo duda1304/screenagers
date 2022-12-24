@@ -152,6 +152,10 @@ button:active {
   padding-bottom: 0.9em;
 }
 
+.alert__text img {
+  width: 100%;
+}
+
 #online {
   font-style: italic;
   opacity: 0.3;

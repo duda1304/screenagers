@@ -3,7 +3,6 @@ var path = require('path');
 var fs = require('fs-extra');
 const QrScanner = require('qr-scanner'); 
 
-
 // Require the package
 const QRCode = require('qrcode')
  

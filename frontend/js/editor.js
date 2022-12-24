@@ -8,6 +8,8 @@ let active = {
     step : ""
 }
 
+navigator.mediaDevices.getUserMedia({video: true, audio: true});
+
 const screens = ['screen', 'laptop'];
 
 let activeScreen = 'screen';
@@ -54,7 +56,7 @@ $('.screens div').on('click', function(){
 
 $( function() {
     $( ".draggable" ).draggable();
-  } );
+} );
 
 // separate JSONs for each show made, data gives array of all JSONs
 socket.on('initial json', function(data) {
@@ -406,6 +408,10 @@ function displayActiveStepMedia() {
                 if (stepMedia[data_key]['type'] === 'videoStream') {
                     liName = stepMedia[data_key]['attributes']['label'];
                 }
+
+                if (stepMedia[data_key]['type'] === 'text') {
+                    liName = stepMedia[data_key]['content'].substring(0, 20) + '...';
+                }
                
                 const li = `<li data-key=${data_key} data-type=${stepMedia[data_key]['type']} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${liName}</li>`;
                 $(`#step-media .${activeScreen}`).append(li);
@@ -469,15 +475,15 @@ function setElements(val, type, data_key, stepMediaObject) {
                             <img style="width: 100%;" src=${src} class="media"></img>
                             </div>`
 
-    const videoElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
-                            <video autoplay style="width: 100%;" src=${src} class="media"></video>
+    const videoElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type} data-audioOutput=''>
+                            <video autoplay volume=0.5 style="width: 100%;" src=${src} class="media"></video>
                           </div>`
                    
     const audioElement = `<div class="draggable" style="width: 5%; position: absolute; top: ${audioElementPosition.top}%; left:${audioElementPosition.left}%; padding:5px;" data-key=${data_key} data-type=${type}>
                             📢<audio autoplay volume=0.5 class="media" src=${src}></audio>
                           </div>`
 
-    const streamElement = `<div class="draggable resizable" style="width: 35%; height: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
+    const streamElement = `<div class="draggable resizable" style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
                             <video autoplay style="width: 100%;" class="media"></video>
                            </div>`
    
@@ -574,6 +580,7 @@ function setElements(val, type, data_key, stepMediaObject) {
 
     $(".resizable").resizable({
         handles: "se",
+        aspectRatio: true,
         resize: function () {
             $(this).css("object-fit", "");
             $(this).children().each(function(){$(this).css("object-fit", "");$(this).css("height", "");})
@@ -614,8 +621,11 @@ function setElements(val, type, data_key, stepMediaObject) {
 
             // APPLY LOOP AND MUTED TO VIDEOS
             if(stepMediaObject['type'] === 'media_video') {
-                mediaElement.find('.media').prop('muted', stepMediaObject['attributes']['muted'])
-                mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop'])
+                mediaElement.find('.media').prop('muted', stepMediaObject['attributes']['muted']);
+                mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop']);
+                mediaElement.find('.media').prop('volume', stepMediaObject['attributes']['volume']);
+                mediaElement.data('audioOutput', stepMediaObject['attributes']['audioOutput']);
+                mediaElement.find('.media')[0].setSinkId(stepMediaObject['attributes']['audioOutput']);
             }
 
             // CHECK IF NEW SRC SHOULD BE APPLIED
@@ -775,6 +785,8 @@ function analyseStep(updatedStepObject) {
         if($(this).data('type') === 'media_video') {
             object['attributes']['loop'] = $(this).find('video')[0].loop;
             object['attributes']['muted'] = $(this).find('video')[0].muted;
+            object['attributes']['volume'] = $(this).find('video')[0].volume;
+            object['attributes']['audioOutput'] = $(this).data('audioOutput');
         }
 
         if($(this).data('type') === 'videoStream') {
@@ -1434,7 +1446,7 @@ function addAvatars() {
 
 function addText() {
     let data_key = createRandomString(5);
-    const li = `<li data-key=${data_key} data-type='text' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>Text</li>`;
+    const li = `<li data-key=${data_key} data-type='text' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${$('#text-content').val().substring(0, 20)}...</li>`;
     $(`#step-media .${activeScreen}`).append(li);
     setElements('', 'text', data_key);
     applyZIndexes();
@@ -1582,7 +1594,7 @@ function toggleMediaList(e) {
 }
 
 // EDITING
-
+{/* <img class="icon" src="../icons/arrow-rotate-right-solid.svg"></img> */}
 function editElement(key, type) {
   
     if (type === 'text') {
@@ -1762,13 +1774,10 @@ function editElement(key, type) {
                     <div class='menu-item bg-image'>
                         <b onclick="toggleMediaList(event)">BACKGROUND IMAGE</b> 
                         <div id="media-backgrounds" class='d-none'>
-                            <p onclick="removeBackgroundImage('${key}')">NONE</p>
-                            <div class="media_cat" id='background-gifs'>
-                            </div>
-                            <div class="media_cat media_images" id='background-images'>
+                            <div class="media_images media_cat">
+                            <p onclick="removeBackgroundImage('${key}')" style="margin-bottom: 10px;">NONE</p>
                             </div>
                         </div>
-                       
                     </div>
                     <div class='menu-item rotation'>
                         <p>ROTATION</p> 
@@ -1783,17 +1792,18 @@ function editElement(key, type) {
         .dialog({
             resizable: false,
             modal: true,
-            maxHeight: 600,
+            // maxHeight: 600,
             dialogClass: "no-titlebar"
         });
-        $('#media .media_images').clone().appendTo('#background-images').show();
-        $('#media .media_gifs').clone().appendTo('#background-gifs').show();
-        $('#background-images .media_images').children().click(function(){
-            $(`#${activeScreen} [data-key=${key}]`).css({'background-image': `url('${htmlPathToMedia}${this.title}')`, 'background-size': 'cover', 'background-repeat': 'no-repeat'})
+        $('#media .media_images div').clone().appendTo('#media-backgrounds .media_images').show();
+        // $('#media .media_gifs').clone().appendTo('#background-gifs').show();
+        $('#media-backgrounds .media_images div').click(function(){
+            $(`#${activeScreen} [data-key=${key}]`).css({'background-image': `url('${htmlPathToMedia}${this.title}')`, 'background-size': 'cover', 'background-repeat': 'no-repeat'});
+            $('.bg-image b').click();
         });
-        $('#background-gifs .media_gifs').children().click(function(){
-            $(`#${activeScreen} [data-key=${key}]`).css({'background-image': `url('${htmlPathToMedia}${this.title}')`, 'background-size': 'cover', 'background-repeat': 'no-repeat'})
-        });
+        // $('#background-gifs .media_gifs').children().click(function(){
+        //     $(`#${activeScreen} [data-key=${key}]`).css({'background-image': `url('${htmlPathToMedia}${this.title}')`, 'background-size': 'cover', 'background-repeat': 'no-repeat'})
+        // });
         activateColorPicker();
     }
     if (type === 'media_video') {
@@ -1803,15 +1813,23 @@ function editElement(key, type) {
                     <p class='editor-section'>CONTROLS</p> 
                     <div class='loop editor-buttons'>
                         <button class="${(video.loop) ? ('active') : ('')}" onclick="setVideoAttribute('${key}', 'loop', event);">
-                            <img class="icon" src="../icons/arrow-rotate-right-solid.svg"></img>
+                            loop
                         </button>
                     </div>
                     <div class='editor-buttons'>
                         <button class="mute ${(video.muted) ? ('active') : ('')}" onclick="setVideoAttribute('${key}', 'muted', event);">
                         </button>
-                    
                     </div>
+                </div>
+                <div class="menu-item">
+                    <input type="range" id="volume" name="volume" min="0" max="100" value="50" onchange="adjustMediaVolume('${key}', 'volume', event)">
+                    <label for="volume">Volume</label>
+                </div>
+                <div class="menu-item">
+                    <select id="select-audioOutput">
+                    </select>
                 </div>`)
+        getAudioOutputs(key);
     }
 
     if (type === 'media_audio') {
@@ -1822,11 +1840,11 @@ function editElement(key, type) {
                     <p class='editor-section'>CONTROLS</p> 
                     <div class='loop editor-buttons'>
                         <button class="${(audio.loop) ? ('active') : ('')}" onclick="setAudioAttribute('${key}', 'loop', event);">
-                            <img class="icon" src="../icons/arrow-rotate-right-solid.svg"></img>
+                            loop
                         </button>
                     </div>
-                    <div>
-                        <input type="range" id="volume" name="volume" min="0" max="100" value="50" onchange="adjustAudioVolume('${key}', 'volume', event)">
+                    <div class="menu-item">
+                        <input type="range" id="volume" name="volume" min="0" max="100" value="50" onchange="adjustMediaVolume('${key}', 'volume', event)">
                         <label for="volume">Volume</label>
                     </div>
                 </div>`)
@@ -1851,10 +1869,10 @@ function setAudioAttribute(key, attribute, e) {
     audio.load();
 }
 
-function adjustAudioVolume(key, attribute, e) {
-    let audio = $(`#${activeScreen} [data-key=${key}] audio`);
+function adjustMediaVolume(key, attribute, e) {
+    let media = $(`#${activeScreen} [data-key=${key}] .media`);
 
-    $(audio).prop(attribute, parseInt(e.target.value) / 100);
+    $(media).prop(attribute, parseInt(e.target.value) / 100);
 }
 
 function activateFontStyleControler() {
@@ -2087,7 +2105,7 @@ function getMediaStream() {
     let constraints = {
         video: { deviceId: ''}
     };
-
+    
     cameraOptions.onchange = () => {
         let data_key = createRandomString(5);
         const li = `<li data-key=${data_key} data-type='videoStream' onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${$(cameraOptions).find(":selected").text()}</li>`;
@@ -2129,3 +2147,18 @@ function handleStream(stream, data_key, screen) {
     $(`#${screen} [data-key=${data_key}] video`)[0].srcObject = stream;
 }
 
+async function getAudioOutputs(data_key) {
+    const audioOptions = document.querySelector('#select-audioOutput');
+
+    audioOptions.onchange = () => {
+        $(`#${activeScreen} [data-key=${data_key}]`).data('audioOutput', audioOptions.value);
+        $(`#${activeScreen} [data-key=${data_key}] .media`)[0].setSinkId(audioOptions.value);
+    }
+
+    const devices = await navigator.mediaDevices.enumerateDevices();
+        const audioDevices = devices.filter(device => device.kind === 'audiooutput');
+        const options = audioDevices.map(audioDevice => {
+            return `<option value="${audioDevice.deviceId}">${audioDevice.label}</option>`;
+        });
+    audioOptions.innerHTML = `<option value="" disabled selected>AUDIO OUTPUT</option>` + options.join('');
+}

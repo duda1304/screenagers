@@ -4,34 +4,57 @@
         "HR"
     ],
     "scene-order": [
-        1
+        1,
+        2
     ],
     "scenes": {
         "1": {
             "name": "test scene",
             "step-order": [
-                1
+                1,
+                3,
+                2
             ],
             "steps": {
                 "1": {
                     "screen": {
                         "media-order": [
-                            "sB6sv",
-                            "0nsqX"
+                            "L0ZPF",
+                            "0nsqX",
+                            "KMu9C"
                         ],
-                        "background-color": "rgb(0, 0, 0)",
+                        "background-color": "rgb(177, 87, 87)",
                         "media": {
-                            "sB6sv": {
+                            "L0ZPF": {
                                 "type": "media_gifs",
                                 "css": {
                                     "width": "35%",
                                     "position": "absolute",
-                                    "top": "43%",
-                                    "left": "64%",
-                                    "z-index": "2"
+                                    "top": "46%",
+                                    "left": "39%",
+                                    "z-index": "3"
                                 },
                                 "attributes": {
-                                    "src": "Gif/Ai.gif"
+                                    "src": "Gif/Avatars/Avatars0.gif"
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "KMu9C": {
+                                "type": "media_video",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "24%",
+                                    "left": "57%",
+                                    "z-index": "1"
+                                },
+                                "attributes": {
+                                    "src": "Animationconnexion/animationconnexion.webm",
+                                    "loop": true,
+                                    "muted": false,
+                                    "volume": 1,
+                                    "audioOutput": "default"
                                 },
                                 "content": "",
                                 "classes": []
@@ -42,9 +65,9 @@
                                     "width": "35%",
                                     "height": "35%",
                                     "position": "absolute",
-                                    "top": "25%",
-                                    "left": "25%",
-                                    "z-index": "1"
+                                    "top": "3%",
+                                    "left": "3%",
+                                    "z-index": "2"
                                 },
                                 "attributes": {
                                     "device": "5600b61abe74af5a4d253231c4d6abda36a399d64be058eb5961c2f4ab28ac2e",
@@ -55,7 +78,7 @@
                             }
                         },
                         "console": {
-                            "active": true,
+                            "active": false,
                             "css": {
                                 "width": "25%",
                                 "height": "94%",
@@ -63,14 +86,35 @@
                                 "top": "1%",
                                 "left": "9%",
                                 "z-index": "100",
-                                "display": "block"
+                                "display": "none"
                             }
                         }
                     },
                     "laptop": {
-                        "media-order": [],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {},
+                        "media-order": [
+                            "RpvoG"
+                        ],
+                        "background-color": "rgb(19, 79, 92)",
+                        "media": {
+                            "RpvoG": {
+                                "type": "media_audio",
+                                "css": {
+                                    "width": "5%",
+                                    "position": "absolute",
+                                    "top": "25%",
+                                    "left": "85%",
+                                    "padding": "5px",
+                                    "z-index": "1"
+                                },
+                                "attributes": {
+                                    "src": "Sons/Cool%20Jazz%20Lounge%20Music.mp3",
+                                    "loop": false,
+                                    "volume": 1
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
                         "console": {
                             "active": true,
                             "css": {
@@ -90,6 +134,357 @@
                     },
                     "console": {
                         "mode": "console"
+                    }
+                },
+                "2": {
+                    "screen": {
+                        "media-order": [
+                            "Bjrhy",
+                            "xBYQN",
+                            "evdcV"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "Bjrhy": {
+                                "type": "media_gifs",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "37%",
+                                    "left": "11%",
+                                    "z-index": "3"
+                                },
+                                "attributes": {
+                                    "src": "CableStory/Sharkconnection2.gif"
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "xBYQN": {
+                                "type": "media_images",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "29%",
+                                    "left": "24%",
+                                    "z-index": "2"
+                                },
+                                "attributes": {
+                                    "src": "Animationconnexion/Animationconnexion/3.%20Connexion%20animation.006.jpeg"
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "evdcV": {
+                                "type": "media_images",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "11%",
+                                    "left": "34%",
+                                    "z-index": "1"
+                                },
+                                "attributes": {
+                                    "src": "QRcodes/asdasdasd.png"
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "3": {
+                    "screen": {
+                        "media-order": [
+                            "L0ZPF",
+                            "KMu9C",
+                            "lJ6xO"
+                        ],
+                        "background-color": "rgb(177, 87, 87)",
+                        "media": {
+                            "L0ZPF": {
+                                "type": "media_gifs",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "46%",
+                                    "left": "39%",
+                                    "z-index": "3"
+                                },
+                                "attributes": {
+                                    "src": "Gif/Avatars/Avatars0.gif"
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "KMu9C": {
+                                "type": "media_video",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "2"
+                                },
+                                "attributes": {
+                                    "src": "Animationconnexion/animationconnexion.webm",
+                                    "loop": true,
+                                    "muted": false,
+                                    "volume": 0.17,
+                                    "audioOutput": "abdbc39548556a0dac0dd4018dc49c58a77a59b55ce230b56cbaa684adf1f563"
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "lJ6xO": {
+                                "type": "videoStream",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "51%",
+                                    "left": "6%",
+                                    "z-index": "1"
+                                },
+                                "attributes": {
+                                    "device": "5600b61abe74af5a4d253231c4d6abda36a399d64be058eb5961c2f4ab28ac2e",
+                                    "label": "USB Camera (0c45:636b)"
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "94%",
+                                "position": "absolute",
+                                "top": "1%",
+                                "left": "9%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [
+                            "RpvoG"
+                        ],
+                        "background-color": "rgb(19, 79, 92)",
+                        "media": {
+                            "RpvoG": {
+                                "type": "media_audio",
+                                "css": {
+                                    "width": "5%",
+                                    "position": "absolute",
+                                    "top": "29%",
+                                    "left": "89%",
+                                    "padding": "5px",
+                                    "z-index": "1"
+                                },
+                                "attributes": {
+                                    "src": "Sons/Cool%20Jazz%20Lounge%20Music.mp3",
+                                    "loop": false,
+                                    "volume": 1
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": true,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "block"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "avertissement",
+                        "arg": ""
+                    },
+                    "console": {
+                        "mode": "console"
+                    }
+                }
+            }
+        },
+        "2": {
+            "name": "tgdfg",
+            "step-order": [
+                1
+            ],
+            "steps": {
+                "1": {
+                    "screen": {
+                        "media-order": [
+                            "M77yD",
+                            "hkPQc",
+                            "CkTht",
+                            "0Yh5z",
+                            "2L7ra"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "M77yD": {
+                                "type": "media_gifs",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "5"
+                                },
+                                "attributes": {
+                                    "src": "Gif/Avatars/Avatars1.gif"
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "hkPQc": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "92%",
+                                    "left": "42%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "16px",
+                                    "margin": "0px",
+                                    "padding": "10px",
+                                    "font-family": "Arial",
+                                    "z-index": "4"
+                                },
+                                "attributes": {},
+                                "content": "cbbcvvc vbcvbbv  fff f. I am here",
+                                "classes": [
+                                    "text"
+                                ]
+                            },
+                            "CkTht": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "21%",
+                                    "left": "17%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "20px",
+                                    "margin": "0px",
+                                    "padding": "14px",
+                                    "font-family": "Arial",
+                                    "z-index": "3"
+                                },
+                                "attributes": {},
+                                "content": "you are there",
+                                "classes": [
+                                    "text"
+                                ]
+                            },
+                            "0Yh5z": {
+                                "type": "media_images",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "23%",
+                                    "left": "54%",
+                                    "z-index": "2"
+                                },
+                                "attributes": {
+                                    "src": "Animationconnexion/Animationconnexion/Connexionanimation.011.jpeg"
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "2L7ra": {
+                                "type": "media_images",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "43%",
+                                    "left": "7%",
+                                    "z-index": "1"
+                                },
+                                "attributes": {
+                                    "src": "Animationconnexion/Animationconnexion/3.%20Connexion%20animation.003.jpeg"
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "collective_song",
+                        "arg": "do you need to\ni alos want to\nbla bla bla"
                     }
                 }
             }

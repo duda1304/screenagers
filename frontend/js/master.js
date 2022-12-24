@@ -1,4 +1,21 @@
+navigator.mediaDevices.getUserMedia({video: true, audio: true});
+
 toggleFullScreen = function() {};
+
+// ACTIVATE draggable elements
+$( function() {
+  $( ".draggable" ).draggable({
+      stop : function(){
+        $(this).position();
+        $(this).css('position', 'absolute');
+      }
+  });
+})
+
+// ACTIVATE resizable elements
+$(".resizable").resizable({
+  handles: "se"
+});
 
 // ACTIVATE title of elements to be shown as tooltip on hover
 $( document ).tooltip();
@@ -198,7 +215,7 @@ $main
   .on('focus', '.message_moderation textarea', function() {
     this.select();
   })
-  .on('click', '.scene__toggle, .box-v > b, .box-h > b', function() {
+  .on('click', '.scene__toggle, b', function() {
     var $this = $(this);
     var next = $this.parent();
     if (next) {
@@ -1878,7 +1895,7 @@ function displayReponses() {
     );
   });
   var $btn = $(`<button title="image" class="icon">IMAGE</button>`);
-  var $imageInput = $(`<input type="file" style="visibility:hidden" id="image-file"></input>`);
+  var $imageInput = $(`<input type="file" style="display: none;" id="image-file"></input>`);
   $reponses.append(
     $btn.on('click', function(e) {
       e.preventDefault();
@@ -1888,14 +1905,8 @@ function displayReponses() {
       var data = e.originalEvent.target.files[0];
       var reader = new FileReader();
       reader.onload = function (evt) {
-        var msg = {};
-        msg.file = evt.target.result;
-        msg.fileName = data.name;
-        socket.emit("image", msg);
-        console.log(msg)
         $('#image-msg')[0].src = '';
-        $('#one_shot__message').val(`<img src=${msg.file} style="width:200px; height: auto;"></img>`)
-        $('#image-msg')[0].src = msg.file;
+        $('#image-msg')[0].src = evt.target.result;
       };
       reader.readAsDataURL(data);
     })
@@ -1945,9 +1956,13 @@ $main
   .on('submit', 'form', function(e) {
     e.preventDefault();
     if (this.id === 'interactions') {
+      let imageMessage = ''
+      if ($('#image-msg').attr('src') !== '') {
+        imageMessage = $('#image-msg')[0].outerHTML;
+      };
       sendToSelectedUsers({
         type: 'message',
-        texte: $one_shot__message.val()
+        texte: $one_shot__message.val() + imageMessage
       });
       $one_shot__message.val('');
       $('#image-msg')[0].src = '';

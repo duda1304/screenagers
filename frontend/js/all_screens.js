@@ -275,7 +275,7 @@ async function startStream(constraints, data_key) {
       handleStream(MediaStream, data_key);
   })
   .catch( error => {
-      alert(error);
+      console.log(error);
   });
 }
 
@@ -318,32 +318,32 @@ function handleStream(stream, data_key) {
 //   // });
 // }
 
-var lastMusicSrc;
-function setMusic({ src, volume, loop = false }) {
-  src = dataFolder + src;
-  audio.loop = loop;
-  if (typeof volume === 'number') audio.volume = volume / 100;
-  else audio.volume = 0.5;
+// var lastMusicSrc;
+// function setMusic({ src, volume, loop = false }) {
+//   src = dataFolder + src;
+//   audio.loop = loop;
+//   if (typeof volume === 'number') audio.volume = volume / 100;
+//   else audio.volume = 0.5;
 
-  if (repet.time !== '') {
-    if (Number.isNaN(audio.duration) !== false) {
-      audio.currentTime = repet.time > audio.duration ? audio.duration : repet.time;
-    } else {
-      audio.currentTime = repet.time;
-    }
-  }
+//   if (repet.time !== '') {
+//     if (Number.isNaN(audio.duration) !== false) {
+//       audio.currentTime = repet.time > audio.duration ? audio.duration : repet.time;
+//     } else {
+//       audio.currentTime = repet.time;
+//     }
+//   }
 
-  if (lastMusicSrc === src) return;
-  // afterFirstClick(() => {
-    stop(audio);
-    audio.src = src;
-    lastMusicSrc = src;
-    audio.addEventListener('canplay', event => {
-      if (repet.pause) audio.pause();
-      else audio.play();
-    });
-  // });
-}
+//   if (lastMusicSrc === src) return;
+//   // afterFirstClick(() => {
+//     stop(audio);
+//     audio.src = src;
+//     lastMusicSrc = src;
+//     audio.addEventListener('canplay', event => {
+//       if (repet.pause) audio.pause();
+//       else audio.play();
+//     });
+//   // });
+// }
 
 // var lastIframeSrc;
 // function setIframe({ src, style, fit }) {
@@ -653,8 +653,10 @@ function clearUnwantedMedia(data){
 
 
 function applyZIndexes(data) {
+  let zIndex = data['media-order'].length;
   data['media-order'].forEach((value, index) => {
-      $(`.step__decor [data-key=${value}]`).css({"z-index" : index + 1});
+      $(`.step__decor [data-key=${value}]`).css({"z-index" : zIndex});
+      zIndex = zIndex - 1;
   })
 }
 
@@ -690,15 +692,15 @@ function setElements(val, type, data_key, stepMediaObject) {
                           <img style="width: 100%;" src=${src} class="media"></img>
                         </div>`
 
-  const videoElement = `<div style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
-                          <video autoplay style="width: 100%;" src=${src} class="media"></video>
+  const videoElement = `<div style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type} data-audioOutput=''>
+                          <video autoplay volume=0.5 style="width: 100%;" src=${src} class="media"></video>
                         </div>`
                  
   const audioElement = `<div style="width: 5%; position: absolute; top: 25%; left:85%; padding:5px;" data-key=${data_key} data-type=${type}>
                             <audio autoplay volume=0.5 class="media" src=${src}></audio>
                           </div>`
 
-  const streamElement = `<div style="width: 35%; height: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
+  const streamElement = `<div style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
                             <video autoplay style="width: 100%;" class="media"></video>
                           </div>`
  
@@ -760,17 +762,7 @@ function setElements(val, type, data_key, stepMediaObject) {
         }
         mediaElement.find('.media').prop('volume', stepMediaObject['attributes']['volume'])
         mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop'])
-      }   
-    
-      // if (type === 'music') {
-      //     if (!$('#music').attr('src').includes(stepMediaObject['src'])) {
-      //         $('#music').attr('src', htmlPathToMedia +  stepMediaObject['src']); 
-      //     }
-      //     $('#music').attr('volume', stepMediaObject['volume'])
-      //     $('#music').attr('loop', stepMediaObject['loop'])
-      // }   
-      
-      else {
+      } else {
       // if (type === 'media_images') {
           // APPLY CSS
           let mediaElement = $(".step").find(`*[data-key="${data_key}"]`);
@@ -779,8 +771,11 @@ function setElements(val, type, data_key, stepMediaObject) {
 
           // APPLY LOOP AND MUTED TO VIDEOS
           if(stepMediaObject['type'] === 'media_video') {
-              mediaElement.find('.media').prop('muted', stepMediaObject['attributes']['muted'])
-              mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop'])
+              mediaElement.find('.media').prop('muted', stepMediaObject['attributes']['muted']);
+              mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop']);
+              mediaElement.find('.media').prop('volume', stepMediaObject['attributes']['volume']);
+              mediaElement.data('audioOutput', stepMediaObject['attributes']['audioOutput']);
+              mediaElement.find('.media')[0].setSinkId(stepMediaObject['attributes']['audioOutput']);
           }
 
            // CHECK IF NEW SRC SHOULD BE APPLIED

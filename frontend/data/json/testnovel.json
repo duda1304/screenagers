@@ -483,8 +483,8 @@
                         }
                     },
                     "boite": {
-                        "type": "collective_song",
-                        "arg": "do you need to\ni alos want to\nbla bla bla"
+                        "type": "chat",
+                        "arg": ""
                     }
                 }
             }

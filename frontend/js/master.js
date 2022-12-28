@@ -6,15 +6,31 @@ toggleFullScreen = function() {};
 $( function() {
   $( ".draggable" ).draggable({
       stop : function(){
-        $(this).position();
+        let position = $(this).position();
         $(this).css('position', 'absolute');
+        $(this).css('top', position.top);
       }
   });
 })
 
+// MUTE preview window
+function mutePreview() {
+  
+//   const iframe = document.getElementsByTagName('iframe')[0].contentWindow.document;
+//   const element = iframe.getElementsByTagName('video')[0];
+// element.setAttribute('muted', true)
+  // $(iframe).find('video').each(function(){
+  //   console.log(this)
+  //   $(this).prop('muted', true)
+  // })
+  // var elements = Array.from(iframe.contentWindow.document.getElementsByTagName("video"));
+  // elements.forEach(element => element.muted = true);
+}
+
 // ACTIVATE resizable elements
 $(".resizable").resizable({
-  handles: "se"
+  handles: "se",
+  minHeight: "fit-content"
 });
 
 // ACTIVATE title of elements to be shown as tooltip on hover
@@ -220,6 +236,7 @@ $main
     var next = $this.parent();
     if (next) {
       next.toggleClass('closed');
+      next.css({'height': 'auto'});
     }
   })
   .on('click', '.toggle', function() {
@@ -643,7 +660,7 @@ actions.message = function(data) {
     );
   }
 
-  $('#monitoring').append($msg);
+  $('#monitoring_incoming').append($msg);
 
   function remove() {
     $msg.slideUp('fast', function() {
@@ -663,7 +680,7 @@ $.each(boites_mobiles, function(key, val) {
   $boites_types.append(
     $(`<div class="button_radio">
         <label class="boite_label" title="${key}">
-        <input class="boite_radio boite_radio--${key}" value="${key}" type="radio" name="type" />
+        <input disabled class="boite_radio boite_radio--${key}" value="${key}" type="radio" name="type" />
         <span>${key}</span>
       </label>
     </div>`)
@@ -1344,14 +1361,19 @@ function setStep(e, fileName, scene, step) {
 
       $.getJSON('./data/json/' + fileName + '.json', function(jsonData) {
         const stepData = jsonData['scenes'][scene]['steps'][step];
-        console.log(stepData);
+        
         if ('boite' in stepData) {
-          $(`#boite input[value=${stepData.boite.type}]`).click();
           setBoite(stepData.boite);
+          $('#boite input').each(function(){
+            $(this).prop('checked', false);
+            $(`#boite input[value=${stepData.boite.type}]`).prop('checked', true);
+        })
+          // $(`#boite input[value=${stepData.boite.type}]`).click();
         }
-       
         
         socket.emit('step', stepData);
+        mutePreview();
+
           // const mediaOrder = jsonData['scenes'][scene]['steps'][step]['screen']['media-order'];
           // const stepMedia = jsonData['scenes'][scene]['steps'][step]['screen']['media'];
           
@@ -2232,16 +2254,34 @@ actions.prev_step = function() {
 //   getCameraSelection();
 // }
 
-// function readCode() {
-//   import('./lib/qr-scanner/qr-scanner.min.js').then((module) => {
-//     const QrScanner = module.default;
-//     // do something with QrScanner
-//     new QrScanner(document.getElementById('stream'), result => 
-//     console.log('decoded qr code:', result));
-//     qrScanner.start();
-// });
-// }
+function readCode() {
+  import('./lib/qr-scanner/qr-scanner.min.js').then((module) => {
+    const QrScanner = module.default;
+    // do something with QrScanner
+    new QrScanner(document.getElementById('stream'), result => 
+    console.log('decoded qr code:', result));
+    qrScanner.start();
+});
+}
 
 // function closeQRmodal() {
 //   document.getElementById('QR_modal').style.display = 'none';
 // }
+
+
+// function onScanSuccess(decodedText, decodedResult) {
+//   // handle the scanned code as you like, for example:
+//   console.log(`Code matched = ${decodedText}`, decodedResult);
+// }
+
+// function onScanFailure(error) {
+//   // handle scan failure, usually better to ignore and keep scanning.
+//   // for example:
+//   console.warn(`Code scan error = ${error}`);
+// }
+
+// let html5QrcodeScanner = new Html5QrcodeScanner(
+//   "reader",
+//   { fps: 10, qrbox: {width: 250, height: 250} },
+//   /* verbose= */ false);
+// html5QrcodeScanner.render(onScanSuccess, onScanFailure);

@@ -74,8 +74,17 @@ margin: 10px;
   background: rgba(165, 165, 165, 0.65);
   padding: 6px;
 }
-#monitoring {
+/* #monitoring {
   background-color: rgba(0, 0, 0, 0.5);
+} */
+
+#monitoring_incoming {
+  color: black;
+}
+
+#monitoring_outgoing {
+  flex: 1 0 auto;
+  color: black;
 }
 /* .box-users {
   background-color: rgba(255, 255, 255, 0.6);
@@ -85,7 +94,7 @@ margin: 10px;
 }
 
 #select-novel {
-  background-color: #242424;
+  background-color: transparent;
   color: white;
   width: fit-content;
 }
@@ -97,6 +106,14 @@ margin: 10px;
 
 #refresh_visual img {
   width: 100%;
+}
+
+.play-steps {
+  display: flex;
+}
+
+.play-steps button {
+  width: 50%;
 }
 
 #shortcuts {
@@ -321,8 +338,14 @@ b::before {
   /* position: absolute; */
 }
 
+.box.draggable {
+  display: flex;
+  flex-direction: column;
+}
+
 #visual {
   min-height: 250px;
+  flex: 1 0 auto;
 }
 
 table {
@@ -586,6 +609,9 @@ input[type='range']:focus::-webkit-slider-runnable-track {
 
 /* Boites
 ========= */
+#boite {
+  flex: 1 0 auto;
+}
 
 #boite_choix label {
   display: block;
@@ -633,6 +659,17 @@ input[type='range']:focus::-webkit-slider-runnable-track {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* Step preview */
+/* #preview {
+  display: flex;
+  flex-direction: row;
+}
+
+.preview div {
+  width: 35%;
+  height: 35%;
+} */
 
 /* The Modal (background) */
 .modal {

@@ -127,13 +127,14 @@
     </section>
   </div>
   <div id="screen" class="preview">
+    <div id="boite"></div>
   </div>
   <div id="laptop" class="preview" style="display:none;">
   </div>
   <div id="left-menu">
     <div id="media-menu">
       <div class="section-header">States</div>
-      <form id="boite">
+      <form id="boite-form">
         <header class="box-h box-boites-type">
           <div id="boites_types" class="box-v box-wrap"></div>
         </header>
@@ -226,9 +227,14 @@
   <hr>
 </section>
 
+<script>
+  cat = 'screen';
+</script>
+
 <script src="./js/common.js?v=1.0"></script>
 
 <script src="./js/iso.js?v=1.0"></script>
+<script src="./js/boites_screen.js"></script> 
 <script src="./js/boites_mobile.js?v=1.0"></script> 
 <script src="./js/boites_master.js?v=1.0"></script>
 <script src="./js/modes.js?v=1.0"></script>

@@ -34,20 +34,18 @@
 
 <script src="./js/constants.js"></script>
 
+<!-- <script src="./js/lib/html5-qrcode.min.js"></script> -->
+
 <link rel="stylesheet" href="./css/master.css?v=1.0" />
 <link rel="stylesheet" href="./css/editor.css" />
 
 <main id="master">
-  <!-- <div class=" "> -->
-    <!-- <div class=""> -->
-      <!-- <div class=""> -->
-        <!-- <div class=""> -->
-          <!-- <div class=""> -->
-            <div class="box box-debug closed draggable resizable">
+            <!-- <div style="width: 500px" id="reader"></div> -->
+            <div class="box box-debug closed draggable">
               <b>debug</b>
               <div id="debug"></div>
             </div>
-            <div class="box box-tools closed draggable resizable">
+            <div class="box box-tools closed draggable">
               <b>tools</b>
               <div id="tools"></div>
             </div>
@@ -110,10 +108,17 @@
             <b>visual</b>
             <div id="visual"></div>
             <div>
-              <div class="">
+              <div class="play-steps">
                 <button id="visual__prev" class="icon">⬅️</button>
                 <button id="visual__next" class="icon">➡️</button>
               </div>
+            </div>
+          </div>
+          <div class="box box-preview closed draggable resizable">
+            <b>preview</b>
+            <div  id="preview">
+              <div id="current-step" class="preview"><iframe id="current-frame" src="/screen" style="width: 100%; height: 100%;"></iframe></div>
+              <div id="next-step" class="preview"></div>
             </div>
           </div>
         <!-- </div> -->
@@ -127,7 +132,7 @@
           <b>monitoring outgoing</b>
           <div id="monitoring_outgoing"></div>
         </div>
-        <div class="box box-boites closed draggable resizable">
+        <div class="box box-boites closed draggable">
           <b>states</b>
           <form id="boite">
             <div class=" box-boites-type">
@@ -158,7 +163,7 @@
         </div>
       <!-- </aside> -->
     <!-- </div> -->
-    <div class="box box-audio_video_control closed draggable resizable">
+    <div class="box box-audio_video_control closed draggable">
         <b>audio/video control</b>
         <div>
       <button class="repet__rewind icon box-min">⏪</button>
@@ -176,7 +181,6 @@
     </div>
       <!-- <button class="icon" id="send_all_screens">📢</button> -->
     </div>
-  <!-- </div> -->
 
 </main>
 
@@ -264,7 +268,7 @@
         </label>
       </div>
     </div>
-    <!-- <div class="">
+    <!-<div class="">
       <select class="select_text_language">
       </select>
     </div> -->
@@ -303,7 +307,7 @@
       />
     </div>
   </div>
-</template> --> -->
+</template> -->
 <!-- <div id="QR_modal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeQRmodal()">&times;</span>

@@ -13,6 +13,7 @@ socket.on('display HTML content', (data) => {
 });
 socket.open();
 
+
 /* No Phone
 =========== */
 boites.no_phone = {

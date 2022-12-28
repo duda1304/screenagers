@@ -285,14 +285,14 @@ $('#boites_types').on('click', '.button_radio', function(){
             }
         let data = {...boiteObject};
         data.type = $(this).find('input').val();
-        $('#boite textarea').val('');
-        data.arg = $('#boite textarea').val();
+        $('#boite-form textarea').val('');
+        data.arg = $('#boite-form textarea').val();
         currentBoiteType = $(this).find('input').val();
         setBoite(data);
     }
 });
 
-$('#boite textarea').on('input', function() {
+$('#boite-form textarea').on('input', function() {
     const boiteObject =     {
         "type": "",
         "arg": ""
@@ -446,9 +446,9 @@ function displayActiveStepMedia() {
         // set boite
         if ('boite' in jsonData['scenes'][active.scene]['steps'][active.step]) {
             setBoite(jsonData['scenes'][active.scene]['steps'][active.step]['boite']);
-            $('#boite input').each(function(){
+            $('#boite-form input').each(function(){
                 $(this).prop('checked', false);
-                $(`#boite input[value=${jsonData['scenes'][active.scene]['steps'][active.step]['boite']['type']}]`).prop('checked', true);
+                $(`#boite-form input[value=${jsonData['scenes'][active.scene]['steps'][active.step]['boite']['type']}]`).prop('checked', true);
             })
         }
     }) 
@@ -828,13 +828,13 @@ function analyseStep(updatedStepObject) {
     // add boite
     updatedStepObject['boite'] = {...boiteObject};
     let boite_type;
-    $('#boite input').each(function(){
+    $('#boite-form input').each(function(){
         if($(this).is(':checked')) {
             boite_type = $(this).val();
         } 
     })
     updatedStepObject['boite']['type'] = boite_type;
-    updatedStepObject['boite']['arg'] = $('#boite textarea').val();
+    updatedStepObject['boite']['arg'] = $('#boite-form textarea').val();
 
     return updatedStepObject;
 }

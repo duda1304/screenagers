@@ -30,8 +30,13 @@ function mutePreview() {
 // ACTIVATE resizable elements
 $(".resizable").resizable({
   handles: "se",
-  minHeight: "fit-content"
+  minHeight: "fit-content",
 });
+
+$(".box-preview").resizable({
+  aspectRatio : true
+});
+
 
 // ACTIVATE title of elements to be shown as tooltip on hover
 $( document ).tooltip();

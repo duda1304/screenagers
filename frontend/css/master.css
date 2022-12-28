@@ -139,6 +139,18 @@ div:not(.closed) #reponses {
   display: flex;
 }
 
+div:not(.closed) .box-preview {
+  /* display: flex; */
+  width: 70vw;
+  height: 35vh;
+}
+
+div:not(.closed) #preview {
+  display: flex;
+  /* width: 70vw;
+  height: 35vh; */
+}
+
 #reponses button {
   width: auto;
   flex-grow: 1;

@@ -86,6 +86,10 @@ margin: 10px;
   flex: 1 0 auto;
   color: black;
 }
+
+#monitoring_outgoing .box-fit {
+  position: relative;
+}
 /* .box-users {
   background-color: rgba(255, 255, 255, 0.6);
 } */
@@ -131,7 +135,7 @@ margin: 10px;
   border-top: 1px solid rgb(159, 130, 149);
 }
 
-.closed > div {
+.closed > div, .closed > select {
   display: none;
 }
 
@@ -166,9 +170,24 @@ div:not(.closed) #preview {
   align-items: center;
 }
 
-#image-msg {
-  width: 70%;
+#image-msg-div {
+  width: 30%;
+  min-width: 50px;
   max-width: 100px;
+  position: absolute;
+  left: 1px;
+  bottom: 1px;
+}
+
+#image-msg-div img {
+  width: 100%;
+}
+
+#remove-image {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  color: black;
 }
 
 #no_click {

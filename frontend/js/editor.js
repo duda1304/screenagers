@@ -86,6 +86,8 @@ function setJSONsdata(data) {
                         $(`#${currentActive.fileName} li[data-scene=${currentActive.scene}] .toggler`).click();
                         if (currentActive.step !== "") {
                             $(`#${currentActive.fileName} li[data-scene=${currentActive.scene}] li[data-step=${currentActive.step}]`).click();
+                            $(`#${currentActive.fileName} li[data-scene=${currentActive.scene}] ul`).scrollTo(`li[data-step=${currentActive.step}]`); 
+                            
                         }
                     } 
                 }
@@ -288,6 +290,9 @@ $('#boites_types').on('click', '.button_radio', function(){
         $('#boite-form textarea').val('');
         data.arg = $('#boite-form textarea').val();
         currentBoiteType = $(this).find('input').val();
+        // if($('#screen #boite').length === 0) {
+        //     $('#screen').append(`<div id="boite"></div>`)
+        // }
         setBoite(data);
     }
 });
@@ -300,6 +305,9 @@ $('#boite-form textarea').on('input', function() {
     let data = {...boiteObject};
     data.type = currentBoiteType;
     data.arg = $(this).val();
+    // if($('#screen #boite').length === 0) {
+    //     $('#screen').append(`<div id="boite"></div>`)
+    // }
     setBoite(data);
 })
 
@@ -445,6 +453,9 @@ function displayActiveStepMedia() {
 
         // set boite
         if ('boite' in jsonData['scenes'][active.scene]['steps'][active.step]) {
+            // if($('#screen #boite').length === 0) {
+            //     $('#screen').append(`<div id="boite"></div>`)
+            // }
             setBoite(jsonData['scenes'][active.scene]['steps'][active.step]['boite']);
             $('#boite-form input').each(function(){
                 $(this).prop('checked', false);
@@ -464,7 +475,6 @@ function setElements(val, type, data_key, stepMediaObject) {
     src = htmlPathToMedia + val;
    
     const avatarsElement = `<div class="avatars draggable resizable" style="width: 25%; height: 15%; position: absolute; top: 25%; left:25%; border-radius: 45%; z-index:99;" data-key=${data_key} data-type=${type}>
-                                <img style = "width: 100%; height: 100%;" class="media"></img>
                             </div>`;
 
     const console = `<div class="console draggable resizable" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:100;" data-type=${type}>
@@ -518,6 +528,15 @@ function setElements(val, type, data_key, stepMediaObject) {
         if($(`#${activeScreen} [data-key=${data_key}]`).length === 0) {
             $(`#${activeScreen}`).append(elements[type]);
         }
+    }
+
+    if (type === 'text') {
+        $(`#${activeScreen} pre`).on("keydown", function(e){
+            if(e.keyCode===13){
+             document.execCommand('insertHTML', false, '\n');
+             e.preventDefault();
+          }
+        });
     }
 
     if (type === 'media_audio') {
@@ -590,6 +609,16 @@ function setElements(val, type, data_key, stepMediaObject) {
             $(this).css("height", h);
         }
     });
+
+    $(".avatars").resizable({
+        aspectRatio: false,
+    });
+
+    $(".console").resizable({
+        aspectRatio: false,
+    });
+
+
 
     // APPLY STYLE IF MEDIA OBJECT IS FROM STEP
     if (stepMediaObject) {

@@ -681,7 +681,6 @@ function setElements(val, type, data_key, stepMediaObject) {
   src = '/data/media/' + val;
  
   const avatarsElement = `<div class="avatars" style="width: 25%; height: 15%; position: absolute; top: 25%; left:25%; border-radius: 45%; z-index:99;" data-key=${data_key} data-type=${type}>
-                            <img style = "width: 100%; height: 100%;" class="media"></img>
                           </div>`;
 
   const console = `<div id="console" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:100;">

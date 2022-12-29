@@ -229,6 +229,10 @@ button:active {
   text-align: right;
 }
 
+#image-msg {
+  width: 100%;
+}
+
 /* singe savant */
 #singe_savant {
   padding: 0;

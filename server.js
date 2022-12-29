@@ -700,6 +700,51 @@ const set = {
       });
     });
 
+    function createRandomString(length) {
+      var result           = '';
+      var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var charactersLength = characters.length;
+      for ( var i = 0; i < length; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+    }
+
+    socket.on('save message', data => {
+      const filePath = `./frontend/data/messages.json`;
+      const file = require(filePath);
+
+      let mesageKey;
+      if (data.key === '') {
+        mesageKey = createRandomString(5);
+      } else {
+        mesageKey = data.key;
+      }
+
+      file['messages'][mesageKey] = data;
+     
+      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
+        if (err) {
+          groups['masters'].emit('save message', {'status' : 'error'});
+        }
+          groups['masters'].emit('save message', {'status' : 'success', 'data' : file});     
+      });
+    })
+
+    socket.on('delete message', data => {
+      const filePath = `./frontend/data/messages.json`;
+      const file = require(filePath);
+
+      delete file['messages'][data.key]
+     
+      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
+        if (err) {
+          groups['masters'].emit('delete message', {'status' : 'error'});
+        }
+          groups['masters'].emit('delete message', {'status' : 'success', 'data' : file});     
+      });
+    })
+
     socket.on('refresh visual', function() {
       const json = walkSync('./frontend/data/json');
       socket.emit('initial json', json);

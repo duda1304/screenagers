@@ -13,18 +13,18 @@ $( function() {
   });
 })
 
+$('iframe').on('load', function() {
+  mutePreview();
+});
+
 // MUTE preview window
 function mutePreview() {
-  
-//   const iframe = document.getElementsByTagName('iframe')[0].contentWindow.document;
-//   const element = iframe.getElementsByTagName('video')[0];
-// element.setAttribute('muted', true)
-  // $(iframe).find('video').each(function(){
-  //   console.log(this)
-  //   $(this).prop('muted', true)
-  // })
-  // var elements = Array.from(iframe.contentWindow.document.getElementsByTagName("video"));
-  // elements.forEach(element => element.muted = true);
+  $('iframe').each(function() {
+    $(this).contents().find('video audio').each(function() {
+      console.log($(this))
+      $(this).prop('muted', true);
+    })
+  })
 }
 
 // ACTIVATE resizable elements
@@ -145,6 +145,23 @@ socket.on('init states', function(data) {
   // displayMedia();
 });
 
+socket.on('save message', function(data) {
+  if(data.status === 'error') {
+    alert ('Something went wrong, message not saved');
+  } else {
+    alert ('Message saved');
+    displaySavedResponses();
+  }
+});
+
+socket.on('delete message', function(data) {
+  if(data.status === 'error') {
+    alert ('Something went wrong, message not deleted');
+  } else {
+    alert ('Message deleted');
+    displaySavedResponses();
+  }
+});
 
 // socket.on('language', function(data) {
 //   $('#select_language').empty();
@@ -586,6 +603,15 @@ $.each(emojis, function(key, val) {
 //     );
 //   })
 // );
+
+
+function saveMessage(content) {
+  socket.emit('save message', content)
+}
+
+function deleteMessage(content) {
+  socket.emit('delete message', content)
+}
 
 /* Moderation
 ============= */
@@ -1926,6 +1952,7 @@ function displayReponses() {
   $reponses.append(
     $btn.on('click', function(e) {
       e.preventDefault();
+      $('#image-file').val('');
       $('#image-file').click();
     }),
     $imageInput.on('change', function (e) {
@@ -1934,10 +1961,47 @@ function displayReponses() {
       reader.onload = function (evt) {
         $('#image-msg')[0].src = '';
         $('#image-msg')[0].src = evt.target.result;
+        $('#remove-image').show();
       };
       reader.readAsDataURL(data);
     })
   );
+
+  displaySavedResponses();
+
+  $('#image-msg').on('click', function(){
+    $('#image-file').click();
+  });
+
+  $('#remove-image').on('click', function(){
+    $('#image-msg').attr('src', '');
+    $('#remove-image').hide();
+  })
+}
+
+let savedResponses;
+
+function displaySavedResponses() {
+  $.getJSON('/data/messages.json', function(data) {
+    $('#select-saved-response').empty();
+    $('#one_shot__message').val('');
+    $('#image-msg').attr('src', '');
+    $('#remove-image').hide();
+    savedResponses = data.messages;
+    $('#select-saved-response').append(`<option disabled selected value=''>Select saved response</option>`);
+    for (let message in savedResponses) {
+      $('#select-saved-response').append(`<option value=${message}>${savedResponses[message].text.substring(0, 10)}...</option>`);
+    }
+    $('#select-saved-response').on('change', function(){
+      $('#one_shot__message').val(savedResponses[$(this).val()].text);
+      $('#image-msg').attr('src', savedResponses[$(this).val()].src);
+      if (savedResponses[$(this).val()].src !== '') {
+        $('#remove-image').show();
+      } else {
+        $('#remove-image').hide();
+      }
+    })
+  });
 }
 
 $('#users_check_all').on('change', function() {
@@ -1983,16 +2047,32 @@ $main
   .on('submit', 'form', function(e) {
     e.preventDefault();
     if (this.id === 'interactions') {
-      let imageMessage = ''
-      if ($('#image-msg').attr('src') !== '') {
-        imageMessage = $('#image-msg')[0].outerHTML;
-      };
-      sendToSelectedUsers({
-        type: 'message',
-        texte: $one_shot__message.val() + imageMessage
-      });
-      $one_shot__message.val('');
-      $('#image-msg')[0].src = '';
+      if ($(e.originalEvent.submitter).data('title') === 'send') {      
+        let imageMessage = ''
+        if ($('#image-msg').attr('src') !== '') {
+          imageMessage = $('#image-msg')[0].outerHTML;
+        };
+        sendToSelectedUsers({
+          type: 'message',
+          texte: "<pre>" + $one_shot__message.val() + "</pre>"+ imageMessage
+        });
+        $one_shot__message.val('');
+        $('#image-msg')[0].src = '';
+        $('#remove-image').hide();
+        $('#select-saved-response').val('');
+      } else if ($(e.originalEvent.submitter).data('title') === 'save') {
+        saveMessage({
+          text: $one_shot__message.val(),
+          src: $('#image-msg').attr('src'),
+          key: $('#select-saved-response').val()
+        })
+      } else {
+        if ($('#select-saved-response').val() !== '') {
+          deleteMessage({
+            key : $('#select-saved-response').val()
+          })
+        }
+      }
     } else if (this.id === 'form_osc_ip') {
       socket.emit('set osc host', $('#osc_ip').val());
     } else {

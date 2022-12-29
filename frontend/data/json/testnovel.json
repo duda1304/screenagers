@@ -5,7 +5,8 @@
     ],
     "scene-order": [
         1,
-        2
+        2,
+        3
     ],
     "scenes": {
         "1": {
@@ -452,6 +453,54 @@
                                 "classes": []
                             }
                         },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "gameboy",
+                        "arg": ""
+                    }
+                }
+            }
+        },
+        "3": {
+            "name": "Screenagers",
+            "step-order": [
+                1
+            ],
+            "steps": {
+                "1": {
+                    "screen": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
                         "console": {
                             "active": false,
                             "css": {

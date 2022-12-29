@@ -499,30 +499,27 @@
                 "1": {
                     "screen": {
                         "media-order": [
-                            "lnTJ6"
+                            "c4d0W"
                         ],
                         "background-color": "rgb(255, 153, 0)",
                         "media": {
-                            "lnTJ6": {
+                            "c4d0W": {
                                 "type": "text",
                                 "css": {
                                     "position": "absolute",
-                                    "top": "8%",
-                                    "left": "6%",
+                                    "top": "23%",
+                                    "left": "24%",
                                     "white-space": "pre-wrap",
                                     "overflow-wrap": "break-word",
                                     "color": "rgb(255, 255, 255)",
-                                    "font-size": "38px",
+                                    "font-size": "47px",
                                     "margin": "0px",
                                     "padding": "10px",
                                     "font-family": "Arial",
-                                    "z-index": "1",
-                                    "width": "90%",
-                                    "height": "60%",
-                                    "text-align": "center"
+                                    "z-index": "1"
                                 },
                                 "attributes": {},
-                                "content": "dsadsadsadsd fsdfds sdfs\ndsfdsfdsfsd\n\nsdfd sfds",
+                                "content": "dsasdasd sadsad. \nsadsadsadssdas\nasdasdasdasdasdasd",
                                 "classes": [
                                     "text"
                                 ]

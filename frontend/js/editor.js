@@ -498,7 +498,7 @@ function setElements(val, type, data_key, stepMediaObject) {
                            </div>`
    
     const textElement = `
-                            <pre contenteditable="true" class="text draggable" data-key=${data_key} data-type=${type} 
+                            <pre contenteditable="true" class="text draggable resizable" data-key=${data_key} data-type=${type} 
                                      style=" 
                                      position: absolute; 
                                      top: 25%; 

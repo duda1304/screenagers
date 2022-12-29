@@ -9954,20 +9954,22 @@
                                 "type": "text",
                                 "css": {
                                     "position": "absolute",
-                                    "top": "22%",
-                                    "left": "0%",
+                                    "top": "7%",
+                                    "left": "16%",
                                     "white-space": "pre-wrap",
                                     "overflow-wrap": "break-word",
-                                    "color": "white",
-                                    "font-size": "32px",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "34px",
                                     "margin": "0px",
-                                    "padding": "10px",
+                                    "padding": "13px",
                                     "font-family": "fixedsys",
                                     "z-index": "1",
-                                    "text-align": "center"
+                                    "text-align": "center",
+                                    "width": "71%",
+                                    "height": "43%"
                                 },
                                 "attributes": {},
-                                "content": "I am a hero in a play. It's a kind of lo-fi space-opera, in which I fight against my own monsters using a bombastic red keyboard hung around the neck like in the heyday of 80s synth-pop.\nHow does it end?",
+                                "content": "I am a hero in a play. \nIt's a kind of lo-fi space-opera, in which I fight against my own monsters using a bombastic red keyboard hung around the neck like in the heyday of 80s synth-pop.\nHow does it end?",
                                 "classes": [
                                     "text"
                                 ]
@@ -10049,8 +10051,7 @@
                                 "z-index": "100",
                                 "display": "none"
                             }
-                        },
-                        "mode": "final_fantasy"
+                        }
                     },
                     "laptop": {
                         "media-order": [],
@@ -10155,7 +10156,7 @@
                                     "white-space": "pre-wrap",
                                     "overflow-wrap": "break-word",
                                     "color": "rgb(255, 255, 255)",
-                                    "font-size": "32px",
+                                    "font-size": "28px",
                                     "margin": "0px",
                                     "padding": "10px",
                                     "font-family": "fixedsys",
@@ -10280,8 +10281,8 @@
                                 "type": "text",
                                 "css": {
                                     "position": "absolute",
-                                    "top": "19%",
-                                    "left": "2%",
+                                    "top": "8%",
+                                    "left": "4%",
                                     "white-space": "pre-wrap",
                                     "overflow-wrap": "break-word",
                                     "color": "rgb(255, 255, 255)",
@@ -10290,7 +10291,9 @@
                                     "padding": "10px",
                                     "font-family": "fixedsys",
                                     "z-index": "1",
-                                    "text-align": "center"
+                                    "text-align": "center",
+                                    "width": "93%",
+                                    "height": "83%"
                                 },
                                 "attributes": {},
                                 "content": "An asteroid hits the stage, absorbing everything into a black hole.  Spectators stay glued to their seats for days, watching the hole waiting for something to happen. It is a wonderful visual spectacle. But the end is not the only end.\nSpectators organise into a union. One of them sings: “Let's all get on stage and have a good old time”\n",

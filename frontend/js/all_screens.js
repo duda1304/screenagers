@@ -801,6 +801,8 @@ function setElements(val, type, data_key, stepMediaObject) {
               if (mediaElement.text() !== stepMediaObject['content']) {
                   mediaElement.text(stepMediaObject['content']);
               }
+              let currentSize = parseFloat(mediaElement.css('font-size'))/0.55;
+              mediaElement.css('font-size', currentSize + 'px')
           }
 
           // APPLY CLASSES

@@ -498,9 +498,36 @@
             "steps": {
                 "1": {
                     "screen": {
-                        "media-order": [],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {},
+                        "media-order": [
+                            "lnTJ6"
+                        ],
+                        "background-color": "rgb(255, 153, 0)",
+                        "media": {
+                            "lnTJ6": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "8%",
+                                    "left": "6%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "38px",
+                                    "margin": "0px",
+                                    "padding": "10px",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "width": "90%",
+                                    "height": "60%",
+                                    "text-align": "center"
+                                },
+                                "attributes": {},
+                                "content": "dsadsadsadsd fsdfds sdfs\ndsfdsfdsfsd\n\nsdfd sfds",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
                         "console": {
                             "active": false,
                             "css": {
@@ -532,7 +559,7 @@
                         }
                     },
                     "boite": {
-                        "type": "chat",
+                        "type": "no_phone",
                         "arg": ""
                     }
                 }

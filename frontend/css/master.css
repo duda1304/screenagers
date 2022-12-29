@@ -149,15 +149,28 @@ div:not(.closed) .box-preview {
   height: 35vh;
 }
 
-div:not(.closed) #preview {
+/* div:not(.closed) #preview {
   display: flex;
-  /* width: 70vw;
-  height: 35vh; */
+ 
 }
 
 #reponses button {
   width: auto;
   flex-grow: 1;
+} */
+
+#preview iframe {
+  border: 2px solid #333;
+    /* position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; */
+    /* width: 200%;
+    height: 200%; */
+    transform-origin: 0 0;
+    transform: scale(0.5);
+    background: transparent;
 }
 
 #interactions button {

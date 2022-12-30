@@ -10156,9 +10156,9 @@
                                     "white-space": "pre-wrap",
                                     "overflow-wrap": "break-word",
                                     "color": "rgb(255, 255, 255)",
-                                    "font-size": "28px",
+                                    "font-size": "2vw",
                                     "margin": "0px",
-                                    "padding": "10px",
+                                    "padding": "0vw",
                                     "font-family": "fixedsys",
                                     "z-index": "1",
                                     "text-align": "center"

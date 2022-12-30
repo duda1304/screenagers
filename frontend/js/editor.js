@@ -506,9 +506,9 @@ function setElements(val, type, data_key, stepMediaObject) {
                                      white-space: pre-wrap; 
                                      word-wrap: break-word;
                                      color: white;
-                                     font-size: 16px;
+                                     font-size: 16vw;
                                      margin: 0px;
-                                     padding: 10px;
+                                     padding: 10vw;
                                      font-family: Arial;
                                      "
                             >${val}</pre>
@@ -1667,7 +1667,7 @@ function editElement(key, type) {
                         </div>
                         <div class='menu-item'>
                             <p>PADDING</p>
-                            <input class='padding' type="number" min = '0' id = ${key + '_padding'} value=${textStyle.padding.replace('px', '')}>
+                            <input class='padding' type="number" min = '0' id = ${key + '_padding'} value=${textStyle.padding.replace('vw', '')}>
                         </div>
                         <div class='menu-item'>
                             <p>FONT STYLE</p>
@@ -1685,7 +1685,7 @@ function editElement(key, type) {
                         </div>
                         <div class='menu-item'>
                             <p>FONT SIZE</p>
-                            <input class='font-size' type="number" min = '0' id = ${key + '_font-size'} value=${textStyle.fontSize.replace('px', '')}>
+                            <input class='font-size' type="number" min = '0' id = ${key + '_font-size'} value=${textStyle.fontSize.replace('vw', '')}>
                         </div>
                         <div class='editor-buttons'>
                             <div class='menu-item'>
@@ -1728,7 +1728,7 @@ function editElement(key, type) {
                                 type ="number" 
                                 min = '0'
                                 id = ${key + '_border-width'} 
-                                value = ${(textStyle.borderWidth) ? (parseInt(textStyle.borderWidth.replace('px', ''))) : (0)} 
+                                value = ${(textStyle.borderWidth) ? (parseInt(textStyle.borderWidth.replace('vw', ''))) : (0)} 
                             >
                         </div>
                         <div class='menu-item'>
@@ -1955,7 +1955,7 @@ function activateFontSizeControler() {
       var val = $this.val();
     
       var inputs = {"id" : $this.context.id.split("_")[0], "CSSparameter" : $this.context.id.split("_")[1]};
-      $(`#${activeScreen} [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val + 'px');
+      $(`#${activeScreen} [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val + 'vw');
     })
 }
 
@@ -1966,7 +1966,7 @@ function activatePaddingControler() {
       var val = $this.val();
     
       var inputs = {"id" : $this.context.id.split("_")[0], "CSSparameter" : $this.context.id.split("_")[1]};
-      $(`#${activeScreen} [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val + 'px');
+      $(`#${activeScreen} [data-key=${inputs.id}]`).css(inputs['CSSparameter'], val + 'vw');
     })
 }
 
@@ -1990,7 +1990,7 @@ function activateBorderControler() {
       var inputs = {"id" : $this.context.id.split("_")[0], 'CSSparameter' : $this.context.id.split("_")[1]};
       var unit;
       if (inputs['CSSparameter'] === 'border-width') 
-            {unit = 'px';
+            {unit = 'vw';
         } else {
             unit = '';
         }

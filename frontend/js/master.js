@@ -1,4 +1,4 @@
-navigator.mediaDevices.getUserMedia({video: true, audio: true});
+// navigator.mediaDevices.getUserMedia({video: true, audio: true});
 
 toggleFullScreen = function() {};
 
@@ -13,20 +13,6 @@ $( function() {
   });
 })
 
-$('iframe').on('load', function() {
-  mutePreview();
-});
-
-// MUTE preview window
-function mutePreview() {
-  $('iframe').each(function() {
-    $(this).contents().find('video audio').each(function() {
-      console.log($(this))
-      $(this).prop('muted', true);
-    })
-  })
-}
-
 // ACTIVATE resizable elements
 $(".resizable").resizable({
   handles: "se",
@@ -34,89 +20,97 @@ $(".resizable").resizable({
 });
 
 $(".box-preview").resizable({
+  handles: "se",
+  // minHeight: 250,
   aspectRatio : true
 });
 
+// $(".box-meme").resizable({
+//   handles: "se",
+//   minWidth: 500,
+//   // aspectRatio : true
+// });
+
 
 // ACTIVATE title of elements to be shown as tooltip on hover
-$( document ).tooltip();
+// $( document ).tooltip();
 
-const isPositiveInteger = val => val >>> 0 === parseFloat(val);
+// const isPositiveInteger = val => val >>> 0 === parseFloat(val);
 
-function locate(obj, path, sep = '.') {
-  return path
-    .split(sep)
-    .filter(key => key !== '')
-    .reduce((acc, key) => acc[key], obj);
-}
+// function locate(obj, path, sep = '.') {
+//   return path
+//     .split(sep)
+//     .filter(key => key !== '')
+//     .reduce((acc, key) => acc[key], obj);
+// }
 
-function allocate(obj, path, val = null, sep = '.') {
-  path
-    .split(sep)
-    .filter(key => key !== '')
-    .reduce((acc, key, i, arr) => {
-      acc[key] = arr.length - 1 === i ? val : acc[key] || {};
-      return acc[key];
-    }, obj);
-  return obj;
-}
+// function allocate(obj, path, val = null, sep = '.') {
+//   path
+//     .split(sep)
+//     .filter(key => key !== '')
+//     .reduce((acc, key, i, arr) => {
+//       acc[key] = arr.length - 1 === i ? val : acc[key] || {};
+//       return acc[key];
+//     }, obj);
+//   return obj;
+// }
 
-allocate.json = function(obj, path, val = null, sep = '.') {
-  path
-    .split(sep)
-    .filter(key => key !== '')
-    .reduce((acc, key, i, arr) => {
-      acc[key] =
-        arr.length - 1 === i
-          ? val
-          : acc[key] || (isPositiveInteger(arr[i + 1]) ? [] : {});
-      return acc[key];
-    }, obj);
-  return obj;
-};
+// allocate.json = function(obj, path, val = null, sep = '.') {
+//   path
+//     .split(sep)
+//     .filter(key => key !== '')
+//     .reduce((acc, key, i, arr) => {
+//       acc[key] =
+//         arr.length - 1 === i
+//           ? val
+//           : acc[key] || (isPositiveInteger(arr[i + 1]) ? [] : {});
+//       return acc[key];
+//     }, obj);
+//   return obj;
+// };
 
-const getFormValues = (form, withEmpty = false) => {
-  var data = {};
-  [...form.elements].forEach(el => {
-    if (el.name === '' || el.disabled) return;
-    let val;
-    if ('valueAsDate' in el && el.valueAsDate !== null) val = el.valueAsDate;
-    else if (el.type === 'number') val = el.value !== '' ? Number(el.value) : '';
-    else if (el.type === 'range') val = el.value !== '' ? Number(el.value) : '';
-    else if (el.type === 'checkbox') val = Boolean(el.checked);
-    else if (el.type === 'radio') {
-      if (el.checked) val = el.value;
-      else return;
-    } else if (el.type === 'select-multiple') {
-      val = [...el.options].filter(option => option.selected).map(option => option.value);
-    } else if (withEmpty || el.value) {
-      val = el.value;
-    } else return;
+// const getFormValues = (form, withEmpty = false) => {
+//   var data = {};
+//   [...form.elements].forEach(el => {
+//     if (el.name === '' || el.disabled) return;
+//     let val;
+//     if ('valueAsDate' in el && el.valueAsDate !== null) val = el.valueAsDate;
+//     else if (el.type === 'number') val = el.value !== '' ? Number(el.value) : '';
+//     else if (el.type === 'range') val = el.value !== '' ? Number(el.value) : '';
+//     else if (el.type === 'checkbox') val = Boolean(el.checked);
+//     else if (el.type === 'radio') {
+//       if (el.checked) val = el.value;
+//       else return;
+//     } else if (el.type === 'select-multiple') {
+//       val = [...el.options].filter(option => option.selected).map(option => option.value);
+//     } else if (withEmpty || el.value) {
+//       val = el.value;
+//     } else return;
 
-    var name = el.name;
-    if (name === 'mode_aff') name = 'mode';
-    allocate(data, name, val);
-  });
-  return data;
-};
+//     var name = el.name;
+//     if (name === 'mode_aff') name = 'mode';
+//     allocate(data, name, val);
+//   });
+//   return data;
+// };
 
-const setFormValues = (form, data) => {
-  [...form.elements].forEach(el => {
-    var name = el.name;
-    if (name === 'mode_aff') name = 'mode';
-    var val = locate(data, name);
-    if (el.type === 'checkbox') {
-      el.checked = val;
-    } else if (el.type === 'radio') {
-      if (el.value === String(val)) el.checked = true;
-    } else if (el.type === 'number' || el.type === 'range') {
-      if (!Number.isNaN(Number(val))) el.value = val;
-    } else if (val != null) {
-      el.value = val;
-    } 
-    $(el).trigger('input');
-  });
-};
+// const setFormValues = (form, data) => {
+//   [...form.elements].forEach(el => {
+//     var name = el.name;
+//     if (name === 'mode_aff') name = 'mode';
+//     var val = locate(data, name);
+//     if (el.type === 'checkbox') {
+//       el.checked = val;
+//     } else if (el.type === 'radio') {
+//       if (el.value === String(val)) el.checked = true;
+//     } else if (el.type === 'number' || el.type === 'range') {
+//       if (!Number.isNaN(Number(val))) el.value = val;
+//     } else if (val != null) {
+//       el.value = val;
+//     } 
+//     $(el).trigger('input');
+//   });
+// };
 
 var scenes;
 var reponses;
@@ -127,9 +121,10 @@ var states = {
   }
 };
 
-var currentLanguage;
 var languageList = [];
 var defaultLanguage = 'FR';
+var currentLanguage = 'FR';
+
 
 
 
@@ -163,6 +158,7 @@ socket.on('delete message', function(data) {
   }
 });
 
+// MISLIM DA OVO NE TREBAM
 // socket.on('language', function(data) {
 //   $('#select_language').empty();
 //   $.each(data.languageList, function(key, language) {
@@ -188,46 +184,7 @@ socket.on('users change', function(users) {
   displayUsers(true);
 });
 
-// socket.on('saving', function(data) {
-//   if (data.error === false) {
-//     var remove = actions.message({
-//       user: 'system',
-//       text: 'Sauvegarde ok'
-//     });
-//     setTimeout(remove, 1500);
-//     var url = `/data/visual_${currentLanguage}.json`;
-//     $.getJSON(url, function(data) {
-//       scenes = data;
-//       displayVisual();
-//     });
-//   } else {
-//     actions.message({
-//       user: 'system',
-//       text: `Une erreur est survenue lors de la sauvegarde, le mieux à faire est de copier-coller des textes en cours d'édition dans un bloc note, de rafraichir la page et de re-essayer de les enregistrer
-//       <textarea class="code">${data.error}</textarea>`
-//     });
-//   }
-// });
 
-// socket.on('multimedia decor', (data) => {
-//   if (typeof(data.layout) === 'object') {
-//     if (data.layout.src) {
-//       document.getElementById(data.to).elements['decor.src'].focus();
-//       setEdit(JSON.stringify(data.layout.src));
-
-//       document.getElementById(data.to).elements['decor.style'].focus();
-//       setEdit(JSON.stringify(data.layout.style));
-      
-//     } 
-//     if (data.layout.texte) {
-//       document.getElementById(data.to).elements['texte'].focus();
-//       setEdit(data.layout.texte);
-
-//       document.getElementById(data.to).elements['style'].focus();
-//       setEdit(data.layout.style);
-//     } 
-//   } 
-// })
 
 // socket.on('avatars position', (data) => {
 //   $('#avatars_area').val(JSON.stringify(data));
@@ -238,13 +195,6 @@ socket.on('users change', function(users) {
 //   }
 // })
 
-// socket.on('new etape', () => {
-//   $('#visual__add_step').click();
-// })
-
-// socket.on('file created', (response) => {
-//   alert(response);
-// })
 
 
 var $main = $('main');
@@ -647,13 +597,22 @@ actions.message = function(data) {
       $('<button class="icon btn_yes"></button')
         .text('👍')
         .on('click', function() {
-          socket.emit('send', {
-            to: 'screens',
-            validated: data
-          });
+          if(page !== 'assistant') {
+            socket.emit('send', {
+              to: 'screens',
+              validated: data
+            });
+          } else {
+            if ($('#meme').find('.meme')[0]) {
+              return
+            } else {
+              $('.boite--image').append(`<div id="meme_div"><div class='meme active'>${data.text}</div></div>`);
+              startMemeGenerator(currentLanguage);
+            }
+          }
           var responseText;
-          if ($('#select_language').val() in reponses['👍'].data) {
-            responseText = sample(reponses['👍'].data[$('#select_language').val()])
+          if (currentLanguage in reponses['👍'].data) {
+            responseText = sample(reponses['👍'].data[currentLanguage])
           } else {
             responseText = sample(reponses['👍'].data[defaultLanguage])
           }
@@ -672,8 +631,8 @@ actions.message = function(data) {
         .text('👎')
         .on('click', function() {
           var responseText;
-          if ($('#select_language').val() in reponses['👎'].data) {
-            responseText = sample(reponses['👎'].data[$('#select_language').val()])
+          if (currentLanguage in reponses['👎'].data) {
+            responseText = sample(reponses['👎'].data[currentLanguage])
           } else {
             responseText = sample(reponses['👎'].data[defaultLanguage])
           }
@@ -701,6 +660,15 @@ actions.message = function(data) {
 
   return remove;
 };
+
+/* Preview of steps
+=================== */
+$('.box-preview .screens div').on('click', function() {
+  $(this).addClass('active');
+  $('.box-preview .screens div').not(this).removeClass('active');
+  $(`#preview_div .preview`).hide();
+  $(`#preview_div div[id*=${$(this).text().toLowerCase()}]`).show();
+})
 
 /* Boites
 ========= */
@@ -1153,7 +1121,7 @@ socket.on('initial json', function(data) {
 
 function setJSONsdata(data) { 
   mainData = {};
-  // let count = 0;
+  let count = 0;
   $('#visual').empty();
   $('#visual')
   .append('<select id="select-novel"><option selected disabled>Select visual novel</option></select>')
@@ -1164,8 +1132,26 @@ function setJSONsdata(data) {
   $('#select-novel').change(function(){
     $('#visual .show').hide();
     $(`#visual #${$(this).val()}`).show();
+
+    // unmark all scenes and steps
+    $(".toggler").removeClass('active');
+    $(".stepElement").removeClass('active');
+
+    // close all scenes
+    $(".toggler").next().hide();
+
+    // set active show
+    setActiveStep($(this).val(), "", "");
+
+    // get scene list
+    displaySceneList();
+
+    // set language
+    currentLanguage = $(`#${active.fileName} .languages`).val();
+    console.log(currentLanguage)
+    socket.emit('change current language', {language : currentLanguage});
   });
-   
+
   const sorted = data.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
   
   sorted.forEach(async(src) => {
@@ -1174,22 +1160,40 @@ function setJSONsdata(data) {
           let fileName = array[array.length -1].replace('.json', '');
           mainData[fileName] = jsonData;
           displayStructure(fileName, jsonData);
-          // count = count + 1;
-          // if (count === data.length) {
-          //      // CLICK ON ACTIVE ITEM 
-          //      const currentActive = {"fileName" : active.fileName, "step" : active.step, "scene" : active.scene};
-          //     if (currentActive.fileName !== "") {
-          //         $(`#${currentActive.fileName} .show-name`).click();
-          //         if (currentActive.scene !== "") {
-          //             $(`#${currentActive.fileName} li[data-scene=${currentActive.scene}] .toggler`).click();
-          //             if (currentActive.step !== "") {
-          //                 $(`#${currentActive.fileName} li[data-scene=${currentActive.scene}] li[data-step=${currentActive.step}]`).click();
-          //             }
-          //         } 
-          //     }
-          // }
+          count = count + 1;
+          if (count === data.length) {
+               // CLICK ON ACTIVE ITEM 
+              const currentActive = {"fileName" : active.fileName, "step" : active.step, "scene" : active.scene};
+              if (currentActive.fileName !== "") {
+                  currentLanguage = $(`#${currentActive.fileName} .languages`).val();
+                  console.log(currentLanguage)
+                  socket.emit('change current language', {language : currentLanguage});
+                  // $(`#${currentActive.fileName} .show-name`).click();
+                  $('#select-novel').val(currentActive.fileName);
+                  $('#select-novel').trigger("change");
+                  if (currentActive.scene !== "") {
+                      $(`#${currentActive.fileName} li[data-scene=${currentActive.scene}] .toggler`).click();
+                      scrollToStep($(`#${currentActive.fileName} li[data-scene=${currentActive.scene}]`));
+                      if (currentActive.step !== "") {
+                          $(`#${currentActive.fileName} li[data-scene=${currentActive.scene}] li[data-step=${currentActive.step}]`).click();
+                          scrollToStep( $(`#${currentActive.fileName} li[data-scene=${currentActive.scene}] li[data-step=${currentActive.step}]`));
+                      }
+                  } 
+              }
+          }
       })    
   });
+}
+
+function displaySceneList() {
+    $('#select-next-scene')
+    .empty()
+    .append(`<option disabled selected>Select next scene.....</option>`)
+
+    const data = mainData[active.fileName];
+    data['scene-order'].forEach(scene => {
+      $('#select-next-scene').append(`<option value=${scene}>${data['scenes'][scene]['name']}</option>`)
+    })
 }
 
 function getFileName(src) {
@@ -1216,6 +1220,7 @@ function setActiveStep(fileName, scene, step) {
   active.fileName = fileName;
   active.scene = scene;
   active.step = step;
+  console.log(active)
 }
 
 function displayStructure(fileName, data) {
@@ -1234,9 +1239,16 @@ function displayStructure(fileName, data) {
   $.each(data.languages, function(key, value) {   
       $('#' + fileName).find('select')
           .append($("<option></option>")
-                     .attr("value", key)
+                     .attr("value", value)
                      .text(value)); 
  });
+
+ $(`#${fileName} .languages`).on('change', function() {
+  currentLanguage = $(this).val();
+  socket.emit('change current language', {language : currentLanguage});
+  console.log(currentLanguage)
+ })
+ 
 
   // APPEND SCENES AND STEPS IF PRESENT
   if (!jQuery.isEmptyObject( data.scenes )  ) {
@@ -1252,10 +1264,14 @@ function displayStructure(fileName, data) {
           </li>`).appendTo(`#${fileName + 'sceneList'}`)
       .append(`<ul id=${id} style="display: none" class="steps"></ul>`);
 
-      let number = 1;
       stepOrder.forEach(stepOrderNumber => {
-          $("#" + id).append(`<li class="step" data-step=${stepOrderNumber} onclick="setStep(event, '${fileName}', ${sceneOrderNumber}, ${stepOrderNumber})">Step ${number}</li>`)
-          number = number + 1;
+        let stepName;
+        if ('name' in scene['steps'][stepOrderNumber]) {
+            stepName = scene['steps'][stepOrderNumber]['name']
+        } else {
+            stepName = 'Step ' + stepOrderNumber;
+        }
+        $("#" + id).append(`<li class="stepElement" data-step=${stepOrderNumber} onclick="setStep(event, '${fileName}', ${sceneOrderNumber}, ${stepOrderNumber})">${stepName}</li>`)
       })
 
       // DEFINE SORTABLE FUNCTIONS FOR SCENES
@@ -1328,10 +1344,10 @@ function displayStructure(fileName, data) {
               setActiveStep(fileName, sceneOrderNumber, "");
               $(".show-name").removeClass('active');
               $(`#${fileName} .show-name`).addClass('active');
-              $(".step").removeClass('active');
+              $(".stepElement").removeClass('active');
           } else {
               setActiveStep(fileName, "", "");
-              $(".step").removeClass('active');
+              $(".stepElement").removeClass('active');
           }
           // $('#step-media ul').empty();
           // $('#preview').empty();
@@ -1355,56 +1371,66 @@ function displayStructure(fileName, data) {
 
       // unmark all scenes and steps
       $(".toggler").removeClass('active');
-      $(".step").removeClass('active');
+      $(".stepElement").removeClass('active');
 
       // MARK ACTIVE SHOW in constant active and by color in menu
-      if ($(this).hasClass('active')) {
-          setActiveStep(fileName, "", "");
-      } else {
-          setActiveStep("", "", "");
-      }
+      // if ($(this).hasClass('active')) {
+      //     setActiveStep(fileName, "", "");
+      // } else {
+      //     setActiveStep("", "", "");
+      // }
       // $('#step-media ul').empty();
       // $('#preview').empty();
       // $('#console-checkbox').prop('checked', false);
       // $('#boite-checkbox').prop('checked', false);
   })
-  
 }
 
+const screensPreview = ['screenCurrent', 'laptopCurrent', 'screenNext', 'laptopNext'];
+let screenPreview;
+
 function setStep(e, fileName, scene, step) {
-  $(".step").not(e.target).removeClass('active');
+  $(".stepElement").not(e.target).removeClass('active');
   // $(e.target).parent().find('.structure-buttons').remove();
   $(e.target).toggleClass('active');
-
-  // CLEAR PREVIOUS  STEP DATA LIST
-  // $('#step-media ul').empty();
-  // $('#console-checkbox').prop('checked', false);
-  // $('#boite-checkbox').prop('checked', false);
 
   if($(e.target).hasClass('active')) {
       setActiveStep(fileName, scene, step);
 
-      // APPEND clone and delete buttons
-      // $(e.target).append(`<div class="structure-buttons">
-      //                         <span onclick="duplicate('step')"><img class="duplicate-icon" src="./icons/duplicate.png"></img></span>
-      //                         <span onclick="deleteFromStructure('step')"><img src="./icons/trash.svg"></img></span>
-      //                     </div>`)
-
       $.getJSON('./data/json/' + fileName + '.json', function(jsonData) {
         const stepData = jsonData['scenes'][scene]['steps'][step];
-        
         if ('boite' in stepData) {
           setBoite(stepData.boite);
           $('#boite input').each(function(){
             $(this).prop('checked', false);
             $(`#boite input[value=${stepData.boite.type}]`).prop('checked', true);
         })
-          // $(`#boite input[value=${stepData.boite.type}]`).click();
-        }
+        } 
         
         socket.emit('step', stepData);
-        mutePreview();
+        // mutePreview();
 
+        screenPreview = 'screenCurrent';
+        displayStep(stepData['screen']);
+
+        screenPreview = 'laptopCurrent';
+        displayStep(stepData['laptop']);
+
+        screenPreview = 'screenNext';
+        const currentStepIndex = jsonData['scenes'][scene]['step-order'].indexOf(step);
+        const nextStep = jsonData['scenes'][scene]['step-order'][currentStepIndex + 1];
+        if (nextStep) {
+          displayStep(jsonData['scenes'][scene]['steps'][nextStep]['screen']);
+          screenPreview = 'laptopNext';
+          displayStep(jsonData['scenes'][scene]['steps'][nextStep]['laptop']);
+        } else {
+          displayStep(offStep['screen']);
+          screenPreview = 'laptopNext';
+          displayStep(offStep['laptop']);
+        }
+
+        
+        
           // const mediaOrder = jsonData['scenes'][scene]['steps'][step]['screen']['media-order'];
           // const stepMedia = jsonData['scenes'][scene]['steps'][step]['screen']['media'];
           
@@ -1429,75 +1455,21 @@ function setStep(e, fileName, scene, step) {
   } else {
       setActiveStep(fileName, scene, ""); 
       socket.emit('step', offStep);
+      screensPreview.forEach(element => {
+        screenPreview = element;
+        displayStep(offStep[element.replace('Current', '').replace('Next', '')]);
+      })
       // $('#preview').empty();
   }
 }
 
-
-// function checkSceneName(titre) {
-//   var ok = true;
-//   $('.scene__toggle').each(function() {
-//     if ($(this).text() === titre) ok = false;
-//   });
-
-//   if (!ok) {
-//     alert('Ce nom de scene existe déjà');
-//     return false;
-//   }
-
-//   return true;
-// }
-
-// function getSceneName(msg = 'Titre', def) {
-//   var titre = prompt(msg, def);
-//   if (titre) {
-//     titre = titre.trim();
-//     var ok = checkSceneName(titre);
-//     if (ok) return titre;
-//   }
-//   return false;
-// }
-
-// function scrollToStep($step) {
-//   var $scene = $step.parent().parent();
-//   if ($scene.hasClass('closed')) {
-//     $('#visual__closeall').click();
-//     $scene.removeClass('closed');
-//   }
-//   $visual.scrollTo($step, {
-//     offset: -1 * ($visual.height() / 2),
-//     over: { top: 0.5 },
-//     duration: 200
-//   });
-// }
-
-// function normalizeStep(val) {
-//   var data =
-//     typeof val === 'string'
-//       ? {
-//           screen: { texte: val },
-//           // emo: {},
-//           console: {},
-//           laptop: {},
-//           boite: {},
-//           osc: {},
-//           mainScreen: {}
-//         }
-//       : val;
-
-//   ['screen', 'console', 'laptop'].forEach(item => {
-//     if (item in data && 'decor' in data[item]) {
-//       data[item].decor.fit = data[item].decor.fit || 'cover';
-//     }
-//   });
-
-//   return data;
-// }
-
-// function normalizeSeq(val) {
-//   var val = normalizeStep(val);
-//   // var screenValues = defaultScreen;
-//   // screenValues.avatars = $('input[name=avatars]:checked', '#screen').val();
+function scrollToStep($step) {
+  $('#visual').scrollTo($step, {
+    offset: -1 * ($('#visual').height() / 2),
+    over: { top: 0.5 },
+    duration: 200
+  });
+}
 
 //   var tmp = {
 //     screen: deepMerge({}, defaultScreen, val.screen),
@@ -1528,46 +1500,6 @@ function setStep(e, fileName, scene, step) {
 //   setCtrlScreen(screens.mainScreen, data.mainScreen);
 // }
 
-// function activateStep($this) {
-//   $('.scene__radio:checked').prop('checked', false);
-//   $('.scene__step').removeClass('active');
-//   $this.addClass('active');
-//   setCtrlScreens(normalizeSeq($this.data('val')));
-// }
-
-// function walkStep(data, def) {
-//   var out = {};
-//   Object.entries(data).forEach(([key, val]) => {
-//     if (typeof val === 'object' && key in def) {
-//       var res = walkStep(val, def[key]);
-//       if (Object.keys(res).length) out[key] = res;
-//     } else if (def[key] !== val) out[key] = val;
-//   });
-//   return out;
-// }
-
-// function serialiseStep(val) {
-//   if (typeof val === 'object') {
-//     val = walkStep(val, dummyStep);
-//     if (
-//       Object.keys(val).length === 1 &&
-//       'screen' in val &&
-//       Object.keys(val.screen).length === 1 &&
-//       'texte' in val.screen
-//     ) {
-//       val = val.screen.texte;
-//     }
-//     // if (val.emo && val.emo.active === false) val.emo = { active: false };
-//     if (val.screen && val.screen.active === false) val.screen = { active: false };
-//     if (val.console && val.console.active === false) val.console = { active: false };
-//     if (val.laptop && val.laptop.active === false) val.laptop = { active: false };
-//   }
-//   return val;
-// }
-
-// function stringifyStep(val) {
-//   return JSON.stringify(val, null, 2);
-// }
 
 // function displayStep(val) {
 //   val = serialiseStep(val);
@@ -1632,113 +1564,6 @@ function setStep(e, fileName, scene, step) {
 //   // });
 // }
 
-// function displaySteps(seq) {
-//   if (!seq) return;
-//   var out = [];
-//   $.each(seq, function(key, val) {
-//     out.push(displayStep(val));
-//   });
-//   return out;
-// }
-
-// function displayScene(key, val) {
-//   return $(`<div class="scene${states.visual.current === key ? '' : ' closed'}">`).append(
-//     $(`<input class="scene__radio" name="scene__radio" type="radio">`),
-//     $(`<b class="scene__toggle">${key}</b>`),
-//     $(`<div data-key="${key}" class="scene__content"></div>`)
-//       .append(displaySteps(val))
-//       .sortable({
-//         axis: 'y'
-//       })
-//   );
-// }
-
-// function addScene(key, val) {
-//   $visual.append(displayScene(key, val));
-// }
-
-// function displaySaut() {
-//   $('#saut_select').empty();
-//   $('#saut_select').append(`<option value="">...</option>`);
-//   $('.scene__content').each(function() {
-//     var key = $(this).data('key');
-//     $('#saut_select').append(`<option>${key}</option>`);
-//   });
-// }
-
-// function displayVisual() {
-//   $visual.empty();
-//   $.each(scenes, addScene);
-//   $visual.sortable({
-//     handle: 'b',
-//     axis: 'y'
-//   });
-//   displaySaut();
-// }
-
-// $('#visual__save').on('click', function() {
-//   var data = {};
-//   $('.scene__content').each(function() {
-//     var $this = $(this);
-//     var key = $this.data('key');
-//     var steps = [];
-//     data[key] = steps;
-
-    
-//       $this.find('.scene__step').each(function(index, value) {
-//         $line = $(this);
-//         var val = $line.data('val');
-//         val = serialiseStep(val);
-             
-//         steps.push(val);
-//         var saved = $line.data('saved');
-//         saved.push(val);
-//         $line.data('saved', saved);
-//       });
-//   });
-//   socket.emit('save', data);
-// });
-
-
-// $('#visual__add_scene').on('click', function() {
-//   $('#visual__closeall').click();
-//   var titre = getSceneName('Nom de la nouvelle scène');
-//   if (!titre) return;
-
-//   var $scene = displayScene(titre, ['']);
-//   var $prevScene = $('.scene__radio:checked');
-//   if ($prevScene.length) {
-//     $prevScene.parent().after($scene);
-//   } else {
-//     $visual.append($scene);
-//   }
-//   $scene.find('.scene__radio').click();
-//   $scene.find('.scene__toggle').click();
-//   displaySaut();
-//   socket.emit('new scene name', titre);
-// });
-
-// $('#visual__add_step').on('click', function() {
-//   var $step = displayStep('');
-//   var $prevStep = $('.scene__step.active');
-//   if ($prevStep.length) $prevStep.after($step);
-//   else {
-//     var $prevScene = $('.scene__radio:checked');
-//     if ($prevScene.length) {
-//       $prevScene
-//         .parent()
-//         .find('.scene__content')
-//         .append($step);
-//     } else {
-//       $('.scene__content')
-//         .last()
-//         .append($step);
-//     }
-//   }
-//   $step.click();
-//   scrollToStep($step);
-// });
-
 // $('#visual__openall').on('click', function() {
 //   $('.scene').removeClass('closed');
 // });
@@ -1747,93 +1572,53 @@ function setStep(e, fileName, scene, step) {
 //   $('.scene').addClass('closed');
 // });
 
-// $('#visual__rename').on('click', function() {
-//   var $scene = $('.scene__radio:checked').parent();
-//   if ($scene.length) {
-//     var $content = $scene.find('.scene__content');
-//     var titre = getSceneName('Nouveau nom pour la scène', $content.data('key'));
-//     if (!titre) return;
-//     $scene.find('.scene__toggle').text(titre);
-//     $content.data('key', titre).attr('data-key', titre);
-//   }
-// });
-
-// $('#visual__clone').on('click', function() {
-//   var $step = $('.scene__step.active');
-//   if ($step.length) {
-//     var $clone = $step.clone(true);
-//     $step.after($clone);
-//     $clone.click();
-//   } else {
-//     var $scene = $('.scene__radio:checked').parent();
-//     if ($scene.length) {
-//       var $content = $scene.find('.scene__content');
-//       var titre = getSceneName('Nom pour la copie', $content.data('key') + '-2');
-//       if (!titre) return;
-//       var $clone = $scene.clone(true);
-//       $scene.after($clone);
-//       $clone.find('.scene__toggle').text(titre);
-//       $clone.find('.scene__content').data('key', titre);
-//       $clone.find('.scene__radio').prop('checked', true);
-//     }
-//   }
-// });
-
-// $('#visual__delete').on('click', function() {
-//   var $step = $('.scene__step.active');
-//   if ($step.length) {
-//     var $next = $step.next();
-//     if ($next.length === 0) $next = $step.prev();
-//     $step.remove();
-//     $next.click();
-//   } else {
-//     var $scene = $('.scene__radio:checked').parent();
-//     if ($scene.length) {
-//       var $next = $scene.next();
-//       if ($next.length === 0) $next = $scene.prev();
-//       $scene.remove();
-//       $next.find('.scene__radio').click();
-//     }
-//   }
-// });
 
 $('#visual__next').on('click', function() {
-  // var $current = $('.scene__step.active');
-  // var val = $current.data('val');
-  // if (val && typeof val === 'object' && 'saut' in val && 'scene' in val.saut) {
-  //   var $next = $(
-  //     `.scene__content[data-key="${val.saut.scene}"] .scene__step:first-child`
-  //   );
-  //   if ($next.length) {
-  //     activateStep($next);
-  //     scrollToStep($next);
-  //     sendScreens();
-  //   }
-  //   return;
-  // }
-
-  // var $next = $current.next();
-  // if ($next.length === 0) return;
-  // activateStep($next);
-  // scrollToStep($next);
-  // sendScreens();
+  let nextStep;
   if (active.step !== '') {
-    $(`#visual #${active.fileName} [data-scene=${active.scene}] [data-step=${active.step + 1}]`).click();
+    nextStep = $(`#visual #${active.fileName} [data-scene=${active.scene}] [data-step=${active.step}]`).next();
+    if (nextStep.length !== 0) {
+      nextStep.click();
+      scrollToStep(nextStep);
+    } else {
+      let nextSceneNumber = $('#select-next-scene').val();
+      let nextScene;
+      if (!nextSceneNumber) {
+        nextScene = $(`#visual #${active.fileName} [data-scene=${active.scene}]`).next();
+      } else {
+        nextScene = $(`#visual #${active.fileName} [data-scene=${nextSceneNumber}]`);
+      }
+      if (!nextScene.find('.toggler').hasClass('active')) {
+        nextScene.find('.toggler').click();
+      }
+     
+      nextStep = nextScene.find('.steps li').first();
+
+      if (!nextStep.hasClass('active')) {
+        nextStep.click();
+      }
+      scrollToStep(nextStep);
+      // empty scenes preventer in editor
+      // if (nextScene.find('.steps li').first().length === 0) {
+      //   socket.emit('step', offStep);
+      //   scrollToStep(nextScene);
+      // } else {
+      //   scrollToStep(nextStep);
+      // }
+    }
   }
 
 });
 
 $('#visual__prev').on('click', function() {
   if (active.step !== '') {
-    $(`#visual #${active.fileName} [data-scene=${active.scene}] [data-step=${active.step - 1}]`).click();
+    const nextStep = $(`#visual #${active.fileName} [data-scene=${active.scene}] [data-step=${active.step}]`).prev();
+    nextStep.click();
+    scrollToStep(nextStep);
   }
-  // var $current = $('.scene__step.active');
-  // var $next = $current.prev();
-  // if ($next.length === 0) return;
-  // activateStep($next);
-  // scrollToStep($next);
-  // sendScreens();
 });
+
+
 
 $visual
   // .on('click', function(e) {
@@ -1935,8 +1720,8 @@ function displayReponses() {
       $btn.on('click', function(e) {
         e.preventDefault();
         var responseText;
-        if ($('#select_language').val() in val.data) {
-          responseText = sample(val.data[$('#select_language').val()])
+        if (currentLanguage in val.data) {
+          responseText = sample(val.data[currentLanguage])
         } else {
           responseText = sample(val.data[defaultLanguage])
         }
@@ -2026,24 +1811,6 @@ $('#select_random_users').on('click', function() {
 var $one_shot__message = $('#one_shot__message');
 
 $main
-  // .on('input', 'form', function() {
-  //   if (this.id === 'form_osc_ip') return;
-  //   var data = getScreens();
-  //   if (this.id === 'boite' && 'boite' in data) {
-  //     if (data.boite.type === 'gifs') {
-  //       $('#boite').find('textarea').val($('#avatars_area').val());
-  //     }
-  //     setBoite(data.boite);
-  //   }
-  //   var $step = $('.scene__step.active');
-  //   if ($step.length) {
-  //     var val = serialiseStep(data);
-  //     $step
-  //       .data('val', val)
-  //       .find('.scene__step__json')
-  //       .text(stringifyStep(val));
-  //   }
-  // })
   .on('submit', 'form', function(e) {
     e.preventDefault();
     if (this.id === 'interactions') {
@@ -2090,180 +1857,7 @@ actions.prev_step = function() {
 };
 
 
-// MODAL
-
-// Get the modal
-// var modal = document.getElementById("layout_modal");
-
-// Get the button that opens the modal
-// var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-// var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on <span> (x), close the modal
-// span.onclick = function() {
-//   modal.style.display = "none";
-// }
-
-// window.onload = function() {
-//   var console = document.getElementById("console-div");
-//   initDragElement(console);
-// }
-// init drag option for console when iframe loaded
-// $('#main-preview').load(function() {
-//   var console = document.getElementById("console-div");
-//   initDragElement(console);
-// });
-
 // SET PREVIEW
-
-// function initDragElement(element) {
-//   var pos1 = 0,
-//       pos2 = 0,
-//       pos3 = 0,
-//       pos4 = 0;
-    
-//     // const iframe = document.getElementById("main-preview");
-//     const dragElement = document.getElementById("drag");
-//     dragElement.onmousedown = dragMouseDown;
-
-//     function dragMouseDown(e) {
-//       e = e || window.event;
-//       e.preventDefault();
-//       // get the mouse cursor position at startup:
-//       pos3 = e.clientX;
-//       pos4 = e.clientY;
-//       document.onmouseup = closeDragElement;
-//       // call a function whenever the cursor moves:
-//       document.onmousemove = elementDrag;
-//   }
-
-//    function elementDrag(e) {
-//         e = e || window.event;
-//         e.preventDefault();
-//         // calculate the new cursor position:
-//         pos1 = pos3 - e.clientX;
-//         pos2 = pos4 - e.clientY;
-//         pos3 = e.clientX;
-//         pos4 = e.clientY;
-      
-//         const previewWindow = document.getElementById("preview-window");
-
-//         const vw = parseInt(getComputedStyle(previewWindow).width);
-//         const vh = parseInt(getComputedStyle(previewWindow).height);
-//         element.style.top = Math.round((element.offsetTop - pos2)*100/vh) + "%";
-//         element.style.left = Math.round((element.offsetLeft - pos1)*100/vw) + "%";
-//     }
-
-//     function closeDragElement() {
-//         /* stop moving when mouse button is released:*/
-//         document.onmouseup = null;
-//         document.onmousemove = null;
-//     }
-// }
-
-// function initResizeElement() {
-//   var popups = document.getElementsByClassName("popup");
-//   var element = null;
-//   var startX, startY, startWidth, startHeight;
-
-//   for (var i = 0; i < popups.length; i++) {
-//     var p = popups[i];
-
-//     var right = document.createElement("div");
-//     right.className = "resizer-right";
-//     p.appendChild(right);
-//     right.addEventListener("mousedown", initDrag, false);
-//     right.parentPopup = p;
-
-//     var bottom = document.createElement("div");
-//     bottom.className = "resizer-bottom";
-//     p.appendChild(bottom);
-//     bottom.addEventListener("mousedown", initDrag, false);
-//     bottom.parentPopup = p;
-
-//     var both = document.createElement("div");
-//     both.className = "resizer-both";
-//     p.appendChild(both);
-//     both.addEventListener("mousedown", initDrag, false);
-//     both.parentPopup = p;
-//   }
-
-//   function initDrag(e) {
-//     element = this.parentPopup;
-
-//     startX = e.clientX;
-//     startY = e.clientY;
-//     startWidth = parseInt(
-//       document.defaultView.getComputedStyle(element).width,
-//       10
-//     );
-//     startHeight = parseInt(
-//       document.defaultView.getComputedStyle(element).height,
-//       10
-//     );
-//     document.documentElement.addEventListener("mousemove", doDrag, false);
-//     document.documentElement.addEventListener("mouseup", stopDrag, false);
-//   }
-
-//   function doDrag(e) {
-//     element.style.width = startWidth + e.clientX - startX + "px";
-//     element.style.height = startHeight + e.clientY - startY + "px";
-//   }
-
-//   function stopDrag() {
-//     document.documentElement.removeEventListener("mousemove", doDrag, false);
-//     document.documentElement.removeEventListener("mouseup", stopDrag, false);
-//   }
-// }
-
-// function saveEtapeLayout() {
-//   var consoleDiv = $('#console-div')[0];
-
-//   // calculate width and height in %
-//   var width = consoleDiv.style.width;
-//   var height = consoleDiv.style.height;
-//   const previewWindow = document.getElementById("preview-window");
-
-//   if(width.includes('px')) {
-//     const vw = parseInt(getComputedStyle(previewWindow).width);
-//     width = Math.round(parseInt(width)*100/vw) + "%"; 
-//   }
-
-//   if(height.includes('px')) {
-//     const vh = parseInt(getComputedStyle(previewWindow).height);
-//     height = Math.round(parseInt(height)*100/vh) + "%"; 
-//   } 
-
-//   var data = {
-//     "top" : consoleDiv.style.top,
-//     "left" : consoleDiv.style.left,
-//     "width" : width,
-//     "height" : height
-//   }
-  
-//   for(const property in data ) {
-//     $('#' + property)[0].focus();
-//     setEdit(data[property]);
-//   }
-//   document.getElementById("layout_modal").style.display = "none";
-// }
-
-// function setDefaultMainScreenLayout() {
-//   var data = {
-//     "top" : "75%",
-//     "left" : "5%",
-//     "width" : "25%",
-//     "height" : "auto"
-//   }
-
-//   for(const property in data ) {
-//     $('#' + property)[0].focus();
-//     setEdit(data[property]);
-//   }
-// }
-
 
 // QR code reader
 // function getMediaStream() {
@@ -2370,3 +1964,194 @@ function readCode() {
 //   { fps: 10, qrbox: {width: 250, height: 250} },
 //   /* verbose= */ false);
 // html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
+function clearUnwantedMedia(data){
+  const stepMedia = data['media'];
+
+  let keysArray = [].map.call($(`#${screenPreview} .step__decor`).children().not('#boite, .console'), function (e) {
+  return e.getAttribute('data-key')
+  })
+
+  keysArray.forEach(key => {
+      if (!stepMedia[key]) {
+          $(`#${screenPreview} .step [data-key=${key}]`).remove();
+      }
+  })
+}
+
+function applyZIndexes(data) {
+  let zIndex = data['media-order'].length;
+  data['media-order'].forEach((value, index) => {
+      $(`#${screenPreview} .step__decor [data-key=${value}]`).css({"z-index" : zIndex});
+      zIndex = zIndex - 1;
+  })
+}
+
+function displayStep(data) {
+    clearUnwantedMedia(data);
+
+    const mediaOrder = data['media-order'];
+    const stepMedia = data['media'];
+
+    for (let data_key of mediaOrder) {
+      setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);
+    }
+    applyZIndexes(data); 
+    
+    setElements("", "console", "", data['console']);
+    $(`#${screenPreview} .step`).css('background-color', data['background-color']);
+}
+
+function setElements(val, type, data_key, stepMediaObject) {
+  src = '/data/media/' + val;
+ 
+  const avatarsElement = `<div class="avatars" style="width: 25%; height: 15%; position: absolute; top: 25%; left:25%; border-radius: 45%; z-index:99;" data-key=${data_key} data-type=${type}>
+                          </div>`;
+
+  const console = `<div id="console" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:666666;">
+                    <iframe src="/console" style="width:100%; height: 100%; border: none;"></iframe>
+                  </div>`;
+
+  const imageElement = `<div style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
+                          <img style="width: 100%;" src=${src} class="media"></img>
+                        </div>`
+
+  const videoElement = `<div style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type} data-audioOutput=''>
+                          <video autoplay volume=0.5 style="width: 100%;" src=${src} class="media"></video>
+                        </div>`
+                 
+  const audioElement = `<div style="width: 5%; position: absolute; top: 25%; left:85%; padding:5px;" data-key=${data_key} data-type=${type}>
+                            <audio autoplay volume=0.5 class="media" src=${src}></audio>
+                          </div>`
+
+  const streamElement = `<div style="width: 35%; position: absolute; top: 25%; left:25%;" data-key=${data_key} data-type=${type}>
+                            <video autoplay style="width: 100%;" class="media"></video>
+                          </div>`
+ 
+  const textElement = `
+                        <pre contenteditable="true" class="text draggable" data-key=${data_key} data-type=${type} 
+                                  style=" 
+                                  position: absolute; 
+                                  top: 25%; 
+                                  left:25%;
+                                  white-space: pre-wrap; 
+                                  word-wrap: break-word;
+                                  color: white;
+                                  font-size: 16px;
+                                  margin: 0px;
+                                  padding: 10px;
+                                  font-family: Arial;
+                                  "
+                        >${val}</pre>
+                    `
+  
+  const elements = {
+    'media_images' : imageElement,
+    'media_gifs' : imageElement,
+    'media_video' : videoElement,
+    'media_audio' : audioElement,
+    'videoStream' : streamElement,
+    'avatars' : avatarsElement,
+    'text' : textElement
+  } 
+
+  if (type in elements) {
+      if($(`#${screenPreview} .step__decor [data-key=${data_key}]`).length === 0) {
+          $(`#${screenPreview} .step__decor`).append(elements[type]);
+      }
+  }
+  
+  if(type === 'console') {
+      if(stepMediaObject.active === true && $('.console').length === 0) {
+          $(`#${screenPreview} .step`).append(console);
+      }
+      if ((stepMediaObject.active === false && $('.console').length !== 0)) {
+        $(`#${screenPreview} .step .console`).remove();
+      }
+  } 
+  
+  // APPLY STYLE IF MEDIA OBJECT IS FROM STEP
+  if (stepMediaObject) {
+      if (type === 'console') {
+          $(`.${type}`).css(stepMediaObject['css']);
+      } 
+      else if (type === 'media_audio') {
+        let mediaElement = $(`#${screenPreview} .step`).find(`*[data-key="${data_key}"]`);
+        if (!mediaElement.find('.media').attr('src').includes(stepMediaObject['attributes']['src'])) {
+            mediaElement.find('.media').attr('src', htmlPathToMedia +  stepMediaObject['attributes']['src']); 
+        }
+        mediaElement.find('.media').prop('volume', 0)
+        mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop'])
+      } 
+      else {
+          // APPLY CSS
+          let mediaElement = $(`#${screenPreview} .step`).find(`*[data-key="${data_key}"]`);
+          mediaElement.removeAttr('style');
+          mediaElement.css(stepMediaObject['css']);
+
+          // APPLY LOOP AND MUTED TO VIDEOS
+          if(stepMediaObject['type'] === 'media_video') {
+              mediaElement.find('.media').prop('muted', true);
+              mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop']);
+              mediaElement.find('.media').prop('volume', stepMediaObject['attributes']['volume']);
+              mediaElement.data('audioOutput', stepMediaObject['attributes']['audioOutput']);
+              mediaElement.find('.media')[0].setSinkId(stepMediaObject['attributes']['audioOutput']);
+          }
+
+           // CHECK IF NEW SRC SHOULD BE APPLIED
+           if (stepMediaObject['type'] === 'media_video' || stepMediaObject['type'] === 'media_images' || stepMediaObject['type'] === 'media_gifs') {
+            if (!mediaElement.find('.media').attr('src').includes(stepMediaObject['attributes']['src'])) {
+                mediaElement.find('.media').attr('src', htmlPathToMedia +  stepMediaObject['attributes']['src']); 
+            }
+          }
+
+          if (stepMediaObject['type'] === 'videoStream') {
+              if (mediaElement.data('device') !== stepMediaObject['attributes']['device']) {
+                  const constraints = {
+                      video: { deviceId: stepMediaObject['attributes']['device']}
+                  };
+                  mediaElement.data('device', stepMediaObject['attributes']['device']);
+                  mediaElement.data('label', stepMediaObject['attributes']['label']);
+
+                  startStream(constraints, data_key, screenPreview);
+              } 
+          }
+
+           // ADD NEW TEXT IF NEEDED
+           if (stepMediaObject['type'] === 'text') {
+              if (mediaElement.text() !== stepMediaObject['content']) {
+                  mediaElement.text(stepMediaObject['content']);
+              }
+              let currentSize = parseFloat(mediaElement.css('font-size'))/0.55;
+              mediaElement.css('font-size', currentSize + 'px')
+          }
+
+          // APPLY CLASSES
+          let classes = "";
+          
+          stepMediaObject['classes'].forEach(element => {
+              classes = classes + element;
+          });
+          mediaElement.addClass(classes);
+         
+          if(stepMediaObject['css']['object-fit'] && stepMediaObject['css']['object-fit'] !== "") {
+              mediaElement.find('.media').css({"height" : "100%", "object-fit" : stepMediaObject['css']['object-fit']});
+          }
+      }
+  } 
+}
+
+
+async function startStream(constraints, data_key, div) {
+  navigator.mediaDevices.getUserMedia( constraints )
+  .then( MediaStream => {
+      handleStream(MediaStream, data_key, div);
+  })
+  .catch( error => {
+      console.log(error);
+  });
+}
+
+function handleStream(stream, data_key, div) {
+  $(`#${div} .step [data-key=${data_key}] video`)[0].srcObject = stream;
+}

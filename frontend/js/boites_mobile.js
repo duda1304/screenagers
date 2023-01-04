@@ -253,37 +253,70 @@ boites.avertissement = {
     var $image_check_icon = $('#image_check_icon');
     var $image_photo_icon = $('#image_photo_icon');
 
+  
     function doFile(file) {
       if (file !== null) {
-        loadImage(
-          file,
-          function(canvas) {
-            if (canvas) {
-              var dataURL = canvas.toDataURL('image/jpeg', 0.8);
-              image_output.src = dataURL;
-              socket.emit('boite', {
-                type: 'image',
-                action: 'url',
-                arg: dataURL
-              });
-              $image_output.show();
-              $image_check_icon.show();
-              $image_photo_icon.hide();
-            } else alert("Image reading problem");
-          },
-          {
-            maxWidth: 1500,
-            orientation: true,
-            meta: true,
-            canvas: true
-          }
-        );
+        // loadImageOrientation();
+        // function loadImageOrientation() {
+            loadImage.parseMetaData(file, function (data) {
+              let options = {};
+                if (data.exif) {
+                    options.orientation = data.exif.get('Orientation');
+                }
+                // loadImage(file, callback, options);
+                loadImage(
+                  file,
+                  function(canvas) {
+                    if (canvas) {
+                      var dataURL = canvas.toDataURL('image/jpeg', 0.8);
+                      image_output.src = dataURL;
+                      socket.emit('boite', {
+                        type: 'image',
+                        action: 'url',
+                        arg: dataURL
+                      });
+                      $image_output.show();
+                      $image_check_icon.show();
+                      $image_photo_icon.hide();
+                    } else alert("Image reading problem");
+                  },
+                  {
+                    maxWidth: 1500,
+                    orientation: options.orientation,
+                    meta: true,
+                    canvas: true
+                  }
+                );
+            });
+        // }
+        // loadImage(
+        //   file,
+        //   function(canvas) {
+        //     if (canvas) {
+        //       var dataURL = canvas.toDataURL('image/jpeg', 0.8);
+        //       image_output.src = dataURL;
+        //       socket.emit('boite', {
+        //         type: 'image',
+        //         action: 'url',
+        //         arg: dataURL
+        //       });
+        //       $image_output.show();
+        //       $image_check_icon.show();
+        //       $image_photo_icon.hide();
+        //     } else alert("Image reading problem");
+        //   },
+        //   {
+        //     maxWidth: 1500,
+        //     orientation: true,
+        //     meta: true,
+        //     canvas: true
+        //   }
+        // );
       }
     }
 
     var fileInput = $image_upload[0];
     var active = false;
-
     fileInput.addEventListener('change', function() {
       if (active === true) doFile(fileInput.files[0]);
     });
@@ -390,7 +423,7 @@ boites.avertissement = {
         $collective_song.append(
           `<div style='display: none' class='question_box'>
             <p id=${element.question_group + '_question'}>${element.question}</p>
-            <input autocomplete='off' type='text' id=${element.question_group + '_input'}></input>
+            <input autocomplete='off' type='text' oninput="this.value = this.value.replace(/[^a-zA-Z0-9 -']/g, '')" id=${element.question_group + '_input'}></input>
             <button id=${element.question_group}>Send</button>
           </div>`
         )
@@ -402,7 +435,7 @@ boites.avertissement = {
           socket.emit('collective song response', {
             group: this.id,
             question : $('#' + this.id + '_question')[0].innerHTML,
-            answer: $('#' + this.id + '_input').val()
+            answer: $('#' + this.id + '_input').val().charAt(0).toLowerCase() + $('#' + this.id + '_input').val().slice(1)
           });
           $(this).parent().css('display', 'none');
           if ($(this).parent().next()[0]) {

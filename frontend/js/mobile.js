@@ -6,6 +6,8 @@ var connected = false;
 var paramId = findGetParameter('id');
 var id = paramId != null ? paramId : localStorage.getItem('id') || uuid();
 
+const defaultLanguage = 'FR';
+
 function findGetParameter(parameterName) {
   var result = null;
   var tmp = [];
@@ -28,8 +30,14 @@ function displayContent(language) {
   $.when(
     $.getJSON(`/data/mobile.json`)
   ).then(function(text) {
-    mobileJSON = text[language];
-    var content = text[language];
+    var content;
+    if(language in text) {
+      mobileJSON = text[language];
+      content = text[language];
+    } else {
+      mobileJSON = text[defaultLanguage];
+      content = text[defaultLanguage];
+    }
     for (const section in content) {
       $('#' + section).find('span').each( (index, element) => {
         element.innerHTML = '';
@@ -129,11 +137,17 @@ socket.on('step', function(data) {
     $.when(
       $.getJSON(`/data/mobile.json`)
     ).then(function(text) {
+      var currentLanguage;
+      if (data.language in text) {
+        currentLanguage = data.language;
+      } else {
+        currentLanguage = defaultLanguage;
+      }
       actions.alert(
-        { title: text[data.language]["avertissement-boite"].title, text: text[data.language]["avertissement-boite"].text + ' ' + displayPseudo() },
+        { title: text[currentLanguage]["avertissement-boite"].title, text: text[currentLanguage]["avertissement-boite"].text + ' ' + displayPseudo() },
         function() {
           $header.show();
-          socket.emit('console', text[data.language]["avertissement-boite"].console);
+          socket.emit('console', text[currentLanguage]["avertissement-boite"].console);
         }
       );
       var gifImage = $('#send_gif')[0].cloneNode(true);    
@@ -144,7 +158,7 @@ socket.on('step', function(data) {
   if ('boite' in data && 'type' in data.boite) {
     setBoite(data.boite);
   }
-  startChatBot(data.language); 
+  // startChatBot(data.language); 
 });
 
 socket.on('display HTML content', (data) => {
@@ -153,7 +167,7 @@ socket.on('display HTML content', (data) => {
 
 socket.on('change language', (data) => {
   displayContent(data);
-  startChatBot(data);
+  // startChatBot(data);
 })
 
 socket.on('change nickname', (data) => {

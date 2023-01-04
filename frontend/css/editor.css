@@ -165,11 +165,11 @@ body {
 
 
 b::before {
-  content: '▼ ';
+  content: '►';
 }
 
 .active b::before, b.active::before {
-  content: '► ';
+  content: '▼ ';
 }
 /* .closed > b::before {
   content: '► ';
@@ -294,12 +294,17 @@ b::before {
 
 .steps {
   margin-top: 10px;
-  /* list-style-type: arrows; */
   max-height: 100px;
   overflow-y: auto;
 }
+/* 
+#master .steps {
+  max-height: fit-content;
+} */
 
-.step {
+
+
+.stepElement {
   width: fit-content;
   padding: 2px;
   border-radius: 5px;
@@ -307,7 +312,7 @@ b::before {
   display: flex;
 }
 
-.step.active {
+.stepElement.active {
   background-color: #008496;
 }
 
@@ -470,6 +475,10 @@ b::before {
 }
 
 .video-controls button.active {
+  background-color: #008496;
+}
+
+.audio-controls button.active {
   background-color: #008496;
 }
 

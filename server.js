@@ -49,7 +49,7 @@ var Group = require('./backend/Group.js');
 
 var port = fs.readFileSync('port.txt', 'utf8').trim();
 
-var currentLanguage = 'FR';
+var currentLanguage = 'EN';
 var languageList = ['FR', 'EN'];
 
 var sendOsc = false;
@@ -217,7 +217,6 @@ const set = {
     socket.emit('init states', states);
 
     const json = walkSync('./frontend/data/json');
-    
     socket.emit('initial json', json);
   
     // socket.emit('language', {'currentLanguage' : currentLanguage});
@@ -232,6 +231,8 @@ const set = {
       fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
         if (err) return console.log(err);
       });
+      const json = walkSync('./frontend/data/json');
+      groups['masters'].emit('initial json', json);   
     })
 
     // NEW reorder scenes
@@ -243,8 +244,9 @@ const set = {
           
       fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
         if (err) return console.log(err);
-        
       });
+      const json = walkSync('./frontend/data/json');
+      groups['masters'].emit('initial json', json);  
     })
 
      // NEW add media
@@ -261,6 +263,7 @@ const set = {
         }
           const json = walkSync('./frontend/data/json');
           groups['editors'].emit('success', {'added' : 'media', 'data' : json});     
+          groups['masters'].emit('initial json', json);  
       });
     })
 
@@ -278,7 +281,8 @@ const set = {
           groups['editors'].emit('error');
         }
           const json = walkSync('./frontend/data/json');
-          groups['editors'].emit('success', {'added' : 'step', 'data' : json});     
+          groups['editors'].emit('success', {'added' : 'step', 'data' : json});  
+          groups['masters'].emit('initial json', json);     
       });
     })
 
@@ -295,7 +299,8 @@ const set = {
           groups['editors'].emit('error');
         }
           const json = walkSync('./frontend/data/json');
-          groups['editors'].emit('success', {'saved' : 'step', 'data' : json});     
+          groups['editors'].emit('success', {'saved' : 'step', 'data' : json});  
+          groups['masters'].emit('initial json', json);     
       });
     })
 
@@ -314,6 +319,7 @@ const set = {
         }
         const json = walkSync('./frontend/data/json');
         groups['editors'].emit('success', {'deleted' : 'step', 'data' : json}); 
+        groups['masters'].emit('initial json', json);  
       });
     })
 
@@ -331,7 +337,7 @@ const set = {
         }
         const json = walkSync('./frontend/data/json');
         groups['editors'].emit('success', {'added' : 'scene', 'data' : json}); 
-       
+        groups['masters'].emit('initial json', json);  
       });
     })
 
@@ -348,7 +354,24 @@ const set = {
         }
         const json = walkSync('./frontend/data/json');
         groups['editors'].emit('success', {'renamed' : 'scene', 'data' : json}); 
-       
+        groups['masters'].emit('initial json', json);  
+      });
+    })
+
+    // NEW rename step 
+    socket.on('rename step', (data) => {
+      const filePath = `./frontend/data/json/${data.fileName}.json`;
+      const file = require(filePath);
+          
+      file['scenes'][data.scene]['steps'][data.step]['name'] = data.name;
+          
+      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
+        if (err) {
+          groups['editors'].emit('error');
+        }
+        const json = walkSync('./frontend/data/json');
+        groups['editors'].emit('success', {'renamed' : 'step', 'data' : json}); 
+        groups['masters'].emit('initial json', json);  
       });
     })
 
@@ -366,7 +389,8 @@ const set = {
           groups['editors'].emit('error');
         }
         const json = walkSync('./frontend/data/json');
-        groups['editors'].emit('success', {'deleted' : 'scene', 'data' : json});     
+        groups['editors'].emit('success', {'deleted' : 'scene', 'data' : json});   
+        groups['masters'].emit('initial json', json);    
       });
     })
 
@@ -380,7 +404,7 @@ const set = {
         }
         const json = walkSync('./frontend/data/json');
         groups['editors'].emit('success', {'added' : 'show', 'data' : json}); 
-       
+        groups['masters'].emit('initial json', json);  
       });
     })
 
@@ -394,6 +418,7 @@ const set = {
         }
         const json = walkSync('./frontend/data/json');
         groups['editors'].emit('success', {'deleted' : 'show', 'data' : json});     
+        groups['masters'].emit('initial json', json);  
       });
     })
 
@@ -417,7 +442,7 @@ const set = {
           }
         const json = walkSync('./frontend/data/json');
         groups['editors'].emit('success', {'renamed' : 'scene', 'data' : json}); 
-       
+        groups['masters'].emit('initial json', json);  
       });
       });
     })
@@ -440,7 +465,8 @@ const set = {
             groups['editors'].emit('error');
           }
           const json = walkSync('./frontend/data/json');
-          groups['editors'].emit('success', {'renamed' : 'show', 'data' : json});   
+          groups['editors'].emit('success', {'renamed' : 'show', 'data' : json});
+          groups['masters'].emit('initial json', json);     
         })
       });
     })
@@ -1041,11 +1067,12 @@ io.on('connection', socket => {
   socket.on('change current language', (data) => {
     currentLanguage = data.language;
     groups['screens'].emit('language changed', data.language);
-    var username = User.nameGenerator(data.language);
-    groups['mobiles'].emit('change nickname', username);
+    // var username = User.nameGenerator(data.language);
+    groups['mobiles'].emit('change nickname', User.nameGenerator(data.language));
     groups['mobiles'].emit('change language', data.language);
-    groups['assistants'].emit('change language', data.language);
-    groups['editors'].emit('change language', data.language);
+    // groups['mobiles']['group'].forEach(function(client){var username = User.nameGenerator(data.language);client.emit('change nickname', username)})
+    // groups['assistants'].emit('change language', data.language);
+    // groups['editors'].emit('change language', data.language);
   });
  
   socket.on('collective song response', (data) => {

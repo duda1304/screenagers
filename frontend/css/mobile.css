@@ -152,6 +152,12 @@ button:active {
   padding-bottom: 0.9em;
 }
 
+
+.alert__text pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
 .alert__text img {
   width: 100%;
 }
@@ -326,6 +332,10 @@ button:active {
   margin-top: 1em;
   padding: 1.8em;
   text-transform: uppercase;
+}
+
+#send_gif {
+  height: 45vh;
 }
 
 /* gamepad */

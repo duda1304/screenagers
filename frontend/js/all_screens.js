@@ -651,7 +651,6 @@ function clearUnwantedMedia(data){
   })
 }
 
-
 function applyZIndexes(data) {
   let zIndex = data['media-order'].length;
   data['media-order'].forEach((value, index) => {
@@ -670,7 +669,7 @@ function displayStep(data) {
     for (let data_key of mediaOrder) {
       setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);
     }
-    applyZIndexes(data); //here
+    applyZIndexes(data); 
     
     setElements("", "console", "", data['console']);
     $('.step').css('background-color', data['background-color']);
@@ -748,21 +747,19 @@ function setElements(val, type, data_key, stepMediaObject) {
   // APPLY STYLE IF MEDIA OBJECT IS FROM STEP
   if (stepMediaObject) {
       if (type === 'console') {
-          // if (!stepMediaObject['active']) {
-          //     $(`#${type}`).hide();
-          // } else {
-          //     $(`#${type}`).show();
-          // }
           $(`.${type}`).css(stepMediaObject['css']);
-      } else if (type === 'media_audio') {
+      } 
+      
+      else if (type === 'media_audio') {
         let mediaElement = $(`.step`).find(`*[data-key="${data_key}"]`);
         if (!mediaElement.find('.media').attr('src').includes(stepMediaObject['attributes']['src'])) {
             mediaElement.find('.media').attr('src', htmlPathToMedia +  stepMediaObject['attributes']['src']); 
         }
         mediaElement.find('.media').prop('volume', stepMediaObject['attributes']['volume'])
         mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop'])
-      } else {
-      // if (type === 'media_images') {
+      } 
+      
+      else {
           // APPLY CSS
           let mediaElement = $(".step").find(`*[data-key="${data_key}"]`);
           mediaElement.removeAttr('style');
@@ -808,15 +805,14 @@ function setElements(val, type, data_key, stepMediaObject) {
           // APPLY CLASSES
           let classes = "";
           
-          // stepMediaObject['classes'].forEach(element => {
-          //     classes = classes + element;
-          // });
-          // mediaElement.addClass(classes);
+          stepMediaObject['classes'].forEach(element => {
+              classes = classes + element;
+          });
+          mediaElement.addClass(classes);
          
           if(stepMediaObject['css']['object-fit'] && stepMediaObject['css']['object-fit'] !== "") {
               mediaElement.find('.media').css({"height" : "100%", "object-fit" : stepMediaObject['css']['object-fit']});
           }
-      // }
       }
   } 
 }

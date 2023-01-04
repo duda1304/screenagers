@@ -1,6 +1,6 @@
-toggleFullScreen = function() {};
+// toggleFullScreen = function() {};
 
-const isPositiveInteger = val => val >>> 0 === parseFloat(val);
+// const isPositiveInteger = val => val >>> 0 === parseFloat(val);
 
 function locate(obj, path, sep = '.') {
   return path
@@ -127,12 +127,10 @@ socket.on('saving', function(data) {
 
 socket.on('current language', (data) => {
   currentLanguage = data;
-  console.log(currentLanguage)
 })
 
 socket.on('change language', (data) => {
   currentLanguage = data;
-  console.log(currentLanguage)
 })
 socket.on('start', (start) => {
     document.getElementById("emo").click();
@@ -893,12 +891,12 @@ var screens = {
 // var cleanedStep = cleanStep(deepMerge({}, dummyStep));
 // cleanedStep.osc.message = '';
 
-var offStep = {
-  console: { active: false },
-  screen: { active: false },
-  emo: { active: false },
-  laptop: { active: false }
-};
+// var offStep = {
+//   console: { active: false },
+//   screen: { active: false },
+//   emo: { active: false },
+//   laptop: { active: false }
+// };
 
 function cleanStep(step) {
   if (typeof step === 'object') {

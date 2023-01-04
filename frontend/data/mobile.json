@@ -7,22 +7,22 @@
         "image_photo_icon" : ["Envoyer une photo"],
         "singe_savant" : ["C'est (peut-être) bientôt", "votre tour d'écrire"],
         "gifs" : ["téléportation", "tonus", "glissade"],
-        "avertissement-boite" : {"title" : "Bienvenue !", "text" : "Votre pseudo est", "console" : "est connecté"},
+	"avertissement-boite" : {"title" : "Bienvenue !", "text" : "Votre pseudo est", "console" : "est connecté"},
         "choix-boite" : {"text" : "Les votes sont clos !"},
-        "image-boite" : {"text" : "Probleme de lecture d'image"},
+        "image-boite" : {"text" : "Problème de lecture d'image"},
         "musique-boite" : {"title" : "Musique", "text" : "Montez le volume de votre téléphone."}
     },
     "EN" : {
-        "avertissement" : ["Vous êtes arrivés au bon endroit !", "La pièce va bientôt commencer..."],
-        "fin" : ["FIN"],
-        "attente" : ["Vous allez pouvoir interagir avec votre téléphone très prochainement"],
-        "no_phone" : ["Vous pouvez ranger votre téléphone pour le moment", "Sortez-le et revenez ici", "lorsque cette icone apparaîtra", "sur l'écran"],
-        "image_photo_icon" : ["Envoyer une photo"],
-        "singe_savant" : ["C'est (peut-être) bientôt", "votre tour d'écrire"],
-        "gifs" : ["téléportation", "tonus", "glissade"],
-        "avertissement-boite" : {"title" : "Bienvenue !", "text" : "Votre pseudo est", "console" : "connected"},
-        "choix-boite" : {"text" : "Les votes sont clos !"},
-        "image-boite" : {"text" : "Probleme de lecture d'image"},
-        "musique-boite" : {"title" : "Musique", "text" : "Montez le volume de votre téléphone."}
+        "avertissement" : ["Welcome", "The show will start soon"],
+        "fin" : ["THE END"],
+        "attente" : ["Be ready to use your phone"],
+        "no_phone" : ["You can put away your phone for now", "Take it out and and come back here", "when you see this image", "on the screen"],
+        "image_photo_icon" : ["Send a photo"],
+        "singe_savant" : ["It will (maybe) soon be", "your turn to right"],
+        "gifs" : ["teleportation", "blow up", "slide"],
+	"avertissement-boite" : {"title" : "Welcome !", "text" : "Your nickname is ", "console" : "connected"},
+        "choix-boite" : {"text" : "Voting is closed !"},
+        "image-boite" : {"text" : "Image reading problem"},
+        "musique-boite" : {"title" : "Musique", "text" : "Turn up the volume on your phone."}
     }
 }

@@ -82,6 +82,11 @@ margin: 10px;
   color: black;
 }
 
+.box-monitoring_incoming, .box-monitoring_outgoing {
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
 #monitoring_outgoing {
   flex: 1 0 auto;
   color: black;
@@ -139,14 +144,21 @@ margin: 10px;
   display: none;
 }
 
-div:not(.closed) #reponses {
+div:not(.closed) #reponses{
   display: flex;
 }
 
-div:not(.closed) .box-preview {
-  /* display: flex; */
-  width: 70vw;
-  height: 35vh;
+.box-preview:not(.closed) {
+  width: 50vw;
+  height: 30vh !important;
+}
+
+.box-preview:not(.closed) div {
+  display: flex;
+}
+
+#reponses button {
+  flex: 1 0 auto;
 }
 
 /* div:not(.closed) #preview {
@@ -300,6 +312,10 @@ div:not(.closed) .box-preview {
   opacity: 1;
 }
 
+#master .steps {
+  max-height: fit-content;
+}
+
 /* Screens
   ========== */
 .box-screens header {
@@ -355,11 +371,11 @@ div:not(.closed) .box-preview {
   margin-top: 20px;
 }
 
-b::before {
+#master b::before {
   content: '▼ ';
 }
 
-.closed > b::before {
+#master .closed > b::before {
   content: '► ';
 }
 
@@ -389,7 +405,14 @@ b::before {
 
 #visual {
   min-height: 250px;
-  flex: 1 0 auto;
+  /* flex: 1 0 auto; */
+  /* max-height: 75vh; */
+  overflow-y: auto;
+}
+
+.box-visual {
+  max-height: 85vh;
+  /* overflow-y: auto; */
 }
 
 table {
@@ -705,10 +728,37 @@ input[type='range']:focus::-webkit-slider-runnable-track {
 }
 
 /* Step preview */
+#master .preview {
+  width: 50%;
+  height: 100%;
+  margin: 5px;
+}
+
+#master .preview:not(.next) {
+  border: 1.5px solid greenyellow;
+}
+
+.next {
+  width: 35% !important;
+  height: 70% !important;
+}
+
+#preview_div {
+  flex-direction: row; 
+  width: 100%; 
+  height: 100%;
+  align-items: center;
+}
+
+main #console {
+  background-color: black;
+  z-index: 666666 !important;
+}
 /* #preview {
   display: flex;
   flex-direction: row;
 }
+
 
 .preview div {
   width: 35%;
@@ -902,3 +952,33 @@ video {
 .d-none {
   display: none;
 }
+
+/* FROM ALL_SCREENS.css */
+
+.step {
+  /* pointer-events: none; */
+  
+  width:100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+.step > div {
+  position: relative;
+  margin: auto;
+}
+
+.step > .step__decor {
+  position: relative;
+  /* top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; */
+  width: 100%;
+  height: 100%;
+
+  background-repeat: no-repeat;
+  background-position: center;
+}
+

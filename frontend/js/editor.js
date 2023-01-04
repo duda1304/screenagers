@@ -135,7 +135,7 @@ function displayStructure(fileName, data) {
     $.each(data.languages, function(key, value) {   
         $('#' + fileName).find('select')
             .append($("<option></option>")
-                       .attr("value", key)
+                       .attr("value", value)
                        .text(value)); 
    });
 
@@ -159,10 +159,16 @@ function displayStructure(fileName, data) {
             </li>`).appendTo(`#${fileName + 'sceneList'}`)
         .append(`<ul id=${id} style="display: none" class="steps"></ul>`);
 
-        let number = 1;
+        // let number = 1;
         stepOrder.forEach(stepOrderNumber => {
-            $("#" + id).append(`<li class="step" data-step=${stepOrderNumber} onclick="setStep(event, '${fileName}', ${sceneOrderNumber}, ${stepOrderNumber})">Step ${number}</li>`)
-            number = number + 1;
+            let stepName;
+            if ('name' in scene['steps'][stepOrderNumber]) {
+                stepName = scene['steps'][stepOrderNumber]['name']
+            } else {
+                stepName = 'Step ' + stepOrderNumber;
+            }
+            $("#" + id).append(`<li class="stepElement" data-step=${stepOrderNumber} onclick="setStep(event, '${fileName}', ${sceneOrderNumber}, ${stepOrderNumber})">${stepName}</li>`)
+            // number = number + 1;
         })
 
         // DEFINE SORTABLE FUNCTIONS FOR SCENES
@@ -199,26 +205,26 @@ function displayStructure(fileName, data) {
                     saveStepOrder(fileName, sceneOrderNumber, mainData[fileName]['scenes'][sceneOrderNumber]['step-order']);
 
                     // ADJUST TEXT STEP number IN HTML
-                    $(ui.item).text('Step ' + (endPosition + 1));
-                    $(function () {
-                        let currentLi = ui.item;
-                        let number = endPosition;
+                    // $(ui.item).text('Step ' + (endPosition + 1));
+                    // $(function () {
+                    //     let currentLi = ui.item;
+                    //     let number = endPosition;
 
-                        while (number > 0) {
-                            $(currentLi).prev().text('Step ' + number);
-                            currentLi = $(currentLi).prev();
-                            number = number - 1;
-                        }       
+                    //     while (number > 0) {
+                    //         $(currentLi).prev().text('Step ' + number);
+                    //         currentLi = $(currentLi).prev();
+                    //         number = number - 1;
+                    //     }       
                         
-                        currentLi = ui.item;
-                        number = endPosition + 2;
+                    //     currentLi = ui.item;
+                    //     number = endPosition + 2;
 
-                        while (number <= ui.item.parent().children().length) {
-                            $(currentLi).next().text('Step ' + number);
-                            currentLi = $(currentLi).next();
-                            number = number + 1;
-                        }
-                    });
+                    //     while (number <= ui.item.parent().children().length) {
+                    //         $(currentLi).next().text('Step ' + number);
+                    //         currentLi = $(currentLi).next();
+                    //         number = number + 1;
+                    //     }
+                    // });
                 }
             }
         });    
@@ -236,10 +242,10 @@ function displayStructure(fileName, data) {
                 setActiveStep(fileName, sceneOrderNumber, "");
                 $(".show-name").removeClass('active');
                 $(`#${fileName} .show-name`).addClass('active');
-                $(".step").removeClass('active');
+                $(".stepElement").removeClass('active');
             } else {
                 setActiveStep(fileName, "", "");
-                $(".step").removeClass('active');
+                $(".stepElement").removeClass('active');
             }
             $(`#step-media ul`).empty();
             screens.forEach(screen => $(`#${screen}`).empty());
@@ -262,7 +268,7 @@ function displayStructure(fileName, data) {
 
         // unmark all scenes and steps
         $(".toggler").removeClass('active');
-        $(".step").removeClass('active');
+        $(".stepElement").removeClass('active');
 
         // MARK ACTIVE SHOW in constant active and by color in menu
         if ($(this).hasClass('active')) {
@@ -370,7 +376,7 @@ $(`#step-media .${activeScreen}`).sortable({
 
 // STEP IS DISPLAYED FROM SAVED JSON DATA
 function setStep(e, fileName, scene, step) {
-    $(".step").not(e.target).removeClass('active');
+    $(".stepElement").not(e.target).removeClass('active');
     $(e.target).parent().find('.structure-buttons').remove();
     $(e.target).toggleClass('active');
 
@@ -384,9 +390,13 @@ function setStep(e, fileName, scene, step) {
         // APPEND clone and delete buttons to step
         $(e.target).append(`<div class="structure-buttons">
                                 <span onclick="duplicate('step')"><img class="duplicate-icon" src="./icons/duplicate.png"></img></span>
-                                <span onclick="deleteFromStructure('step')"><img src="./icons/trash.svg"></img></span>
+                                <span class='delete' onclick="deleteFromStructure('step')"><img src="./icons/trash.svg"></img></span>
+                                <span onclick="editName('step')"><img class="edit-icon" src="./icons/edit.png"></img></span>
                             </div>`)
-
+        // PREVENT option to delete only step
+        if ($(e.target).next().length === 0 && $(e.target).prev().length === 0) {
+            $(e.target).find('.delete').remove();
+        }
         // DISPLAY step media
         displayActiveStepMedia(); 
 
@@ -453,13 +463,15 @@ function displayActiveStepMedia() {
 
         // set boite
         if ('boite' in jsonData['scenes'][active.scene]['steps'][active.step]) {
+            const boite = jsonData['scenes'][active.scene]['steps'][active.step]['boite'];
             // if($('#screen #boite').length === 0) {
             //     $('#screen').append(`<div id="boite"></div>`)
-            // }
-            setBoite(jsonData['scenes'][active.scene]['steps'][active.step]['boite']);
+            $('#boite-form textarea').val(boite['arg']);
+            currentBoiteType = boite['type'];
+            setBoite(boite);
             $('#boite-form input').each(function(){
                 $(this).prop('checked', false);
-                $(`#boite-form input[value=${jsonData['scenes'][active.scene]['steps'][active.step]['boite']['type']}]`).prop('checked', true);
+                $(`#boite-form input[value=${boite['type']}]`).prop('checked', true);
             })
         }
     }) 
@@ -631,9 +643,9 @@ function setElements(val, type, data_key, stepMediaObject) {
                 // $(`#${type}-checkbox`).prop("checked", true);
             }
             $(`#${activeScreen} .${type}`).css(stepMediaObject['css']);
-        } else 
+        }  
         
-        if (type === 'media_audio') {
+        else if (type === 'media_audio') {
             let mediaElement = $(`#${activeScreen}`).find(`*[data-key="${data_key}"]`);
             if (!mediaElement.find('.media').attr('src').includes(stepMediaObject['attributes']['src'])) {
                 mediaElement.find('.media').attr('src', htmlPathToMedia +  stepMediaObject['attributes']['src']); 
@@ -1150,6 +1162,30 @@ function editName(parameter) {
             showSpinner('alert');
         })
     }
+    if (parameter === 'step') {
+        $('#alert')
+        .empty()
+        .append(`<form class="show-form">
+                    <input type="text" name="name" placeholder="${$(`#${active.fileName} li[data-scene=${active.scene}] li[data-step=${active.step}]`).text()}" required></input>
+                    <div class='editor-buttons' style='justify-content: center;'>
+                        <button type="submit">Ok</button><button type='button'onclick="closeModal()">Cancel</button>
+                    </div>
+                 </form>`)
+        .dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+        });
+         // OK BUTTON FUNCTION
+         $('#alert form').submit(function(e) {
+            e.preventDefault();
+            const stepName = e.target.elements.name.value.trim();
+            
+            // SAVE TO JSON FILE
+            renameStep(stepName);
+            showSpinner('alert');
+        })
+    }
 }
 
 function deleteFromStructure(parameter) {
@@ -1338,6 +1374,10 @@ function addNewScene(newSceneNumber, scene) {
 
 function renameScene(sceneName) {
     socket.emit("rename scene", {"fileName" : active.fileName, "scene" : active.scene, "name" : sceneName});
+}
+
+function renameStep(stepName) {
+    socket.emit("rename step", {"fileName" : active.fileName, "scene" : active.scene, "step" : active.step, "name" : stepName});
 }
 
 function deleteScene() {
@@ -1851,7 +1891,7 @@ function editElement(key, type) {
                     </div>
                 </div>
                 <div class="menu-item">
-                    <input type="range" id="volume" name="volume" min="0" max="100" value="50" onchange="adjustMediaVolume('${key}', 'volume', event)">
+                    <input type="range" id="volume" name="volume" min="0" max="100" value=${($(video).prop('volume')*100) ? $(video).prop('volume')*100 : '50'} onchange="adjustMediaVolume('${key}', 'volume', event)">
                     <label for="volume">Volume</label>
                 </div>
                 <div class="menu-item">
@@ -1862,7 +1902,7 @@ function editElement(key, type) {
     }
 
     if (type === 'media_audio') {
-        const audio = $(`#${activeScreen} [data-key=${key}]`)[0];
+        const audio = $(`#${activeScreen} [data-key=${key}] audio`)[0];
         $('#alert .editor-menu')
         .empty()
         .append(`<div class='menu-item audio-controls'>
@@ -1873,7 +1913,7 @@ function editElement(key, type) {
                         </button>
                     </div>
                     <div class="menu-item">
-                        <input type="range" id="volume" name="volume" min="0" max="100" value="50" onchange="adjustMediaVolume('${key}', 'volume', event)">
+                        <input type="range" id="volume" name="volume" min="0" max="100" value=${($(audio).prop('volume')*100) ? $(audio).prop('volume')*100 : '50'} onchange="adjustMediaVolume('${key}', 'volume', event)">
                         <label for="volume">Volume</label>
                     </div>
                 </div>`)

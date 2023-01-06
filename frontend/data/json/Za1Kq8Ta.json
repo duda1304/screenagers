@@ -1,12 +1,10 @@
 {
     "name": "test novell",
     "languages": [
-        "HR"
+        "EN",
+        "FR"
     ],
     "scene-order": [
-        3,
-        2,
-        5,
         1,
         4
     ],
@@ -14,9 +12,9 @@
         "1": {
             "name": "test scene",
             "step-order": [
+                1,
                 2,
                 3,
-                1,
                 4
             ],
             "steps": {
@@ -416,251 +414,6 @@
                 }
             }
         },
-        "2": {
-            "name": "tgdfg",
-            "step-order": [
-                1
-            ],
-            "steps": {
-                "1": {
-                    "screen": {
-                        "media-order": [
-                            "M77yD",
-                            "hkPQc",
-                            "CkTht",
-                            "0Yh5z",
-                            "2L7ra"
-                        ],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {
-                            "M77yD": {
-                                "type": "media_gifs",
-                                "css": {
-                                    "width": "35%",
-                                    "position": "absolute",
-                                    "top": "25%",
-                                    "left": "25%",
-                                    "z-index": "5"
-                                },
-                                "attributes": {
-                                    "src": "Gif/Avatars/Avatars1.gif"
-                                },
-                                "content": "",
-                                "classes": []
-                            },
-                            "hkPQc": {
-                                "type": "text",
-                                "css": {
-                                    "position": "absolute",
-                                    "top": "92%",
-                                    "left": "42%",
-                                    "white-space": "pre-wrap",
-                                    "overflow-wrap": "break-word",
-                                    "color": "rgb(255, 255, 255)",
-                                    "font-size": "16px",
-                                    "margin": "0px",
-                                    "padding": "10px",
-                                    "font-family": "Arial",
-                                    "z-index": "4"
-                                },
-                                "attributes": {},
-                                "content": "cbbcvvc vbcvbbv  fff f. I am here",
-                                "classes": [
-                                    "text"
-                                ]
-                            },
-                            "CkTht": {
-                                "type": "text",
-                                "css": {
-                                    "position": "absolute",
-                                    "top": "21%",
-                                    "left": "17%",
-                                    "white-space": "pre-wrap",
-                                    "overflow-wrap": "break-word",
-                                    "color": "rgb(255, 255, 255)",
-                                    "font-size": "20px",
-                                    "margin": "0px",
-                                    "padding": "14px",
-                                    "font-family": "Arial",
-                                    "z-index": "3"
-                                },
-                                "attributes": {},
-                                "content": "you are there",
-                                "classes": [
-                                    "text"
-                                ]
-                            },
-                            "0Yh5z": {
-                                "type": "media_images",
-                                "css": {
-                                    "width": "35%",
-                                    "position": "absolute",
-                                    "top": "23%",
-                                    "left": "54%",
-                                    "z-index": "2"
-                                },
-                                "attributes": {
-                                    "src": "Animationconnexion/Animationconnexion/Connexionanimation.011.jpeg"
-                                },
-                                "content": "",
-                                "classes": []
-                            },
-                            "2L7ra": {
-                                "type": "media_images",
-                                "css": {
-                                    "width": "35%",
-                                    "position": "absolute",
-                                    "top": "43%",
-                                    "left": "7%",
-                                    "z-index": "1"
-                                },
-                                "attributes": {
-                                    "src": "Animationconnexion/Animationconnexion/3.%20Connexion%20animation.003.jpeg"
-                                },
-                                "content": "",
-                                "classes": []
-                            }
-                        },
-                        "console": {
-                            "active": false,
-                            "css": {
-                                "width": "25%",
-                                "height": "95%",
-                                "position": "absolute",
-                                "top": "2.5%",
-                                "left": "5%",
-                                "z-index": "100",
-                                "display": "none"
-                            }
-                        }
-                    },
-                    "laptop": {
-                        "media-order": [],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {},
-                        "console": {
-                            "active": false,
-                            "css": {
-                                "width": "25%",
-                                "height": "95%",
-                                "position": "absolute",
-                                "top": "2.5%",
-                                "left": "5%",
-                                "z-index": "100",
-                                "display": "none"
-                            }
-                        }
-                    },
-                    "boite": {
-                        "type": "gameboy",
-                        "arg": ""
-                    },
-                    "name": "dsfsdfsd"
-                }
-            }
-        },
-        "3": {
-            "name": "Screenagers",
-            "step-order": [
-                1,
-                2
-            ],
-            "steps": {
-                "1": {
-                    "screen": {
-                        "media-order": [
-                            "c4d0W"
-                        ],
-                        "background-color": "rgb(255, 153, 0)",
-                        "media": {
-                            "c4d0W": {
-                                "type": "text",
-                                "css": {
-                                    "position": "absolute",
-                                    "top": "16%",
-                                    "left": "17%",
-                                    "white-space": "pre-wrap",
-                                    "overflow-wrap": "break-word",
-                                    "color": "rgb(255, 255, 255)",
-                                    "font-size": "3vw",
-                                    "margin": "0px",
-                                    "padding": "4vw",
-                                    "font-family": "Arial",
-                                    "z-index": "1",
-                                    "text-align": "center",
-                                    "border-width": "1vw",
-                                    "border-color": "rgb(0, 0, 0)",
-                                    "border-style": "dotted"
-                                },
-                                "attributes": {},
-                                "content": "dsasdasd sadsad. \nsadsadsadssdas\nasdasdasdasdasdasd",
-                                "classes": [
-                                    "text"
-                                ]
-                            }
-                        },
-                        "console": {
-                            "active": false,
-                            "css": {
-                                "width": "25%",
-                                "height": "95%",
-                                "position": "absolute",
-                                "top": "2.5%",
-                                "left": "5%",
-                                "z-index": "100",
-                                "display": "none"
-                            }
-                        }
-                    },
-                    "laptop": {
-                        "media-order": [],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {},
-                        "console": {
-                            "active": false,
-                            "css": {
-                                "width": "25%",
-                                "height": "95%",
-                                "position": "absolute",
-                                "top": "2.5%",
-                                "left": "5%",
-                                "z-index": "100",
-                                "display": "none"
-                            }
-                        }
-                    },
-                    "boite": {
-                        "type": "no_phone",
-                        "arg": ""
-                    },
-                    "name": "kjkhhjk"
-                },
-                "2": {
-                    "screen": {
-                        "media-order": [],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {},
-                        "console": {
-                            "active": false,
-                            "css": {}
-                        }
-                    },
-                    "laptop": {
-                        "media-order": [],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {},
-                        "console": {
-                            "active": false,
-                            "css": {}
-                        }
-                    },
-                    "boite": {
-                        "type": "no_phone",
-                        "arg": ""
-                    }
-                }
-            }
-        },
         "4": {
             "name": "empty scene",
             "step-order": [
@@ -669,76 +422,35 @@
             "steps": {
                 "1": {
                     "screen": {
-                        "media-order": [],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {},
-                        "console": {
-                            "active": true,
-                            "css": {
-                                "width": "25%",
-                                "height": "95%",
-                                "position": "absolute",
-                                "top": "2.5%",
-                                "left": "5%",
-                                "z-index": "100",
-                                "display": "block"
-                            }
-                        }
-                    },
-                    "laptop": {
-                        "media-order": [],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {},
-                        "console": {
-                            "active": false,
-                            "css": {
-                                "width": "25%",
-                                "height": "95%",
-                                "position": "absolute",
-                                "top": "2.5%",
-                                "left": "5%",
-                                "z-index": "100",
-                                "display": "none"
-                            }
-                        }
-                    },
-                    "boite": {
-                        "type": "no_phone",
-                        "arg": ""
-                    },
-                    "console": {
-                        "mode": "console"
-                    }
-                }
-            }
-        },
-        "5": {
-            "name": "jnhlknm",
-            "step-order": [
-                1
-            ],
-            "steps": {
-                "1": {
-                    "screen": {
                         "media-order": [
-                            "LJewh"
+                            "gpJ4z"
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
-                            "LJewh": {
-                                "type": "media_images",
+                            "gpJ4z": {
+                                "type": "text",
                                 "css": {
-                                    "width": "35%",
                                     "position": "absolute",
-                                    "top": "25%",
-                                    "left": "25%",
-                                    "z-index": "1"
+                                    "top": "27%",
+                                    "left": "16%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "white",
+                                    "font-size": "5.5vw",
+                                    "margin": "0px",
+                                    "padding": "3vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "border-width": "1vw",
+                                    "border-color": "rgb(208, 224, 227)",
+                                    "border-style": "dotted",
+                                    "transform": "rotate(15deg)"
                                 },
-                                "attributes": {
-                                    "src": "QRcodes/asdasdasd.png"
-                                },
-                                "content": "",
-                                "classes": []
+                                "attributes": {},
+                                "content": "xvcv xcvxVC",
+                                "classes": [
+                                    "text"
+                                ]
                             }
                         },
                         "console": {
@@ -755,27 +467,9 @@
                         }
                     },
                     "laptop": {
-                        "media-order": [
-                            "u7M4g"
-                        ],
+                        "media-order": [],
                         "background-color": "rgb(0, 0, 0)",
-                        "media": {
-                            "u7M4g": {
-                                "type": "media_gifs",
-                                "css": {
-                                    "width": "35%",
-                                    "position": "absolute",
-                                    "top": "13%",
-                                    "left": "9%",
-                                    "z-index": "1"
-                                },
-                                "attributes": {
-                                    "src": "CableStory/Sharkconnection2.gif"
-                                },
-                                "content": "",
-                                "classes": []
-                            }
-                        },
+                        "media": {},
                         "console": {
                             "active": false,
                             "css": {

@@ -1,7 +1,8 @@
 {
     "name": "Screenagers",
     "languages": [
-        "EN"
+        "EN",
+        "FR"
     ],
     "scene-order": [
         1,

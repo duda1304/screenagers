@@ -8,6 +8,9 @@ let active = {
     step : ""
 }
 
+let subtitlesData = {};
+let subtitlesStyles = {};
+
 navigator.mediaDevices.getUserMedia({video: true, audio: true});
 
 const screens = ['screen', 'laptop'];
@@ -57,6 +60,49 @@ $('.screens div').on('click', function(){
 $( function() {
     $( ".draggable" ).draggable();
 } );
+
+socket.on('subtitles', function(data) {
+    if (data.length !== 0) {
+        setSubtitlesData(data);
+    }
+});
+
+function setSubtitlesData(data) {
+    let count = 0;
+    data.forEach(async(translation) => {
+        await $.getJSON(translation.replace('frontend', '.'), function(jsonData) {
+            count = count + 1;
+            let array = translation.split('/');
+            let fileName = array[array.length -1].replace('.json', '');
+            subtitlesData[fileName] = {};
+            Object.assign(subtitlesData[fileName], jsonData);
+
+            if (count === data.length && active.fileName !== '') {
+                toggleSubtitles($(`input:radio[name=${`${active.fileName}_subtitles`}]:checked`).val());
+            }
+        })
+    })
+}
+
+async function loadSubtitlesStyles() {
+    await $.getJSON('./data/subtitles/style.json', function(jsonData) {
+        // subtitlesStyles = {};
+        // Object.assign(subtitlesStyles, jsonData);
+        subtitlesData.style = jsonData;
+        $('#load-saved-style')
+            .empty()
+        
+        $.each(subtitlesData.style, function(key, value) {
+            $('#load-saved-style').append(`<option value=${key}>${key}</option>`)
+        });
+
+        $('#load-saved-style option[value=default]')
+        $('#load-saved-style').on('change', function() {
+            $('.subtitles').removeAttr('style');
+            $('.subtitles').css(subtitlesData['style'][this.value])
+        })
+    })
+}
 
 // separate JSONs for each show made, data gives array of all JSONs
 socket.on('initial json', function(data) {
@@ -115,6 +161,85 @@ function createRandomString(length) {
     return result;
 }
 
+function toggleSubtitles(value) {
+    const subtitlesDiv = `<div class="subtitles" style="position: absolute; width: 100%; height: 15%; color: white; bottom: 0px; background-color: rgb(211,211,211, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.5vw;" data-key='subtitles'></div>`
+   
+    $('#line').removeData('line');
+    if (value === 'off') {
+        $('#screen .subtitles').remove();
+        $('.subtitles-menu').hide();
+        $('.subtitles-menu .editor-buttons').empty();
+        $('#line').text('Subtitle lines');
+        // $('#line').removeData();
+    } else {
+        if ($('#screen .subtitles').length === 0) {
+            $('#screen').append(subtitlesDiv);
+        }
+        
+        $('.subtitles-menu .editor-buttons').empty();
+        $('.subtitles-menu').show();
+
+        if (active.fileName in subtitlesData) {
+            if ($(`#${active.fileName} .languages`).val() in subtitlesData[active.fileName]) {
+                $('.subtitles-menu .subtitles-style')
+                    .append(`
+                            <button onclick="editElement('subtitles', 'text')">
+                                <img src="./icons/settings.svg">
+                            </button>
+                            <select id="load-saved-style"></select>
+                            <button type="button" onclick="saveSubtitlesStyle('new')">Save as</button>
+                            <button type="button" onclick="saveSubtitlesStyle('existing')">Save</button>
+                            `);
+                $('.subtitles-menu .subtitles-content')
+                    .append(`<button type="button" onclick="editTranslation()">Edit translation</button>`);  
+
+                loadSubtitlesStyles();
+                $('#line').text(subtitlesData[active.fileName][$(`#${active.fileName} .languages`).val()].split("\n")[0]);
+                $('#line').data('line', 0);
+                $('.subtitles').text(subtitlesData[active.fileName][$(`#${active.fileName} .languages`).val()].split("\n")[0]);
+            } else {
+                $('.subtitles-menu .subtitles-content').append(`<button type="button" onclick="importTranslation()" style="margin: 0px;">Import translation</button> <small>No subtitles on ${$(`#${active.fileName} .languages`).val()} language</small>`);
+                $('#line').text('Subtitle lines');
+                // $('#line').removeData();
+                $('.subtitles').text('Subtitle lines');
+            }
+        } else {
+            $('.subtitles-menu .subtitles-content').append(`<button type="button" onclick="importTranslation()" style="margin: 0px;">Import translation</button> <small>No subtitles on ${$(`#${active.fileName} .languages`).val()} language</small>`);
+            $('#line').text('Subtitle lines');
+            // $('#line').removeData();
+            $('.subtitles').text('Subtitle lines');
+        }
+
+        // $('#select-subtitles-language').on('change', function() {
+        //     $('#line').text(subtitlesData[active.fileName][this.value].split("\n")[0]);
+        //     $('#line').data('line', 0);
+        // })
+    }
+}
+
+$('#subtitles__prev').on('click', function() {
+    let newLineIndex = $('#line').data('line') - 1;
+    let language = $(`#${active.fileName} .languages`).val();
+    if (newLineIndex >= 0) {
+        $('#line').text(subtitlesData[active.fileName][language].split("\n")[newLineIndex]);
+        $('#line').data('line', newLineIndex);
+        console.log($('#line').data())
+        $('.subtitles').text(subtitlesData[active.fileName][language].split("\n")[newLineIndex]);
+    }
+})
+
+$('#subtitles__next').on('click', function() {
+    let newLineIndex = $('#line').data('line') + 1;
+    let language = $(`#${active.fileName} .languages`).val()
+    if (newLineIndex <= subtitlesData[active.fileName][language].split("\n").length - 1) {
+        $('#line').text(subtitlesData[active.fileName][language].split("\n")[newLineIndex]);
+        $('#line').data('line', newLineIndex);
+        console.log($('#line').data())
+        $('.subtitles').text(subtitlesData[active.fileName][language].split("\n")[newLineIndex]);
+    }
+})
+
+
 function displayStructure(fileName, data) {
     let showElement =  `<ul id=${fileName} class="show">
                             <li class="show-name"><b><u>${data.name}</u></b></li>
@@ -122,6 +247,13 @@ function displayStructure(fileName, data) {
                                 <span onclick="addInStructure('scene')"><img src="./icons/plus.svg"></img></span>
                                 <span onclick="duplicate('show')"><img class="duplicate-icon" src="./icons/duplicate.png"></img></span>
                                 <span onclick="editName('show')"><img class="edit-icon" src="./icons/edit.png"></img></span>
+                                <fieldset>
+                                    <legend>Subtitles</legend>
+                                    <label for="on">on</label>
+                                    <input type="radio" value="on" id="on" name="${`${fileName}_subtitles`}"></input>
+                                    <label for="off">off</label>
+                                    <input type="radio" value="off" id="off" name="${`${fileName}_subtitles`}" checked></input>
+                                </fieldset>
                             </li>
                             <li style="display: none;"><select class="languages"></select></li>
                             <li style="display: none;">
@@ -130,6 +262,9 @@ function displayStructure(fileName, data) {
                         </ul>`
     $('#structure-content').append(showElement);
 
+    $(`input:radio[name=${`${fileName}_subtitles`}]`).change(function() {
+        toggleSubtitles(this.value);
+    });
 
     // APPEND AVAILABLE LANGUAGES
     $.each(data.languages, function(key, value) {   
@@ -138,6 +273,10 @@ function displayStructure(fileName, data) {
                        .attr("value", value)
                        .text(value)); 
    });
+
+   $(`#${fileName} .languages`).on('change', function() {
+        toggleSubtitles($(`input:radio[name=${`${active.fileName}_subtitles`}]:checked`).val());
+   })
 
     // APPEND SCENES AND STEPS IF PRESENT
     if (!jQuery.isEmptyObject( data.scenes )  ) {
@@ -273,9 +412,14 @@ function displayStructure(fileName, data) {
         // MARK ACTIVE SHOW in constant active and by color in menu
         if ($(this).hasClass('active')) {
             setActiveStep(fileName, "", "");
+            toggleSubtitles($(`input:radio[name=${`${fileName}_subtitles`}]:checked`).val());
         } else {
             setActiveStep("", "", "");
+            toggleSubtitles('off');
+            // $('#line').text('Subtitle lines');
+            // $('#line').removeData();
         }
+
         $(`#step-media ul`).empty();
         screens.forEach(screen => $(`#${screen}`).empty());
         $('#console-checkbox').prop('checked', false);
@@ -330,12 +474,6 @@ function setActiveStep(fileName, scene, step) {
     active.fileName = fileName;
     active.scene = scene;
     active.step = step;
-
-    // if (step !== '') {
-    //     $('#select-audio').prop('disabled', false);
-    // } else {
-    //     $('#select-audio').prop('disabled', true);
-    // }
 }
 
 function applyZIndexes() {
@@ -439,6 +577,7 @@ function displayActiveStepMedia() {
             applyZIndexes();
             setElements("", "console", "", jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['console']);
             $(`#${screen}`).css('background-color', jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['background-color']);
+            toggleSubtitles($(`input[name=${active.fileName}_subtitles]:checked`).val());
         });
 
         activeScreen = currentActiveScreen;
@@ -518,9 +657,9 @@ function setElements(val, type, data_key, stepMediaObject) {
                                      white-space: pre-wrap; 
                                      word-wrap: break-word;
                                      color: white;
-                                     font-size: 16vw;
+                                     font-size: 5vw;
                                      margin: 0px;
-                                     padding: 10vw;
+                                     padding: 2vw;
                                      font-family: Arial;
                                      "
                             >${val}</pre>
@@ -562,9 +701,6 @@ function setElements(val, type, data_key, stepMediaObject) {
         }
     } 
    
-    // if (type === 'text') {
-    //     $(`#${activeScreen} [data-key=${data_key}]`).focus();
-    // }
 
     // DEFINE FUNCTIONS FOR ELEMENT TO BE DRAGGABLE AND RESIZABLE
     $(`#${activeScreen} .draggable`).draggable({
@@ -629,8 +765,6 @@ function setElements(val, type, data_key, stepMediaObject) {
     $(".console").resizable({
         aspectRatio: false,
     });
-
-
 
     // APPLY STYLE IF MEDIA OBJECT IS FROM STEP
     if (stepMediaObject) {
@@ -732,7 +866,6 @@ function checkMediaType(val) {
 
     return 'media_stream'
 }
-
 
 function toggleVisibility(e) {
     $(e.target).toggleClass('visible');
@@ -940,6 +1073,98 @@ function closeModal() {
     }, 200);  
 }
 
+function importTranslation() {
+    $('#alert')
+        .empty()
+        .append(`<form><p>Copy subtitles in textarea below. New row will be new sentence to display in subtitles.</p>
+                    <textarea rows=10 name="lines"></textarea>
+                    <div class='editor-buttons' style='justify-content: center;'>
+                        <button type="submit">Save</button><button type='button'onclick="closeModal()">Cancel</button>
+                    </div>
+                </form>`)
+        .dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+        });
+
+    $('#alert form').submit(function(e) {
+        e.preventDefault();
+        const lines = e.target.elements.lines.value;
+        
+        // SAVE TO JSON FILE
+        addSubtitles(lines);
+        showSpinner('alert');
+    })
+}
+
+function editTranslation() {
+    $('#alert')
+        .empty()
+        .append(`<form><p>Edit translation in textarea below. New row will be new sentence to display in subtitles.</p>
+                    <textarea rows=10 name="lines"></textarea>
+                    <div class='editor-buttons' style='justify-content: center;'>
+                        <button type="submit">Save</button><button type='button'onclick="closeModal()">Cancel</button>
+                    </div>
+                </form>`)
+        .dialog({
+            resizable: false,
+            modal: true,
+            maxHeight: 600,
+        });
+    
+    $('#alert textarea').val(subtitlesData[active.fileName][$(`#${active.fileName} .languages`).val()]);
+
+    $('#alert form').submit(function(e) {
+        e.preventDefault();
+        const lines = e.target.elements.lines.value;
+        
+        // SAVE TO JSON FILE
+        addSubtitles(lines);
+        showSpinner('alert');
+    })
+}
+
+function saveSubtitlesStyle(status) {
+    if ($('#load-saved-style option:selected').val() !== '') {
+   
+        $('#alert').empty();
+
+        if (status !== 'new') {
+            $('#alert')
+                .append(`<form>
+                            <input style="display:none" type="text" name="name" placeholder="Style name" required oninput="this.value = this.value.replace(/[^a-zA-Z0-9 -]/g, '')" value=${$('#load-saved-style').val()}></input>
+                            <div class='editor-buttons' style='justify-content: center;'>
+                                <button type="submit">Save</button><button type='button'onclick="closeModal()">Cancel</button>
+                            </div>
+                        </form>`)
+        } else {
+            $('#alert')
+                .append(`<form><p>Save new style</p>
+                            <input type="text" name="name" placeholder="Style name" required oninput="this.value = this.value.replace(/[^a-zA-Z0-9 -]/g, '')"></input>
+                            <div class='editor-buttons' style='justify-content: center;'>
+                                <button type="submit">Save</button><button type='button'onclick="closeModal()">Cancel</button>
+                            </div>
+                        </form>`)
+        }
+        $('#alert')
+            .dialog({
+                resizable: false,
+                modal: true,
+                maxHeight: 600,
+            });
+        
+        $('#alert form').submit(function(e) {
+            e.preventDefault();
+            const name = e.target.elements.name.value;
+            const style = styleToObject($('.subtitles').attr('style'));
+            // SAVE TO JSON FILE
+            saveStyle(name, style);
+            showSpinner('alert');
+        })
+    }
+}
+
 function addInStructure(parameter) {
     if (parameter === 'show') {
         const languageList = Object.keys(languages);
@@ -953,9 +1178,8 @@ function addInStructure(parameter) {
         $('#alert')
         .empty()
         .append(`<form class="show-form">
-                    <input type="text" name="name" placeholder="New show name" required oninput="this.value = this.value.replace(/[^a-zA-Z0-9 -]/g, '')"></input>
-                    <select name="language" required>${options}</select>
-                    <small>* you need to select language due to multilingual support.<br>Languages can be edited later.</small>
+                    Add new visual novel
+                    <input type="text" name="name" placeholder="New visual novel name" required oninput="this.value = this.value.replace(/[^a-zA-Z0-9 -]/g, '')"></input>
                     <div class='editor-buttons' style='justify-content: center;'>
                         <button type="submit">Ok</button><button type='button'onclick="closeModal()">Cancel</button>
                     </div>
@@ -965,11 +1189,14 @@ function addInStructure(parameter) {
             modal: true,
             maxHeight: 600,
         });
+        // THIS OPTION AHOULD BE SOMEWHOW ADDDED WHEN CREATING SHOW
+        // <select name="language" required>${options}</select>
+        //             <small>* you need to select language due to multilingual support.<br>Languages can be edited later.</small>
         // OK BUTTON FUNCTION
         $('#alert form').submit(function(e) {
             e.preventDefault();
             const showName = e.target.elements.name.value;
-            const fileName = showName.replace(/ /g, '').trim();
+            const fileName = createRandomString(8);
 
             let newShowObject = Object.assign({}, showObject);
             newShowObject.name = showName;
@@ -1007,6 +1234,7 @@ function addInStructure(parameter) {
         $('#alert')
         .empty()
         .append(`<form>
+                    Add new scene
                     <input type="text" name="name" placeholder="New scene name" required></input>
                     <div class='editor-buttons' style='justify-content: center;'>
                         <button type="submit">Ok</button><button type='button'onclick="closeModal()">Cancel</button>
@@ -1117,6 +1345,7 @@ function editName(parameter) {
         $('#alert')
         .empty()
         .append(`<form class="show-form">
+                    Change visual novel name
                     <input type="text" name="name" placeholder="${mainData[active.fileName]['name']}" required oninput="this.value = this.value.replace(/[^a-zA-Z0-9 -]/g, '')"></input>
                     <div class='editor-buttons' style='justify-content: center;'>
                         <button type="submit">Ok</button><button type='button'onclick="closeModal()">Cancel</button>
@@ -1142,6 +1371,7 @@ function editName(parameter) {
         $('#alert')
         .empty()
         .append(`<form class="show-form">
+                    Change scene name
                     <input type="text" name="name" placeholder="${mainData[active.fileName]['scenes'][active.scene]['name']}" required></input>
                     <div class='editor-buttons' style='justify-content: center;'>
                         <button type="submit">Ok</button><button type='button'onclick="closeModal()">Cancel</button>
@@ -1166,6 +1396,7 @@ function editName(parameter) {
         $('#alert')
         .empty()
         .append(`<form class="show-form">
+                    Change step name
                     <input type="text" name="name" placeholder="${$(`#${active.fileName} li[data-scene=${active.scene}] li[data-step=${active.step}]`).text()}" required></input>
                     <div class='editor-buttons' style='justify-content: center;'>
                         <button type="submit">Ok</button><button type='button'onclick="closeModal()">Cancel</button>
@@ -1276,7 +1507,18 @@ function showSpinner(div) {
 }
 
 socket.on('success', function(data){
-    if ('qrcode' in data) {
+    if ('subtitles' in data) {
+        if (data.subtitles === 'added') {
+            setSubtitlesData(data.data);
+            closeModal();
+        } else {
+            loadSubtitlesStyles();
+            $(`#load-saved-style option[value=${data.subtitles.style}]`).click();
+            // $('#load-saved-style').trigger('change')
+            closeModal();
+        }
+    }
+    else if ('qrcode' in data) {
         $('#create-QRcode').append(`<label>
                                         Filename
                                         <input id="fileName" name='fileName' required oninput="this.value = this.value.replace(/[^a-zA-Z0-9 -]/g, '')">
@@ -1297,8 +1539,6 @@ socket.on('success', function(data){
             $(this).toggleClass('active');
         })
     } else {
-
-    
     // EMPTY PREVIOUS STRUCTURE AND STEP PREVIEW
     $(`#step-media ul`).empty();
     $('#structure-content').empty();
@@ -1324,7 +1564,7 @@ socket.on('success', function(data){
 
     // CLOSE MODAL
     closeModal();
-}
+    }
 })
 
 socket.on('error', function(data){
@@ -1359,6 +1599,14 @@ $('.editor-buttons fieldset input').change(function() {
     }
     
 });
+
+function addSubtitles(lines) {
+    socket.emit("add subtitles", {"fileName" : active.fileName, "language" : $(`#${active.fileName} .languages`).val(), "lines" : lines});
+}
+
+function saveStyle(name, style) {
+    socket.emit("save subtitles style", {"name" : name, "style" : style});
+}
 
 function addNewStep(newStepNumber, step) {
     socket.emit("add step", {"fileName" : active.fileName, "scene" : active.scene, "key" : newStepNumber, "step" : step, "activeStep" : active.step});
@@ -1428,7 +1676,6 @@ function sendStep(step) {
     socket.emit('step', step);
     // if (boite && 'send' in boite) boite.send();
 }
-
 
 window.onload = function() {
     activateColorPicker();
@@ -1665,10 +1912,9 @@ function toggleMediaList(e) {
 // EDITING
 {/* <img class="icon" src="../icons/arrow-rotate-right-solid.svg"></img> */}
 function editElement(key, type) {
-  
     if (type === 'text') {
-
         var textStyle = getComputedStyle($(`#${activeScreen} [data-key=${key}]`)[0]);
+        var textSizes = styleToObject($(`#${activeScreen} [data-key=${key}]`).attr('style'));
 
         var isActive = {
             "bold" : (textStyle.fontWeight === '700') ? ('active') : (''),
@@ -1707,7 +1953,7 @@ function editElement(key, type) {
                         </div>
                         <div class='menu-item'>
                             <p>PADDING</p>
-                            <input class='padding' type="number" min = '0' id = ${key + '_padding'} value=${textStyle.padding.replace('vw', '')}>
+                            <input class='padding' type="number" min = '0' step = '0.5' id = ${key + '_padding'} value=${parseFloat(textSizes['padding'])}>
                         </div>
                         <div class='menu-item'>
                             <p>FONT STYLE</p>
@@ -1725,9 +1971,9 @@ function editElement(key, type) {
                         </div>
                         <div class='menu-item'>
                             <p>FONT SIZE</p>
-                            <input class='font-size' type="number" min = '0' id = ${key + '_font-size'} value=${textStyle.fontSize.replace('vw', '')}>
+                            <input class='font-size' type="number" min = '0' step = '0.5' id = ${key + '_font-size'} value=${parseFloat(textSizes['font-size'])}>
                         </div>
-                        <div class='editor-buttons'>
+                        <div class='editor-buttons font-decor'>
                             <div class='menu-item'>
                                 <button class='font-style ${isActive.bold}' id = ${key + '_font-weight_bold'}>
                                     <img class='icon' src="../icons/bold.svg"></img>
@@ -1744,7 +1990,7 @@ function editElement(key, type) {
                                 </button>
                             </div>
                         </div>
-                        <div class='editor-buttons'>
+                        <div class='editor-buttons font-aligment'>
                             <div class='menu-item'>
                                 <button class='text-align ${isActive.center}' id = ${key + '_text-align_center'}>
                                     <img class='icon' src="../icons/align-center.svg"></img>
@@ -1761,14 +2007,16 @@ function editElement(key, type) {
                                 </button>
                             </div>
                         </div>
+                        <div class='border-div'>
                         Border
                         <div class='menu-item'>
                             <input 
                                 class ='font-size menu-item border' 
                                 type ="number" 
                                 min = '0'
+                                step = '0.5'
                                 id = ${key + '_border-width'} 
-                                value = ${(textStyle.borderWidth) ? (parseInt(textStyle.borderWidth.replace('vw', ''))) : (0)} 
+                                value = ${(textStyle.borderWidth) ? (parseFloat(textSizes['border-width'])) : (0)} 
                             >
                         </div>
                         <div class='menu-item'>
@@ -1776,7 +2024,7 @@ function editElement(key, type) {
                                 id = ${key + '_border-color'} 
                                 autocomplete="off"
                                 _list="list_decors"
-                                class="color-picker _box-min d-none menu-item"
+                                class="color-picker _box-min d-none menu-item border-color"
                                 type="text"
                                 name="border-color"
                                 value = ${(textStyle.borderColor) ? (textStyle.borderColor.replaceAll(' ', '')) : ('transparent')} 
@@ -1789,6 +2037,7 @@ function editElement(key, type) {
                             <option value='double' ${(textStyle.borderStyle === 'double') ? ('selected') : (null)}>Double</option>
                             <option value='none' ${(textStyle.borderStyle === 'none' || textStyle.borderStyle === '') ? ('selected') : (null)}>none</option>
                         </select>
+                        </div>
                         <div class='menu-item rotation'>
                             <p>ROTATION</p>
                             <div class='editor-buttons'>
@@ -1875,6 +2124,7 @@ function editElement(key, type) {
         // });
         activateColorPicker();
     }
+
     if (type === 'media_video') {
         const video = $(`#${activeScreen} [data-key=${key}] video`)[0];
         $('#alert .editor-menu')
@@ -1917,6 +2167,14 @@ function editElement(key, type) {
                         <label for="volume">Volume</label>
                     </div>
                 </div>`)
+    }
+
+    if (key === 'subtitles') {
+        $('.padding').parent().remove();
+        $('.font-decor').remove();
+        $('.font-aligment').remove();
+        $('.border-div').remove();
+        $('.rotation').remove();
     }
 
     // APPLY CURRENT STYLE
@@ -2149,7 +2407,7 @@ function activateColorPicker() {
       allowEmpty: true,
       showPalette: true,
       showInitial: true,
-      preferredFormat: 'hex3',
+      preferredFormat: 'rgb',
       // prettier-ignore
       palette: [
           ["#000","#444","#666","#999","#ccc","#eee","#f3f3f3","#fff"],

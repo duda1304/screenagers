@@ -675,6 +675,14 @@ function displayStep(data) {
     $('.step').css('background-color', data['background-color']);
 }
 
+function styleToObject(style) {
+  const regex = /([\w-]*)\s*:\s*([^;]*)/g;
+  let match, properties={};
+  while(match=regex.exec(style)) properties[match[1]] = match[2].trim(); 
+  return properties;
+}
+
+
 function setElements(val, type, data_key, stepMediaObject) {
   // $('#media-editor')[0].innerHTML = '';
   src = '/data/media/' + val;
@@ -682,7 +690,7 @@ function setElements(val, type, data_key, stepMediaObject) {
   const avatarsElement = `<div class="avatars" style="width: 25%; height: 15%; position: absolute; top: 25%; left:25%; border-radius: 45%; z-index:99;" data-key=${data_key} data-type=${type}>
                           </div>`;
 
-  const console = `<div id="console" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:100;">
+  const console = `<div id="console" class="console" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:100;">
                     <iframe src="/console" style="width:100%; height: 100%; border: none;"></iframe>
                   </div>`;
 
@@ -735,19 +743,32 @@ function setElements(val, type, data_key, stepMediaObject) {
       }
   }
   
+  // if(type === 'console') {
+  //     if(stepMediaObject.active === true && $('.console').length === 0) {
+  //         $('.step').append(console);
+  //     }
+  //     if ((stepMediaObject.active === false && $('.console').length !== 0)) {
+  //       $('.step .console').remove();
+  //     }
+  // } 
+
   if(type === 'console') {
-      if(stepMediaObject.active === true && $('.console').length === 0) {
-          $('.step').append(console);
-      }
-      if ((stepMediaObject.active === false && $('.console').length !== 0)) {
-        $('.step .console').remove();
-      }
+    if($(`.console`).length === 0) {
+      $('.step').append(console);
+    }
   } 
   
   // APPLY STYLE IF MEDIA OBJECT IS FROM STEP
   if (stepMediaObject) {
       if (type === 'console') {
-          $(`.${type}`).css(stepMediaObject['css']);
+          // $(`.${type}`).css(stepMediaObject['css']);
+          
+          if (!stepMediaObject['active']) {
+            $(`.${type}`).hide();
+        } else {
+            $(`.${type}`).show();
+        }
+        $(`.${type}`).css(stepMediaObject['css']);
       } 
       
       else if (type === 'media_audio') {
@@ -798,8 +819,17 @@ function setElements(val, type, data_key, stepMediaObject) {
               if (mediaElement.text() !== stepMediaObject['content']) {
                   mediaElement.text(stepMediaObject['content']);
               }
-              let currentSize = parseFloat(mediaElement.css('font-size'))/0.55;
-              mediaElement.css('font-size', currentSize + 'px')
+
+              // CORRECTION DUE TO DIFFERENCE IN EDITOR SCREEN SIZE AND REAL FULL SCREEN SIZE
+              const textStyle = styleToObject(mediaElement.attr('style'));
+
+              let correctedSize = parseFloat(textStyle['font-size'])*100/55;
+              let correctedBorder = parseFloat(textStyle['border-width'])*100/55;
+              let correctedPadding = parseFloat(textStyle['padding'])*100/55;
+
+              mediaElement.css('font-size', correctedSize + 'vw');
+              mediaElement.css('border-width', correctedBorder + 'vw');
+              mediaElement.css('padding', correctedPadding + 'vw');
           }
 
           // APPLY CLASSES

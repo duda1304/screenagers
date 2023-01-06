@@ -218,6 +218,9 @@ const set = {
 
     const json = walkSync('./frontend/data/json');
     socket.emit('initial json', json);
+
+    const subtitles = walkSync('./frontend/data/subtitles');
+    socket.emit('subtitles', subtitles);
   
     // socket.emit('language', {'currentLanguage' : currentLanguage});
 
@@ -249,7 +252,46 @@ const set = {
       groups['masters'].emit('initial json', json);  
     })
 
-     // NEW add media
+    // NEW add translation
+    socket.on('add subtitles', (data) => {
+      const filePath = `./frontend/data/subtitles/${data.fileName}.json`;
+      let file;
+      if (fs.existsSync(filePath)) {
+        file = require(filePath);
+        file[data.language] = data.lines;
+      } else {
+        file = {};
+        file[data.language] = data.lines;
+      }
+
+      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
+        if (err) {
+          groups['editors'].emit('error');
+        }
+        const json = walkSync('./frontend/data/subtitles');
+        groups['editors'].emit('success', {'subtitles' : 'added', 'data' : json});
+      });
+    })
+
+
+    // NEW save subtitles style
+    socket.on('save subtitles style', (data) => {
+      const filePath = `./frontend/data/subtitles/style.json`;
+
+      file = require(filePath);
+      file[data.name] = data.style;
+
+      fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
+        if (err) {
+          groups['editors'].emit('error');
+        }
+        groups['editors'].emit('success', {'subtitles' : {'style' : data.name}});
+      });
+    })
+
+    
+
+    // NEW add media
      socket.on('add media', (data) => {
       const filePath = `./frontend/data/json/${data.fileName}.json`;
       const file = require(filePath);
@@ -454,20 +496,20 @@ const set = {
 
       file['name'] = data.name;
 
-      const newFilePath = `./frontend/data/json/${data.newFileName}.json`;
+      // const newFilePath = `./frontend/data/json/${data.newFileName}.json`;
           
       fs.writeFile(filePath, JSON.stringify(file, null, 4), function writeJSON(err) {
         if (err) {
           groups['editors'].emit('error');
         }
-        fs.rename(filePath, newFilePath, (err) => {
-          if (err) {
-            groups['editors'].emit('error');
-          }
+        // fs.rename(filePath, newFilePath, (err) => {
+        //   if (err) {
+        //     groups['editors'].emit('error');
+        //   }
           const json = walkSync('./frontend/data/json');
           groups['editors'].emit('success', {'renamed' : 'show', 'data' : json});
           groups['masters'].emit('initial json', json);     
-        })
+        // })
       });
     })
 

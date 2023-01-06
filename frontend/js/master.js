@@ -1223,9 +1223,66 @@ function setActiveStep(fileName, scene, step) {
   console.log(active)
 }
 
+// function toggleSubtitles(value) {
+//   const subtitlesDiv = `<div class="subtitles" style="position: absolute; width: 100%; height: 15%; color: white; bottom: 0px; background-color: rgb(211,211,211, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.5vw;" data-key='subtitles'></div>`
+ 
+//   $('#line').removeData('line');
+//   if (value === 'off') {
+//       $('#screen .subtitles').remove();
+//       $('.subtitles-menu').hide();
+//       $('.subtitles-menu .editor-buttons').empty();
+//       $('#line').text('Subtitle lines');
+//   } else {
+//       if ($('#screen .subtitles').length === 0) {
+//           $('#screen').append(subtitlesDiv);
+//       }
+      
+//       $('.subtitles-menu .editor-buttons').empty();
+//       $('.subtitles-menu').show();
+
+//       if (active.fileName in subtitlesData) {
+//           if ($(`#${active.fileName} .languages`).val() in subtitlesData[active.fileName]) {
+//               $('.subtitles-menu .subtitles-style')
+//                   .append(`
+//                           <button onclick="editElement('subtitles', 'text')">
+//                               <img src="./icons/settings.svg">
+//                           </button>
+//                           <select id="load-saved-style"></select>
+//                           <button type="button" onclick="saveSubtitlesStyle('new')">Save as</button>
+//                           <button type="button" onclick="saveSubtitlesStyle('existing')">Save</button>
+//                           `);
+//               $('.subtitles-menu .subtitles-content')
+//                   .append(`<button type="button" onclick="editTranslation()">Edit translation</button>`);  
+
+//               loadSubtitlesStyles();
+//               $('#line').text(subtitlesData[active.fileName][$(`#${active.fileName} .languages`).val()].split("\n")[0]);
+//               $('#line').data('line', 0);
+//               $('.subtitles').text(subtitlesData[active.fileName][$(`#${active.fileName} .languages`).val()].split("\n")[0]);
+//           } else {
+//               $('.subtitles-menu .subtitles-content').append(`<button type="button" onclick="importTranslation()" style="margin: 0px;">Import translation</button> <small>No subtitles on ${$(`#${active.fileName} .languages`).val()} language</small>`);
+//               $('#line').text('Subtitle lines');
+//               $('.subtitles').text('Subtitle lines');
+//           }
+//       } else {
+//           $('.subtitles-menu .subtitles-content').append(`<button type="button" onclick="importTranslation()" style="margin: 0px;">Import translation</button> <small>No subtitles on ${$(`#${active.fileName} .languages`).val()} language</small>`);
+//           $('#line').text('Subtitle lines');
+//           $('.subtitles').text('Subtitle lines');
+//       }
+//   }
+// }
+
 function displayStructure(fileName, data) {
   let showElement =  `<ul id=${fileName} class="show" style="display: none;">
                           <li class="show-name"><b><u>${data.name}</u></b></li>
+                          <li class="structure-buttons">
+                            <fieldset>
+                                <legend>Subtitles</legend>
+                                <label for="on">on</label>
+                                <input type="radio" value="on" id="on" name="${`${fileName}_subtitles`}"></input>
+                                <label for="off">off</label>
+                                <input type="radio" value="off" id="off" name="${`${fileName}_subtitles`}" checked></input>
+                            </fieldset>
+                          </li>
                           <li><select class="languages"></select></li>
                           <li>
                               <ul id=${fileName + 'sceneList'} class="scenes"></ul>
@@ -1234,6 +1291,9 @@ function displayStructure(fileName, data) {
   $('#visual').append(showElement);
   $('#select-novel').append(`<option value=${fileName}>${data.name}</option>`)
 
+  // $(`input:radio[name=${`${fileName}_subtitles`}]`).change(function() {
+  //   toggleSubtitles(this.value);
+  // });
 
   // APPEND AVAILABLE LANGUAGES
   $.each(data.languages, function(key, value) {   
@@ -2002,13 +2062,20 @@ function displayStep(data) {
     $(`#${screenPreview} .step`).css('background-color', data['background-color']);
 }
 
+function styleToObject(style) {
+  const regex = /([\w-]*)\s*:\s*([^;]*)/g;
+  let match, properties={};
+  while(match=regex.exec(style)) properties[match[1]] = match[2].trim(); 
+  return properties;
+}
+
 function setElements(val, type, data_key, stepMediaObject) {
   src = '/data/media/' + val;
  
   const avatarsElement = `<div class="avatars" style="width: 25%; height: 15%; position: absolute; top: 25%; left:25%; border-radius: 45%; z-index:99;" data-key=${data_key} data-type=${type}>
                           </div>`;
 
-  const console = `<div id="console" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:666666;">
+  const console = `<div id="console" class="console" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:666666;">
                     <iframe src="/console" style="width:100%; height: 100%; border: none;"></iframe>
                   </div>`;
 
@@ -2061,19 +2128,31 @@ function setElements(val, type, data_key, stepMediaObject) {
       }
   }
   
+  // if(type === 'console') {
+  //     if(stepMediaObject.active === true && $(`#${screenPreview} .step .console`).length === 0) {
+  //         $(`#${screenPreview} .step`).append(console);
+  //     }
+  //     if (stepMediaObject.active === false && $(`#${screenPreview} .step .console`).length !== 0) {
+  //       $(`#${screenPreview} .step .console`).remove();
+  //     }
+  // } 
   if(type === 'console') {
-      if(stepMediaObject.active === true && $('.console').length === 0) {
-          $(`#${screenPreview} .step`).append(console);
-      }
-      if ((stepMediaObject.active === false && $('.console').length !== 0)) {
-        $(`#${screenPreview} .step .console`).remove();
-      }
+    if($(`#${screenPreview} .step .console`).length === 0) {
+      $(`#${screenPreview} .step`).append(console);
+    }
   } 
   
   // APPLY STYLE IF MEDIA OBJECT IS FROM STEP
   if (stepMediaObject) {
       if (type === 'console') {
-          $(`.${type}`).css(stepMediaObject['css']);
+          // $(`#${screenPreview} .${type}`).css(stepMediaObject['css']);
+
+          if (!stepMediaObject['active']) {
+            $(`#${screenPreview} .${type}`).hide();
+          } else {
+            $(`#${screenPreview} .${type}`).show();
+          }
+          $(`#${screenPreview} .${type}`).css(stepMediaObject['css']);
       } 
       else if (type === 'media_audio') {
         let mediaElement = $(`#${screenPreview} .step`).find(`*[data-key="${data_key}"]`);
@@ -2122,8 +2201,16 @@ function setElements(val, type, data_key, stepMediaObject) {
               if (mediaElement.text() !== stepMediaObject['content']) {
                   mediaElement.text(stepMediaObject['content']);
               }
-              let currentSize = parseFloat(mediaElement.css('font-size'))/0.55;
-              mediaElement.css('font-size', currentSize + 'px')
+               // CORRECTION DUE TO DIFFERENCE IN EDITOR SCREEN SIZE AND REAL FULL SCREEN SIZE
+               const textStyle = styleToObject(mediaElement.attr('style'));
+               const correctionParameter = 100*mediaElement.parent().width()/window.innerWidth;
+               let correctedSize = parseFloat(textStyle['font-size'])*correctionParameter/55;
+               let correctedBorder = parseFloat(textStyle['border-width'])*correctionParameter/55;
+               let correctedPadding = parseFloat(textStyle['padding'])*correctionParameter/55;
+ 
+               mediaElement.css('font-size', correctedSize + 'vw');
+               mediaElement.css('border-width', correctedBorder + 'vw');
+               mediaElement.css('padding', correctedPadding + 'vw');
           }
 
           // APPLY CLASSES

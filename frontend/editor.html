@@ -110,9 +110,6 @@
           <label for="boite" style="display: none;">Boite</label>
           <input style="display: none;" type="checkbox" name="boite" id="boite-checkbox" checked>
        </fieldset>
-       <!-- <select id="select-audio" disabled>
-        <option selected value="">Select audio</option>
-       </select> -->
       </div>
     </div>
     <section id="structure">
@@ -158,6 +155,19 @@
   </div>
 </main>
 <div id="alert"></div>
+<div class="subtitles-menu draggable" style="display: none;">
+  <div class="editor-buttons subtitles-style">
+    <!-- <button onclick="importTranslation()" style="margin: 0px;">Import translation</button> -->
+  </div>
+  <div id="subtitles-control">
+      <button id="subtitles__prev" class="icon">⬅️</button>
+      <p id="line">Subtitle lines</p>
+      <button id="subtitles__next" class="icon">➡️</button>
+  </div>
+  <div class="editor-buttons subtitles-content" style="margin-top: 20px;">
+
+  </div>
+</div>
 <section id="media">
   Add media to step:
   <!-- <div class="media_cat">

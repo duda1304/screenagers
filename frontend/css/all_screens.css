@@ -62,7 +62,7 @@ h1 {
 }
 
 main #console {
-  background-color: black;
+  /* background-color: black; */
   z-index: 666666 !important;
 }
 

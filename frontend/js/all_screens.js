@@ -851,6 +851,15 @@ socket.on('step', function(data){
   if ('boite' in data && 'type' in data.boite) setBoite(data.boite);
   if ('media-order' in data) displayStep(data);
   if ('mode' in data) setMode(data['mode']);
+    
+  
+    if (data.mode === 'final_fantasy') {
+      $.each(data.media, function(){
+        if (this.type === 'text'){
+          mode.write(this.content);
+        }}
+      )
+    }
   // if ('screen' in data) displayStep(data['screen']);
   // if ('laptop' in data) displayStep(data['laptop']);
 })

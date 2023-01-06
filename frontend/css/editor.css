@@ -262,9 +262,9 @@ b::before {
   word-break: normal;
 }
 
-/* #console iframe {
+.console iframe {
   pointer-events: none;
-} */
+}
 
 .arrow-right {
   width: 0; 
@@ -294,7 +294,7 @@ b::before {
 
 .steps {
   margin-top: 10px;
-  max-height: 100px;
+  /* max-height: 100px; */
   overflow-y: auto;
 }
 /* 
@@ -586,7 +586,7 @@ b::before {
 }
 
 .console {
-  background-color: black;
+  /* background-color: black; */
 }
 
 .ui-dialog {
@@ -1008,11 +1008,12 @@ video {
   height: 15%;
   color: white;
   bottom: 0px;
-  background-color: rgb(211,211,211, 0.1);
+  background-color: rgb(211,211,211, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5vw;
+  z-index: 100;
 }
 
 .subtitles-style select {

@@ -1,5 +1,6 @@
 var modes = {};
 
+// THIS IS MORE RELATED TO OLD VERSION OF APP WHERE TERXT WAS WRITTEN ONLY IN ONE CENTRAL BOX
 modes.normal = function() {
   return {
     type: 'normal',
@@ -57,6 +58,16 @@ modes.normal = function() {
   modes.final_fantasy = function() {
     var timeouts = [];
 
+    $texte;
+    //  IF THERE IS CUSTOM BOX WRTIE IN IT IF NOT WRITE I DEFAULT ONE
+    if ($('.step__decor pre').length !== 0) {
+      $texte = $('.step__decor pre');
+      // $('.step__decor pre')[0].innerHTML = data.question + '  ' +  data.answer;
+    } else {
+      $texte = $('.step__texte');
+      // $('.step__texte')[0].innerHTML = data.question + '  ' +  data.answer;
+    }
+
     function ecrireMot(letter, i) {
       var time = i * 30;
       return setTimeout(function() {
@@ -80,7 +91,7 @@ modes.normal = function() {
       timeouts = [...str].map((letter, i) => ecrireMot(letter, i));
     }
 
-    $main.addClass('mode--final_fantasy');
+    // $main.addClass('mode--final_fantasy');
     $texte.hide();
 
     return {

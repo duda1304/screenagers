@@ -751,7 +751,7 @@ input[type='range']:focus::-webkit-slider-runnable-track {
 }
 
 main #console {
-  background-color: black;
+  /* background-color: black; */
   z-index: 666666 !important;
 }
 /* #preview {

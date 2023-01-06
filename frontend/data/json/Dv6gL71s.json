@@ -21,7 +21,6 @@
         "1": {
             "name": "Cable story",
             "step-order": [
-                2,
                 1,
                 3,
                 4,
@@ -41,6 +40,7 @@
                 15,
                 19,
                 20,
+                37,
                 21,
                 22,
                 23,
@@ -48,42 +48,19 @@
                 24,
                 26,
                 27,
-                28,
                 29,
                 30,
                 31,
                 32,
                 33,
-                34,
-                35,
-                36
+                34
             ],
             "steps": {
                 "1": {
                     "screen": {
-                        "media-order": [
-                            "LBybY"
-                        ],
+                        "media-order": [],
                         "background-color": "rgb(0, 0, 0)",
-                        "media": {
-                            "LBybY": {
-                                "type": "media_images",
-                                "css": {
-                                    "width": "100%",
-                                    "position": "absolute",
-                                    "top": "0%",
-                                    "left": "0%",
-                                    "z-index": "1",
-                                    "object-fit": "cover",
-                                    "height": "100%"
-                                },
-                                "attributes": {
-                                    "src": "CableStory/Histoire-des-cables001.jpeg"
-                                },
-                                "content": "",
-                                "classes": []
-                            }
-                        },
+                        "media": {},
                         "console": {
                             "active": false,
                             "css": {
@@ -115,31 +92,7 @@
                         }
                     },
                     "boite": {
-                        "type": "no_phone",
-                        "arg": ""
-                    }
-                },
-                "2": {
-                    "screen": {
-                        "media-order": [],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {},
-                        "console": {
-                            "active": false,
-                            "css": {}
-                        }
-                    },
-                    "laptop": {
-                        "media-order": [],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {},
-                        "console": {
-                            "active": false,
-                            "css": {}
-                        }
-                    },
-                    "boite": {
-                        "type": "no_phone",
+                        "type": "vide",
                         "arg": ""
                     }
                 },
@@ -199,7 +152,7 @@
                         }
                     },
                     "boite": {
-                        "type": "no_phone",
+                        "type": "vide",
                         "arg": ""
                     }
                 },
@@ -1358,7 +1311,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -1418,7 +1371,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -1478,7 +1431,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -1526,11 +1479,11 @@
                 "26": {
                     "screen": {
                         "media-order": [
-                            "TyNDG"
+                            "0T8Di"
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
-                            "TyNDG": {
+                            "0T8Di": {
                                 "type": "media_images",
                                 "css": {
                                     "width": "100%",
@@ -1538,67 +1491,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
-                                    "height": "100%"
-                                },
-                                "attributes": {
-                                    "src": "CableStory/G03.jpeg"
-                                },
-                                "content": "",
-                                "classes": []
-                            }
-                        },
-                        "console": {
-                            "active": false,
-                            "css": {
-                                "width": "25%",
-                                "height": "95%",
-                                "position": "absolute",
-                                "top": "2.5%",
-                                "left": "5%",
-                                "z-index": "100",
-                                "display": "none"
-                            }
-                        }
-                    },
-                    "laptop": {
-                        "media-order": [],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {},
-                        "console": {
-                            "active": false,
-                            "css": {
-                                "width": "25%",
-                                "height": "95%",
-                                "position": "absolute",
-                                "top": "2.5%",
-                                "left": "5%",
-                                "z-index": "100",
-                                "display": "none"
-                            }
-                        }
-                    },
-                    "boite": {
-                        "type": "no_phone",
-                        "arg": ""
-                    }
-                },
-                "27": {
-                    "screen": {
-                        "media-order": [
-                            "r5DqP"
-                        ],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {
-                            "r5DqP": {
-                                "type": "media_images",
-                                "css": {
-                                    "width": "100%",
-                                    "position": "absolute",
-                                    "top": "0%",
-                                    "left": "0%",
-                                    "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -1643,14 +1536,14 @@
                         "arg": ""
                     }
                 },
-                "28": {
+                "27": {
                     "screen": {
                         "media-order": [
-                            "dyx71"
+                            "c2ifd"
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
-                            "dyx71": {
+                            "c2ifd": {
                                 "type": "media_images",
                                 "css": {
                                     "width": "100%",
@@ -1778,7 +1671,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -1838,7 +1731,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -2027,38 +1920,14 @@
                         "arg": ""
                     }
                 },
-                "35": {
-                    "screen": {
-                        "media-order": [],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {},
-                        "console": {
-                            "active": false,
-                            "css": {}
-                        }
-                    },
-                    "laptop": {
-                        "media-order": [],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {},
-                        "console": {
-                            "active": false,
-                            "css": {}
-                        }
-                    },
-                    "boite": {
-                        "type": "no_phone",
-                        "arg": ""
-                    }
-                },
-                "36": {
+                "37": {
                     "screen": {
                         "media-order": [
-                            "xiaqJ"
+                            "EvwHi"
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
-                            "xiaqJ": {
+                            "EvwHi": {
                                 "type": "media_images",
                                 "css": {
                                     "width": "100%",
@@ -2070,7 +1939,7 @@
                                     "height": "100%"
                                 },
                                 "attributes": {
-                                    "src": "CableStory/Histoire-des-cables001.jpeg"
+                                    "src": "CableStory/Histoire-des-cables020.jpeg"
                                 },
                                 "content": "",
                                 "classes": []
@@ -2119,10 +1988,33 @@
                 1,
                 2,
                 3,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
                 5,
+                15,
+                16,
                 4,
                 6,
-                7
+                7,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                30,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29
             ],
             "steps": {
                 "1": {
@@ -2201,15 +2093,40 @@
                         }
                     },
                     "boite": {
-                        "type": "vide",
+                        "type": "no_phone",
                         "arg": ""
                     }
                 },
                 "3": {
                     "screen": {
-                        "media-order": [],
+                        "media-order": [
+                            "uFaod"
+                        ],
                         "background-color": "rgb(0, 0, 0)",
-                        "media": {},
+                        "media": {
+                            "uFaod": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "38%",
+                                    "left": "17%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "font-weight": "bold"
+                                },
+                                "attributes": {},
+                                "content": "Welcome to the second scene",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
                         "console": {
                             "active": false,
                             "css": {
@@ -2241,15 +2158,41 @@
                         }
                     },
                     "boite": {
-                        "type": "vide",
+                        "type": "no_phone",
                         "arg": ""
                     }
                 },
                 "4": {
                     "screen": {
-                        "media-order": [],
+                        "media-order": [
+                            "apAZt"
+                        ],
                         "background-color": "rgb(0, 0, 0)",
-                        "media": {},
+                        "media": {
+                            "apAZt": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "26%",
+                                    "left": "1%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "4vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "text-align": "center",
+                                    "font-weight": "bold"
+                                },
+                                "attributes": {},
+                                "content": "Then Batman comes and tells you to connect to Wi-Fi called “SCREENAGERS”",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
                         "console": {
                             "active": false,
                             "css": {
@@ -2281,15 +2224,35 @@
                         }
                     },
                     "boite": {
-                        "type": "vide",
+                        "type": "no_phone",
                         "arg": ""
                     }
                 },
                 "5": {
                     "screen": {
-                        "media-order": [],
+                        "media-order": [
+                            "DKzdC"
+                        ],
                         "background-color": "rgb(0, 0, 0)",
-                        "media": {},
+                        "media": {
+                            "DKzdC": {
+                                "type": "media_images",
+                                "css": {
+                                    "width": "100%",
+                                    "position": "absolute",
+                                    "top": "0%",
+                                    "left": "0%",
+                                    "z-index": "1",
+                                    "object-fit": "contain",
+                                    "height": "100%"
+                                },
+                                "attributes": {
+                                    "src": "Animationconnexion/Animationconnexion/Connexionanimation.010.jpeg"
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
                         "console": {
                             "active": false,
                             "css": {
@@ -2321,35 +2284,1075 @@
                         }
                     },
                     "boite": {
-                        "type": "vide",
+                        "type": "no_phone",
                         "arg": ""
                     }
                 },
                 "6": {
                     "screen": {
                         "media-order": [
-                            "MTm2t"
+                            "3fAsL"
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
-                            "MTm2t": {
-                                "type": "avatars",
+                            "3fAsL": {
+                                "type": "media_video",
                                 "css": {
-                                    "width": "38%",
-                                    "height": "54%",
+                                    "width": "100%",
                                     "position": "absolute",
-                                    "top": "23%",
-                                    "left": "8%",
-                                    "border-radius": "45%",
-                                    "z-index": "1"
+                                    "top": "0%",
+                                    "left": "0%",
+                                    "z-index": "1",
+                                    "object-fit": "cover",
+                                    "height": "100%"
+                                },
+                                "attributes": {
+                                    "src": "Animationconnexion/connexionanimationbatman.webmhd.webm",
+                                    "loop": false,
+                                    "muted": false,
+                                    "volume": 1
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "7": {
+                    "screen": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "8": {
+                    "screen": {
+                        "media-order": [
+                            "uFaod"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "uFaod": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "26%",
+                                    "left": "2%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "font-weight": "bold",
+                                    "text-align": "center"
                                 },
                                 "attributes": {},
-                                "content": "",
+                                "content": "It was supposed to be an space \n- opera in 3D animation\nthat explains how to connect to our network",
                                 "classes": [
-                                    "avatars"
+                                    "text"
                                 ]
                             }
                         },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "9": {
+                    "screen": {
+                        "media-order": [
+                            "uFaod"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "uFaod": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "31%",
+                                    "left": "23%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "font-weight": "bold",
+                                    "text-align": "center"
+                                },
+                                "attributes": {},
+                                "content": "We used a respectable \nanimation software, \nbut results were terrible",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "10": {
+                    "screen": {
+                        "media-order": [
+                            "uFaod"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "uFaod": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "29%",
+                                    "left": "21%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "font-weight": "bold",
+                                    "text-align": "center"
+                                },
+                                "attributes": {},
+                                "content": "So we decided to ditch it\n-\nit was too low-key even \nfor our lo-fi taste.",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "11": {
+                    "screen": {
+                        "media-order": [
+                            "uFaod"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "uFaod": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "32%",
+                                    "left": "20%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "font-weight": "bold",
+                                    "text-align": "center"
+                                },
+                                "attributes": {},
+                                "content": "Which is really a pity,\nbecause the idea was great.",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "12": {
+                    "screen": {
+                        "media-order": [
+                            "uFaod"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "uFaod": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "24%",
+                                    "left": "15%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "font-weight": "bold",
+                                    "text-align": "center",
+                                    "width": "75%"
+                                },
+                                "attributes": {},
+                                "content": "It features Barbara as the only inhabitant of a comet travelling through space, \neating pizza and contemplating storytelling",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "13": {
+                    "screen": {
+                        "media-order": [
+                            "uFaod"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "uFaod": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "24%",
+                                    "left": "15%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "font-weight": "bold",
+                                    "text-align": "center",
+                                    "width": "75%"
+                                },
+                                "attributes": {},
+                                "content": "She encounters various characters and objects from many different stories, \nall floating around her, like space debris",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "14": {
+                    "screen": {
+                        "media-order": [
+                            "uFaod"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "uFaod": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "33%",
+                                    "left": "14%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "font-weight": "bold",
+                                    "text-align": "center",
+                                    "width": "75%"
+                                },
+                                "attributes": {},
+                                "content": "Here are some good stills, just to give you an idea:",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "15": {
+                    "screen": {
+                        "media-order": [
+                            "izE3c"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "izE3c": {
+                                "type": "media_images",
+                                "css": {
+                                    "width": "100%",
+                                    "position": "absolute",
+                                    "top": "0%",
+                                    "left": "0%",
+                                    "z-index": "1",
+                                    "object-fit": "cover",
+                                    "height": "100%"
+                                },
+                                "attributes": {
+                                    "src": "Animationconnexion/Animationconnexion/Connexionanimation.011.jpeg"
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "16": {
+                    "screen": {
+                        "media-order": [
+                            "oMpJB"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "oMpJB": {
+                                "type": "media_images",
+                                "css": {
+                                    "width": "100%",
+                                    "position": "absolute",
+                                    "top": "0%",
+                                    "left": "0%",
+                                    "z-index": "1",
+                                    "object-fit": "contain",
+                                    "height": "100%"
+                                },
+                                "attributes": {
+                                    "src": "Animationconnexion/Animationconnexion/Connexionanimation.Still010.jpg"
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "17": {
+                    "screen": {
+                        "media-order": [
+                            "apAZt"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "apAZt": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "32%",
+                                    "left": "14%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "4vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "text-align": "center",
+                                    "font-weight": "bold"
+                                },
+                                "attributes": {},
+                                "content": "While you connect to wifi,\nBarbara is counting the stars",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "18": {
+                    "screen": {
+                        "media-order": [
+                            "xpqyp"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "xpqyp": {
+                                "type": "media_video",
+                                "css": {
+                                    "width": "100%",
+                                    "position": "absolute",
+                                    "top": "0%",
+                                    "left": "0%",
+                                    "z-index": "1",
+                                    "object-fit": "cover",
+                                    "height": "100%"
+                                },
+                                "attributes": {
+                                    "src": "Animationconnexion/counting.webmhd.webm",
+                                    "loop": false,
+                                    "muted": false,
+                                    "volume": 1
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "19": {
+                    "screen": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "20": {
+                    "screen": {
+                        "media-order": [
+                            "apAZt"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "apAZt": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "23%",
+                                    "left": "2%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "4vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "text-align": "center",
+                                    "font-weight": "bold"
+                                },
+                                "attributes": {},
+                                "content": "Than there is a cosmic storm during which she screams about how exciting it is to find herself in a place not covered by Google maps   ",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "21": {
+                    "screen": {
+                        "media-order": [
+                            "SiDmP"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "SiDmP": {
+                                "type": "media_video",
+                                "css": {
+                                    "width": "100%",
+                                    "position": "absolute",
+                                    "top": "0%",
+                                    "left": "0%",
+                                    "z-index": "1",
+                                    "object-fit": "contain",
+                                    "height": "100%"
+                                },
+                                "attributes": {
+                                    "src": "Animationconnexion/animationconnexion.webm",
+                                    "loop": false,
+                                    "muted": false,
+                                    "volume": 1
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "22": {
+                    "screen": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "23": {
+                    "screen": {
+                        "media-order": [
+                            "MhC3H"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "MhC3H": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "24%",
+                                    "left": "3%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "white",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "font-weight": "bold",
+                                    "text-align": "center"
+                                },
+                                "attributes": {},
+                                "content": "After the storm calms down,\nshe tells you to open your Chrome / Safari / Firefox etc,\nand enter : futur.pizza\nin your address bar.",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "24": {
+                    "screen": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
                         "console": {
                             "active": false,
                             "css": {
@@ -2385,11 +3388,302 @@
                         "arg": ""
                     }
                 },
-                "7": {
+                "25": {
                     "screen": {
                         "media-order": [],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {}
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "26": {
+                    "screen": {
+                        "media-order": [
+                            "uFaod"
+                        ],
+                        "background-color": "rgb(255, 255, 255)",
+                        "media": {
+                            "uFaod": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "33%",
+                                    "left": "13%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(0, 0, 0)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "font-weight": "bold",
+                                    "text-align": "center",
+                                    "width": "75%"
+                                },
+                                "attributes": {},
+                                "content": "This peaceful moment is than brutally interrupted",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "27": {
+                    "screen": {
+                        "media-order": [
+                            "uFaod"
+                        ],
+                        "background-color": "rgb(255, 255, 255)",
+                        "media": {
+                            "uFaod": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "33%",
+                                    "left": "13%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(0, 0, 0)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "font-weight": "bold",
+                                    "text-align": "center",
+                                    "width": "75%"
+                                },
+                                "attributes": {},
+                                "content": "Because the asteroid is suddenly torched by a passing dragon",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "28": {
+                    "screen": {
+                        "media-order": [
+                            "uFaod"
+                        ],
+                        "background-color": "rgb(255, 255, 255)",
+                        "media": {
+                            "uFaod": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "33%",
+                                    "left": "13%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(0, 0, 0)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "font-weight": "bold",
+                                    "text-align": "center",
+                                    "width": "75%"
+                                },
+                                "attributes": {},
+                                "content": "and everything dissolves into white nothingness",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "29": {
+                    "screen": {
+                        "media-order": [],
+                        "background-color": "rgb(255, 255, 255)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "30": {
+                    "screen": {
+                        "media-order": [
+                            "MhC3H"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "MhC3H": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "33%",
+                                    "left": "3%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "1",
+                                    "font-weight": "bold",
+                                    "text-align": "center"
+                                },
+                                "attributes": {},
+                                "content": "Address bar - NOT search bar! \nAnd while you’re trying to figure out the difference between the two, \nshe practices her ukulele",
+                                "classes": [
+                                    "text"
+                                ]
+                            }
+                        },
                         "console": {
                             "active": false,
                             "css": {
@@ -2438,11 +3732,19 @@
                 "1": {
                     "screen": {
                         "media-order": [],
-                        "background-color": "rgb(0, 0, 0)",
+                        "background-color": "rgb(255, 255, 255)",
                         "media": {},
                         "console": {
                             "active": false,
-                            "css": {}
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
                         }
                     },
                     "laptop": {
@@ -2451,7 +3753,15 @@
                         "media": {},
                         "console": {
                             "active": false,
-                            "css": {}
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
                         }
                     },
                     "boite": {
@@ -2670,7 +3980,8 @@
             "step-order": [
                 1,
                 2,
-                3
+                3,
+                4
             ],
             "steps": {
                 "1": {
@@ -2816,6 +4127,46 @@
                     "console": {
                         "mode": "console"
                     }
+                },
+                "4": {
+                    "screen": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "100%",
+                                "position": "absolute",
+                                "top": "0%",
+                                "left": "0%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "vide",
+                        "arg": ""
+                    }
                 }
             }
         },
@@ -2881,28 +4232,9 @@
                 },
                 "2": {
                     "screen": {
-                        "media-order": [
-                            "DbCF2"
-                        ],
+                        "media-order": [],
                         "background-color": "rgb(0, 0, 0)",
-                        "media": {
-                            "DbCF2": {
-                                "type": "videoStream",
-                                "css": {
-                                    "width": "35%",
-                                    "position": "absolute",
-                                    "top": "25%",
-                                    "left": "25%",
-                                    "z-index": "1"
-                                },
-                                "attributes": {
-                                    "device": "afbd81e382bd4b999d76925d8beeee297077e1b021b81cadb245ab753a04ded9",
-                                    "label": "NDI Video"
-                                },
-                                "content": "",
-                                "classes": []
-                            }
-                        },
+                        "media": {},
                         "console": {
                             "active": false,
                             "css": {
@@ -3133,7 +4465,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -3193,7 +4525,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -3253,7 +4585,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -3313,7 +4645,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -3373,7 +4705,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -3433,7 +4765,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -3493,7 +4825,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -3553,7 +4885,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -3613,7 +4945,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -3673,7 +5005,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -3733,7 +5065,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -3793,7 +5125,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -3853,7 +5185,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -3913,7 +5245,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -3973,7 +5305,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -4033,7 +5365,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -4093,7 +5425,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -4153,7 +5485,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -4213,7 +5545,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -4273,7 +5605,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -4333,7 +5665,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -4393,7 +5725,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -4453,7 +5785,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -4513,7 +5845,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -4573,7 +5905,7 @@
                                     "top": "0%",
                                     "left": "0%",
                                     "z-index": "1",
-                                    "object-fit": "cover",
+                                    "object-fit": "contain",
                                     "height": "100%"
                                 },
                                 "attributes": {
@@ -4694,31 +6026,11 @@
                 },
                 "2": {
                     "screen": {
-                        "media-order": [
-                            "JoAPm"
-                        ],
+                        "media-order": [],
                         "background-color": "rgb(0, 0, 0)",
-                        "media": {
-                            "JoAPm": {
-                                "type": "media_audio",
-                                "css": {
-                                    "width": "5%",
-                                    "position": "absolute",
-                                    "top": "27%",
-                                    "left": "87%",
-                                    "padding": "5px",
-                                    "z-index": "1"
-                                },
-                                "attributes": {
-                                    "src": "Sons/%5BSynthesia%5D%5BMIDI%5D%20Bossa%20Nova%20USA.mp3",
-                                    "loop": true,
-                                    "volume": 1
-                                },
-                                "content": ""
-                            }
-                        },
+                        "media": {},
                         "console": {
-                            "active": true,
+                            "active": false,
                             "css": {
                                 "width": "25%",
                                 "height": "99%",
@@ -4726,7 +6038,7 @@
                                 "top": "1%",
                                 "left": "0%",
                                 "z-index": "100",
-                                "display": "block"
+                                "display": "none"
                             }
                         }
                     },
@@ -4750,9 +6062,6 @@
                     "boite": {
                         "type": "image",
                         "arg": ""
-                    },
-                    "console": {
-                        "mode": "console"
                     }
                 },
                 "3": {
@@ -5086,7 +6395,8 @@
                             "RYkYB",
                             "w6pUR",
                             "GmCqM",
-                            "wvXLR"
+                            "wvXLR",
+                            "wqLJS"
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
@@ -5097,7 +6407,7 @@
                                     "position": "absolute",
                                     "top": "6%",
                                     "left": "3%",
-                                    "z-index": "4"
+                                    "z-index": "5"
                                 },
                                 "attributes": {
                                     "src": "YoutubeBand/Screen1.webmhd.webm",
@@ -5115,7 +6425,7 @@
                                     "position": "absolute",
                                     "top": "7%",
                                     "left": "46%",
-                                    "z-index": "3"
+                                    "z-index": "4"
                                 },
                                 "attributes": {
                                     "src": "YoutubeBand/Screen2.webmhd.webm",
@@ -5133,7 +6443,7 @@
                                     "position": "absolute",
                                     "top": "51%",
                                     "left": "3%",
-                                    "z-index": "2"
+                                    "z-index": "3"
                                 },
                                 "attributes": {
                                     "src": "YoutubeBand/Screen3.webmhd.webm",
@@ -5151,10 +6461,28 @@
                                     "position": "absolute",
                                     "top": "49%",
                                     "left": "46%",
-                                    "z-index": "1"
+                                    "z-index": "2"
                                 },
                                 "attributes": {
                                     "src": "YoutubeBand/Screen4.webmhd.webm",
+                                    "loop": false,
+                                    "muted": false,
+                                    "volume": 1
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "wqLJS": {
+                                "type": "media_video",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "1"
+                                },
+                                "attributes": {
+                                    "src": "YoutubeBand/Laptop2parte.webmhd.webm",
                                     "loop": false,
                                     "muted": false,
                                     "volume": 1
@@ -8681,7 +10009,7 @@
                 "44": {
                     "screen": {
                         "media-order": [
-                            "reNuu",
+                            "iZt3u",
                             "YZJew"
                         ],
                         "background-color": "rgb(0, 0, 0)",
@@ -8702,15 +10030,15 @@
                                 "content": "",
                                 "classes": []
                             },
-                            "reNuu": {
+                            "iZt3u": {
                                 "type": "media_images",
                                 "css": {
-                                    "width": "52%",
+                                    "width": "51%",
                                     "position": "absolute",
-                                    "top": "22%",
-                                    "left": "15%",
+                                    "top": "35%",
+                                    "left": "21%",
                                     "z-index": "2",
-                                    "height": "50%"
+                                    "height": "35%"
                                 },
                                 "attributes": {
                                     "src": "Press-Song/2022-05-08-11-09-47.png"
@@ -9910,6 +11238,7 @@
                 6,
                 7,
                 8,
+                19,
                 9,
                 10,
                 12,
@@ -9955,14 +11284,14 @@
                                 "type": "text",
                                 "css": {
                                     "position": "absolute",
-                                    "top": "7%",
+                                    "top": "20%",
                                     "left": "16%",
                                     "white-space": "pre-wrap",
                                     "overflow-wrap": "break-word",
                                     "color": "rgb(255, 255, 255)",
-                                    "font-size": "34px",
+                                    "font-size": "2.5vw",
                                     "margin": "0px",
-                                    "padding": "13px",
+                                    "padding": "0.5vw",
                                     "font-family": "fixedsys",
                                     "z-index": "1",
                                     "text-align": "center",
@@ -10022,14 +11351,14 @@
                                 "type": "text",
                                 "css": {
                                     "position": "absolute",
-                                    "top": "36%",
-                                    "left": "30%",
+                                    "top": "40%",
+                                    "left": "28%",
                                     "white-space": "pre-wrap",
                                     "overflow-wrap": "break-word",
                                     "color": "rgb(255, 255, 255)",
-                                    "font-size": "32px",
+                                    "font-size": "2.5vw",
                                     "margin": "0px",
-                                    "padding": "10px",
+                                    "padding": "1vw",
                                     "font-family": "fixedsys",
                                     "z-index": "1",
                                     "text-align": "center"
@@ -10087,14 +11416,14 @@
                                 "type": "text",
                                 "css": {
                                     "position": "absolute",
-                                    "top": "27%",
+                                    "top": "26%",
                                     "left": "2%",
                                     "white-space": "pre-wrap",
                                     "overflow-wrap": "break-word",
                                     "color": "rgb(255, 255, 255)",
-                                    "font-size": "32px",
+                                    "font-size": "2.5vw",
                                     "margin": "0px",
-                                    "padding": "10px",
+                                    "padding": "2vw",
                                     "font-family": "fixedsys",
                                     "z-index": "1",
                                     "text-align": "center"
@@ -10152,12 +11481,12 @@
                                 "type": "text",
                                 "css": {
                                     "position": "absolute",
-                                    "top": "0%",
+                                    "top": "8%",
                                     "left": "1%",
                                     "white-space": "pre-wrap",
                                     "overflow-wrap": "break-word",
                                     "color": "rgb(255, 255, 255)",
-                                    "font-size": "2vw",
+                                    "font-size": "2.5vw",
                                     "margin": "0px",
                                     "padding": "0vw",
                                     "font-family": "fixedsys",
@@ -10222,9 +11551,9 @@
                                     "white-space": "pre-wrap",
                                     "overflow-wrap": "break-word",
                                     "color": "rgb(255, 255, 255)",
-                                    "font-size": "32px",
+                                    "font-size": "2.5vw",
                                     "margin": "0px",
-                                    "padding": "10px",
+                                    "padding": "2vw",
                                     "font-family": "fixedsys",
                                     "z-index": "1",
                                     "text-align": "center"
@@ -10287,9 +11616,9 @@
                                     "white-space": "pre-wrap",
                                     "overflow-wrap": "break-word",
                                     "color": "rgb(255, 255, 255)",
-                                    "font-size": "32px",
+                                    "font-size": "2.5vw",
                                     "margin": "0px",
-                                    "padding": "10px",
+                                    "padding": "2vw",
                                     "font-family": "fixedsys",
                                     "z-index": "1",
                                     "text-align": "center",
@@ -10374,17 +11703,40 @@
                         }
                     },
                     "boite": {
-                        "type": "vide",
+                        "type": "no_phone",
                         "arg": ""
                     }
                 },
                 "9": {
                     "screen": {
                         "media-order": [
+                            "FPtG6",
                             "YZGik"
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
+                            "FPtG6": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "3%",
+                                    "left": "27%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "3.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "2",
+                                    "text-align": "center"
+                                },
+                                "attributes": {},
+                                "content": "",
+                                "classes": [
+                                    "text"
+                                ]
+                            },
                             "YZGik": {
                                 "type": "media_video",
                                 "css": {
@@ -10438,7 +11790,7 @@
                     },
                     "boite": {
                         "type": "collective_song",
-                        "arg": "I’m so tired of\nI regret\nPeople say I’m\nI wish I could\nWhy can’t people be more\nI’ve got to stop\nI’m afraid\nI’m running out of\nI lied when I said\nLast night I dreamt\nI hope someday"
+                        "arg": "i’m so tired of\ni regret\npeople say I’m\ni wish I could\nwhy can’t people be more\ni’ve got to stop\ni’m afraid\ni’m running out of\ni lied when I said\nlast night I dreamt\ni hope someday"
                     }
                 },
                 "10": {
@@ -10449,27 +11801,6 @@
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
-                            "9qnaX": {
-                                "type": "text",
-                                "css": {
-                                    "position": "absolute",
-                                    "top": "10%",
-                                    "left": "37%",
-                                    "white-space": "pre-wrap",
-                                    "overflow-wrap": "break-word",
-                                    "color": "rgb(255, 255, 255)",
-                                    "font-size": "35px",
-                                    "margin": "0px",
-                                    "padding": "10px",
-                                    "font-family": "Arial",
-                                    "z-index": "2"
-                                },
-                                "attributes": {},
-                                "content": "Come what way",
-                                "classes": [
-                                    "text"
-                                ]
-                            },
                             "YZGik": {
                                 "type": "media_video",
                                 "css": {
@@ -10489,6 +11820,27 @@
                                 },
                                 "content": "",
                                 "classes": []
+                            },
+                            "9qnaX": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "8%",
+                                    "left": "31%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "2"
+                                },
+                                "attributes": {},
+                                "content": "Come what way",
+                                "classes": [
+                                    "text"
+                                ]
                             }
                         },
                         "console": {
@@ -10522,8 +11874,8 @@
                         }
                     },
                     "boite": {
-                        "type": "collective_song",
-                        "arg": "I’m so tired of\nI regret\nPeople say I’m\nI wish I could\nWhy can’t people be more\nI’ve got to stop\nI’m afraid\nI’m running out of\nI lied when I said\nLast night I dreamt\nI hope someday"
+                        "type": "no_phone",
+                        "arg": ""
                     }
                 },
                 "12": {
@@ -10534,6 +11886,27 @@
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
+                            "9qnaX": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "9%",
+                                    "left": "31%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "2"
+                                },
+                                "attributes": {},
+                                "content": "The world is broken",
+                                "classes": [
+                                    "text"
+                                ]
+                            },
                             "YZGik": {
                                 "type": "media_video",
                                 "css": {
@@ -10553,27 +11926,6 @@
                                 },
                                 "content": "",
                                 "classes": []
-                            },
-                            "9qnaX": {
-                                "type": "text",
-                                "css": {
-                                    "position": "absolute",
-                                    "top": "9%",
-                                    "left": "34%",
-                                    "white-space": "pre-wrap",
-                                    "overflow-wrap": "break-word",
-                                    "color": "rgb(255, 255, 255)",
-                                    "font-size": "35px",
-                                    "margin": "0px",
-                                    "padding": "10px",
-                                    "font-family": "Arial",
-                                    "z-index": "2"
-                                },
-                                "attributes": {},
-                                "content": "The world is broken",
-                                "classes": [
-                                    "text"
-                                ]
                             }
                         },
                         "console": {
@@ -10619,6 +11971,27 @@
                         ],
                         "background-color": "rgb(0, 0, 0)",
                         "media": {
+                            "9qnaX": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "9%",
+                                    "left": "25%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "2.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "2"
+                                },
+                                "attributes": {},
+                                "content": "But the sky’s wide open",
+                                "classes": [
+                                    "text"
+                                ]
+                            },
                             "YZGik": {
                                 "type": "media_video",
                                 "css": {
@@ -10638,27 +12011,6 @@
                                 },
                                 "content": "",
                                 "classes": []
-                            },
-                            "9qnaX": {
-                                "type": "text",
-                                "css": {
-                                    "position": "absolute",
-                                    "top": "9%",
-                                    "left": "31%",
-                                    "white-space": "pre-wrap",
-                                    "overflow-wrap": "break-word",
-                                    "color": "rgb(255, 255, 255)",
-                                    "font-size": "35px",
-                                    "margin": "0px",
-                                    "padding": "10px",
-                                    "font-family": "Arial",
-                                    "z-index": "2"
-                                },
-                                "attributes": {},
-                                "content": "But the sky’s wide open",
-                                "classes": [
-                                    "text"
-                                ]
                             }
                         },
                         "console": {
@@ -10713,9 +12065,9 @@
                                     "white-space": "pre-wrap",
                                     "overflow-wrap": "break-word",
                                     "color": "rgb(255, 255, 255)",
-                                    "font-size": "35px",
+                                    "font-size": "2.5vw",
                                     "margin": "0px",
-                                    "padding": "10px",
+                                    "padding": "2vw",
                                     "font-family": "Arial",
                                     "z-index": "2"
                                 },
@@ -10794,13 +12146,13 @@
                                 "css": {
                                     "position": "absolute",
                                     "top": "9%",
-                                    "left": "30%",
+                                    "left": "28%",
                                     "white-space": "pre-wrap",
                                     "overflow-wrap": "break-word",
                                     "color": "rgb(255, 255, 255)",
-                                    "font-size": "35px",
+                                    "font-size": "2.5vw",
                                     "margin": "0px",
-                                    "padding": "10px",
+                                    "padding": "2vw",
                                     "font-family": "Arial",
                                     "z-index": "2"
                                 },
@@ -10879,13 +12231,13 @@
                                 "css": {
                                     "position": "absolute",
                                     "top": "9%",
-                                    "left": "32%",
+                                    "left": "26%",
                                     "white-space": "pre-wrap",
                                     "overflow-wrap": "break-word",
                                     "color": "rgb(255, 255, 255)",
-                                    "font-size": "35px",
+                                    "font-size": "2.5vw",
                                     "margin": "0px",
-                                    "padding": "10px",
+                                    "padding": "2vw",
                                     "font-family": "Arial",
                                     "z-index": "2"
                                 },
@@ -10972,6 +12324,46 @@
                     },
                     "boite": {
                         "type": "no_phone",
+                        "arg": ""
+                    }
+                },
+                "19": {
+                    "screen": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "attente",
                         "arg": ""
                     }
                 }

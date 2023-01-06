@@ -162,7 +162,7 @@ function createRandomString(length) {
 }
 
 function toggleSubtitles(value) {
-    const subtitlesDiv = `<div class="subtitles" style="position: absolute; width: 100%; height: 15%; color: white; bottom: 0px; background-color: rgb(211,211,211, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.5vw;" data-key='subtitles'></div>`
+    const subtitlesDiv = `<div class="subtitles draggable resizable" style="position: absolute; width: 100%; height: 15%; color: white; bottom: 0px; background-color: rgb(211,211,211, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.5vw;" data-key='subtitles'></div>`
    
     $('#line').removeData('line');
     if (value === 'off') {
@@ -575,7 +575,7 @@ function displayActiveStepMedia() {
                 setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);
             }
             applyZIndexes();
-            setElements("", "console", "", jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['console']);
+            setElements("", "console", createRandomString(5), jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['console']);
             $(`#${screen}`).css('background-color', jsonData['scenes'][active.scene]['steps'][active.step][activeScreen]['background-color']);
             toggleSubtitles($(`input[name=${active.fileName}_subtitles]:checked`).val());
         });
@@ -628,7 +628,7 @@ function setElements(val, type, data_key, stepMediaObject) {
     const avatarsElement = `<div class="avatars draggable resizable" style="width: 25%; height: 15%; position: absolute; top: 25%; left:25%; border-radius: 45%; z-index:99;" data-key=${data_key} data-type=${type}>
                             </div>`;
 
-    const console = `<div class="console draggable resizable" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:100;" data-type=${type}>
+    const console = `<div class="console draggable resizable" style="width: 25%; height: 95%; position: absolute; top: 2.5%; left:5%; z-index:100;" data-key=${data_key} data-type=${type}>
                         <iframe src="/console" style="width:100%; height: 100%; border: none;"></iframe>
                     </div>`;
 
@@ -1084,7 +1084,7 @@ function importTranslation() {
                 </form>`)
         .dialog({
             resizable: false,
-            modal: true,
+            modal: true, width: 300,
             maxHeight: 600,
         });
 
@@ -1102,15 +1102,16 @@ function editTranslation() {
     $('#alert')
         .empty()
         .append(`<form><p>Edit translation in textarea below. New row will be new sentence to display in subtitles.</p>
-                    <textarea rows=10 name="lines"></textarea>
+                    <textarea rows=20 name="lines"></textarea>
                     <div class='editor-buttons' style='justify-content: center;'>
                         <button type="submit">Save</button><button type='button'onclick="closeModal()">Cancel</button>
                     </div>
                 </form>`)
         .dialog({
-            resizable: false,
+            draggable: true,
             modal: true,
-            maxHeight: 600,
+            width: 800,
+            maxHeight: 800,
         });
     
     $('#alert textarea').val(subtitlesData[active.fileName][$(`#${active.fileName} .languages`).val()]);
@@ -1150,7 +1151,7 @@ function saveSubtitlesStyle(status) {
         $('#alert')
             .dialog({
                 resizable: false,
-                modal: true,
+                modal: true, width: 300,
                 maxHeight: 600,
             });
         
@@ -1186,7 +1187,7 @@ function addInStructure(parameter) {
                  </form>`)
         .dialog({
             resizable: false,
-            modal: true,
+            modal: true, width: 300,
             maxHeight: 600,
         });
         // THIS OPTION AHOULD BE SOMEWHOW ADDDED WHEN CREATING SHOW
@@ -1216,7 +1217,7 @@ function addInStructure(parameter) {
                  </div>`)
         .dialog({
             resizable: false,
-            modal: true,
+            modal: true, width: 300,
             maxHeight: 600,
         });
 
@@ -1242,7 +1243,7 @@ function addInStructure(parameter) {
                  </form>`)
         .dialog({
             resizable: false,
-            modal: true,
+            modal: true, width: 300,
             maxHeight: 600,
         });
         // OK BUTTON FUNCTION
@@ -1276,7 +1277,7 @@ function duplicate(parameter) {
                  </div>`)
         .dialog({
             resizable: false,
-            modal: true,
+            modal: true, width: 300,
             maxHeight: 600,
         });
           // OK BUTTON FUNCTION
@@ -1296,7 +1297,7 @@ function duplicate(parameter) {
                  </div>`)
         .dialog({
             resizable: false,
-            modal: true,
+            modal: true, width: 300,
             maxHeight: 600,
         });
           // OK BUTTON FUNCTION
@@ -1324,7 +1325,7 @@ function duplicate(parameter) {
                  </div>`)
         .dialog({
             resizable: false,
-            modal: true,
+            modal: true, width: 300,
             maxHeight: 600,
         });
           // OK BUTTON FUNCTION
@@ -1353,7 +1354,7 @@ function editName(parameter) {
                  </form>`)
         .dialog({
             resizable: false,
-            modal: true,
+            modal: true, width: 300,
             maxHeight: 600,
         });
          // OK BUTTON FUNCTION
@@ -1379,7 +1380,7 @@ function editName(parameter) {
                  </form>`)
         .dialog({
             resizable: false,
-            modal: true,
+            modal: true, width: 300,
             maxHeight: 600,
         });
          // OK BUTTON FUNCTION
@@ -1404,7 +1405,7 @@ function editName(parameter) {
                  </form>`)
         .dialog({
             resizable: false,
-            modal: true,
+            modal: true, width: 300,
             maxHeight: 600,
         });
          // OK BUTTON FUNCTION
@@ -1429,7 +1430,7 @@ function deleteFromStructure(parameter) {
                 </div>`)
         .dialog({
             resizable: false,
-            modal: true,
+            modal: true, width: 300,
             maxHeight: 600,
         });
 
@@ -1449,7 +1450,7 @@ function deleteFromStructure(parameter) {
                 </div>`)
         .dialog({
             resizable: false,
-            modal: true,
+            modal: true, width: 300,
             maxHeight: 600,
         });
 
@@ -1478,7 +1479,7 @@ function deleteFromStructure(parameter) {
                     </div>`)
             .dialog({
                 resizable: false,
-                modal: true,
+                modal: true, width: 300,
                 maxHeight: 600,
             });
 
@@ -1578,7 +1579,7 @@ socket.on('error', function(data){
     // if (data.deleted) {
     //     $('#alert').dialog({
     //         resizable: false,
-    //         modal: true,
+    //         modal: true, width: 300,
     //         maxHeight: 600,
     //         minWidth: 500
     //     });
@@ -2055,7 +2056,7 @@ function editElement(key, type) {
                 </div>`)
                 .dialog({
                     resizable: false,
-                    modal: true,
+                    modal: true, width: 300,
                     maxHeight: 600,
                     dialogClass: "no-titlebar"
                 });
@@ -2109,7 +2110,7 @@ function editElement(key, type) {
                 </div>`)
         .dialog({
             resizable: false,
-            modal: true,
+            modal: true, width: 300,
             // maxHeight: 600,
             dialogClass: "no-titlebar"
         });
@@ -2175,6 +2176,7 @@ function editElement(key, type) {
         $('.font-aligment').remove();
         $('.border-div').remove();
         $('.rotation').remove();
+        $('#alert .editor-menu').append(`<div class="menu-item">Position</div>`)
     }
 
     // APPLY CURRENT STYLE
@@ -2359,7 +2361,7 @@ function displayMediaList() {
     $("#text-content").val('');
     $( "#media" ).dialog({
         resizable: false,
-        modal: true,
+        modal: true, width: 300,
         maxHeight: 600,
         minWidth: 500,
         dialogClass: "no-titlebar" 

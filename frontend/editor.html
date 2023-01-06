@@ -60,6 +60,7 @@
 <!-- <link  rel="stylesheet" href="../node_modules/cropperjs/src/css/cropper.css"  />
 <script src="../node_modules/cropperjs/src/js/cropper.js"></script> -->
 
+<!-- <script type="text/javascript" src="../node_modules/osc-js/lib/osc.min.js"></script> -->
 
 <body>
 <main id="editor-main">
@@ -155,7 +156,7 @@
   </div>
 </main>
 <div id="alert"></div>
-<div class="subtitles-menu draggable" style="display: none;">
+<div class="subtitles-menu draggable" style="display: none; resize: both;">
   <div class="editor-buttons subtitles-style">
     <!-- <button onclick="importTranslation()" style="margin: 0px;">Import translation</button> -->
   </div>
@@ -235,6 +236,18 @@
   </div>
   <hr>
 </section>
+
+<!-- <button id="send" style="position: absolute; top: 0%;">Send Message</button>
+
+<script type="text/javascript">
+  var osc = new OSC();
+  osc.open(); // connect by default to ws://localhost:8080
+
+  document.getElementById('send').addEventListener('click', () => {
+    var message = new OSC.Message('/test/random', Math.random());
+    osc.send(message);
+  });
+</script> -->
 
 <script>
   cat = 'screen';

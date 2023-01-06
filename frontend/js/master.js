@@ -1090,19 +1090,80 @@ $('.repet__pause').on('click', function() {
       repet: addRepetData({}).repet
     });
   }, 0);
+  playPause();
 });
 $('.repet__rewind').on('click', function() {
   socket.emit('send', {
     to: ['screens', 'consoles', 'emos', 'laptops'],
     rewind: true
   });
+  rewind();
 });
 $('.repet__forward').on('click', function() {
   socket.emit('send', {
     to: ['screens', 'consoles', 'emos', 'laptops'],
     forward: true
   });
+  forward();
 });
+
+function playPause(media) {
+  document.querySelectorAll('video').forEach(element => {
+    if (element.paused) {
+      element.play().catch(() => {});
+    } else {
+      element.pause();
+    }
+    // if (repet.pause) element.pause();
+    // else if (element.paused) {
+    //   element.play().catch(() => {});
+    // }
+  })
+  document.querySelectorAll('audio').forEach(element => {
+    if (element.paused) {
+      element.play().catch(() => {});
+    } else {
+      element.pause();
+    }
+
+    // if (repet.pause) element.pause();
+    // else if (element.paused) {
+    //   element.play().catch(() => {});
+    // }
+  })
+}
+
+function rewind(media) {
+  document.querySelectorAll('video').forEach(element => {
+    if (element.src) {
+      var t = element.currentTime - 5;
+      if (t < 0) t = 0;
+      element.currentTime = t;
+    }
+  })
+  document.querySelectorAll('audio').forEach(element => {
+    if (element.src) {
+      var t = element.currentTime - 5;
+      if (t < 0) t = 0;
+      element.currentTime = t;
+    }
+  })
+}
+
+function forward(media) {
+  document.querySelectorAll('video').forEach(element => {
+    if (element.src) {
+      var t = element.currentTime + 5;
+      element.currentTime = t;
+    }
+  })
+  document.querySelectorAll('audio').forEach(element => {
+    if (element.src) {
+      var t = element.currentTime + 5;
+      element.currentTime = t;
+    }
+  })
+}
 
 /* Visual Novel
 =============== */
@@ -1188,7 +1249,7 @@ function setJSONsdata(data) {
 function displaySceneList() {
     $('#select-next-scene')
     .empty()
-    .append(`<option selected>Select next scene.....</option>`)
+    .append(`<option selected value="none">Select next scene.....</option>`)
 
     const data = mainData[active.fileName];
     data['scene-order'].forEach(scene => {
@@ -1643,7 +1704,7 @@ $('#visual__next').on('click', function() {
     } else {
       let nextSceneNumber = $('#select-next-scene').val();
       let nextScene;
-      if (!nextSceneNumber) {
+      if (nextSceneNumber === "none") {
         nextScene = $(`#visual #${active.fileName} [data-scene=${active.scene}]`).next();
       } else {
         nextScene = $(`#visual #${active.fileName} [data-scene=${nextSceneNumber}]`);

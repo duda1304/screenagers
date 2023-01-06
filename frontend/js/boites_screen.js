@@ -220,25 +220,30 @@ boites.collective_song = {
   //   $('.step__texte').hide();
   // },
   init: function(data) {
-    if ('answer' in data) {
-      setBoiteToDefaultSize();
-      if (cat !== 'screen') return;
-      $('#boite').empty();
-      $('.step__texte')[0].innerHTML = data.question + '  ' +  data.answer;
-     
-      // $('#boite').append(`<p style='padding: 45% 0; text-align: center;'>${data.question} ${data.answer}</p>`)
-      // $('.step__texte').show();
+    setBoiteToDefaultSize();
+    if (cat !== 'screen') return;
+    $('#boite').empty();
+
+    if (jQuery.type(data) === 'object') {
+      if ('answer' in data) {
+        // CHECK FIRST IF THERE IS CUSTOM TEXT BOX IF NOT WRITE IN DEFAULT ONE
+        if ($('.step__decor pre').length !== 0) {
+          $('.step__decor pre')[0].innerHTML = data.question + '  ' +  data.answer;
+        } else {
+          $('.step__texte')[0].innerHTML = data.question + '  ' +  data.answer;
+        }
+      }
     }
   },
-  start : function(data) {
-    if ('answer' in data) {
-      setBoiteToDefaultSize();
-      if (cat !== 'screen') return;
-      $('#boite').empty();
-      $('#boite').append(`<p style='padding: 45% 0; text-align: center;'>${data.question} ${data.answer}</p>`)
-      $('#boite').show();
-    }
-  },
+  // start : function(data) {
+  //   if ('answer' in data) {
+  //     setBoiteToDefaultSize();
+  //     if (cat !== 'screen') return;
+  //     $('#boite').empty();
+  //     $('#boite').append(`<p style='padding: 45% 0; text-align: center;'>${data.question} ${data.answer}</p>`)
+  //     $('#boite').show();
+  //   }
+  // },
   destroy: function() {
     $boite.empty();
     $boite.hide();

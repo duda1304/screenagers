@@ -53,8 +53,6 @@ function startMemeGenerator(language) {
     </section>`;
     $('.boite--image #meme_div').append(memeGeneratorHTML);
     $('#meme_generator_select input').on('change', function() {
-    //   var $selected = $(this).find(':selected');
-    //   var data = $selected.data('meme');
     var data = $(this).data('meme');
       if (typeof data === 'object') {
         var header = typeof data[0] === 'string' ? data[0] : data[1];
@@ -71,12 +69,14 @@ function startMemeGenerator(language) {
                         <button id='choose-random'>Choose random</button>
                     </div>`)
   $('#send-button').on('click', function() {
-    socket.emit('meme', {
-      to: 'screens',
-      data: $('.meme')[0].outerHTML
-    });
-    $('.boite--image').empty();
-    $('#send-button').remove();
+    if ($('input[name=meme]:checked').length !== 0) {
+      socket.emit('meme', {
+        to: 'screens',
+        data: $('.meme')[0].outerHTML
+      });
+      $('.boite--image').empty();
+      $('#send-button').parent().remove();
+    }
   });
   $('#choose-random').on('click', function() {
     $(chooseRandom($('#meme_generator_select input'))).click();

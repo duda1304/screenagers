@@ -1188,7 +1188,7 @@ function setJSONsdata(data) {
 function displaySceneList() {
     $('#select-next-scene')
     .empty()
-    .append(`<option disabled selected>Select next scene.....</option>`)
+    .append(`<option selected>Select next scene.....</option>`)
 
     const data = mainData[active.fileName];
     data['scene-order'].forEach(scene => {

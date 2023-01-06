@@ -93,7 +93,7 @@
 .box-meme-collective_song {
     max-height: 100vh;
     overflow-y: auto;
-    min-width: 70vw !important;
+    min-width: 40vw !important;
 }
 
 #image-msg {

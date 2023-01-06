@@ -411,7 +411,7 @@ div:not(.closed) #reponses{
 }
 
 .box-visual {
-  max-height: 85vh;
+  max-height: 95vh;
   /* overflow-y: auto; */
 }
 

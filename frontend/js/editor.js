@@ -749,7 +749,7 @@ function setElements(val, type, data_key, stepMediaObject) {
         handles: "se",
         aspectRatio: true,
         resize: function () {
-            $(this).css("object-fit", "");
+            $(this).css("object-fit", ""); $(this).css("height", "");
             $(this).children().each(function(){$(this).css("object-fit", "");$(this).css("height", "");})
             const w = Math.round(( 100 * $(this).width() / $(`#${activeScreen}`).width() )) + "%" ;
             const h = Math.round(( 100 * $(this).height() / $(`#${activeScreen}`).height() )) + "%" ;
@@ -2307,7 +2307,7 @@ function setSize(event, size, key, type) {
     if (type === 'media_images' || type === 'media_gifs') {
         $(`#${activeScreen} [data-key=${key}] img`).css({'object-fit' : size, 'height' : '100%'})
     }
-    if (type === 'media_videos' || type === 'videoStream') {
+    if (type === 'media_video' || type === 'videoStream') {
         $(`#${activeScreen} [data-key=${key}] video`).css({'object-fit' : size, 'height' : '100%'})
     }
 }

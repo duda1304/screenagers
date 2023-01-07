@@ -585,14 +585,12 @@ b::before {
   word-break: break-word;
 }
 
-.console {
-  /* background-color: black; */
-}
 
 .ui-dialog {
   word-break: break-all;
   background-color: #424141;
   z-index: 600;
+  min-width: fit-content;
 }
 
 .ui-widget-header {

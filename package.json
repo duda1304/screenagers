@@ -16,7 +16,6 @@
     "fs-extra": "^11.1.0",
     "gh-pages": "^3.2.3",
     "node-xlsx": "^0.15.0",
-    "osc-js": "^2.4.0",
     "qr-scanner": "^1.4.1",
     "qrcode": "^1.5.0",
     "reset-image-orientation": "^2.0.1",

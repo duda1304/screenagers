@@ -128,7 +128,7 @@ app.get('/master', (req, res, next) => {
 });
 
 app.get('/screen', (req, res) => res.sendFile(path.resolve('frontend/all_screens.html')));
-app.get('/emo', (req, res) => res.sendFile(path.resolve('frontend/all_screens.html')));
+// app.get('/emo', (req, res) => res.sendFile(path.resolve('frontend/all_screens.html')));
 app.get('/console', (req, res) =>  res.sendFile(path.resolve('frontend/all_screens.html')));
 app.get('/laptop', (req, res) => res.sendFile(path.resolve('frontend/all_screens.html')));
 app.get('*', (req, res) => res.redirect('/'));
@@ -143,7 +143,7 @@ const groups = {
   consoles: new Group('consoles', io),
   screens: new Group('screens', io),
   laptops: new Group('laptops', io),
-  emos: new Group('emos', io),
+  // emos: new Group('emos', io),
   mainScreens: new Group('mainScreens', io),
   performers: new Group('performers', io),
   assistants: new Group('assistants', io),
@@ -742,9 +742,9 @@ const set = {
           if (name in groups) {
             groups[name].emit('step', val);
           }
-          if (key === 'console') {
-            groups['mainScreens'].emit('console', val);
-          }
+          // if (key === 'console') {
+          //   groups['mainScreens'].emit('console', val);
+          // }
         }
       });
 

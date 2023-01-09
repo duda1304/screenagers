@@ -1,4 +1,3 @@
-// navigator.mediaDevices.getUserMedia({video: true, audio: true});
 
 toggleFullScreen = function() {};
 
@@ -199,18 +198,26 @@ socket.on('users change', function(users) {
 
 var $main = $('main');
 
+$('.box b').on('click', function() {
+  var $this = $(this);
+  var next = $this.parent();
+  if (next) {
+    next.toggleClass('closed');
+    next.css({'height': 'auto'});
+  }
+})
 $main
   .on('focus', '.message_moderation textarea', function() {
     this.select();
   })
-  .on('click', '.scene__toggle, b', function() {
-    var $this = $(this);
-    var next = $this.parent();
-    if (next) {
-      next.toggleClass('closed');
-      next.css({'height': 'auto'});
-    }
-  })
+  // .on('click', '.scene__toggle, b', function() {
+  //   var $this = $(this);
+  //   var next = $this.parent();
+  //   if (next) {
+  //     next.toggleClass('closed');
+  //     next.css({'height': 'auto'});
+  //   }
+  // })
   .on('click', '.toggle', function() {
     $(this).toggleClass('active');
   });
@@ -1209,7 +1216,7 @@ function setJSONsdata(data) {
 
     // set language
     currentLanguage = $(`#${active.fileName} .languages`).val();
-    console.log(currentLanguage)
+    // console.log(currentLanguage)
     socket.emit('change current language', {language : currentLanguage});
   });
 
@@ -1227,7 +1234,7 @@ function setJSONsdata(data) {
               const currentActive = {"fileName" : active.fileName, "step" : active.step, "scene" : active.scene};
               if (currentActive.fileName !== "") {
                   currentLanguage = $(`#${currentActive.fileName} .languages`).val();
-                  console.log(currentLanguage)
+                  // console.log(currentLanguage)
                   socket.emit('change current language', {language : currentLanguage});
                   // $(`#${currentActive.fileName} .show-name`).click();
                   $('#select-novel').val(currentActive.fileName);
@@ -1281,7 +1288,7 @@ function setActiveStep(fileName, scene, step) {
   active.fileName = fileName;
   active.scene = scene;
   active.step = step;
-  console.log(active)
+  // console.log(active)
 }
 
 // function toggleSubtitles(value) {
@@ -1367,7 +1374,7 @@ function displayStructure(fileName, data) {
  $(`#${fileName} .languages`).on('change', function() {
   currentLanguage = $(this).val();
   socket.emit('change current language', {language : currentLanguage});
-  console.log(currentLanguage)
+  // console.log(currentLanguage)
  })
  
 
@@ -1518,8 +1525,9 @@ function setStep(e, fileName, scene, step) {
   if($(e.target).hasClass('active')) {
       setActiveStep(fileName, scene, step);
 
-      $.getJSON('./data/json/' + fileName + '.json', function(jsonData) {
-        const stepData = jsonData['scenes'][scene]['steps'][step];
+      // $.getJSON('./data/json/' + fileName + '.json', function(jsonData) {
+        const stepData = mainData[fileName]['scenes'][scene]['steps'][step];
+        // console.log(stepData);
         if ('boite' in stepData) {
           setBoite(stepData.boite);
           $('#boite input').each(function(){
@@ -1529,8 +1537,7 @@ function setStep(e, fileName, scene, step) {
         } 
         
         socket.emit('step', stepData);
-        // mutePreview();
-
+       
         screenPreview = 'screenCurrent';
         displayStep(stepData['screen']);
 
@@ -1538,12 +1545,12 @@ function setStep(e, fileName, scene, step) {
         displayStep(stepData['laptop']);
 
         screenPreview = 'screenNext';
-        const currentStepIndex = jsonData['scenes'][scene]['step-order'].indexOf(step);
-        const nextStep = jsonData['scenes'][scene]['step-order'][currentStepIndex + 1];
+        const currentStepIndex = mainData[fileName]['scenes'][scene]['step-order'].indexOf(step);
+        const nextStep = mainData[fileName]['scenes'][scene]['step-order'][currentStepIndex + 1];
         if (nextStep) {
-          displayStep(jsonData['scenes'][scene]['steps'][nextStep]['screen']);
+          displayStep(mainData[fileName]['scenes'][scene]['steps'][nextStep]['screen']);
           screenPreview = 'laptopNext';
-          displayStep(jsonData['scenes'][scene]['steps'][nextStep]['laptop']);
+          displayStep(mainData[fileName]['scenes'][scene]['steps'][nextStep]['laptop']);
         } else {
           displayStep(offStep['screen']);
           screenPreview = 'laptopNext';
@@ -1572,7 +1579,8 @@ function setStep(e, fileName, scene, step) {
           // applyZIndexes();
           // setElements("", "console", "", jsonData['scenes'][scene]['steps'][step]['screen']['console']);
           // setElements("", "music", "", jsonData['scenes'][scene]['steps'][step]['screen']['music']);
-      }) 
+      // )}
+       
   } else {
       setActiveStep(fileName, scene, ""); 
       socket.emit('step', offStep);
@@ -2054,15 +2062,15 @@ actions.prev_step = function() {
 //   getCameraSelection();
 // }
 
-function readCode() {
-  import('./lib/qr-scanner/qr-scanner.min.js').then((module) => {
-    const QrScanner = module.default;
-    // do something with QrScanner
-    new QrScanner(document.getElementById('stream'), result => 
-    console.log('decoded qr code:', result));
-    qrScanner.start();
-});
-}
+// function readCode() {
+//   import('./lib/qr-scanner/qr-scanner.min.js').then((module) => {
+//     const QrScanner = module.default;
+//     // do something with QrScanner
+//     new QrScanner(document.getElementById('stream'), result => 
+//     console.log('decoded qr code:', result));
+//     qrScanner.start();
+// });
+// }
 
 // function closeQRmodal() {
 //   document.getElementById('QR_modal').style.display = 'none';
@@ -2234,8 +2242,8 @@ function setElements(val, type, data_key, stepMediaObject) {
               mediaElement.find('.media').prop('muted', true);
               mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop']);
               mediaElement.find('.media').prop('volume', stepMediaObject['attributes']['volume']);
-              mediaElement.data('audioOutput', stepMediaObject['attributes']['audioOutput']);
-              mediaElement.find('.media')[0].setSinkId(stepMediaObject['attributes']['audioOutput']);
+              // mediaElement.data('audioOutput', stepMediaObject['attributes']['audioOutput']);
+              // mediaElement.find('.media')[0].setSinkId(stepMediaObject['attributes']['audioOutput']);
           }
 
            // CHECK IF NEW SRC SHOULD BE APPLIED
@@ -2291,6 +2299,8 @@ function setElements(val, type, data_key, stepMediaObject) {
 
 
 async function startStream(constraints, data_key, div) {
+  navigator.mediaDevices.getUserMedia({video: true, audio: true});
+
   navigator.mediaDevices.getUserMedia( constraints )
   .then( MediaStream => {
       handleStream(MediaStream, data_key, div);

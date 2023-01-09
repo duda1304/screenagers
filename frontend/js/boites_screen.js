@@ -129,9 +129,12 @@ function startMemeGenerator(language) {
         cache = [];
         active = true;
   
-        $boite.append(memeGeneratorHTML);
-        $('#meme_generator').addClass('hide');
-        $('#meme_lines').addClass('hide');
+        if (page === 'assistant') {
+          $boite.append(memeGeneratorHTML);
+          $('#meme_generator').addClass('hide');
+          $('#meme_lines').addClass('hide');
+        }
+       
   
         // $boite[0].className = 'boite--image gallery';
         $boite[0].className = 'boite--image meme_editor';

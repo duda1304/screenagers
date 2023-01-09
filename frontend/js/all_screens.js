@@ -791,8 +791,8 @@ function setElements(val, type, data_key, stepMediaObject) {
               mediaElement.find('.media').prop('muted', stepMediaObject['attributes']['muted']);
               mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop']);
               mediaElement.find('.media').prop('volume', stepMediaObject['attributes']['volume']);
-              mediaElement.data('audioOutput', stepMediaObject['attributes']['audioOutput']);
-              mediaElement.find('.media')[0].setSinkId(stepMediaObject['attributes']['audioOutput']);
+              // mediaElement.data('audioOutput', stepMediaObject['attributes']['audioOutput']);
+              // mediaElement.find('.media')[0].setSinkId(stepMediaObject['attributes']['audioOutput']);
           }
 
            // CHECK IF NEW SRC SHOULD BE APPLIED

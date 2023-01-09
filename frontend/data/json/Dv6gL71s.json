@@ -20,7 +20,8 @@
         13,
         14,
         15,
-        16
+        16,
+        17
     ],
     "scenes": {
         "1": {
@@ -11128,6 +11129,7 @@
                 8,
                 19,
                 9,
+                20,
                 10,
                 12,
                 14,
@@ -12254,6 +12256,92 @@
                         "type": "attente",
                         "arg": ""
                     }
+                },
+                "20": {
+                    "screen": {
+                        "media-order": [
+                            "FPtG6",
+                            "YZGik"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "FPtG6": {
+                                "type": "text",
+                                "css": {
+                                    "position": "absolute",
+                                    "top": "3%",
+                                    "left": "27%",
+                                    "white-space": "pre-wrap",
+                                    "overflow-wrap": "break-word",
+                                    "color": "rgb(255, 255, 255)",
+                                    "font-size": "3.5vw",
+                                    "margin": "0px",
+                                    "padding": "2vw",
+                                    "font-family": "Arial",
+                                    "z-index": "2",
+                                    "text-align": "center"
+                                },
+                                "attributes": {},
+                                "content": "",
+                                "classes": [
+                                    "text"
+                                ]
+                            },
+                            "YZGik": {
+                                "type": "media_video",
+                                "css": {
+                                    "width": "100%",
+                                    "position": "absolute",
+                                    "top": "0%",
+                                    "left": "0%",
+                                    "z-index": "1",
+                                    "object-fit": "cover",
+                                    "height": "100%"
+                                },
+                                "attributes": {
+                                    "src": "Collective-song/Collectivesong.webmhd.webm",
+                                    "loop": false,
+                                    "muted": false,
+                                    "volume": 1
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "collective_song",
+                        "arg": "i’m so tired of\ni regret\npeople say I’m\ni wish I could\nwhy can’t people be more\ni’ve got to stop\ni’m afraid\ni’m running out of\ni lied when I said\nlast night I dreamt\ni hope someday"
+                    }
                 }
             }
         },
@@ -13339,6 +13427,94 @@
                     },
                     "boite": {
                         "type": "chat",
+                        "arg": ""
+                    }
+                }
+            }
+        },
+        "17": {
+            "name": "test youtube",
+            "step-order": [
+                1
+            ],
+            "steps": {
+                "1": {
+                    "screen": {
+                        "media-order": [
+                            "uy0Zg",
+                            "8LIqE"
+                        ],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {
+                            "uy0Zg": {
+                                "type": "media_video",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "53%",
+                                    "left": "51%",
+                                    "z-index": "2"
+                                },
+                                "attributes": {
+                                    "src": "YoutubeBand/Screen1.webmhd.webm",
+                                    "loop": false,
+                                    "muted": false,
+                                    "volume": 1
+                                },
+                                "content": "",
+                                "classes": []
+                            },
+                            "8LIqE": {
+                                "type": "media_video",
+                                "css": {
+                                    "width": "35%",
+                                    "position": "absolute",
+                                    "top": "25%",
+                                    "left": "25%",
+                                    "z-index": "1"
+                                },
+                                "attributes": {
+                                    "src": "YoutubeBand/Screen2.webmhd.webm",
+                                    "loop": false,
+                                    "muted": false,
+                                    "volume": 1
+                                },
+                                "content": "",
+                                "classes": []
+                            }
+                        },
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "laptop": {
+                        "media-order": [],
+                        "background-color": "rgb(0, 0, 0)",
+                        "media": {},
+                        "console": {
+                            "active": false,
+                            "css": {
+                                "width": "25%",
+                                "height": "95%",
+                                "position": "absolute",
+                                "top": "2.5%",
+                                "left": "5%",
+                                "z-index": "100",
+                                "display": "none"
+                            }
+                        }
+                    },
+                    "boite": {
+                        "type": "no_phone",
                         "arg": ""
                     }
                 }

@@ -11,7 +11,7 @@ let active = {
 let subtitlesData = {};
 let subtitlesStyles = {};
 
-navigator.mediaDevices.getUserMedia({video: true, audio: true});
+
 
 const screens = ['screen', 'laptop'];
 
@@ -799,8 +799,8 @@ function setElements(val, type, data_key, stepMediaObject) {
                 mediaElement.find('.media').prop('muted', stepMediaObject['attributes']['muted']);
                 mediaElement.find('.media').prop('loop', stepMediaObject['attributes']['loop']);
                 mediaElement.find('.media').prop('volume', stepMediaObject['attributes']['volume']);
-                mediaElement.data('audioOutput', stepMediaObject['attributes']['audioOutput']);
-                mediaElement.find('.media')[0].setSinkId(stepMediaObject['attributes']['audioOutput']);
+                // mediaElement.data('audioOutput', stepMediaObject['attributes']['audioOutput']);
+                // mediaElement.find('.media')[0].setSinkId(stepMediaObject['attributes']['audioOutput']);
             }
 
             // CHECK IF NEW SRC SHOULD BE APPLIED
@@ -2149,7 +2149,7 @@ function editElement(key, type) {
                     <select id="select-audioOutput">
                     </select>
                 </div>`)
-        getAudioOutputs(key);
+        // getAudioOutputs(key);
     }
 
     if (type === 'media_audio') {
@@ -2451,6 +2451,7 @@ function getMediaStream() {
     };
 
     const getCameraSelection = async () => {
+        navigator.mediaDevices.getUserMedia({video: true, audio: true});
         const devices = await navigator.mediaDevices.enumerateDevices();
         const videoDevices = devices.filter(device => device.kind === 'videoinput');
         const options = videoDevices.map(videoDevice => {

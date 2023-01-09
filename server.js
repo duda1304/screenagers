@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var fs = require('fs-extra');
-const QrScanner = require('qr-scanner'); 
+// const QrScanner = require('qr-scanner'); 
 
 // Require the package
 const QRCode = require('qrcode')
@@ -1247,44 +1247,44 @@ function con(data, id) {
 
 Write shortcuts from memes.xlsx in memes.json
 */
-try {
-  var xlsx = require('node-xlsx');
-  const memes = xlsx.parse(`${__dirname}/frontend/data/memes.xlsx`);
-  var liste = memes[0].data;
-  var data = {};
-  var isLetter = null;
-  for (let i = 2, l = 100; i < l; i++) {
-    if (liste[i].length) {
-      if (liste[i] != null) {
-        liste[i].forEach(function(item) {
-          var str = String(item);
-          if (str.length === 1) {
-            isLetter = str;
-          } else {
-            data[isLetter] = str
-              .split(/\n\n/)
-              .map(item =>
-                item
-                  .replace(/A\s*\:/, '')
-                  .trim()
-                  .replace(/"$/, '')
-                  .replace(/^"/, '')
-              )
-              .filter(Boolean);
-            isLetter = null;
-          }
-        });
-      }
-    }
-  }
-  fs.writeFileSync(
-    `${__dirname}/frontend/data/memes.json`,
-    JSON.stringify(data, null, 2),
-    'utf8'
-  );
-} catch (err) {
-  console.log('Impossible de lire le fichier /frontend/data/memes.xlsx', err);
-}
+// try {
+//   var xlsx = require('node-xlsx');
+//   const memes = xlsx.parse(`${__dirname}/frontend/data/memes.xlsx`);
+//   var liste = memes[0].data;
+//   var data = {};
+//   var isLetter = null;
+//   for (let i = 2, l = 100; i < l; i++) {
+//     if (liste[i].length) {
+//       if (liste[i] != null) {
+//         liste[i].forEach(function(item) {
+//           var str = String(item);
+//           if (str.length === 1) {
+//             isLetter = str;
+//           } else {
+//             data[isLetter] = str
+//               .split(/\n\n/)
+//               .map(item =>
+//                 item
+//                   .replace(/A\s*\:/, '')
+//                   .trim()
+//                   .replace(/"$/, '')
+//                   .replace(/^"/, '')
+//               )
+//               .filter(Boolean);
+//             isLetter = null;
+//           }
+//         });
+//       }
+//     }
+//   }
+//   fs.writeFileSync(
+//     `${__dirname}/frontend/data/memes.json`,
+//     JSON.stringify(data, null, 2),
+//     'utf8'
+//   );
+// } catch (err) {
+//   console.log('Impossible de lire le fichier /frontend/data/memes.xlsx', err);
+// }
 
 /* OSC Server
 ============= */

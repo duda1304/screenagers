@@ -20,8 +20,7 @@
         13,
         14,
         15,
-        16,
-        17
+        16
     ],
     "scenes": {
         "1": {
@@ -13428,113 +13427,6 @@
                     },
                     "boite": {
                         "type": "chat",
-                        "arg": ""
-                    }
-                }
-            }
-        },
-        "17": {
-            "name": "test youtube",
-            "step-order": [
-                1
-            ],
-            "steps": {
-                "1": {
-                    "screen": {
-                        "media-order": [
-                            "uy0Zg",
-                            "8LIqE",
-                            "WbP9T"
-                        ],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {
-                            "uy0Zg": {
-                                "type": "media_video",
-                                "css": {
-                                    "width": "35%",
-                                    "position": "absolute",
-                                    "top": "53%",
-                                    "left": "51%",
-                                    "z-index": "3"
-                                },
-                                "attributes": {
-                                    "src": "YoutubeBand/Screen1.webmhd.webm",
-                                    "loop": false,
-                                    "muted": false,
-                                    "volume": 1
-                                },
-                                "content": "",
-                                "classes": []
-                            },
-                            "8LIqE": {
-                                "type": "media_video",
-                                "css": {
-                                    "width": "35%",
-                                    "position": "absolute",
-                                    "top": "14%",
-                                    "left": "48%",
-                                    "z-index": "2"
-                                },
-                                "attributes": {
-                                    "src": "YoutubeBand/Screen2.webmhd.webm",
-                                    "loop": false,
-                                    "muted": false,
-                                    "volume": 1
-                                },
-                                "content": "",
-                                "classes": []
-                            },
-                            "WbP9T": {
-                                "type": "media_video",
-                                "css": {
-                                    "width": "35%",
-                                    "position": "absolute",
-                                    "top": "25%",
-                                    "left": "25%",
-                                    "z-index": "1"
-                                },
-                                "attributes": {
-                                    "src": "Google%20song/Googlesong.webmhd.webm",
-                                    "loop": false,
-                                    "muted": false,
-                                    "volume": 1
-                                },
-                                "content": "",
-                                "classes": []
-                            }
-                        },
-                        "console": {
-                            "active": false,
-                            "css": {
-                                "width": "25%",
-                                "height": "95%",
-                                "position": "absolute",
-                                "top": "2.5%",
-                                "left": "5%",
-                                "z-index": "100",
-                                "display": "none"
-                            }
-                        }
-                    },
-                    "laptop": {
-                        "media-order": [],
-                        "background-color": "rgb(0, 0, 0)",
-                        "media": {},
-                        "console": {
-                            "active": false,
-                            "css": {
-                                "width": "25%",
-                                "height": "95%",
-                                "position": "absolute",
-                                "top": "2.5%",
-                                "left": "5%",
-                                "z-index": "100",
-                                "display": "none"
-                            }
-                        }
-                    },
-                    "boite": {
-                        "type": "no_phone",
                         "arg": ""
                     }
                 }

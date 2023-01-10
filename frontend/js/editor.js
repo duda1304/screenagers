@@ -84,7 +84,7 @@ function setSubtitlesData(data) {
     })
 }
 
-async function loadSubtitlesStyles() {
+async function loadSubtitlesStyles(preselected) {
     await $.getJSON('./data/subtitles/style.json', function(jsonData) {
         // subtitlesStyles = {};
         // Object.assign(subtitlesStyles, jsonData);
@@ -101,6 +101,8 @@ async function loadSubtitlesStyles() {
             $('.subtitles').removeAttr('style');
             $('.subtitles').css(subtitlesData['style'][this.value])
         })
+        
+        $(`#load-saved-style option[value='${preselected}']`).attr('selected', true);
     })
 }
 
@@ -193,7 +195,7 @@ function toggleSubtitles(value) {
                 $('.subtitles-menu .subtitles-content')
                     .append(`<button type="button" onclick="editTranslation()">Edit translation</button>`);  
 
-                loadSubtitlesStyles();
+                loadSubtitlesStyles('defualt');
                 $('#line').text(subtitlesData[active.fileName][$(`#${active.fileName} .languages`).val()].split("\n")[0]);
                 $('#line').data('line', 0);
                 $('.subtitles').text(subtitlesData[active.fileName][$(`#${active.fileName} .languages`).val()].split("\n")[0]);
@@ -1517,8 +1519,8 @@ socket.on('success', function(data){
             setSubtitlesData(data.data);
             closeModal();
         } else {
-            loadSubtitlesStyles();
-            $(`#load-saved-style option[value=${data.subtitles.style}]`).click();
+            loadSubtitlesStyles(data.subtitles.style);
+            // $(`#load-saved-style option[value='${data.subtitles.style}']`).click();
             // $('#load-saved-style').trigger('change')
             closeModal();
         }

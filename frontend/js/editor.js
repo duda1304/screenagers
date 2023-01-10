@@ -493,6 +493,10 @@ function clearUnwantedMedia(stepMedia){
 
     keysArray.forEach(key => {
         if (!stepMedia[key]) {
+            if ($(`#${activeScreen} [data-key=${key}]`).find('video').length !== 0) {
+                $(`#${activeScreen} [data-key=${key}] video`).stop();
+                $(`#${activeScreen} [data-key=${key}] video`).attr('src', '');
+              }
             $(`#${activeScreen} [data-key=${key}]`).remove();
         }
     })

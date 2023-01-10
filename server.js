@@ -116,6 +116,9 @@ app.get('/editor', (req, res) => res.sendFile(path.resolve('frontend/editor.html
 
 app.get('/debug', (req, res) => res.sendFile(path.resolve('frontend/debug.html')));
 
+app.get('/test', (req, res) => res.sendFile(path.resolve('frontend/test.html')));
+app.get('/debug_test', (req, res) => res.sendFile(path.resolve('frontend/debug_test.html')));
+
 const auth = require('basic-auth');
 const admins = { toto: { password: 'toto' } };
 app.get('/master', (req, res, next) => {
@@ -132,6 +135,7 @@ app.get('/screen', (req, res) => res.sendFile(path.resolve('frontend/all_screens
 app.get('/console', (req, res) =>  res.sendFile(path.resolve('frontend/all_screens.html')));
 app.get('/laptop', (req, res) => res.sendFile(path.resolve('frontend/all_screens.html')));
 app.get('*', (req, res) => res.redirect('/'));
+
 
 /* Socket server
 ================ */

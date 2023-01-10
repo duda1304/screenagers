@@ -1517,6 +1517,24 @@ function displayStructure(fileName, data) {
 const screensPreview = ['screenCurrent', 'laptopCurrent', 'screenNext', 'laptopNext'];
 let screenPreview;
 
+let videoElementsNo = 0;
+let loadedVideos = 0;
+
+// function countVideoMedias(stepMedia) {
+//   $.each(stepMedia, function() {
+//     if (this.type=== 'media_video') videoElementsNo = videoElementsNo + 1;
+//   })
+// }
+
+function checkIfProblematic(data) {
+  if ('name' in data) {
+    if (data.name === 'problematic') {
+      return true
+    } return false
+  } 
+  return false
+}
+
 function setStep(e, fileName, scene, step) {
   $(".stepElement").not(e.target).removeClass('active');
   // $(e.target).parent().find('.structure-buttons').remove();
@@ -1539,16 +1557,26 @@ function setStep(e, fileName, scene, step) {
         socket.emit('step', stepData);
        
         screenPreview = 'screenCurrent';
-        displayStep(stepData['screen']);
-
+        if (checkIfProblematic(stepData)) {
+          displayStep(offStep['screen']);
+        } else {
+          displayStep(stepData['screen']);
+        }
+        
         screenPreview = 'laptopCurrent';
         displayStep(stepData['laptop']);
 
         screenPreview = 'screenNext';
+
         const currentStepIndex = mainData[fileName]['scenes'][scene]['step-order'].indexOf(step);
         const nextStep = mainData[fileName]['scenes'][scene]['step-order'][currentStepIndex + 1];
         if (nextStep) {
-          displayStep(mainData[fileName]['scenes'][scene]['steps'][nextStep]['screen']);
+          if (checkIfProblematic(mainData[fileName]['scenes'][scene]['steps'][nextStep])) {
+            displayStep(offStep['screen']);
+          } else {
+            displayStep(mainData[fileName]['scenes'][scene]['steps'][nextStep]['screen']);
+          }
+          // displayStep(mainData[fileName]['scenes'][scene]['steps'][nextStep]['screen']);
           screenPreview = 'laptopNext';
           displayStep(mainData[fileName]['scenes'][scene]['steps'][nextStep]['laptop']);
         } else {
@@ -1557,39 +1585,31 @@ function setStep(e, fileName, scene, step) {
           displayStep(offStep['laptop']);
         }
 
-        
-        
-          // const mediaOrder = jsonData['scenes'][scene]['steps'][step]['screen']['media-order'];
-          // const stepMedia = jsonData['scenes'][scene]['steps'][step]['screen']['media'];
-          
-          // clearUnwantedMedia(stepMedia);
-          // for (let data_key of mediaOrder) {
-          //     // DISPLAY MEDIA IN MEDIA LIST
-          //     let liName;
-          //     if (stepMedia[data_key]['type'] === 'media_images' || stepMedia[data_key]['type'] === 'media_video' || stepMedia[data_key]['type'] === 'media_gifs') {
-          //         liName = getFileName(stepMedia[data_key]['attributes']['src']);
-          //     } else {
-          //         liName = stepMedia[data_key]['type']
-          //     }
-          //     const li = `<li data-key=${data_key} data-type=${stepMedia[data_key]['type']} onclick="markActiveStepMediaElement(event)"><div class="visibility-icon visible" onclick="toggleVisibility(event)" data-key=${data_key}></div>${liName}</li>`;
-          //     $('#step-media ul').append(li);
-          //     // DISPLAY STEP IN MEDIA PREVIEW
-          //     setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);
-          // }
-          // applyZIndexes();
-          // setElements("", "console", "", jsonData['scenes'][scene]['steps'][step]['screen']['console']);
-          // setElements("", "music", "", jsonData['scenes'][scene]['steps'][step]['screen']['music']);
-      // )}
-       
+        // start playing videos only after all are loaded to play trough
+        // Array.from(document.getElementsByTagName('video')).forEach(video => {
+        //   video.oncanplay = function() {
+        //     loadedVideos = loadedVideos + 1;
+        //     if (loadedVideos === videoElementsNo) {
+        //       startAllVideos()
+        //     }
+        //   }
+        // })
+
   } else {
       setActiveStep(fileName, scene, ""); 
       socket.emit('step', offStep);
+      
       screensPreview.forEach(element => {
         screenPreview = element;
         displayStep(offStep[element.replace('Current', '').replace('Next', '')]);
       })
-      // $('#preview').empty();
   }
+}
+
+function startAllVideos() {
+  Array.from(document.getElementsByTagName('video')).forEach(video => {
+    video.play();
+  })
 }
 
 function scrollToStep($step) {
@@ -2103,6 +2123,10 @@ function clearUnwantedMedia(data){
 
   keysArray.forEach(key => {
       if (!stepMedia[key]) {
+        if ($(`#${screenPreview} .step [data-key=${key}]`).find('video').length !== 0) {
+          $(`#${screenPreview} .step [data-key=${key}] video`).stop();
+          $(`#${screenPreview} .step [data-key=${key}] video`).attr('src', '');
+        }
           $(`#${screenPreview} .step [data-key=${key}]`).remove();
       }
   })
@@ -2121,6 +2145,8 @@ function displayStep(data) {
 
     const mediaOrder = data['media-order'];
     const stepMedia = data['media'];
+
+    // countVideoMedias(stepMedia);
 
     for (let data_key of mediaOrder) {
       setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);

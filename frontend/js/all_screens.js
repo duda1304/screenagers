@@ -636,6 +636,8 @@ socket.on('remove avatar', (data) =>{
   jQuery(`#avatars img[src*=${data}]`).remove();
 })
 
+htmlPathToMedia = './data/media/';
+
 function clearUnwantedMedia(data){
   // const div = document.getElementsByClassName('step')[0];
   const stepMedia = data['media'];
@@ -646,6 +648,10 @@ function clearUnwantedMedia(data){
 
   keysArray.forEach(key => {
       if (!stepMedia[key]) {
+        if ($(`.step [data-key=${key}]`).find('video').length !== 0) {
+          $(`.step [data-key=${key}] video`).stop();
+          $(`.step [data-key=${key}] video`).attr('src', '');
+        }
           $(`.step [data-key=${key}]`).remove();
       }
   })
@@ -659,12 +665,26 @@ function applyZIndexes(data) {
   })
 }
 
+let videoElementsNo = 0;
+let loadedVideos = 0;
+
+// function countVideoMedias(stepMedia) {
+//   $.each(stepMedia, function() {
+//     if (this.type=== 'media_video') videoElementsNo = videoElementsNo + 1;
+//   })
+// }
+
 function displayStep(data) {
 
     clearUnwantedMedia(data);
 
     const mediaOrder = data['media-order'];
     const stepMedia = data['media'];
+
+    videoElementsNo = 0;
+    loadedVideos = 0;
+
+    // countVideoMedias(stepMedia);
 
     for (let data_key of mediaOrder) {
       setElements(stepMedia[data_key].attributes.src, stepMedia[data_key]['type'], data_key, stepMedia[data_key]);
@@ -673,7 +693,24 @@ function displayStep(data) {
     
     setElements("", "console", "", data['console']);
     $('.step').css('background-color', data['background-color']);
+
+    // start playing videos only after all are loaded to play trough
+    // Array.from(document.getElementsByTagName('video')).forEach(video => {
+    //   video.oncanplay = function() {
+    //     loadedVideos = loadedVideos + 1;
+    //     if (loadedVideos === videoElementsNo) {
+    //       startAllVideos()
+    //     }
+    //   }
+    // })
 }
+
+// function startAllVideos() {
+//   Array.from(document.getElementsByTagName('video')).forEach(video => {
+//     console.log(repet)
+//     video.play();
+//   })
+// }
 
 function styleToObject(style) {
   const regex = /([\w-]*)\s*:\s*([^;]*)/g;
@@ -681,6 +718,7 @@ function styleToObject(style) {
   while(match=regex.exec(style)) properties[match[1]] = match[2].trim(); 
   return properties;
 }
+
 
 
 function setElements(val, type, data_key, stepMediaObject) {
@@ -793,6 +831,7 @@ function setElements(val, type, data_key, stepMediaObject) {
               mediaElement.find('.media').prop('volume', stepMediaObject['attributes']['volume']);
               // mediaElement.data('audioOutput', stepMediaObject['attributes']['audioOutput']);
               // mediaElement.find('.media')[0].setSinkId(stepMediaObject['attributes']['audioOutput']);
+              
           }
 
            // CHECK IF NEW SRC SHOULD BE APPLIED
